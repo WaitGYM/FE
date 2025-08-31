@@ -1,0 +1,13 @@
+@use "@styles/variables" as *;
+
+body {
+  background-color: $c-primary-blue-dark;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+    sans-serif;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  color: white;
+}
