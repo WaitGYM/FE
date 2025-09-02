@@ -16,6 +16,10 @@ export default defineConfig({
         find: "@styles",
         replacement: path.resolve(__dirname, "src/styles/sass"),
       },
+      {
+        find: "@comp",
+        replacement: path.resolve(__dirname, "src/components"),
+      },
     ],
   },
 });
