@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, BackHandler, Platform } from "react-native";
+import { StyleSheet, BackHandler, Platform, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 
@@ -87,6 +87,14 @@ export default function App() {
         scalesPageToFit={true}
         originWhitelist={["*"]}
         allowsBackForwardNavigationGestures={true}
+        // iOS 전용 설정
+        automaticallyAdjustContentInsets={false}
+        contentInsetAdjustmentBehavior="never"
+        scrollEnabled={false}
+        bounces={false}
+        // 추가 iOS 최적화
+        allowsInlineMediaPlayback={true}
+        mediaPlaybackRequiresUserAction={false}
         onMessage={handleMessage}
         onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
       />
@@ -98,6 +106,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#293241",
+    // iOS에서 추가 안전 영역 확보
+    paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight,
   },
   webview: { flex: 1, backgroundColor: "#293241", margin: 0, padding: 0 },
 });
