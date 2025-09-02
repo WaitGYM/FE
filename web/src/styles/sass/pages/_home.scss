@@ -1,1 +1,65 @@
 @use "@styles/variables" as *;
+
+$header-height: 8em;
+
+.home-page {
+  height: 100%;
+  padding: 1.6em 1em;
+
+  header {
+    height: $header-height;
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .greeting {
+      font-size: 1.1rem;
+      margin-top: 1em;
+      line-height: 1.8rem;
+    }
+  }
+
+  section {
+    height: calc(100% - $header-height);
+    overflow-y: scroll;
+
+    .not-routine,
+    li.routine {
+      border-radius: 1rem;
+      background-color: rgba($color: #fff, $alpha: 0.25);
+      padding: 1em;
+      color: #fff;
+    }
+
+    li.routine {
+      display: flex;
+
+      .icon {
+        width: 2.5em;
+        height: 2.5em;
+        background-color: antiquewhite;
+      }
+
+      .info {
+        margin-left: 1em;
+
+        .title {
+          font-size: 1.1rem;
+        }
+
+        .detail {
+          margin-top: 0.5em;
+
+          span {
+            font-size: 0.9rem;
+          }
+        }
+      }
+      & + li.routine {
+        margin-top: 1em;
+      }
+    }
+  }
+}
