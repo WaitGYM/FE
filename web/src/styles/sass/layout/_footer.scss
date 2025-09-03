@@ -1,0 +1,33 @@
+@use "@styles/variables" as *;
+
+footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+
+  width: 100%;
+  height: 75px;
+  border-top: 1px solid $c-primary-blue;
+  background: $c-primary-blue-dark;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    opacity: 0.5;
+
+    &.on {
+      opacity: 1;
+    }
+
+    & > p {
+      font-size: 12px;
+      color: $c-sub-white;
+    }
+  }
+}
