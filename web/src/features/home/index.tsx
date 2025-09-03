@@ -15,7 +15,7 @@ export default function HomePage() {
             <img src={logo} alt="logo" />
           </div>
           <div className="icon-bell">
-            <Bell size={24} stroke-width="1.5" />
+            <Bell size={24} strokeWidth="1.5" />
           </div>
         </div>
 
@@ -42,6 +42,77 @@ export default function HomePage() {
                   </div>
                 </div>
               </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+              <li className="routine">
+                <div className="icon"></div>
+                <div className="info">
+                  <p className="title">루틴01</p>
+                  <div className="detail">
+                    <span>10개운동</span>
+                    <span>예상시간28분</span>
+                  </div>
+                </div>
+              </li>
+
               <li className="routine">
                 <div className="icon"></div>
                 <div className="info">
