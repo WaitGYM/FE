@@ -25,6 +25,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "src/stores"),
       },
       {
+        find: "@img",
+        replacement: path.resolve(__dirname, "src/assets/images"),
+      },
+      {
         find: "@styles",
         replacement: path.resolve(__dirname, "src/styles/sass"),
       },

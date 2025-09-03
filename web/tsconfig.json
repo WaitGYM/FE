@@ -11,6 +11,7 @@
       "@api/*": ["src/services/*"],
       "@comp/*": ["src/components/*"],
       "@stores/*": ["src/stores/*"],
+      "@img/*": ["src/assets/images/*"],
       "@styles/*": ["src/styles/sass/*"],
       "@types/*": ["src/types/*"]
     }
