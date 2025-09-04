@@ -17,7 +17,7 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "src/components"),
       },
       {
-        find: "@api",
+        find: "@apis",
         replacement: path.resolve(__dirname, "src/services"),
       },
       {
