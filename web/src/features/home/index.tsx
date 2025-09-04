@@ -1,11 +1,16 @@
-import Button from "@comp/ui/Button";
 import Footer from "@comp/layout/Footer";
-import { Stack } from "@mui/material";
 import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
+import { usePlanStore } from "@stores/planStore";
+import type { Plan } from "@types";
+import { useEffect } from "react";
 
 export default function HomePage() {
-  const hasRoutine = true;
+  const { plans, loading, error, getPlans, clearError } = usePlanStore();
+
+  useEffect(() => {
+    getPlans();
+  }, [getPlans]);
 
   return (
     <div className="home-page">
@@ -28,7 +33,9 @@ export default function HomePage() {
 
       <div className="container">
         <section>
-          {!hasRoutine ? (
+          {loading ? (
+            <div>로딩 중...</div>
+          ) : !plans || plans.length < 1 ? (
             <ul className="not-routine">
               <li className="routine">
                 <div className="icon">
@@ -41,31 +48,28 @@ export default function HomePage() {
             </ul>
           ) : (
             <ul className="routine-list">
-              <li className="routine">
-                <div className="icon">
-                  <Dumbbell size={32} strokeWidth="1.5" />
-                </div>
-                <div className="info">
-                  <p className="title">8월 22일 운동 루틴</p>
-                  <div className="detail">
-                    <span>10개 운동</span>
-                    <span>예상시간 28분</span>
+              {plans.map((plan: Plan) => (
+                <li className="routine">
+                  <div className="icon">
+                    <Dumbbell size={32} strokeWidth="1.5" />
                   </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon">
-                  <Dumbbell size={32} strokeWidth="1.5" />
-                </div>
-                <div className="info">
-                  <p className="title">8월 23일 운동 루틴</p>
-                  <div className="detail">
-                    <span>10개 운동</span>
-                    <span>예상시간 28분</span>
+                  <div className="info">
+                    <p className="title">{plan.name}</p>
+                    <div className="detail">
+                      <span>{plan.equipmentNum}개 운동</span>
+                      <span>예상시간 {plan.duration}분</span>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              ))}
             </ul>
+          )}
+
+          {error && (
+            <div>
+              {error}
+              <button onClick={clearError}>×</button>
+            </div>
           )}
 
           <div className="btn-wrap">
