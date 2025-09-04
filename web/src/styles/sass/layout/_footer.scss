@@ -6,10 +6,10 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 48px;
+  gap: 3rem;
 
   width: 100%;
-  height: 75px;
+  height: 4.68rem;
   border-top: 1px solid $c-primary-blue;
   background: $c-primary-blue-dark;
 
@@ -20,13 +20,14 @@ footer {
     justify-content: center;
     gap: 4px;
     opacity: 0.5;
+    cursor: pointer;
 
     &.on {
       opacity: 1;
     }
 
     & > p {
-      font-size: 12px;
+      font-size: 0.75rem;
       color: $c-sub-white;
     }
   }

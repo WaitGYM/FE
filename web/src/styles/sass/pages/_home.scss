@@ -1,21 +1,22 @@
 @use "@styles/variables" as *;
 
-$header-height: 8em;
+// $header-height: ;
 
 .home-page {
   height: 100%;
-  padding: 1.6em 0;
 
   header {
-    height: $header-height;
+    height: auto;
 
     .header-top {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      height: 3.43rem;
 
       .logo {
-        width: 6.533rem;
-        height: 1.392rem;
+        width: 6.53rem;
+        height: 1.39rem;
 
         img {
           width: 100%;
@@ -26,51 +27,79 @@ $header-height: 8em;
     }
 
     .greeting {
-      font-size: 1.1rem;
-      margin-top: 1em;
-      line-height: 1.8rem;
+      font-size: 1.12rem;
+      margin: 1.5rem 0;
+      line-height: 1.57rem;
+      font-weight: 500;
     }
   }
 
   section {
-    height: calc(100% - $header-height);
-    overflow-y: scroll;
-
-    .not-routine,
-    li.routine {
-      border-radius: 1rem;
-      background-color: rgba($color: #fff, $alpha: 0.25);
-      padding: 1em;
-      color: #fff;
-    }
+    // height: calc(100% - $header-height);
+    // overflow-y: scroll;
 
     li.routine {
-      display: flex;
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      column-gap: 1.5rem;
+      align-items: center;
+      height: 4.75rem;
+
+      border-radius: 0.5rem;
+      background-color: rgba($color: $c-sub-white, $alpha: 0.25);
+      padding: 1rem 1.5rem;
+      color: $c-sub-white;
+      cursor: pointer;
 
       .icon {
-        width: 2.5em;
-        height: 2.5em;
-        background-color: antiquewhite;
+        width: 2rem;
+        height: 2rem;
+        // background-color: antiquewhite;
       }
 
       .info {
-        margin-left: 1em;
-
         .title {
           font-size: 1.1rem;
+          font-weight: 600;
         }
 
         .detail {
-          margin-top: 0.5em;
+          margin-top: 0.25rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
 
           span {
-            font-size: 0.9rem;
+            font-size: 0.81rem;
+            font-weight: 500;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            &:not(:last-child)::after {
+              content: "";
+              display: inline-block;
+              width: 0.25rem;
+              height: 0.25rem;
+              border-radius: 50%;
+              background-color: $c-sub-white;
+              opacity: 0.5;
+            }
           }
         }
       }
       & + li.routine {
-        margin-top: 1em;
+        margin-top: 0.5rem;
       }
     }
+  }
+  .btn-wrap {
+    width: calc(100% - 3rem);
+    position: fixed;
+    bottom: calc(4.6875rem + 3.125rem);
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
   }
 }

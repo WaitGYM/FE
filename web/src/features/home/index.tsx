@@ -1,7 +1,7 @@
 import Button from "@comp/ui/Button";
 import Footer from "@comp/layout/Footer";
 import { Stack } from "@mui/material";
-import { Bell } from "lucide-react";
+import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
 
 export default function HomePage() {
@@ -29,167 +29,53 @@ export default function HomePage() {
       <div className="container">
         <section>
           {!hasRoutine ? (
-            <div className="not-routine">루틴을 추가하세요</div>
+            <ul className="not-routine">
+              <li className="routine">
+                <div className="icon">
+                  <Plus size={32} strokeWidth="1.5" />
+                </div>
+                <div className="info">
+                  <p className="title">루틴을 등록해주세요</p>
+                </div>
+              </li>
+            </ul>
           ) : (
             <ul className="routine-list">
               <li className="routine">
-                <div className="icon"></div>
+                <div className="icon">
+                  <Dumbbell size={32} strokeWidth="1.5" />
+                </div>
                 <div className="info">
-                  <p className="title">루틴01</p>
+                  <p className="title">8월 22일 운동 루틴</p>
                   <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
+                    <span>10개 운동</span>
+                    <span>예상시간 28분</span>
                   </div>
                 </div>
               </li>
               <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
+                <div className="icon">
+                  <Dumbbell size={32} strokeWidth="1.5" />
                 </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
                 <div className="info">
-                  <p className="title">루틴01</p>
+                  <p className="title">8월 23일 운동 루틴</p>
                   <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
-                  </div>
-                </div>
-              </li>
-              <li className="routine">
-                <div className="icon"></div>
-                <div className="info">
-                  <p className="title">루틴01</p>
-                  <div className="detail">
-                    <span>10개운동</span>
-                    <span>예상시간28분</span>
+                    <span>10개 운동</span>
+                    <span>예상시간 28분</span>
                   </div>
                 </div>
               </li>
             </ul>
           )}
 
-          <Stack direction="row" spacing={2}>
-            <Button title="바로운동" color="primary" />
-            <Button title="루틴추가" color="secondary" />
-          </Stack>
+          <div className="btn-wrap">
+            <div className="btn" id="no-routine">
+              바로운동
+            </div>
+            <div className="btn" id="routine-add">
+              루틴추가
+            </div>
+          </div>
         </section>
       </div>
 
