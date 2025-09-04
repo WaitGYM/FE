@@ -2,6 +2,7 @@
 
 @use "base/reset";
 @use "base/base";
+@use "base/font";
 
 @use "layout/header";
 @use "layout/footer";
@@ -10,5 +11,3 @@
 @use "components/equipment";
 
 @use "pages/home";
-
-// @use "global";

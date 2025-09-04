@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("@/assets/fonts/pretendard/PretendardVariable.woff2") format("woff2");
+  font-weight: 100 900; // 가변 폰트 범위
+  font-style: normal;
+  font-display: swap; // 웹폰트 로딩 지연 시 시스템 폰트를 먼저 보여주는 설정
+}

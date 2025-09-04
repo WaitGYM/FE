@@ -1,10 +1,28 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import AppRoutes from "./routes/AppRoutes.tsx";
+import { createTheme, ThemeProvider } from "@mui/material";
 import "./styles/sass/main.scss";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      "Pretendard",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppRoutes />
+    <ThemeProvider theme={theme}>
+      <AppRoutes />
+    </ThemeProvider>
   </StrictMode>
 );
