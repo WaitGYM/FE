@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyleSheet, BackHandler, Platform, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 
 const LOCAL_ADDRESS = process.env.EXPO_PUBLIC_LOCAL_ADDRES;
@@ -76,29 +76,33 @@ export default function App() {
   }, [canGoBack, isWebModalOpen]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webViewRef}
-        source={{ uri: `http://${LOCAL_ADDRESS}:5173` }}
-        style={styles.webview}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        startInLoadingState={true}
-        scalesPageToFit={true}
-        originWhitelist={["*"]}
-        allowsBackForwardNavigationGestures={true}
-        // iOS 전용 설정
-        automaticallyAdjustContentInsets={false}
-        contentInsetAdjustmentBehavior="never"
-        scrollEnabled={false}
-        bounces={false}
-        // 추가 iOS 최적화
-        allowsInlineMediaPlayback={true}
-        mediaPlaybackRequiresUserAction={false}
-        onMessage={handleMessage}
-        onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
-      />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <WebView
+          ref={webViewRef}
+          source={{ uri: `http://${LOCAL_ADDRESS}:5173` }}
+          style={styles.webview}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          startInLoadingState={true}
+          scalesPageToFit={true}
+          originWhitelist={["*"]}
+          allowsBackForwardNavigationGestures={true}
+          // iOS 전용 설정
+          automaticallyAdjustContentInsets={false}
+          contentInsetAdjustmentBehavior="never"
+          scrollEnabled={false}
+          bounces={false}
+          // 추가 iOS 최적화
+          allowsInlineMediaPlayback={true}
+          mediaPlaybackRequiresUserAction={false}
+          onMessage={handleMessage}
+          onNavigationStateChange={(navState) =>
+            setCanGoBack(navState.canGoBack)
+          }
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -107,7 +111,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#293241",
     // iOS에서 추가 안전 영역 확보
-    paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight,
+    // paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight,
   },
-  webview: { flex: 1, backgroundColor: "#293241", margin: 0, padding: 0 },
+  webview: {
+    flex: 1,
+    backgroundColor: "#293241",
+    margin: 0,
+    padding: 0,
+  },
 });
