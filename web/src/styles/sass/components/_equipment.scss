@@ -1,14 +1,14 @@
 @use "@styles/variables" as *;
 
 .equipment {
-  padding: 1em;
+  padding: 0.5em;
   display: flex;
   align-items: center;
 
   img {
-    width: 4em;
+    flex: 0 0 4em;
     height: 4em;
-    background-color: rgba(81, 78, 83, 0.5);
+    background-color: #272c34;
     border-radius: 0.4rem;
   }
 
@@ -31,6 +31,26 @@
 
       &.waiting {
         color: $c-point-orange;
+
+        span:not(:last-child)::after {
+          background-color: $c-point-orange;
+        }
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child)::after {
+          content: "";
+          display: inline-block;
+          width: 0.25rem;
+          height: 0.25rem;
+          border-radius: 50%;
+          background-color: $c-sub-white;
+          opacity: 0.5;
+          margin: 0 0.5rem;
+        }
       }
     }
   }

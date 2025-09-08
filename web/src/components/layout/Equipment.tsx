@@ -1,22 +1,16 @@
-type EquipmentProps = {
-  name: string;
-  imgSrc: string;
-  waitingTime: string;
-  waitingCount: number;
-  isFavorite: boolean;
-};
+import type { Equipment } from "@types";
 
 export default function Equipment({
   name = "힙어브덕션",
   imgSrc,
-  waitingTime = "40분",
+  waitingTime = 40,
   waitingCount = 2,
   isFavorite = true,
-}: EquipmentProps) {
+}: Equipment) {
   return (
     <>
       <div className="equipment">
-        <img src={imgSrc} alt="equipment image" />
+        <img src={imgSrc} />
         <div className="info">
           <div>
             <span className="name">{name}</span>
@@ -24,10 +18,11 @@ export default function Equipment({
           </div>
           {waitingTime ? (
             <div className={`status ${waitingTime ? "waiting" : null}`}>
-              대기 {waitingTime} - {waitingCount}명
+              <span>대기 {waitingTime}분</span>
+              <span>{waitingCount}명</span>
             </div>
           ) : (
-            <div>사용가능</div>
+            <div>이용가능</div>
           )}
         </div>
       </div>
