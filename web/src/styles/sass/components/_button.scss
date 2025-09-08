@@ -4,6 +4,12 @@
   display: flex;
   justify-content: center;
   gap: 0.375rem;
+  
+  width: calc(100% - 3rem);
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
 
   .btn {
     display: flex;
@@ -17,11 +23,11 @@
     font-weight: 600;
     line-height: 140%;
 
-    &#no-routine {
+    &.btn-orange {
       background: $c-primary-blue;
       color: $c-sub-white;
     }
-    &#routine-add {
+    &.btn-blue {
       background: $c-point-orange;
       color: $c-sub-white;
     }
