@@ -31,10 +31,13 @@
 
       &.waiting {
         color: $c-point-orange;
+      }
 
-        span:not(:last-child)::after {
-          background-color: $c-point-orange;
-        }
+      &.available {
+        color: $c-primary-blue-light;
+      }
+      & span:not(:last-child)::after {
+        background-color: $c-point-orange;
       }
 
       span {

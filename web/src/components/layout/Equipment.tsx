@@ -22,7 +22,9 @@ export default function Equipment({
               <span>{waitingCount}명</span>
             </div>
           ) : (
-            <div>이용가능</div>
+            <div className="status available">
+              <span>이용가능</span>
+            </div>
           )}
         </div>
       </div>

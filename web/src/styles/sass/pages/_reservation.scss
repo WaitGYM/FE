@@ -1,39 +1,26 @@
 @use "@styles/variables" as *;
 
 .reservation-page {
-  height: 100%;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 
+  .content-scroll {
+    height: 100%;
+    overflow-y: scroll;
+    padding-bottom: calc(3rem + 3rem);
+  }
   section {
-    padding-top: 1rem;
+    padding: 0 1.5rem;
 
     .search-bar {
       height: 3rem;
 
       input[type="search"] {
-        background-color: #6b6b7e;
+        background-color: $c-primary-blue-dark-light;
       }
-    }
-
-    .category-wrap {
-      margin-top: 1rem;
-      height: 2rem;
-      display: flex;
-      overflow-x: scroll;
-
-      button {
-        flex: 0 0 auto;
-        height: 2rem;
-        padding: 0.5rem;
+      input[type="search"]::placeholder {
         color: $c-sub-white;
-        background-color: #6b6b7e;
-        border-radius: 0.5rem;
-        font-size: 0.875rem;
-        display: flex;
-        align-items: center;
-
-        & + button {
-          margin-left: 0.5rem;
-        }
       }
     }
 
@@ -49,16 +36,39 @@
 
       li {
         border-radius: 0.4rem;
+        cursor: pointer;
 
         &.selected {
-          background-color: $c-primary-blue;
+          background-color: $c-primary-blue-dark-light;
         }
       }
     }
   }
 
-  .btn.bottom-fix {
-    position: fixed;
-    bottom: 1.5rem;
+  .category-wrap {
+    padding: 0 1.5rem;
+    margin-top: 1rem;
+    height: 2rem;
+    display: flex;
+    overflow-x: scroll;
+
+    button {
+      flex: 0 0 auto;
+      height: 2rem;
+      padding: 0.5rem;
+      color: $c-sub-white;
+      background-color: $c-primary-blue-dark-light;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+
+      & + button {
+        margin-left: 0.5rem;
+      }
+      &.active {
+        background-color: $c-primary-blue;
+      }
+    }
   }
 }

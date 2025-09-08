@@ -6,7 +6,7 @@
   gap: 0.375rem;
 
   width: calc(100% - 3rem);
-  position: fixed;
+  position: absolute;
   left: 50%;
   bottom: 1.5rem;
   transform: translateX(-50%);
@@ -25,11 +25,11 @@
   line-height: 140%;
 
   &.btn-orange {
-    background: $c-primary-blue;
+    background: $c-point-orange;
     color: $c-sub-white;
   }
   &.btn-blue {
-    background: $c-point-orange;
+    background: $c-primary-blue;
     color: $c-sub-white;
   }
 
