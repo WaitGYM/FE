@@ -1,9 +1,10 @@
 import Footer from "@comp/layout/Footer";
 import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { usePlanStore } from "@stores/planStore";
 import type { Plan } from "@types";
-import { useEffect } from "react";
 
 export default function HomePage() {
   const { plans, loading, error, getPlans, clearError } = usePlanStore();
@@ -49,7 +50,7 @@ export default function HomePage() {
           ) : (
             <ul className="routine-list">
               {plans.map((plan: Plan) => (
-                <li className="routine">
+                <li className="routine" key={plan.id}>
                   <div className="icon">
                     <Dumbbell size={32} strokeWidth="1.5" />
                   </div>
@@ -73,12 +74,12 @@ export default function HomePage() {
           )}
 
           <div className="btn-wrap">
-            <button className="btn btn-blue" id="no-routine">
+            <Link to="/reservation" className="btn btn-blue" id="no-routine">
               바로운동
-            </button>
-            <button className="btn btn-orange" id="routine-add">
+            </Link>
+            <Link to="/" className="btn btn-orange" id="routine-add">
               루틴추가
-            </button>
+            </Link>
           </div>
         </section>
       </div>

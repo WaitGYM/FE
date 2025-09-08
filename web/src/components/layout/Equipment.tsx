@@ -2,7 +2,7 @@ import type { Equipment } from "@types";
 
 export default function Equipment({
   name = "힙어브덕션",
-  imgSrc,
+  imgSrc = "/equipment_01.png",
   waitingTime = 40,
   waitingCount = 2,
   isFavorite = true,
