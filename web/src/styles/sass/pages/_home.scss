@@ -35,8 +35,7 @@
   }
 
   section {
-    // height: calc(100% - $header-height);
-    // overflow-y: scroll;
+    margin-bottom: calc(3rem + 3rem);
 
     li.routine {
       display: grid;
@@ -46,7 +45,7 @@
       height: 4.75rem;
 
       border-radius: 0.5rem;
-      background-color: rgba($color: $c-sub-white, $alpha: 0.25);
+      background-color: $c-primary-blue-dark-light;
       padding: 1rem 1.5rem;
       color: $c-sub-white;
       cursor: pointer;
@@ -54,7 +53,7 @@
       .icon {
         width: 2rem;
         height: 2rem;
-        // background-color: antiquewhite;
+        color: $c-primary-navy-lightest;
       }
 
       .info {
@@ -95,11 +94,6 @@
     }
   }
   .btn-wrap {
-    width: calc(100% - 3rem);
-    position: fixed;
-    bottom: calc(4.6875rem + 3.125rem);
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: pointer;
+    bottom: calc(4.68rem + 1.5rem);
   }
 }

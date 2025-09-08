@@ -73,12 +73,12 @@ export default function HomePage() {
           )}
 
           <div className="btn-wrap">
-            <div className="btn" id="no-routine">
+            <button className="btn btn-blue" id="no-routine">
               바로운동
-            </div>
-            <div className="btn" id="routine-add">
+            </button>
+            <button className="btn btn-orange" id="routine-add">
               루틴추가
-            </div>
+            </button>
           </div>
         </section>
       </div>
