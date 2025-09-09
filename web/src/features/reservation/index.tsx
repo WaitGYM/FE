@@ -1,13 +1,13 @@
-import { useEffect, useState, type ReactEventHandler } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import { useEquipmentStore } from "@stores/equipmentStore";
-import type { TEquipment } from "@types";
-import Equipment from "@comp/layout/Equipment";
+import { useEquipmentStore } from "../../stores/equipmentStore";
+import type { EquipmentType } from "../../types";
+import Equipment from "../../components/layout/Equipment";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(0);
   const [hasPlan, setHasPlan] = useState(true);
   const { equipmentList, loading, error, getEquipments, clearError } =
     useEquipmentStore();
@@ -53,19 +53,13 @@ export default function ReservationPage() {
               </div>
             ) : null}
             <ul className="equipment-list">
-              {equipmentList.map((equipment: TEquipment) => (
+              {equipmentList.map((equipment: EquipmentType) => (
                 <li
                   key={equipment.id}
                   onClick={() => setSelectedId(equipment.id)}
                   className={selectedId === equipment.id ? "selected" : ""}
                 >
-                  <Equipment
-                    name={equipment.name}
-                    isFavorite={equipment.isFavorite}
-                    imgSrc={equipment.imgSrc}
-                    waitingTime={equipment.waitingTime}
-                    waitingCount={equipment.waitingCount}
-                  />
+                  <Equipment {...equipment} />
                 </li>
               ))}
             </ul>

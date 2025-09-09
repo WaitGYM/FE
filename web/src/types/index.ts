@@ -1,3 +1,3 @@
-export type { Movie } from "./movie"; // 테스트용입니다. 추후 삭제
-export type { Equipment } from "./equipment";
-export type { Plan } from "./plan";
+export type { EquipmentType } from "./equipment";
+export type { PlanType } from "./plan";
+export type { WorkoutModeType } from "./UI";

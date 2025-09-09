@@ -1,10 +1,10 @@
 import axios from "axios";
-import type { Plan } from "@types";
+import type { PlanType } from "../../types";
 
 const API_BASE = "https://nomad-movies.nomadcoders.workers.dev";
 
 export const planApi = {
-  getPlans: () => axios.get<Plan[]>(`${API_BASE}/api/plan`),
+  getPlans: () => axios.get<PlanType[]>(`${API_BASE}/api/plan`),
   // createPlan: (plan: Omit<Plan, "id">) =>
   //   axios.post<Plan>(`${API_BASE}/api/plan`, plan),
   // updatePlan: (id: number, plan: Omit<Plan, "id">) =>

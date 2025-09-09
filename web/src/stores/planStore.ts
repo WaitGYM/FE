@@ -1,9 +1,9 @@
 import { create } from "zustand";
 // import { planApi } from "@apis";
-import type { Plan } from "@types";
+import type { PlanType } from "../types";
 
-interface PlanStore {
-  plans: Plan[];
+interface PlanStoreType {
+  plans: PlanType[];
   loading: boolean;
   error: string | null;
 
@@ -22,48 +22,49 @@ function getTempData(): Promise<string> {
       resolve({
         data: [
           {
+            id: 1,
             name: "8월 22일 루틴",
             isActive: false,
             equipmentNum: 10,
             duration: 156,
           },
           {
+            id: 2,
             name: "하체 루틴",
             isActive: false,
             equipmentNum: 5,
             duration: 46,
           },
           {
+            id: 3,
             name: "상체 루틴",
             isActive: false,
             equipmentNum: 7,
             duration: 46,
           },
           {
+            id: 4,
             name: "루틴04444444",
             isActive: false,
             equipmentNum: 8,
             duration: 66,
           },
           {
+            id: 5,
             name: "8월 22일 루틴",
             isActive: false,
             equipmentNum: 10,
             duration: 156,
           },
           {
+            id: 6,
             name: "루틴0222222",
             isActive: false,
             equipmentNum: 5,
             duration: 46,
           },
           {
-            name: "루틴0",
-            isActive: false,
-            equipmentNum: 7,
-            duration: 46,
-          },
-          {
+            id: 10,
             name: "루틴 끝",
             isActive: false,
             equipmentNum: 8,
@@ -75,7 +76,7 @@ function getTempData(): Promise<string> {
   });
 }
 
-export const usePlanStore = create<PlanStore>((set, get) => ({
+export const usePlanStore = create<PlanStoreType>((set, get) => ({
   plans: [],
   loading: false,
   error: null,

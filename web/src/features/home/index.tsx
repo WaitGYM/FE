@@ -1,10 +1,10 @@
-import Footer from "@comp/layout/Footer";
+import Footer from "../../components/layout/Footer";
 import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { usePlanStore } from "@stores/planStore";
-import type { Plan } from "@types";
+import { usePlanStore } from "../../stores/planStore";
+import type { PlanType } from "../../types";
 
 export default function HomePage() {
   const { plans, loading, error, getPlans, clearError } = usePlanStore();
@@ -49,7 +49,7 @@ export default function HomePage() {
               </ul>
             ) : (
               <ul className="routine-list">
-                {plans.map((plan: Plan) => (
+                {plans.map((plan: PlanType) => (
                   <li className="routine" key={plan.id}>
                     <div className="icon">
                       <Dumbbell size={32} strokeWidth="1.5" />

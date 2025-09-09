@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { equipmentApi } from "@apis";
-import type { Equipment } from "@types";
+import { equipmentApi } from "../services";
+import type { EquipmentType } from "../types";
 
-interface EquipmentStore {
-  equipmentList: Equipment[];
+interface EquipmentStoreType {
+  equipmentList: EquipmentType[];
   loading: boolean;
   error: string | null;
 
@@ -11,7 +11,7 @@ interface EquipmentStore {
   clearError: () => void;
 }
 
-export const useEquipmentStore = create<EquipmentStore>((set, get) => ({
+export const useEquipmentStore = create<EquipmentStoreType>((set, get) => ({
   equipmentList: [],
   loading: false,
   error: null,

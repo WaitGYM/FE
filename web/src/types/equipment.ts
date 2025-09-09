@@ -1,4 +1,4 @@
-export type Equipment = {
+export type EquipmentType = {
   id: number;
   name: string;
   isFavorite: boolean;

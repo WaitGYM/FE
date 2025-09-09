@@ -1,4 +1,4 @@
-import type { Equipment } from "@types";
+import type { EquipmentType } from "../../types";
 import { Star, StarOff } from "lucide-react";
 
 export default function Equipment({
@@ -7,7 +7,7 @@ export default function Equipment({
   waitingTime = 40,
   waitingCount = 2,
   isFavorite = true,
-}: Equipment) {
+}: EquipmentType) {
   return (
     <>
       <div className="equipment">
