@@ -5,8 +5,12 @@
 .home-page {
   height: 100%;
 
+  .content-scroll {
+    padding-bottom: 4.68rem;
+  }
   header {
     height: auto;
+    padding: 2.75rem 1.5rem 0;
 
     .header-top {
       display: flex;
@@ -34,9 +38,10 @@
     }
   }
 
+  .container {
+    padding: 0 1.5rem calc(4.68rem + 1.5rem);
+  }
   section {
-    margin-bottom: calc(3rem + 3rem);
-
     li.routine {
       display: grid;
       grid-template-columns: 2rem 1fr;

@@ -1,4 +1,5 @@
 import type { Equipment } from "@types";
+import { Star, StarOff } from "lucide-react";
 
 export default function Equipment({
   name = "힙어브덕션",
@@ -12,9 +13,15 @@ export default function Equipment({
       <div className="equipment">
         <img src={imgSrc} />
         <div className="info">
-          <div>
+          <div className="title">
             <span className="name">{name}</span>
-            <div className="favorite">{isFavorite ? "🌟" : "⭐"}</div>
+            <div className="favorite">
+              {isFavorite ? (
+                <Star size={18} strokeWidth="2" />
+              ) : (
+                <StarOff size={18} strokeWidth="2" />
+              )}
+            </div>
           </div>
           {waitingTime ? (
             <div className={`status ${waitingTime ? "waiting" : null}`}>
