@@ -1,0 +1,52 @@
+@use "@styles/variables" as *;
+
+.login-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    text-align: center;
+    .text-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      h6 {
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+      }
+      .logo {
+        width: 9.38rem;
+        height: 2rem;
+      }
+    }
+  }
+  .btn-white {
+    background: $c-sub-white;
+    color: $c-primary-blue-dark;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+
+    .icon-google {
+      width: 1.125rem;
+      height: 1.125rem;
+      aspect-ratio: 1/1;
+    }
+  }
+}
