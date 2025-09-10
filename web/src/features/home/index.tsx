@@ -1,17 +1,27 @@
 import Footer from "../../components/layout/Footer";
 import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { usePlanStore } from "../../stores/planStore";
 import type { PlanType } from "../../types";
+import { useUIStore } from "../../stores/UIStore";
+import type { WorkoutModeType } from "../../types";
 
 export default function HomePage() {
-  const { plans, loading, error, getPlans, clearError } = usePlanStore();
+  const navigate = useNavigate();
+  const { planList, loading, error, getPlanList, clearError } = usePlanStore();
+  const { setWorkoutMode, setPlanId } = useUIStore();
 
   useEffect(() => {
-    getPlans();
-  }, [getPlans]);
+    getPlanList();
+  }, [getPlanList]);
+
+  function handleWorkoutMode(mode: WorkoutModeType, selectedPlanId?: number) {
+    if (mode === "plan" && selectedPlanId) setPlanId(selectedPlanId);
+    setWorkoutMode(mode);
+    navigate("/reservation");
+  }
 
   return (
     <div className="home-page">
@@ -36,7 +46,7 @@ export default function HomePage() {
           <section>
             {loading ? (
               <div>로딩 중...</div>
-            ) : !plans || plans.length < 1 ? (
+            ) : !planList || planList.length < 1 ? (
               <ul className="not-routine">
                 <li className="routine">
                   <div className="icon">
@@ -49,8 +59,12 @@ export default function HomePage() {
               </ul>
             ) : (
               <ul className="routine-list">
-                {plans.map((plan: PlanType) => (
-                  <li className="routine" key={plan.id}>
+                {planList.map((plan: PlanType) => (
+                  <li
+                    className="routine"
+                    key={plan.id}
+                    onClick={() => handleWorkoutMode("plan", plan.id)}
+                  >
                     <div className="icon">
                       <Dumbbell size={32} strokeWidth="1.5" />
                     </div>
@@ -77,12 +91,20 @@ export default function HomePage() {
       </div>
 
       <div className="btn-wrap">
-        <Link to="/reservation" className="btn btn-blue" id="no-routine">
+        <button
+          onClick={() => handleWorkoutMode("direct")}
+          className="btn btn-blue"
+          id="no-routine"
+        >
           바로운동
-        </Link>
-        <Link to="/" className="btn btn-orange" id="routine-add">
+        </button>
+        <button
+          onClick={() => handleWorkoutMode("addPlan")}
+          className="btn btn-orange"
+          id="routine-add"
+        >
           루틴추가
-        </Link>
+        </button>
       </div>
       <Footer />
     </div>

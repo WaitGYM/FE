@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import type { EquipmentType } from "../../types";
 import Equipment from "../../components/layout/Equipment";
+import { useUIStore } from "../../stores/UIStore";
+import { usePlanStore } from "../../stores/planStore";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
@@ -11,10 +13,19 @@ export default function ReservationPage() {
   const [hasPlan, setHasPlan] = useState(true);
   const { equipmentList, loading, error, getEquipments, clearError } =
     useEquipmentStore();
+  const { workoutMode, planId } = useUIStore();
+  const { planDetail, planLoading, getPlanDetail } = usePlanStore();
 
   useEffect(() => {
     getEquipments();
   }, [getEquipments]);
+
+  useEffect(() => {
+    if (planId) {
+      getPlanDetail(planId);
+      console.log("reservation-page", planId, planDetail);
+    }
+  }, [getPlanDetail]);
 
   return (
     <div className="reservation-page">
@@ -24,7 +35,13 @@ export default function ReservationPage() {
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
           <div className="page-title">
-            <h2>바로운동</h2>
+            <h2>
+              {planId && workoutMode === "plan"
+                ? planDetail?.name
+                : workoutMode === "direct"
+                ? "바로운동"
+                : "루틴추가"}
+            </h2>
           </div>
         </header>
 
@@ -44,6 +61,7 @@ export default function ReservationPage() {
           <button>엉덩이</button>
           <button>복근</button>
         </div>
+
         <section className="container">
           <div className="equipment-wrap">
             {hasPlan ? (

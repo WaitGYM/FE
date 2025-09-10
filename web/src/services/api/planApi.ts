@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { PlanType } from "../../types";
 
-const API_BASE = "https://nomad-movies.nomadcoders.workers.dev";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export const planApi = {
   getPlans: () => axios.get<PlanType[]>(`${API_BASE}/api/plan`),

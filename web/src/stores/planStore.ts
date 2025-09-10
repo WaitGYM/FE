@@ -1,74 +1,41 @@
 import { create } from "zustand";
 // import { planApi } from "@apis";
-import type { PlanType } from "../types";
+import type { PlanType, PlanDetailType } from "../types";
 
 interface PlanStoreType {
-  plans: PlanType[];
-  loading: boolean;
-  error: string | null;
+  planList: PlanType[];
+  planDetail: PlanDetailType | null;
+  planLoading: boolean;
+  planError: string | null;
 
   // Actions
-  getPlans: () => Promise<void>;
+  getPlanList: () => Promise<void>;
+  getPlanDetail: (id: number) => Promise<void>;
   // createPlan: (plan: Omit<Plan, "id">) => Promise<void>;
   // updatePlan: (id: number, plan: Omit<Plan, "id">) => Promise<void>;
   // deletePlan: (id: number) => Promise<void>;
   clearError: () => void;
 }
 
-// 로딩, 에러, 임시데이터 확인용
-function getTempData(): Promise<string> {
+// 루틴 리스트 로딩, 에러, 임시데이터 확인용
+function getPlanListTempData(): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         data: [
           {
-            id: 1,
+            id: 211,
             name: "8월 22일 루틴",
             isActive: false,
             equipmentNum: 10,
             duration: 156,
           },
           {
-            id: 2,
+            id: 212,
             name: "하체 루틴",
             isActive: false,
             equipmentNum: 5,
             duration: 46,
-          },
-          {
-            id: 3,
-            name: "상체 루틴",
-            isActive: false,
-            equipmentNum: 7,
-            duration: 46,
-          },
-          {
-            id: 4,
-            name: "루틴04444444",
-            isActive: false,
-            equipmentNum: 8,
-            duration: 66,
-          },
-          {
-            id: 5,
-            name: "8월 22일 루틴",
-            isActive: false,
-            equipmentNum: 10,
-            duration: 156,
-          },
-          {
-            id: 6,
-            name: "루틴0222222",
-            isActive: false,
-            equipmentNum: 5,
-            duration: 46,
-          },
-          {
-            id: 10,
-            name: "루틴 끝",
-            isActive: false,
-            equipmentNum: 8,
-            duration: 66,
           },
         ],
       });
@@ -76,21 +43,171 @@ function getTempData(): Promise<string> {
   });
 }
 
-export const usePlanStore = create<PlanStoreType>((set, get) => ({
-  plans: [],
-  loading: false,
-  error: null,
+// 루틴 로딩, 에러, 임시데이터 확인용
+function getPlanTempData(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          {
+            id: 211,
+            name: "8월 22일 루틴",
+            equipmentList: [
+              {
+                id: 3,
+                name: "머신3",
+                isFavorite: true,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 2,
+                name: "머신2",
+                isFavorite: true,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 1,
+                name: "머신1",
+                isFavorite: true,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 10,
+                name: "머신10",
+                isFavorite: false,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 7,
+                name: "머신7",
+                isFavorite: false,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 6,
+                name: "머신6",
+                isFavorite: false,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+            ],
+          },
+          {
+            id: 212,
+            name: "하체 루틴",
+            equipmentList: [
+              {
+                id: 3,
+                name: "머신3",
+                isFavorite: true,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 2,
+                name: "머신2",
+                isFavorite: true,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 1,
+                name: "머신1",
+                isFavorite: true,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 10,
+                name: "머신10",
+                isFavorite: false,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 7,
+                name: "머신7",
+                isFavorite: false,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+              {
+                id: 6,
+                name: "머신6",
+                isFavorite: false,
+                imgSrc: "",
+                waitingTime: 0,
+                waitingCount: 0,
+                bodyPart: "엉덩이",
+              },
+            ],
+          },
+        ],
+      });
+    }, 1000);
+  });
+}
 
-  getPlans: async () => {
+export const usePlanStore = create<PlanStoreType>((set, get) => ({
+  planList: [],
+  planDetail: null,
+  planLoading: false,
+  planError: null,
+
+  getPlanList: async () => {
     set({ loading: true, error: null });
     try {
-      // const response = await planApi.getPlans();
-      const response = await getTempData();
-      set({ plans: response.data, loading: false });
+      // const response = await planApi.getPlanList();
+      const response = await getPlanListTempData();
+      set({ planList: response.data, loading: false });
     } catch (error) {
       set({
         error: "루틴 목록을 불러오는데 실패했습니다.",
         loading: false,
+      });
+    }
+  },
+
+  getPlanDetail: async (id) => {
+    set({ planLoading: true, planError: null });
+    try {
+      // const response = await planApi.getPlan();
+      const response = await getPlanTempData();
+      set({
+        planDetail: response?.data?.find((x: PlanDetailType) => x.id === id),
+        planLoading: false,
+      });
+    } catch (error) {
+      set({
+        planError: "루틴을 불러오는데 실패했습니다.",
+        planLoading: false,
       });
     }
   },
@@ -145,5 +262,5 @@ export const usePlanStore = create<PlanStoreType>((set, get) => ({
   //   }
   // },
 
-  clearError: () => set({ error: null }),
+  clearError: () => set({ planError: null }),
 }));
