@@ -1,0 +1,28 @@
+@use "sass:map";
+@use "@styles/variables" as *;
+
+.push-msg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 map.get($spacing, 6);
+  width: 100%;
+
+  .msg {
+    border-radius: 0.5rem;
+    border: 1px solid $c-sub-gray;
+    padding: 1rem;
+
+    background: $c-primary-blue-dark-modal;
+    color: $c-sub-white;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+
+    .waiting-user {
+      font-weight: 700;
+      color: $c-point-orange;
+    }
+  }
+}

@@ -7,10 +7,12 @@ import { usePlanStore } from "../../stores/planStore";
 import type { PlanType } from "../../types";
 import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { planList, loading, error, getPlanList, clearError } = usePlanStore();
+  const { planList, planLoading, planError, getPlanList, clearError } =
+    usePlanStore();
   const { setWorkoutMode, setPlanId } = useUIStore();
 
   useEffect(() => {
@@ -44,8 +46,32 @@ export default function HomePage() {
         </header>
         <div className="container">
           <section>
-            {loading ? (
+            {planLoading ? (
               <div>로딩 중...</div>
+            ) : !planList || planList.length < 1 ? (
+              <ul className="routine-list">
+                {Array.from(new Array(3)).map((_, index) => (
+                  <li className="routine" key={index}>
+                    <div className="icon">
+                      <Skeleton
+                        variant="rounded"
+                        width={32}
+                        height={32}
+                        animation="wave"
+                      />
+                    </div>
+                    <div className="info">
+                      <Skeleton
+                        variant="text"
+                        width="70%"
+                        style={{ marginBottom: "0.5" }}
+                        animation="wave"
+                      />
+                      <Skeleton variant="text" width="90%" animation="wave" />
+                    </div>
+                  </li>
+                ))}
+              </ul>
             ) : !planList || planList.length < 1 ? (
               <ul className="not-routine">
                 <li className="routine">
@@ -80,9 +106,9 @@ export default function HomePage() {
               </ul>
             )}
 
-            {error && (
+            {planError && (
               <div>
-                {error}
+                {planError}
                 <button onClick={clearError}>×</button>
               </div>
             )}

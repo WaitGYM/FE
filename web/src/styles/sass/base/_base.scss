@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "@styles/variables" as *;
 
 body {
@@ -25,7 +26,7 @@ button {
 input {
   width: 100%;
   background: none;
-  border: none !important;
+  border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   color: $c-sub-white;
@@ -35,6 +36,13 @@ input[type="search"] {
   height: 3rem;
 }
 
+button {
+  box-shadow: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .container {
   padding: 0 1.5rem 4.6875rem;
 }
@@ -42,5 +50,5 @@ input[type="search"] {
 .content-scroll {
   height: 100%;
   overflow-y: scroll;
-  padding-bottom: calc(3rem + 3rem);
+  padding-bottom: map.get($spacing, 24);
 }

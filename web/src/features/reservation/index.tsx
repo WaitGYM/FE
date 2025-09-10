@@ -6,6 +6,7 @@ import type { EquipmentType } from "../../types";
 import Equipment from "../../components/layout/Equipment";
 import { useUIStore } from "../../stores/UIStore";
 import { usePlanStore } from "../../stores/planStore";
+import Switch from "@mui/material/Switch";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
@@ -26,22 +27,25 @@ export default function ReservationPage() {
       console.log("reservation-page", planId, planDetail);
     }
   }, [getPlanDetail]);
+  const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
 
   return (
     <div className="reservation-page">
       <div className="content-scroll">
-        <header className="h-52">
-          <button className="btn btn-icon" onClick={() => navigate(-1)}>
-            <ChevronLeft size={24} strokeWidth="2" />
-          </button>
-          <div className="page-title">
-            <h2>
-              {planId && workoutMode === "plan"
-                ? planDetail?.name
-                : workoutMode === "direct"
-                ? "바로운동"
-                : "루틴추가"}
-            </h2>
+        <header>
+          <div className="header-top">
+            <button className="btn btn-icon" onClick={() => navigate(-1)}>
+              <ChevronLeft size={24} strokeWidth="2" />
+            </button>
+            <div className="page-title">
+              <h2>
+                {planId && workoutMode === "plan"
+                  ? planDetail?.name
+                  : workoutMode === "direct"
+                  ? "바로운동"
+                  : "루틴추가"}
+              </h2>{" "}
+            </div>
           </div>
         </header>
 
@@ -66,8 +70,19 @@ export default function ReservationPage() {
           <div className="equipment-wrap">
             {hasPlan ? (
               <div className="top">
-                <span>선택한 운동</span>
-                <div>자동제안</div>
+                <div className="total-select">
+                  <span>선택한 운동</span>
+                  <span>N개</span>
+                </div>
+                <div className="auto-suggest">
+                  <span>자동제안</span>
+                  <Switch
+                    {...label}
+                    defaultChecked
+                    size="small"
+                    color="warning"
+                  />
+                </div>
               </div>
             ) : null}
             <ul className="equipment-list">

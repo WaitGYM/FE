@@ -7,10 +7,12 @@
 @use "layout/header";
 @use "layout/footer";
 
+@use "components/pushmsg";
 @use "components/button";
 @use "components/equipment";
 
 @use "pages/home";
 @use "pages/login";
 @use "pages/reservation";
+
 @use "pages/workout";
