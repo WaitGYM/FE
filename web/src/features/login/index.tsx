@@ -2,6 +2,11 @@ import logo from "@img/logo.svg"; //이미지로고
 import googleLogo from "@img/icon-google.svg"; //이미지로고
 
 export default function Login() {
+  function handleLogin() {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL;
+    window.location.href = `${API_BASE}/api/auth/google`;
+  }
+
   return (
     <div className="login-page">
       <div className="container">
@@ -13,7 +18,7 @@ export default function Login() {
           </h6>
           <img src={logo} className="logo" alt="logo" />
         </div>
-        <button className="btn btn-white">
+        <button onClick={handleLogin} className="btn btn-white">
           <img src={googleLogo} className="icon-google" alt="google-logo" />
           구글아이디로 로그인
         </button>
