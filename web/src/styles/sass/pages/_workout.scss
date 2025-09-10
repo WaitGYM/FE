@@ -1,5 +1,92 @@
+@use "sass:map";
 @use "@styles/variables" as *;
 
+// 예약중, 운동중
+.workout-page {
+  height: 100%;
+
+  .header-top {
+    display: flex;
+    padding: 0 map.get($spacing, 6);
+
+    .btn-side {
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 500;
+      color: $c-sub-gray;
+    }
+  }
+  &#booking .header-top {
+    justify-content: space-between;
+  }
+  &#exercising .header-top {
+    justify-content: flex-end;
+  }
+  .container {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 map.get($spacing, 6);
+    position: relative;
+
+    .text-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+
+      h6 {
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+      }
+      h1 {
+        font-size: 3.75rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+      }
+      p {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+      }
+    }
+  }
+  &#booking .text-wrap {
+    h1 {
+      color: $c-point-orange;
+    }
+    p {
+      .waiting-user {
+        color: $c-point-orange;
+      }
+    }
+  }
+  &#exercising .text-wrap {
+    h1 {
+      color: $c-primary-blue-light;
+    }
+    p {
+      .lucide-circle {
+        color: $c-sub-gray;
+      }
+      .lucide-circle-check {
+        color: $c-primary-blue-light;
+      }
+    }
+  }
+}
+
+// 운동완료
 .workout-complete-page {
   display: flex;
   flex-direction: column;

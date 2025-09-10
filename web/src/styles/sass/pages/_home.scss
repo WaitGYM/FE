@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "@styles/variables" as *;
 
 // $header-height: ;
@@ -10,36 +11,29 @@
   }
   header {
     height: auto;
-    padding: 2.75rem 1.5rem 0;
+    padding: 0 map.get($spacing, 6);
 
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 3.43rem;
+    .logo {
+      width: 6.53rem;
+      height: 1.39rem;
 
-      .logo {
-        width: 6.53rem;
-        height: 1.39rem;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
-    }
-
-    .greeting {
-      font-size: 1.12rem;
-      margin: 1.5rem 0;
-      line-height: 1.57rem;
-      font-weight: 500;
     }
   }
 
+  .greeting {
+    font-size: 1.12rem;
+    margin: map.get($spacing, 6) 0;
+    line-height: 1.57rem;
+    font-weight: 500;
+  }
+
   .container {
-    padding: 0 1.5rem calc(4.68rem + 1.5rem);
+    padding: 0 map.get($spacing, 6) calc(4.68rem + map.get($spacing, 6));
   }
   section {
     li.routine {

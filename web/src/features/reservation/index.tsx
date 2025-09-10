@@ -19,12 +19,14 @@ export default function ReservationPage() {
   return (
     <div className="reservation-page">
       <div className="content-scroll">
-        <header className="h-52">
-          <button className="btn btn-icon" onClick={() => navigate(-1)}>
-            <ChevronLeft size={24} strokeWidth="2" />
-          </button>
-          <div className="page-title">
-            <h2>바로운동</h2>
+        <header>
+          <div className="header-top">
+            <button className="btn btn-icon" onClick={() => navigate(-1)}>
+              <ChevronLeft size={24} strokeWidth="2" />
+            </button>
+            <div className="page-title">
+              <h2>바로운동</h2>
+            </div>
           </div>
         </header>
 

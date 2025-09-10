@@ -13,22 +13,21 @@ footer {
   border-top: 1px solid $c-primary-blue;
   background: $c-primary-blue-dark;
 
-  & > div {
+  .nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 4px;
-    opacity: 0.5;
+    color: $c-sub-gray;
     cursor: pointer;
 
     &.on {
-      opacity: 1;
+      color: $c-sub-white;
     }
 
     & > p {
       font-size: 0.75rem;
-      color: $c-sub-white;
     }
   }
 }
