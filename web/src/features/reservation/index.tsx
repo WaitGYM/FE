@@ -4,6 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import type { EquipmentType } from "../../types";
 import Equipment from "../../components/layout/Equipment";
+import Switch from "@mui/material/Switch";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ export default function ReservationPage() {
   useEffect(() => {
     getEquipments();
   }, [getEquipments]);
+
+  const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
 
   return (
     <div className="reservation-page">
@@ -50,8 +53,19 @@ export default function ReservationPage() {
           <div className="equipment-wrap">
             {hasPlan ? (
               <div className="top">
-                <span>선택한 운동</span>
-                <div>자동제안</div>
+                <div className="total-select">
+                  <span>선택한 운동</span>
+                  <span>N개</span>
+                </div>
+                <div className="auto-suggest">
+                  <span>자동제안</span>
+                  <Switch
+                    {...label}
+                    defaultChecked
+                    size="small"
+                    color="warning"
+                  />
+                </div>
               </div>
             ) : null}
             <ul className="equipment-list">

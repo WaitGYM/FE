@@ -25,8 +25,18 @@
       .top {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         font-size: 0.75rem;
         margin-bottom: 1rem;
+
+        .total-select,
+        .auto-suggest {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          color: $c-sub-white;
+          font-weight: 500;
+        }
       }
 
       li {
