@@ -26,6 +26,7 @@ export default function Equipment({
           {waitingTime ? (
             <div className={`status ${waitingTime ? "waiting" : null}`}>
               <span>대기 {waitingTime}분</span>
+              <span className="dot"></span>
               <span>{waitingCount}명</span>
             </div>
           ) : (

@@ -38,6 +38,10 @@
     background: $c-primary-blue;
     color: $c-sub-white;
   }
+  &.btn-gray {
+    background: $c-sub-gray;
+    color: $c-sub-white;
+  }
 
   &-icon {
     width: 2.75rem;

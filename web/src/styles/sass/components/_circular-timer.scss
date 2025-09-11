@@ -1,0 +1,68 @@
+@use "../variables" as *;
+
+.circular-timer {
+  position: relative;
+  display: inline-flex;
+  width: 17rem;
+  height: 17rem;
+
+  .MuiCircularProgress-root {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .track {
+    color: $c-primary-blue; // 트랙 색상
+  }
+
+  .progress {
+    color: $c-point-orange; // 진행률 색상
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    transform: rotate(90deg) scaleX(-1) !important;
+  }
+
+  &__text-box {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .text-wrap {
+      h6 {
+        color: $c-sub-white;
+      }
+
+      h1 {
+        color: $c-point-orange;
+      }
+    }
+  }
+}
+
+#workout-reservation {
+  .circular-timer {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 6rem;
+
+    width: 4.375rem;
+    height: 4.375rem;
+    aspect-ratio: 1/1;
+    .text-wrap {
+      h6 {
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      h1 {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+    }
+  }
+}

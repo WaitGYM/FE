@@ -2,12 +2,13 @@
 
 .equipment {
   padding: 0.5em;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
 
   img {
     flex: 0 0 4em;
-    height: 4em;
+    height: 3rem;
     background-color: #272c34;
     border-radius: 0.4rem;
   }
@@ -32,6 +33,9 @@
       margin-top: 0.6em;
       color: $c-primary-blue-light;
 
+      display: flex;
+      gap: 0.5rem;
+
       &.waiting {
         color: $c-point-orange;
       }
@@ -43,19 +47,35 @@
         background-color: $c-point-orange;
       }
 
+      .badge {
+        height: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-around;
+        color: $c-sub-white;
+        font-size: 0.7rem;
+        border-radius: 0.25rem;
+        padding: 0 0.5rem;
+        text-align: center;
+
+        &.waiting {
+          background-color: $c-point-orange;
+        }
+        &.complete {
+          background-color: $c-primary-blue;
+        }
+      }
+
       span {
         display: flex;
         align-items: center;
 
-        &:not(:last-child)::after {
-          content: "";
-          display: inline-block;
+        &.dot {
           width: 0.25rem;
           height: 0.25rem;
           border-radius: 50%;
           background-color: $c-sub-white;
           opacity: 0.5;
-          margin: 0 0.5rem;
         }
       }
     }
