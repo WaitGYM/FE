@@ -182,15 +182,15 @@ export const usePlanStore = create<PlanStoreType>((set, get) => ({
   planError: null,
 
   getPlanList: async () => {
-    set({ loading: true, error: null });
+    set({ planLoading: true, planError: null });
     try {
       // const response = await planApi.getPlanList();
       const response = await getPlanListTempData();
-      set({ planList: response.data, loading: false });
+      set({ planList: response.data, planLoading: false });
     } catch (error) {
       set({
-        error: "루틴 목록을 불러오는데 실패했습니다.",
-        loading: false,
+        planError: "루틴 목록을 불러오는데 실패했습니다.",
+        planLoading: false,
       });
     }
   },

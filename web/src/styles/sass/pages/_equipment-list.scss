@@ -1,6 +1,6 @@
 @use "@styles/variables" as *;
 
-.reservation-page {
+.equipmentList-page {
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -24,7 +24,6 @@
 
       .top {
         display: flex;
-        justify-content: space-between;
         align-items: center;
         font-size: 0.75rem;
         margin-bottom: 1rem;
@@ -36,6 +35,14 @@
           gap: 0.25rem;
           color: $c-sub-white;
           font-weight: 500;
+        }
+
+        .total-select {
+          margin-right: auto;
+        }
+
+        .auto-suggest {
+          margin-left: auto;
         }
       }
 
