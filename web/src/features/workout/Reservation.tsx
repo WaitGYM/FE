@@ -1,23 +1,17 @@
-import * as React from "react";
-
 import type { EquipmentType } from "../../types";
 import CircularTimer from "../../components/ui/CircularTimer";
-
-import Box from "@mui/material/Box";
-import LinearProgress from "@mui/material/LinearProgress";
-import { ChevronLeft, Star, StarOff, Equal } from "lucide-react";
+import { ChevronLeft, Star, Equal } from "lucide-react";
 
 export default function WorkoutReservation({
   name = "힙어브덕션",
   imgSrc = "/equipment_01.png",
   waitingTime = 40,
   waitingCount = 2,
-  isFavorite = true,
 }: EquipmentType) {
   return (
     <div className="reservation-page" id="workout-reservation">
       <div className="content-scroll">
-        <header>
+        <header className="header">
           <div className="header-top">
             <button className="btn btn-icon">
               <ChevronLeft size={24} strokeWidth="2" />

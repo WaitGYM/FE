@@ -1,0 +1,92 @@
+@use "@styles/variables" as *;
+
+// 운동완료
+.workout-complete-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  height: 100%;
+
+  .complete-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+
+    .icon-motion {
+      width: 5rem;
+      height: 5rem;
+      margin-bottom: 1rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    h1 {
+      color: $c-sub-white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 140%;
+    }
+
+    p {
+      color: $c-primary-blue-light;
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 140%;
+    }
+  }
+
+  .complete-time {
+    width: 100%;
+    display: flex;
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-radius: 0.5rem;
+    background: $c-primary-blue-dark-light;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    strong {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 140%;
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+        aspect-ratio: 1/1;
+      }
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 140%;
+
+      &#exercise-time {
+        color: $c-point-orange;
+      }
+    }
+
+    & + li {
+      margin-top: 1rem;
+    }
+  }
+}

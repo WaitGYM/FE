@@ -4,7 +4,7 @@ import { ChevronLeft, UsersRound } from "lucide-react";
 export default function WorkoutBooking() {
   return (
     <div className="workout-page" id="booking">
-      <header>
+      <header className="header header--booking">
         <div className="header-top">
           <button className="btn btn-icon">
             <ChevronLeft size={24} strokeWidth="2" />

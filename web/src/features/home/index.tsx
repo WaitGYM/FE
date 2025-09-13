@@ -28,7 +28,7 @@ export default function HomePage() {
   return (
     <div className="home-page">
       <div className="content-scroll">
-        <header>
+        <header className="header header--home">
           <div className="header-top">
             <div className="logo">
               <img src={logo} alt="logo" />
@@ -47,8 +47,7 @@ export default function HomePage() {
         <div className="container">
           <section>
             {planLoading ? (
-              <div>로딩 중...</div>
-            ) : !planList || planList.length < 1 ? (
+              // 1. 로딩 중일 때
               <ul className="routine-list">
                 {Array.from(new Array(3)).map((_, index) => (
                   <li className="routine" key={index}>
@@ -73,6 +72,7 @@ export default function HomePage() {
                 ))}
               </ul>
             ) : !planList || planList.length < 1 ? (
+              // 2. 데이터가 없을 때
               <ul className="not-routine">
                 <li className="routine">
                   <div className="icon">
@@ -84,6 +84,7 @@ export default function HomePage() {
                 </li>
               </ul>
             ) : (
+              // 3. 데이터가 있을 때
               <ul className="routine-list">
                 {planList.map((plan: PlanType) => (
                   <li

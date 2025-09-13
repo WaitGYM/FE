@@ -5,7 +5,7 @@ import CircularTimer from "../../components/ui/CircularTimer";
 export default function WorkoutBreaktimer() {
   return (
     <div className="workout-page" id="breaktimer">
-      <header>
+      <header className="header header--breaktimer">
         <div className="header-top">
           <div className="btn-side">
             <span>루틴 현황 보기</span>

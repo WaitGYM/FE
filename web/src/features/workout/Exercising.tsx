@@ -11,7 +11,7 @@ export default function WorkoutExercising() {
 
   return (
     <div className="workout-page" id="exercising">
-      <header>
+      <header className="header header--exercising">
         <div className="header-top">
           <div className="btn-side">
             <span>운동종료</span>

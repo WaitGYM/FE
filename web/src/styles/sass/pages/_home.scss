@@ -9,21 +9,7 @@
   .content-scroll {
     padding-bottom: 4.68rem;
   }
-  header {
-    height: auto;
-    padding: 0 map.get($spacing, 6);
 
-    .logo {
-      width: 6.53rem;
-      height: 1.39rem;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-    }
-  }
 
   .greeting {
     font-size: 1.12rem;
