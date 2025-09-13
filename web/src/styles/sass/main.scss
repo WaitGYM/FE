@@ -15,5 +15,7 @@
 @use "pages/home";
 @use "pages/login";
 @use "pages/equipment-list";
+@use "pages/equipment-detail";
 
-@use "pages/workout";
+@use "pages/workout-session"; //대기중,운동중,휴식중
+@use "pages/workout-complete"; //운동완료

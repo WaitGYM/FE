@@ -58,7 +58,7 @@ export default function EquipmentListPage() {
   return (
     <div className="equipmentList-page">
       <div className="content-scroll">
-        <header>
+        <header className="header">
           <div className="header-top">
             <button className="btn btn-icon" onClick={() => navigate(-1)}>
               <ChevronLeft size={24} strokeWidth="2" />
@@ -135,10 +135,7 @@ export default function EquipmentListPage() {
 
       {selectedList.length ? (
         <div className="btn-wrap">
-          <button
-            onClick={handleNextBtnClick}
-            className="btn btn-orange bottom-fix"
-          >
+          <button onClick={handleNextBtnClick} className="btn btn-orange">
             다음
           </button>
         </div>

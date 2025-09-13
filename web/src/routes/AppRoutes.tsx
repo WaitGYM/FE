@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../features/login";
 import OauthSuccess from "../features/login/oauth-success";
 import HomePage from "../features/home";
-import EquipmentList from "../features/equipmentList";
+import EquipmentList from "../features/equipment/equipmentList"; //기구리스트
+import EquipmentDetail from "../features/equipment/equipmentDetail"; //세트수정
 import WorkoutBooking from "../features/workout/Booking"; //예약중
 import WorkoutExercising from "../features/workout/Exercising"; //운동중
 import WorkoutBreaktimer from "../features/workout/Breaktimer";
@@ -17,6 +18,7 @@ export default function AppRoutes() {
         <Route path="/oauth-success" element={<OauthSuccess />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/equipmentList" element={<EquipmentList />} />
+        <Route path="/equipmentDetail" element={<EquipmentDetail />} />
         <Route path="/workout/booking" element={<WorkoutBooking />} />
         <Route path="/workout/exercising" element={<WorkoutExercising />} />
         <Route path="/workout/breaktimer" element={<WorkoutBreaktimer />} />

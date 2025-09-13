@@ -29,10 +29,12 @@ input {
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
+  box-sizing: border-box;
   color: $c-sub-white;
 }
 
-input[type="search"] {
+input[type="search"],
+input[type="text"] {
   height: 3rem;
 }
 

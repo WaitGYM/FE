@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "@styles/variables" as *;
 
-header {
+.header {
   margin: map.get($spacing, 6) 0;
   position: relative;
 
@@ -27,5 +27,47 @@ header {
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
+  }
+
+  // 메인
+  &--home {
+    height: auto;
+    padding: 0 map.get($spacing, 6);
+
+    .logo {
+      width: 6.53rem;
+      height: 1.39rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &--booking,
+  &--exercising,
+  &--breaktimer,
+  &--equipment--detail {
+    .header-top {
+      padding: 0 map.get($spacing, 6);
+    }
+    .btn-side {
+      color: $c-sub-gray;
+    }
+  }
+
+  &--booking,
+  &--equipment-detail {
+    .header-top {
+      justify-content: space-between;
+    }
+  }
+  &--exercising,
+  &--breaktimer {
+    .header-top {
+      justify-content: flex-end;
+    }
   }
 }
