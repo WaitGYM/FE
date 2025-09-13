@@ -1,22 +1,21 @@
 import { ChevronLeft, Trash, Plus, Minus } from "lucide-react";
+import Header from "../../components/layout/Header";
+import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function EquipmentDetail() {
   return (
     <div className="equipmentDetail-page">
       <div className="content-scroll">
-        <header className="header header--equipment--detail">
-          <div className="header-top">
+        <Header
+          className="header--equipment-detail"
+          title={<h2>루틴수정</h2>}
+          leftContent={
             <button className="btn btn-icon">
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
-            <div className="page-title">
-              <h2>루틴수정</h2>
-            </div>
-            <div className="btn-side">
-              <span>삭제</span>
-            </div>
-          </div>
-        </header>
+          }
+          rightContent={<span>삭제</span>}
+        />
         <div className="container">
           <section>
             <label htmlFor="routine-name">
@@ -123,9 +122,9 @@ export default function EquipmentDetail() {
           </section>
         </div>
       </div>
-      <div className="btn-wrap">
+      <BottomButtonWrapper>
         <button className="btn btn-orange">루틴 수정하기</button>
-      </div>
+      </BottomButtonWrapper>
     </div>
   );
 }

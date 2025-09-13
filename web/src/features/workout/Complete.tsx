@@ -1,5 +1,6 @@
 import { Dumbbell, Timer } from "lucide-react";
 import motion from "@img/motion-clap.png"; //이미지
+import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function WorkoutCompletePage() {
   return (
@@ -31,11 +32,11 @@ export default function WorkoutCompletePage() {
         </li>
       </ul>
 
-      <div className="btn-wrap">
+      <BottomButtonWrapper>
         <button className="btn btn-orange" id="ok">
           확인
         </button>
-      </div>
+      </BottomButtonWrapper>
     </div>
   );
 }

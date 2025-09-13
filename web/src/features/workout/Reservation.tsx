@@ -1,8 +1,10 @@
 import type { EquipmentType } from "../../types";
 import CircularTimer from "../../components/ui/CircularTimer";
 import { ChevronLeft, Star, Equal } from "lucide-react";
+import Header from "../../components/layout/Header";
+import { BottomButtonWrapper } from "../../components/ui/Button";
 
-export default function WorkoutReservation({
+export default function WorkoutReservation({ 
   name = "힙어브덕션",
   imgSrc = "/equipment_01.png",
   waitingTime = 40,
@@ -11,16 +13,14 @@ export default function WorkoutReservation({
   return (
     <div className="reservation-page" id="workout-reservation">
       <div className="content-scroll">
-        <header className="header">
-          <div className="header-top">
+        <Header
+          leftContent={
             <button className="btn btn-icon">
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
-            <div className="page-title">
-              <span>8월 22일 운동 루틴</span>
-            </div>
-          </div>
-        </header>
+          }
+          title={<span>8월 22일 운동 루틴</span>}
+        />
         <section className="container">
           <div className="equipment">
             <img src={imgSrc} />
@@ -82,9 +82,9 @@ export default function WorkoutReservation({
         </section>
       </div>
 
-      <div className="btn-wrap">
+      <BottomButtonWrapper>
         <button className="btn btn-orange">대기하기</button>
-      </div>
+      </BottomButtonWrapper>
 
       {/* 휴식시간타이머 */}
       <CircularTimer thickness={2} />

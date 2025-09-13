@@ -7,6 +7,8 @@ import Equipment from "../../components/layout/Equipment";
 import { useUIStore } from "../../stores/UIStore";
 import { usePlanStore } from "../../stores/planStore";
 import Switch from "@mui/material/Switch";
+import Header from "../../components/layout/Header";
+import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function EquipmentListPage() {
   const navigate = useNavigate();
@@ -58,22 +60,22 @@ export default function EquipmentListPage() {
   return (
     <div className="equipmentList-page">
       <div className="content-scroll">
-        <header className="header">
-          <div className="header-top">
+        <Header
+          leftContent={
             <button className="btn btn-icon" onClick={() => navigate(-1)}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
-            <div className="page-title">
-              <h2>
-                {planId && workoutMode === "plan"
-                  ? planDetail?.name
-                  : workoutMode === "direct"
-                  ? "바로운동"
-                  : "루틴추가"}
-              </h2>
-            </div>
-          </div>
-        </header>
+          }
+          title={
+            <h2>
+              {planId && workoutMode === "plan"
+                ? planDetail?.name
+                : workoutMode === "direct"
+                ? "바로운동"
+                : "루틴추가"}
+            </h2>
+          }
+        />
 
         {workoutMode === "direct" || workoutMode === "addPlan" ? (
           <>
@@ -134,11 +136,11 @@ export default function EquipmentListPage() {
       </div>
 
       {selectedList.length ? (
-        <div className="btn-wrap">
+        <BottomButtonWrapper>
           <button onClick={handleNextBtnClick} className="btn btn-orange">
             다음
           </button>
-        </div>
+        </BottomButtonWrapper>
       ) : null}
     </div>
   );

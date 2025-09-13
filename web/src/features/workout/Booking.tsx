@@ -1,19 +1,24 @@
 import PushMsg from "../../components/ui/PushMsg";
 import { ChevronLeft, UsersRound } from "lucide-react";
+import Header from "../../components/layout/Header";
+import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function WorkoutBooking() {
   return (
     <div className="workout-page" id="booking">
-      <header className="header header--booking">
-        <div className="header-top">
+      <Header
+        className="header--booking"
+        leftContent={
           <button className="btn btn-icon">
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
+        }
+        rightContent={
           <div className="btn-side">
             <span>대기취소</span>
           </div>
-        </div>
-      </header>
+        }
+      />
 
       <section className="container">
         <PushMsg />
@@ -28,9 +33,9 @@ export default function WorkoutBooking() {
         </div>
       </section>
 
-      <div className="btn-wrap">
+      <BottomButtonWrapper>
         <button className="btn btn-orange">사용 요청 보내기</button>
-      </div>
+      </BottomButtonWrapper>
     </div>
   );
 }

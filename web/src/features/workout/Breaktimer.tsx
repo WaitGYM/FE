@@ -1,24 +1,27 @@
 import PushMsg from "../../components/ui/PushMsg";
 import { Plus, Minus } from "lucide-react";
 import CircularTimer from "../../components/ui/CircularTimer";
+import Header from "../../components/layout/Header";
+import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function WorkoutBreaktimer() {
   return (
     <div className="workout-page" id="breaktimer">
-      <header className="header header--breaktimer">
-        <div className="header-top">
+      <Header
+        className="header--breaktimer"
+        rightContent={
           <div className="btn-side">
             <span>루틴 현황 보기</span>
           </div>
-        </div>
-      </header>
+        }
+      />
 
       <section className="container">
         <PushMsg />
         <CircularTimer thickness={1.5} title="휴식 타이머" />
       </section>
 
-      <div className="btn-wrap">
+      <BottomButtonWrapper>
         <button className="btn btn-gray">
           <Plus />
         </button>
@@ -26,7 +29,7 @@ export default function WorkoutBreaktimer() {
         <button className="btn btn-gray">
           <Minus />
         </button>
-      </div>
+      </BottomButtonWrapper>
     </div>
   );
 }

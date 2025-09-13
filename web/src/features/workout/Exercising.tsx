@@ -1,5 +1,7 @@
 import PushMsg from "../../components/ui/PushMsg";
 import { CircleCheck, Circle } from "lucide-react";
+import Header from "../../components/layout/Header";
+import { BottomButtonWrapper } from "../../components/ui/Button";
 // import { useNavigate } from "react-router-dom";
 
 export default function WorkoutExercising() {
@@ -11,13 +13,14 @@ export default function WorkoutExercising() {
 
   return (
     <div className="workout-page" id="exercising">
-      <header className="header header--exercising">
-        <div className="header-top">
+      <Header
+        className="header--exercising"
+        rightContent={
           <div className="btn-side">
             <span>운동종료</span>
           </div>
-        </div>
-      </header>
+        }
+      />
 
       <section className="container">
         <PushMsg />
@@ -33,9 +36,9 @@ export default function WorkoutExercising() {
         </div>
       </section>
 
-      <div className="btn-wrap">
+      <BottomButtonWrapper>
         <button className="btn btn-blue">세트 완료</button>
-      </div>
+      </BottomButtonWrapper>
     </div>
   );
 }

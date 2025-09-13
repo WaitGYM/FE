@@ -3,16 +3,21 @@
 footer {
   position: fixed;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-
   width: 100%;
   height: 4.68rem;
   border-top: 1px solid $c-primary-blue;
   background: $c-primary-blue-dark;
 
+  // nav 태그가 flex 컨테이너 역할을 하도록 변경
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    height: 100%;
+  }
+
+  // .nav 클래스는 이제 a 태그(NavLink)에 적용됨
   .nav {
     display: flex;
     flex-direction: column;
@@ -21,8 +26,11 @@ footer {
     gap: 4px;
     color: $c-sub-gray;
     cursor: pointer;
+    text-decoration: none; // a 태그의 밑줄 제거
 
-    &.on {
+    // NavLink가 활성화될 때 'active' 클래스가 자동으로 추가됨
+    // 기존의 .on 대신 .active를 사용
+    &.active {
       color: $c-sub-white;
     }
 
