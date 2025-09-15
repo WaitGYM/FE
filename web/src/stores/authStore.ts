@@ -1,12 +1,24 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface AuthStoreType {
   token: string | null;
-  // Actions
-  setToken: (token: string | null) => void;
+  isAuthenticated: boolean;
+  login: (token: string) => void;
+  logout: () => void;
 }
 
-export const useAuthStore = create<AuthStoreType>((set) => ({
-  token: null,
-  setToken: (token) => set({ token }),
-}));
+export const useAuthStore = create<AuthStoreType>()(
+  // persist 이용한 자동 로그인 처리
+  persist(
+    (set) => ({
+      token: null,
+      isAuthenticated: false,
+      login: (token) => set({ token, isAuthenticated: true }),
+      logout: () => set({ token: null, isAuthenticated: false }),
+    }),
+    {
+      name: "auth-storage", // localStorage key
+    }
+  )
+);

@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuthInit } from "../hooks/useAuthInit";
+import { useAuthStore } from "../stores/authStore";
 import Login from "../features/login";
-import OauthSuccess from "../features/login/oauth-success";
+import OAuthSuccess from "../features/login/oauth-success";
 import HomePage from "../features/home"; //메인
 import EquipmentList from "../features/equipment/equipmentList"; //기구리스트
 import EquipmentDetail from "../features/equipment/equipmentDetail"; //세트수정
@@ -11,12 +13,21 @@ import WorkoutCompletePage from "../features/workout/Complete"; //운동완료
 import WorkoutReservation from "../features/workout/Reservation"; //운동예약
 
 export default function AppRoutes() {
+  useAuthInit();
+  const token = useAuthStore((state) => state.token);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/oauth-success" element={<OauthSuccess />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route
+          path="/login"
+          element={token ? <Navigate to="/" replace /> : <Login />}
+        />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
+        <Route
+          path="/"
+          element={token ? <HomePage /> : <Navigate to="/login" replace />}
+        />
         <Route path="/equipmentList" element={<EquipmentList />} />
         <Route path="/equipmentDetail" element={<EquipmentDetail />} />
         <Route path="/workout/booking" element={<WorkoutBooking />} />
