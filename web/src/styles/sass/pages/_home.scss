@@ -10,12 +10,12 @@
     padding-bottom: 4.68rem;
   }
 
-
   .greeting {
     font-size: 1.12rem;
     margin: map.get($spacing, 6) 0;
     line-height: 1.57rem;
     font-weight: 500;
+    padding: 0 map.get($spacing, 6);
   }
 
   .container {

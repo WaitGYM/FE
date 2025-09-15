@@ -2,6 +2,7 @@ import * as React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { Circle, CircleCheck } from "lucide-react";
 
 // 총 휴식 시간을 초 단위로 설정 (props로 받으면 재사용성 높아짐)
 const TOTAL_DURATION = 30;
@@ -9,11 +10,13 @@ const TOTAL_DURATION = 30;
 interface CircularTimerProps {
   thickness?: number;
   title?: string;
+  showSetIcons?: boolean;
 }
 
 export default function CircularTimer({
   thickness = 1.5,
   title = "휴식",
+  showSetIcons = true,
 }: CircularTimerProps) {
   const [timeLeft, setTimeLeft] = React.useState(TOTAL_DURATION);
 
@@ -52,6 +55,13 @@ export default function CircularTimer({
           <div className="text-wrap">
             <h6>{title}</h6>
             <h1>00:{String(timeLeft).padStart(2, "0")}</h1>
+            {showSetIcons && (
+              <p>
+                <CircleCheck size={18} strokeWidth="2" className="on" />
+                <Circle size={18} strokeWidth="2" />
+                <Circle size={18} strokeWidth="2" />
+              </p>
+            )}
           </div>
         </Typography>
       </Box>

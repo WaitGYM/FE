@@ -5,7 +5,6 @@
 .workout-page {
   height: 100%;
 
-
   .container {
     height: 75%;
     display: flex;
@@ -66,6 +65,16 @@
       }
       .lucide-circle-check {
         color: $c-primary-blue-light;
+      }
+    }
+  }
+  &#breaktimer .text-wrap {
+    p {
+      .lucide-circle {
+        color: $c-sub-gray;
+      }
+      .lucide-circle-check {
+        color: $c-point-orange;
       }
     }
   }

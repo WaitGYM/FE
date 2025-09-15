@@ -11,6 +11,8 @@
     align-items: center;
     height: 3.43rem;
     position: relative;
+
+    padding: 0 map.get($spacing, 6);
   }
 
   .page-title {
@@ -31,8 +33,8 @@
 
   // 메인
   &--home {
-    height: auto;
-    padding: 0 map.get($spacing, 6);
+    // height: auto;
+    // padding: 0 map.get($spacing, 6);
 
     .logo {
       width: 6.53rem;
@@ -50,9 +52,6 @@
   &--exercising,
   &--breaktimer,
   &--equipment--detail {
-    .header-top {
-      padding: 0 map.get($spacing, 6);
-    }
     .btn-side {
       color: $c-sub-gray;
     }

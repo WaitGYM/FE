@@ -87,7 +87,7 @@ export default function WorkoutReservation({
       </BottomButtonWrapper>
 
       {/* 휴식시간타이머 */}
-      <CircularTimer thickness={2} />
+      <CircularTimer thickness={2} showSetIcons={false} />
     </div>
   );
 }
