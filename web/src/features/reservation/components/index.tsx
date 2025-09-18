@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import { useEquipmentStore } from "../../stores/equipmentStore";
-import type { EquipmentType } from "../../types";
-import Equipment from "../../components/layout/Equipment";
-import { useUIStore } from "../../stores/UIStore";
-import { usePlanStore } from "../../stores/planStore";
 import Switch from "@mui/material/Switch";
-import Header from "../../components/layout/Header";
-import { BottomButtonWrapper } from "../../components/ui/Button";
+import { useEquipmentStore } from "../../../stores/equipmentStore";
+import type { EquipmentType } from "../types";
+import Equipment from "../../../components/layout/Equipment";
+import { useUIStore } from "../../../stores/UIStore";
+import { usePlanStore } from "../../../stores/planStore";
+import Header from "../../../components/layout/Header";
+import { BottomButtonWrapper } from "../../../components/ui/Button";
 
 export default function EquipmentListPage() {
   const navigate = useNavigate();
@@ -30,15 +30,7 @@ export default function EquipmentListPage() {
   }, [getPlanDetail]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
-    if (workoutMode === "addPlan") {
-      setSelectedList((prevSelected) =>
-        prevSelected.includes(selectEquip)
-          ? prevSelected.filter((v) => v !== selectEquip)
-          : [...prevSelected, selectEquip]
-      );
-    } else {
-      setSelectedList([selectEquip]);
-    }
+    setSelectedList([selectEquip]);
   }
 
   function handleNextBtnClick() {
@@ -67,40 +59,8 @@ export default function EquipmentListPage() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          title={
-            <h2>
-              {planId && workoutMode === "plan"
-                ? planDetail?.name
-                : workoutMode === "direct"
-                ? "바로운동"
-                : "루틴추가"}
-            </h2>
-          }
+          title={<h2>바로운동</h2>}
         />
-
-        {workoutMode === "direct" || workoutMode === "addPlan" ? (
-          <>
-            <section className="container">
-              <div className="search-bar">
-                <input
-                  type="search"
-                  placeholder="기구명, 부위를 검색해주세요"
-                />
-              </div>
-            </section>
-            <div className="category-wrap">
-              <button className="active">즐겨찾기</button>
-              <button>허벅지</button>
-              <button>어깨</button>
-              <button>가슴</button>
-              <button>팔</button>
-              <button>등</button>
-              <button>엉덩이</button>
-              <button>엉덩이</button>
-              <button>복근</button>
-            </div>
-          </>
-        ) : null}
 
         <section className="container">
           <div className="equipment-wrap">

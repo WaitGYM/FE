@@ -131,7 +131,7 @@ export default function HomePage() {
           바로운동
         </button>
         <button
-          onClick={() => handleWorkoutMode("addPlan")}
+          onClick={() => navigate("/add-plan")}
           className="btn btn-orange"
           id="routine-add"
         >
