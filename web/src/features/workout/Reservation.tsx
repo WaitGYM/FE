@@ -3,13 +3,25 @@ import CircularTimer from "../../components/ui/CircularTimer";
 import { ChevronLeft, Star, Equal } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function WorkoutReservation({ 
+export default function WorkoutReservation({
   name = "힙어브덕션",
   imgSrc = "/equipment_01.png",
   waitingTime = 40,
   waitingCount = 2,
 }: EquipmentType) {
+  const [isZoomingOut, setIsZoomingOut] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    setIsZoomingOut(true);
+    setTimeout(() => {
+      navigate(path);
+    }, 200); // animation duration
+  };
+
   return (
     <div className="reservation-page" id="workout-reservation">
       <div className="content-scroll">
@@ -87,7 +99,13 @@ export default function WorkoutReservation({
       </BottomButtonWrapper>
 
       {/* 휴식시간타이머 */}
-      <CircularTimer thickness={2} showSetIcons={false} />
+      <div onClick={() => handleNavigate("/workout/breaktimer")}>
+        <CircularTimer
+          thickness={2}
+          showSetIcons={false}
+          className={isZoomingOut ? "zoom-out" : ""}
+        />
+      </div>
     </div>
   );
 }

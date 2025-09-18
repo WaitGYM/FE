@@ -86,3 +86,11 @@
     }
   }
 }
+
+.workout-page.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
+.workout-page.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
