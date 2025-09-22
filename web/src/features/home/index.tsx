@@ -24,7 +24,7 @@ export default function HomePage() {
   function handleWorkoutMode(mode: WorkoutModeType, selectedPlanId?: number) {
     if (mode === "plan" && selectedPlanId) setPlanId(selectedPlanId);
     setWorkoutMode(mode);
-    navigate("/equipmentList");
+    navigate("/reservation/select-equipment");
   }
 
   return (
@@ -131,7 +131,7 @@ export default function HomePage() {
           바로운동
         </button>
         <button
-          onClick={() => handleWorkoutMode("addPlan")}
+          onClick={() => navigate("/add-plan")}
           className="btn btn-orange"
           id="routine-add"
         >

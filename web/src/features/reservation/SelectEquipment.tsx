@@ -1,0 +1,84 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
+import Switch from "@mui/material/Switch";
+import { useEquipmentStore } from "../../stores/equipmentStore";
+import type { EquipmentType } from "./types";
+import Equipment from "../../components/layout/Equipment";
+import { useUIStore } from "../../stores/UIStore";
+// import { usePlanStore } from "../../stores/planStore";
+import Header from "../../components/layout/Header";
+import EquipmentList from "../../components/EquipmentList";
+import { BottomButtonWrapper } from "../../components/ui/Button";
+import { useReservationStore } from "./stores/reservationStore";
+
+export default function ReservationPage() {
+  const navigate = useNavigate();
+  // const [selectedList, setSelectedList] = useState<EquipmentType[]>([]);
+  const { equipmentList, loading, error, getEquipments, clearError } =
+    useEquipmentStore();
+  const { workoutMode, planId } = useUIStore();
+  // const { planDetail, planLoading, getPlanDetail } = usePlanStore();
+  const { selectedEquipment, setSelectedEquipment } = useReservationStore();
+  const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
+
+  useEffect(() => {
+    getEquipments();
+  }, [getEquipments]);
+
+  // useEffect(() => {
+  //   if (workoutMode === "plan" && planId) {
+  //     getPlanDetail(planId);
+  //   }
+  // }, [getPlanDetail]);
+
+  // function handleEquipmentToggle(selectEquip: EquipmentType) {
+  //   setSelectedEquipment([selectEquip]);
+  // }
+
+  function handleNextBtnClick() {
+    console.log(selectedEquipment);
+    navigate("/reservation/goal-setting");
+  }
+
+  return (
+    <div className="equipmentList-page reservation-page">
+      <div className="content-scroll">
+        <Header
+          leftContent={
+            <button className="btn btn-icon" onClick={() => navigate(-1)}>
+              <ChevronLeft size={24} strokeWidth="2" />
+            </button>
+          }
+          title={<h2>바로운동</h2>}
+        />
+
+        <section className="container">
+          <div className="equipment-wrap">
+            <div className="top">
+              <div className="auto-suggest">
+                <span>자동제안</span>
+                <Switch
+                  {...label}
+                  defaultChecked
+                  size="small"
+                  color="warning"
+                />
+              </div>
+            </div>
+
+            <EquipmentList selectedEquipment={setSelectedEquipment} />
+          </div>
+        </section>
+      </div>
+
+      {selectedEquipment ? (
+        <BottomButtonWrapper>
+          <button onClick={handleNextBtnClick} className="btn btn-orange">
+            다음
+          </button>
+        </BottomButtonWrapper>
+      ) : null}
+    </div>
+  );
+}
