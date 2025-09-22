@@ -73,6 +73,17 @@ button {
   padding-bottom: map.get($spacing, 24);
 }
 
+.badge {
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 0.7rem;
+  border-radius: 0.25rem;
+  padding: 0 0.5rem;
+  text-align: center;
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;

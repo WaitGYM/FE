@@ -47,20 +47,12 @@
       }
 
       .badge {
-        height: 1.25rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-around;
-        color: $c-sub-white;
-        font-size: 0.7rem;
-        border-radius: 0.25rem;
-        padding: 0 0.5rem;
-        text-align: center;
-
         &.waiting {
+          color: $c-sub-white;
           background-color: $c-point-orange;
         }
         &.complete {
+          color: $c-sub-white;
           background-color: $c-primary-blue;
         }
       }

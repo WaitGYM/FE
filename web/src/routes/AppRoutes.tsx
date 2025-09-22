@@ -4,6 +4,7 @@ import { useAuthStore } from "../stores/authStore";
 import Login from "../features/login";
 import OAuthSuccess from "../features/login/oauth-success";
 import HomePage from "../features/home"; //메인
+import PushList from "../features/home/PushList"; //푸시리스트
 import EquipmentList from "../features/equipment/equipmentList"; //기구리스트
 import EquipmentDetail from "../features/equipment/equipmentDetail"; //세트수정
 import WorkoutBooking from "../features/workout/Booking"; //예약중
@@ -28,6 +29,7 @@ export default function AppRoutes() {
           path="/"
           element={token ? <HomePage /> : <Navigate to="/login" replace />}
         />
+        <Route path="/home/pushlist" element={<PushList />} />
         <Route path="/equipmentList" element={<EquipmentList />} />
         <Route path="/equipmentDetail" element={<EquipmentDetail />} />
         <Route path="/workout/booking" element={<WorkoutBooking />} />
