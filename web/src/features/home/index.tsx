@@ -15,7 +15,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { planList, planLoading, planError, getPlanList, clearError } =
     usePlanStore();
-  const { setWorkoutMode, setPlanId } = useUIStore();
+  const { setWorkoutMode, setPlanId, isWorkingOut } = useUIStore();
 
   useEffect(() => {
     getPlanList();
@@ -122,22 +122,25 @@ export default function HomePage() {
         </div>
       </div>
 
-      <BottomButtonWrapper>
-        <button
-          onClick={() => handleWorkoutMode("direct")}
-          className="btn btn-blue"
-          id="no-routine"
-        >
-          바로운동
-        </button>
-        <button
-          onClick={() => navigate("/add-plan")}
-          className="btn btn-orange"
-          id="routine-add"
-        >
-          루틴추가
-        </button>
-      </BottomButtonWrapper>
+      {!isWorkingOut && (
+        <BottomButtonWrapper>
+          <button
+            onClick={() => handleWorkoutMode("direct")}
+            className="btn btn-blue"
+            id="no-routine"
+          >
+            바로운동
+          </button>
+          <button
+            onClick={() => navigate("/add-plan")}
+            className="btn btn-orange"
+            id="routine-add"
+          >
+            루틴추가
+          </button>
+        </BottomButtonWrapper>
+      )}
+
       <Footer />
     </div>
   );
