@@ -10,11 +10,11 @@ import ReservationGoalSetting from "../features/reservation/GoalSetting"; // 세
 import ReservationSelectEquipment from "../features/reservation/SelectEquipment"; // 세트설정
 import ReservationWaitRequest from "../features/reservation/WaitRequest"; // 세트설정
 import Plan from "../features/plan"; // 루틴 추가
-import WorkoutBooking from "../features/reservation/WaitRequest"; // 대기 요청
+import PushList from "../features/home/PushList"; //푸시리스트
+import WorkoutBooking from "../features/workout/Booking"; //예약중
 import WorkoutExercising from "../features/workout/Exercising"; //운동중
 import WorkoutBreaktimer from "../features/workout/Breaktimer"; //휴식중
 import WorkoutCompletePage from "../features/workout/Complete"; //운동완료
-import WorkoutReservation from "../features/workout/Reservation"; //운동예약
 
 export default function AppRoutes() {
   useAuthInit();
@@ -47,11 +47,11 @@ export default function AppRoutes() {
           element={<ReservationWaitRequest />}
         />
         <Route path="/add-plan" element={<Plan />} />
+        <Route path="/home/pushlist" element={<PushList />} />
         <Route path="/workout/booking" element={<WorkoutBooking />} />
         <Route path="/workout/exercising" element={<WorkoutExercising />} />
         <Route path="/workout/breaktimer" element={<WorkoutBreaktimer />} />
         <Route path="/workout/complete" element={<WorkoutCompletePage />} />
-        {/* <Route path="/workout/reservation" element={<WorkoutReservation />} /> */}
       </Routes>
     </BrowserRouter>
   );

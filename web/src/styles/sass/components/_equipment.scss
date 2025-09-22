@@ -3,8 +3,9 @@
 .equipment {
   padding: 0.5em;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
+  gap: 1rem;
 
   img {
     flex: 0 0 4em;
@@ -14,8 +15,6 @@
   }
 
   .info {
-    margin-left: 1em;
-
     & > div {
       display: flex;
       align-items: center;
@@ -48,20 +47,12 @@
       }
 
       .badge {
-        height: 1.25rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-around;
-        color: $c-sub-white;
-        font-size: 0.7rem;
-        border-radius: 0.25rem;
-        padding: 0 0.5rem;
-        text-align: center;
-
         &.waiting {
+          color: $c-sub-white;
           background-color: $c-point-orange;
         }
         &.complete {
+          color: $c-sub-white;
           background-color: $c-primary-blue;
         }
       }
@@ -79,5 +70,11 @@
         }
       }
     }
+  }
+
+  .icon-drag {
+    width: 1.125rem;
+    height: 1.125rem;
+    aspect-ratio: 1/1;
   }
 }

@@ -1,0 +1,70 @@
+@use "sass:map";
+@use "@styles/variables" as *;
+
+.pushlist-page {
+  .container {
+    padding: 0 1.5rem;
+  }
+  .push-wrap {
+    .top {
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .push-list-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        background: $c-primary-blue-dark-light;
+
+        .state {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .badge {
+            &.push-res {
+              color: $c-sub-white;
+              background-color: $c-point-orange;
+            }
+            &.push-reser {
+              color: $c-sub-white;
+              background-color: $c-primary-blue;
+            }
+            &.push-break {
+              color: $c-primary-blue;
+              background-color: $c-primary-blue-light;
+            }
+          }
+          .time {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: $c-primary-blue-light;
+          }
+        }
+        .msg {
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: $c-sub-white;
+        }
+      }
+    }
+    .bottom-notice {
+      margin: 1.4rem 0;
+      width: 100%;
+      font-size: 0.75rem;
+      text-align: center;
+      font-weight: 500;
+      color: $c-primary-blue-light;
+    }
+  }
+}
