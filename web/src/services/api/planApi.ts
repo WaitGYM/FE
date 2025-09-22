@@ -4,7 +4,7 @@ import type { PlanType } from "../../types";
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export const planApi = {
-  getPlans: () => axios.get<PlanType[]>(`${API_BASE}/api/plan`),
+  getPlans: () => axios.get<PlanType[]>(`${API_BASE}/plan`),
   // createPlan: (plan: Omit<Plan, "id">) =>
   //   axios.post<Plan>(`${API_BASE}/api/plan`, plan),
   // updatePlan: (id: number, plan: Omit<Plan, "id">) =>

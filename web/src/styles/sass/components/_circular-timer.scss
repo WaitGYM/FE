@@ -43,10 +43,9 @@
       }
     }
   }
-}
 
-#workout-reservation {
-  .circular-timer {
+  &.miniview {
+    z-index: 1000;
     position: absolute;
     right: 1.5rem;
     bottom: 6rem;

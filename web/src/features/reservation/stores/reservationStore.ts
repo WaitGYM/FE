@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { reservationApi } from "../services/reservationApi";
 import type { EquipmentType } from "../../../types";
 import { useLoadingStore } from "../../../stores/loadingStore";
-const setLoading = useLoadingStore.getState().setLoading;
+import { useUIStore } from "../../../stores/UIStore";
+
+const { setLoading } = useLoadingStore.getState();
+const { toggleWorkingOut } = useUIStore.getState();
 
 type WorkoutGoalType = {
   sets: number;
@@ -14,6 +17,7 @@ interface ReservationStoreType {
   equipmentReservationStatus: string;
   // loading: boolean;
   reservationError: string | null;
+  workoutError: string | null;
 
   setSelectedEquipment: (equipmentInfo: EquipmentType) => void;
   updateSelectedEquipment: (
@@ -22,6 +26,7 @@ interface ReservationStoreType {
   ) => void;
   getEquipmentReservationStatus: () => Promise<void>;
   createReservation: () => Promise<void>;
+  startWorkout: () => Promise<void>;
   resetState: () => void;
 }
 
@@ -33,6 +38,7 @@ const initialState = {
   equipmentReservationStatus: "",
   // loading: false,
   reservationError: null,
+  workoutError: null,
 };
 
 export const useReservationStore = create<ReservationStoreType>((set, get) => ({
@@ -62,6 +68,8 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
         const response = await reservationApi.getEquipmentReservationStatus(
           eq.id
         );
+        console.log("getEquipmentReservationStatus :", response.data);
+
         set({ equipmentReservationStatus: response.data.reservations });
       } else {
         throw Error;
@@ -91,6 +99,31 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
     } catch (error) {
       set({
         reservationError: "기구 예약에 실패했습니다.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  },
+
+  startWorkout: async () => {
+    setLoading(true);
+    try {
+      const eq = get().selectedEquipment;
+      if (eq) {
+        const reqData = {
+          equipmentId: eq.id,
+          sets: eq.sets,
+          restMinutes: eq.restMinutes,
+        };
+        const response = await reservationApi.startWorkout(reqData);
+        console.log(response.data);
+        toggleWorkingOut();
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      set({
+        workoutError: "운동 시작에 실패했습니다.",
       });
     } finally {
       setLoading(false);

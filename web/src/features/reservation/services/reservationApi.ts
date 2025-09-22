@@ -1,7 +1,4 @@
-import axios from "axios";
-// import type { EquipmentType } from "../../types";
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+import { apiClient } from "../../../services/apiClient";
 
 type ReservationCreateType = {
   equipmentId: number;
@@ -10,10 +7,13 @@ type ReservationCreateType = {
 };
 
 export const reservationApi = {
-  // getReservationList: () => axios.get(`${API_BASE}/api/equipment`),
-  // 기구별 예약 현황
   getEquipmentReservationStatus: (equipmentId: number) =>
-    axios.get(`${API_BASE}/api/equipment/${equipmentId}`),
+    apiClient.get(`/equipment/${equipmentId}`),
   createReservation: (data: ReservationCreateType) =>
-    axios.post(`${API_BASE}/api/reservations/`, data),
+    apiClient.post(`/reservations/`, data),
+  startWorkout: (data: ReservationCreateType) =>
+    apiClient.post(`/waiting/start-using/${data.equipmentId}`, {
+      totalSets: data.sets,
+      restMinutes: data.restMinutes,
+    }),
 };
