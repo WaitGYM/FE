@@ -35,6 +35,9 @@ export default function WorkoutReservation({
         />
         <section className="container">
           <div className="equipment">
+            <div className="icon-drag">
+              <Equal size={24} strokeWidth="2" />
+            </div>
             <img src={imgSrc} />
             <div className="info">
               <div className="title">
@@ -50,11 +53,11 @@ export default function WorkoutReservation({
                 <span>{waitingCount}명</span>
               </div>
             </div>
+          </div>
+          <div className="equipment">
             <div className="icon-drag">
               <Equal size={24} strokeWidth="2" />
             </div>
-          </div>
-          <div className="equipment">
             <img src={imgSrc} />
             <div className="info">
               <div className="title">
@@ -68,11 +71,11 @@ export default function WorkoutReservation({
                 <span>이용가능</span>
               </div>
             </div>
+          </div>
+          <div className="equipment">
             <div className="icon-drag">
               <Equal size={24} strokeWidth="2" />
             </div>
-          </div>
-          <div className="equipment">
             <img src={imgSrc} />
             <div className="info">
               <div className="title">
@@ -86,9 +89,6 @@ export default function WorkoutReservation({
                 <span className="dot"></span>
                 <span>{waitingCount}명</span>
               </div>
-            </div>
-            <div className="icon-drag">
-              <Equal size={24} strokeWidth="2" />
             </div>
           </div>
         </section>

@@ -3,8 +3,9 @@
 .equipment {
   padding: 0.5em;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
+  gap: 1rem;
 
   img {
     flex: 0 0 4em;
@@ -14,8 +15,6 @@
   }
 
   .info {
-    margin-left: 1em;
-
     & > div {
       display: flex;
       align-items: center;
@@ -79,5 +78,11 @@
         }
       }
     }
+  }
+
+  .icon-drag {
+    width: 1.125rem;
+    height: 1.125rem;
+    aspect-ratio: 1/1;
   }
 }
