@@ -1,6 +1,6 @@
 import type { EquipmentType } from "../../types";
 import CircularTimer from "../../components/ui/CircularTimer";
-import { ChevronLeft, Star, Equal } from "lucide-react";
+import { ChevronLeft, Star, Equal, RefreshCcw } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useState } from "react";
@@ -12,6 +12,7 @@ export default function WorkoutReservation({
   waitingTime = 40,
   waitingCount = 2,
 }: EquipmentType) {
+  //휴식타이머
   const [isZoomingOut, setIsZoomingOut] = useState(false);
   const navigate = useNavigate();
 
@@ -19,7 +20,16 @@ export default function WorkoutReservation({
     setIsZoomingOut(true);
     setTimeout(() => {
       navigate(path);
-    }, 200); // animation duration
+    }, 200);
+  };
+
+  //새로고침 아이콘회전
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleRefreshClick = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 3000);
   };
 
   return (
@@ -32,11 +42,20 @@ export default function WorkoutReservation({
             </button>
           }
           title={<span>8월 22일 운동 루틴</span>}
+          rightContent={
+            <button className="btn btn-icon" onClick={handleRefreshClick}>
+              <RefreshCcw
+                size={18}
+                strokeWidth="2"
+                className={isRefreshing ? "rotating" : ""}
+              />
+            </button>
+          }
         />
         <section className="container">
           <div className="equipment">
             <div className="icon-drag">
-              <Equal size={24} strokeWidth="2" />
+              <Equal size={18} strokeWidth="2" />
             </div>
             <img src={imgSrc} />
             <div className="info">
@@ -56,7 +75,7 @@ export default function WorkoutReservation({
           </div>
           <div className="equipment">
             <div className="icon-drag">
-              <Equal size={24} strokeWidth="2" />
+              <Equal size={18} strokeWidth="2" />
             </div>
             <img src={imgSrc} />
             <div className="info">
@@ -74,7 +93,7 @@ export default function WorkoutReservation({
           </div>
           <div className="equipment">
             <div className="icon-drag">
-              <Equal size={24} strokeWidth="2" />
+              <Equal size={18} strokeWidth="2" />
             </div>
             <img src={imgSrc} />
             <div className="info">
