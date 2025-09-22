@@ -47,6 +47,22 @@
       }
     }
   }
+  //랭킹,미션
+  &--mission {
+    .header-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      a {
+        color: $c-sub-gray;
+        font-size: 1.25rem;
+        font-weight: 600;
+        &.active {
+          color: $c-sub-white;
+        }
+      }
+    }
+  }
 
   &--booking,
   &--exercising,

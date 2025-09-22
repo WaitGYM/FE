@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { equipmentApi, favoriteApi } from "../services";
+import { equipmentApi } from "../services";
 import type { EquipmentType } from "../types";
 import { useLoadingStore } from "./loadingStore";
 const setLoading = useLoadingStore.getState().setLoading;

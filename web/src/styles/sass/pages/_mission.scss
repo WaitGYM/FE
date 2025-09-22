@@ -1,0 +1,96 @@
+@use "sass:map";
+@use "@styles/variables" as *;
+
+.mission-page {
+  .greeting {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 1.5rem;
+
+    .msg {
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 140%;
+    }
+    .icon-motion {
+      width: 3.125rem;
+      height: 3.125rem;
+      aspect-ratio: 1/1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  .mission-wrap {
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      span {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        &.time {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+        }
+      }
+    }
+
+    .mission-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .mission-item {
+        display: flex;
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0.625rem;
+        border-radius: 0.5rem;
+        background: $c-primary-blue-dark-light;
+        .info {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 0.875rem;
+          .title {
+            font-weight: 600;
+            color: $c-sub-white;
+          }
+          .score {
+            font-weight: 300;
+            color: $c-primary-blue-light;
+          }
+        }
+      }
+      .progress-bar {
+        position: relative;
+        width: 100%;
+        .progress {
+          height: 1.25rem;
+          border-radius: 1.25rem;
+          background-color: $c-primary-blue;
+          & .MuiLinearProgress-bar {
+            background-color: $c-point-orange;
+          }
+        }
+        .num-count {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 0.75rem;
+          color: $c-sub-white;
+        }
+      }
+    }
+  }
+}
