@@ -1,4 +1,4 @@
-export type EquipmentMode = "plan" | "direct" | "addPlan";
+export type EquipmentMode = "plan" | "direct";
 
 export interface EquipmentSelectionOptions {
   singleSelect: boolean;
