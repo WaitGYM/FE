@@ -11,7 +11,13 @@ export default function EquipmentDetail() {
     updateSelectedEquipment,
     equipmentReservationStatus,
     getEquipmentReservationStatus,
+    resetState,
   } = useReservationStore();
+
+  function handleBackBtnClick() {
+    navigate(-1);
+    resetState();
+  }
 
   function formatSecondsToTime(seconds: number): string {
     const min = Math.floor(seconds / 60);
@@ -26,14 +32,13 @@ export default function EquipmentDetail() {
     // 대기 현황 없는지 한번 더 확인
     await getEquipmentReservationStatus();
 
-    // // 대기 없으면 운동 시작으로
-    // if (!equipmentReservationStatus?.length) {
-    //   navigate("/workout/exercising");
-    // } else {
-    //   // 대기 있으면 예약으로
-    //   navigate("/reservation/wait-request");
-    // }
-    navigate("/reservation/wait-request");
+    // 대기 없으면 운동 시작으로
+    if (!equipmentReservationStatus?.length) {
+      navigate("/workout/exercising");
+    } else {
+      // 대기 있으면 예약으로
+      navigate("/reservation/wait-request");
+    }
   }
 
   return (
@@ -43,7 +48,7 @@ export default function EquipmentDetail() {
           className="header--equipment-detail"
           title={<h2>세트설정</h2>}
           leftContent={
-            <button className="btn btn-icon" onClick={() => navigate(-1)}>
+            <button className="btn btn-icon" onClick={handleBackBtnClick}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }

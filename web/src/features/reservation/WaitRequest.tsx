@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, UsersRound } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
@@ -5,8 +6,10 @@ import { useReservationStore } from "./stores/reservationStore";
 import { useEffect } from "react";
 
 export default function WaitRequest() {
+  const navigate = useNavigate();
   const {
     selectedEquipment,
+    reservationError,
     equipmentReservationStatus,
     getEquipmentReservationStatus,
     createReservation,
@@ -17,8 +20,10 @@ export default function WaitRequest() {
   //   getEquipmentReservationStatus();
   // }, [getEquipmentReservationStatus]);
 
-  function handleReqBtnClick() {
-    createReservation();
+  async function handleReqBtnClick() {
+    await createReservation();
+    // 예약 생성 성공하면 이전 단계로 이동
+    if (!reservationError) navigate(-1);
   }
 
   return (
@@ -26,7 +31,7 @@ export default function WaitRequest() {
       <Header
         className="header--booking"
         leftContent={
-          <button className="btn btn-icon">
+          <button className="btn btn-icon" onClick={() => navigate(-1)}>
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
