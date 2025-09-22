@@ -1,8 +1,11 @@
 import { ChevronLeft, Trash, Plus, Minus } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function EquipmentDetail() {
+  const { workoutMode, planId } = useUIStore();
+
   return (
     <div className="equipmentDetail-page">
       <div className="content-scroll">

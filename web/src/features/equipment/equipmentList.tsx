@@ -54,6 +54,7 @@ export default function EquipmentListPage() {
       }
     } else {
       // 루틴등록 or 바로운동이면 세트설정으로
+      navigate("/equipment-detail");
     }
   }
 

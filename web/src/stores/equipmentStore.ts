@@ -1,6 +1,8 @@
 import { create } from "zustand";
-import { equipmentApi } from "../services";
+import { equipmentApi, favoriteApi } from "../services";
 import type { EquipmentType } from "../types";
+import { useLoadingStore } from "./loadingStore";
+const setLoading = useLoadingStore.getState().setLoading;
 
 interface EquipmentStoreType {
   equipmentList: EquipmentType[];
@@ -17,15 +19,16 @@ export const useEquipmentStore = create<EquipmentStoreType>((set, get) => ({
   error: null,
 
   getEquipments: async () => {
-    set({ loading: true, error: null });
+    setLoading(true);
     try {
-      const response = await equipmentApi.getEquipments();
-      set({ equipmentList: response.data, loading: false });
+      const equipmentsData = (await equipmentApi.getEquipmentList()).data;
+      set({ equipmentList: equipmentsData });
     } catch (error) {
       set({
         error: "기구 목록을 불러오는데 실패했습니다.",
-        loading: false,
       });
+    } finally {
+      setLoading(false);
     }
   },
 

@@ -2,8 +2,16 @@ export type EquipmentType = {
   id: number;
   name: string;
   isFavorite: boolean;
-  imgSrc: string;
-  waitingTime: number;
-  waitingCount: number;
-  bodyPart: string;
+  imageUrl: string;
+  waitingTime?: number;
+  reservationCount?: number;
+  category: string;
+  muscleGroup: string;
+};
+
+export type EquipmentFavoriteType = {
+  id: number;
+  userId: number;
+  equipmentId: number;
+  createdAt: Date;
 };
