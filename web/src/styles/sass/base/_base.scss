@@ -31,11 +31,30 @@ input {
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   color: $c-sub-white;
-}
+  font-size: 0.75rem;
 
-input[type="search"],
-input[type="text"] {
-  height: 3rem;
+  &::placeholder {
+    color: $c-sub-gray !important;
+  }
+
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  &[type="search"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+  }
+  &[type="search"],
+  &[type="text"] {
+    height: 2.25rem;
+  }
 }
 
 button {

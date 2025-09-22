@@ -10,13 +10,10 @@
     padding: 0 1.5rem;
 
     .search-bar {
-      height: 3rem;
+      // height: 3rem;
 
       input[type="search"] {
         background-color: $c-primary-blue-dark-light;
-      }
-      input[type="search"]::placeholder {
-        color: $c-sub-white;
       }
     }
 
@@ -72,7 +69,7 @@
       color: $c-sub-white;
       background-color: $c-primary-blue-dark-light;
       border-radius: 0.5rem;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       display: flex;
       align-items: center;
 
