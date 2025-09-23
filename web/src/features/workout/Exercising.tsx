@@ -3,13 +3,18 @@ import { CircleCheck, Circle } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useEffect, useRef, useState } from "react";
+import { useWorkoutStore } from "./stores/workoutStore";
 
 export default function WorkoutExercising() {
   const navigate = useNavigate();
+  const { stopWorkout } = useWorkoutStore();
 
   const handleWorkoutFinish = () => {
+    console.log("handleWorkoutFinish");
+
     setIsRunning(false);
     setTime(0);
+    stopWorkout();
     navigate("/workout/complete");
   };
 

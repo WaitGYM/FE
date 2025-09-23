@@ -6,6 +6,8 @@ type WorkoutCreateType = {
 };
 
 export const workoutApi = {
-  createWorkout: (equipmentId: number, data: WorkoutCreateType) =>
+  startWorkout: (equipmentId: number, data: WorkoutCreateType) =>
     apiClient.post(`/waiting/start-using/${equipmentId}`, data),
+  stopWorkout: (equipmentId: number) =>
+    apiClient.post(`/waiting/stop-exercise/${equipmentId}`),
 };
