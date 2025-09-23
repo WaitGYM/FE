@@ -1,0 +1,70 @@
+import {
+  Bell,
+  User,
+  Dumbbell,
+  Star,
+  Headset,
+  Settings,
+  FileCheck2,
+} from "lucide-react";
+import Header from "../../components/layout/Header";
+import Footer from "../../components/layout/Footer";
+import thumbDefault from "../../assets/images/thumb-default.jpg"; //프로필 default이미지
+
+export default function Mypage() {
+  return (
+    <div className="mypage">
+      <div className="content-scroll">
+        <Header
+          className="header--mypage"
+          leftContent={<h1 className="title">내 정보</h1>}
+          rightContent={
+            <div className="icon-bell">
+              <Bell size={24} strokeWidth="1.5" />
+            </div>
+          }
+        />
+        <div className="container">
+          <div className="greeting">
+            <div className="msg">
+              <p>짐박스 구로디지털단지점</p>
+              <strong>박철민</strong>님
+            </div>
+            <div className="profile-img">
+              <img src={thumbDefault} alt="프로필 이미지" />
+            </div>
+          </div>
+          <div className="menu-wrap">
+            <a className="menu" href="mypage/profile">
+              <User size={18} strokeWidth="1.5" />
+              개인정보 수정
+            </a>
+            <a className="menu" href="mypage/gyms">
+              <Dumbbell size={18} strokeWidth="1.5" />
+              이용 헬스장 변경
+            </a>
+            <a className="menu" href="mypage/favorites">
+              <Star size={18} strokeWidth="1.5" />
+              즐겨찾기한 기구
+            </a>
+            <a className="menu" href="mypage/cs">
+              <Headset size={18} strokeWidth="1.5" />
+              고객센터
+            </a>
+            <a className="menu" href="mypage/settings">
+              <Settings size={18} strokeWidth="1.5" />앱 설정
+            </a>
+            <a className="menu" href="mypage/legal">
+              <FileCheck2 size={18} strokeWidth="1.5" />
+              서비스 약관
+            </a>
+          </div>
+
+          <a className="btn-logout">로그아웃</a>
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}

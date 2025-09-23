@@ -28,13 +28,13 @@ export default function Mission() {
   ];
 
   return (
-    <div className="mission-page">
+    <div className="mission" id="mission-page">
       <div className="content-scroll">
         <Header
-          className="header--mission"
+          className="header--achive"
           leftContent={
             <div className="header-tab">
-              <a href="/" className="active">
+              <a href="/mission" className="active">
                 미션
               </a>
               <a href="/ranking">랭킹</a>
@@ -65,10 +65,10 @@ export default function Mission() {
                 8시간
               </span>
             </div>
-            <div className="mission-list">
+            <div className="mission-wrap-list">
               {missions.map((mission, index) => {
                 return (
-                  <div className="mission-item" key={index}>
+                  <div className="mission-wrap-list-item" key={index}>
                     <div className="info">
                       <div className="title">{mission.title}</div>
                       <div className="score">{mission.score}점</div>

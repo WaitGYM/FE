@@ -1,7 +1,9 @@
 @use "sass:map";
 @use "@styles/variables" as *;
 
-.mission-page {
+//미션,랭킹 공통
+.mission,
+.ranking {
   .greeting {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -11,6 +13,9 @@
       font-size: 1.125rem;
       font-weight: 400;
       line-height: 140%;
+      strong {
+        font-weight: 600;
+      }
     }
     .icon-motion {
       width: 3.125rem;
@@ -24,7 +29,8 @@
       }
     }
   }
-  .mission-wrap {
+
+  &-wrap {
     .top {
       display: flex;
       align-items: center;
@@ -41,12 +47,12 @@
       }
     }
 
-    .mission-list {
+    &-list {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
 
-      .mission-item {
+      &-item {
         display: flex;
         padding: 1rem 1.5rem;
         flex-direction: column;
@@ -55,12 +61,14 @@
         gap: 0.625rem;
         border-radius: 0.5rem;
         background: $c-primary-blue-dark-light;
+
         .info {
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: space-between;
           font-size: 0.875rem;
+
           .title {
             font-weight: 600;
             color: $c-sub-white;
@@ -69,6 +77,55 @@
             font-weight: 300;
             color: $c-primary-blue-light;
           }
+        }
+        .rank-num {
+          width: 1.25rem;
+          height: 1.25rem;
+          background: $c-primary-blue-dark-modal;
+          color: $c-sub-white;
+          border-radius: 50%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.75rem;
+          font-weight: 600;
+          &.me {
+            background: $c-point-orange;
+          }
+        }
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 0.625rem;
+
+          .profile-thumb {
+            width: 1.5305rem;
+            height: 1.5305rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid $c-sub-gray;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          .name {
+            font-weight: 600;
+          }
+          .total-score {
+          }
+        }
+      }
+
+      .ranking-wrap-list-item {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 0.5rem;
+        &:first-of-type {
+          background: $c-primary-blue;
         }
       }
       .progress-bar {

@@ -1,0 +1,95 @@
+@use "sass:map";
+@use "@styles/variables" as *;
+
+.mypage-page {
+  .btn-withdraw {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    margin: 1.5rem 0;
+    color: $c-primary-blue-light;
+  }
+
+  section {
+    &.profile-section {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .thumb-wrap {
+        display: block;
+        border-radius: 50%;
+        // overflow: hidden;
+        width: 6.25rem;
+        height: 6.25rem;
+        aspect-ratio: 1/1;
+        background: url("../../../assets/images/thumb-default.jpg") no-repeat
+          center/contain;
+        border: 1px solid $c-sub-gray;
+        position: relative;
+        .btn-file {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 1.5625rem;
+          height: 1.5625rem;
+          padding: 0;
+          color: $c-sub-white;
+          background: $c-sub-gray;
+          aspect-ratio: 1/1;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          input[type="file"] {
+            position: absolute;
+            width: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+          }
+        }
+      }
+    }
+    &.info-section {
+      margin-bottom: 1.5rem;
+      label {
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .label-title {
+        font-size: 0.875rem;
+        display: block;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+      }
+      .input-with-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .icon-google {
+          position: absolute;
+          left: 1.5rem;
+          width: 20px;
+          height: 20px;
+        }
+        input[type="text"] {
+          padding-left: calc(1.5rem + 20px + 0.5rem);
+        }
+      }
+    }
+  }
+
+  input[type="text"] {
+    height: 2.4375rem;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: $c-primary-blue-dark-modal;
+  }
+}

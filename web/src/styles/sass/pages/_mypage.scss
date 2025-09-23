@@ -1,0 +1,80 @@
+@use "sass:map";
+@use "@styles/variables" as *;
+
+.mypage {
+  .greeting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 1.5rem 0;
+
+    .msg {
+      font-size: 1.25rem;
+      p {
+        font-size: 0.875rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+      }
+      strong {
+        font-weight: 600;
+      }
+    }
+    .profile-img {
+      width: 3.125rem;
+      height: 3.125rem;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      border: 1px solid $c-sub-gray;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .menu-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      color: $c-sub-white;
+      background: $c-primary-blue-dark-light;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+  }
+
+  .terms {
+    margin: map.get($spacing, 6) 0 map.get($spacing, 4) 0;
+    font-size: 0.75rem;
+    color: $c-sub-gray;
+
+    a {
+      color: $c-sub-gray;
+      text-decoration: underline;
+    }
+
+    .divider {
+      margin: 0 map.get($spacing, 2);
+    }
+  }
+
+  .btn-logout {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    margin: 1.5rem 0;
+    color: $c-primary-blue-light;
+  }
+}

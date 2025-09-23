@@ -48,7 +48,7 @@
     }
   }
   //랭킹,미션
-  &--mission {
+  &--achive {
     .header-tab {
       display: flex;
       align-items: center;
@@ -61,6 +61,13 @@
           color: $c-sub-white;
         }
       }
+    }
+  }
+  &--mypage {
+    .title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: $c-sub-white;
     }
   }
 
