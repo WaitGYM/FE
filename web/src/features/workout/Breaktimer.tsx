@@ -3,25 +3,26 @@ import CircularTimer from "../../components/ui/CircularTimer";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUIStore } from "../../stores/UIStore";
 
 export default function WorkoutBreaktimer() {
-  const { isRestTimerMiniView, setRestTimerMiniView } = useUIStore();
   const navigate = useNavigate();
+  const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
 
   const handleEquipStatusNavigate = () => {
-    setRestTimerMiniView(true);
+    toggleRestTimerMiniView();
     setTimeout(() => {
       navigate("/reservation/select-equipment");
     }, 200); // animation duration
   };
 
+  useEffect(() => {
+    console.log("isRestTimerMiniView: ", isRestTimerMiniView);
+  }, [isRestTimerMiniView]);
+
   return (
-    <div
-      className={`workout-page ${isRestTimerMiniView ? "fade-out" : "fade-in"}`}
-      id="breaktimer"
-    >
+    <div className={`workout-page`} id="breaktimer">
       <Header
         className="header--breaktimer"
         rightContent={

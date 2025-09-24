@@ -12,7 +12,7 @@ interface UIStateType {
   setWorkingOut: (isWorkingOut: boolean) => void;
 
   isRestTimerMiniView: boolean;
-  setRestTimerMiniView: (isMini: boolean) => void;
+  toggleRestTimerMiniView: () => void;
 }
 
 export const useUIStore = create<UIStateType>((set, get) => ({
@@ -31,5 +31,6 @@ export const useUIStore = create<UIStateType>((set, get) => ({
   setWorkingOut: (isWorkingOut) => set({ isWorkingOut }),
 
   isRestTimerMiniView: false,
-  setRestTimerMiniView: (isRestTimerMiniView) => set({ isRestTimerMiniView }),
+  toggleRestTimerMiniView: () =>
+    set((state) => ({ isRestTimerMiniView: !state.isRestTimerMiniView })),
 }));

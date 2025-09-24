@@ -16,12 +16,15 @@ import Profile from "../features/mypage/profile"; //개인정보 수정
 import WorkoutExercising from "../features/workout/Exercising"; //운동중
 import WorkoutBreaktimer from "../features/workout/Breaktimer"; //휴식중
 import WorkoutCompletePage from "../features/workout/Complete"; //운동완료
+import CircularTimer from "../components/ui/CircularTimer";
+import { useUIStore } from "../stores/UIStore";
 
 // import WorkoutBooking from "../features/workout/Booking"; //예약중
 
 export default function AppRoutes() {
   useAuthInit();
   const token = useAuthStore((state) => state.token);
+  const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
 
   return (
     <BrowserRouter>
@@ -61,6 +64,9 @@ export default function AppRoutes() {
         {/* <Route path="/workout/booking" element={<WorkoutBooking />} />
          */}
       </Routes>
+      {isRestTimerMiniView && (
+        <CircularTimer thickness={1.5} title="휴식 타이머" />
+      )}
     </BrowserRouter>
   );
 }

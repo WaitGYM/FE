@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Circle, CircleCheck } from "lucide-react";
+import { useUIStore } from "../../stores/UIStore";
 
 // 총 휴식 시간을 초 단위로 설정 (props로 받으면 재사용성 높아짐)
 const TOTAL_DURATION = 30;
@@ -19,6 +20,7 @@ export default function CircularTimer({
   showSetIcons = true,
 }: CircularTimerProps) {
   const [timeLeft, setTimeLeft] = React.useState(TOTAL_DURATION);
+  const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
 
   React.useEffect(() => {
     if (timeLeft === 0) return;
@@ -34,7 +36,13 @@ export default function CircularTimer({
   const progressValue = (timeLeft / TOTAL_DURATION) * 100;
 
   return (
-    <Box className="circular-timer">
+    <Box
+      className={`circular-timer ${isRestTimerMiniView && "miniview"}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        isRestTimerMiniView && toggleRestTimerMiniView();
+      }}
+    >
       {/* 배경 트랙 */}
       <CircularProgress
         className="track"
