@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Search, Star } from "lucide-react";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import type { EquipmentType } from "../../types";
 import Equipment from "../../components/layout/Equipment";
@@ -48,10 +48,16 @@ export default function EquipmentListPage() {
         <section className="container">
           <div className="search-bar">
             <input type="search" placeholder="기구명, 부위를 검색해주세요" />
+            <button className="btn-search">
+              <Search size={18} strokeWidth="1.5" />
+            </button>
           </div>
         </section>
         <div className="category-wrap">
-          <button className="active">즐겨찾기</button>
+          <button className="btn-like active">
+            <Star size={18} strokeWidth="1.5" />
+            즐겨찾기
+          </button>
           <button>허벅지</button>
           <button>어깨</button>
           <button>가슴</button>

@@ -84,6 +84,74 @@ button {
   text-align: center;
 }
 
+.search-bar {
+  position: relative;
+
+  input[type="search"] {
+    background-color: $c-primary-blue-dark-light;
+  }
+  .btn-search {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $c-sub-white;
+    padding: 0.5rem 1rem;
+    background-color: $c-primary-blue-dark-light;
+    border-radius: 0.5rem;
+  }
+}
+
+.category-wrap {
+  padding: 0 1.5rem;
+  margin-top: 1rem;
+  height: 2rem;
+  display: flex;
+  overflow-x: scroll;
+
+  button {
+    flex: 0 0 auto;
+    height: 2rem;
+    padding: 0.5rem;
+    color: $c-sub-white;
+    background-color: $c-primary-blue-dark-light;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+
+    & + button {
+      margin-left: 0.5rem;
+    }
+    &.active {
+      background-color: $c-primary-blue;
+    }
+  }
+}
+.btn-like {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  // background: $c-sub-white !important;
+  // color: $c-primary-blue !important;
+  .lucide-star {
+    // color: $c-primary-blue !important;
+    fill: $c-sub-white !important;
+  }
+}
+
+.lucide-star {
+  color: $c-sub-white;
+  cursor: pointer;
+  transition: fill 0.3s ease;
+  &.on {
+    fill: $c-sub-white;
+  }
+}
 @keyframes fadeOut {
   from {
     opacity: 1;
