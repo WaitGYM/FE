@@ -14,10 +14,7 @@ import Ranking from "../features/mission/Ranking"; //랭킹
 import Mypage from "../features/mypage"; //내정보
 import Profile from "../features/mypage/Profile"; //개인정보 수정
 import Gyms from "../features/mypage/Gyms"; //헬스장변경
-// import Favorites from "../features/mypage/favorites"; //즐겨찾기한기구
-// import Cs from "../features/mypage/cs"; //고객센터
-// import Settings from "../features/mypage/settings"; //앱설정
-// import Legal from "../features/mypage/legal"; //서비스약관
+import Favorites from "../features/mypage/Favorites"; //즐겨찾기한기구
 import WorkoutExercising from "../features/workout/Exercising"; //운동중
 import WorkoutBreaktimer from "../features/workout/Breaktimer"; //휴식중
 import WorkoutCompletePage from "../features/workout/Complete"; //운동완료
@@ -57,12 +54,9 @@ export default function AppRoutes() {
         <Route path="/mission" element={<Mission />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/mypage" element={<Mypage />} />
-        <Route path="/mypage/profile" element={<Profile />} />
-        <Route path="/mypage/gyms" element={<Gyms />} />
-        {/* <Route path="/mypage/favorites" element={<Favorites />} />
-        <Route path="/mypage/cs" element={<Cs />} />
-        <Route path="/mypage/settings" element={<Settings />} />
-        <Route path="/mypage/legal" element={<Legal />} /> */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/gyms" element={<Gyms />} />
+        <Route path="/favorites" element={<Favorites />} />
 
         <Route path="/workout/exercising" element={<WorkoutExercising />} />
         <Route path="/workout/breaktimer" element={<WorkoutBreaktimer />} />

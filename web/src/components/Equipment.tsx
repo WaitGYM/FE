@@ -1,5 +1,5 @@
 import type { EquipmentType } from "../types";
-import { Star, StarOff } from "lucide-react";
+import { Star } from "lucide-react";
 
 export default function Equipment({
   name = "힙어브덕션",
@@ -17,9 +17,9 @@ export default function Equipment({
             <span className="name">{name}</span>
             <div className="favorite">
               {isFavorite ? (
-                <Star size={18} strokeWidth="2" />
+                <Star size={18} strokeWidth="1.5" className="on" />
               ) : (
-                <StarOff size={18} strokeWidth="2" />
+                <Star size={18} strokeWidth="1.5" className="" />
               )}
             </div>
           </div>
