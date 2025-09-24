@@ -22,6 +22,7 @@ interface ReservationStoreType {
   ) => void;
   getEquipmentReservationStatus: () => Promise<void>;
   createReservation: () => Promise<void>;
+  deleteReservation: () => Promise<void>;
   resetState: () => void;
 }
 
@@ -62,12 +63,14 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
     try {
       const eq = get().selectedEquipment;
       if (eq) {
-        const response = await reservationApi.getEquipmentReservationStatus(
-          eq.id
-        );
-        console.log("getEquipmentReservationStatus :", response.data);
+        const resData = (
+          await reservationApi.getEquipmentReservationStatus(eq.id)
+        ).data;
 
-        set({ equipmentReservationStatus: response.data.reservations });
+        set({
+          equipmentReservationStatus: resData.status,
+        });
+        console.log("getEquipmentReservationStatus :", resData.status);
       } else {
         throw Error;
       }
@@ -84,15 +87,39 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
       const eq = get().selectedEquipment;
       if (eq) {
         const reqData = {
-          equipmentId: eq.id,
-          sets: eq.sets,
+          totalSets: eq.sets,
           restMinutes: eq.restMinutes,
         };
-        const response = await reservationApi.createReservation(reqData);
+        const response = await reservationApi.createReservation(eq.id, reqData);
         console.log(response.data);
       } else {
         throw Error;
       }
+    } catch (error) {
+      set({
+        reservationError: "기구 예약에 실패했습니다.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  },
+
+  deleteReservation: async () => {
+    setLoading(true);
+    try {
+      console.log("예약 취소됨!!!");
+
+      // const eq = get().selectedEquipment;
+      // if (eq) {
+      //   const reqData = {
+      //     totalSets: eq.sets,
+      //     restMinutes: eq.restMinutes,
+      //   };
+      //   const response = await reservationApi.deleteReservation(eq.id,);
+      //   console.log(response.data);
+      // } else {
+      //   throw Error;
+      // }
     } catch (error) {
       set({
         reservationError: "기구 예약에 실패했습니다.",

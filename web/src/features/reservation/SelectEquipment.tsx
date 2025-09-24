@@ -19,7 +19,8 @@ export default function ReservationPage() {
     useEquipmentStore();
   const { workoutMode, planId } = useUIStore();
   // const { planDetail, planLoading, getPlanDetail } = usePlanStore();
-  const { selectedEquipment, setSelectedEquipment } = useReservationStore();
+  const { selectedEquipment, setSelectedEquipment, deleteReservation } =
+    useReservationStore();
   const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
 
   useEffect(() => {
@@ -38,7 +39,12 @@ export default function ReservationPage() {
 
   function handleNextBtnClick() {
     console.log(selectedEquipment);
-    navigate("/reservation/goal-setting");
+    if (selectedEquipment?.status?.myQueueStatus === "WAITING") {
+      // 대기 취소
+      deleteReservation();
+    } else {
+      navigate("/reservation/goal-setting");
+    }
   }
 
   return (
@@ -75,7 +81,9 @@ export default function ReservationPage() {
       {selectedEquipment ? (
         <BottomButtonWrapper>
           <button onClick={handleNextBtnClick} className="btn btn-orange">
-            다음
+            {selectedEquipment?.status?.myQueueStatus === "WAITING"
+              ? "대기취소"
+              : "다음"}
           </button>
         </BottomButtonWrapper>
       ) : null}

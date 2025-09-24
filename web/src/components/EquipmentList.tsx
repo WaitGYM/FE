@@ -49,19 +49,27 @@ export default function EquipmentListPage({
                   <Star size={18} strokeWidth="2" />
                 </div>
               </div>
-              {equipment.reservationCount ? (
-                <div className="status waiting">
-                  {/* <span className="badge waiting">대기중</span>
-                <span className="badge complete">운동완</span> */}
-                  <span>대기 {equipment.waitingTime}분</span>
-                  <span className="dot"></span>
-                  <span>{equipment.reservationCount}명</span>
-                </div>
-              ) : (
-                <div className="status">
+              <div
+                className={`status ${
+                  !equipment.status.isAvailable && "waiting"
+                }`}
+              >
+                {equipment.status.myQueueStatus === "WAITING" && (
+                  <span className="badge waiting">대기중</span>
+                )}
+                {equipment.status.myQueueStatus === "COMPLETE" && (
+                  <span className="badge complete">운동완</span>
+                )}
+                {equipment.status.isAvailable ? (
                   <span>이용가능</span>
-                </div>
-              )}
+                ) : (
+                  <>
+                    <span>대기 {equipment.waitingTime}분</span>
+                    <span className="dot"></span>
+                    <span>{equipment.status.waitingCount}명</span>
+                  </>
+                )}
+              </div>
             </div>
             <div className="icon-drag">
               <Equal size={24} strokeWidth="2" />

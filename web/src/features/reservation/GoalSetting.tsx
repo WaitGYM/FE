@@ -34,10 +34,10 @@ export default function EquipmentDetail() {
   async function handleNextBtnClick() {
     // console.log("handleNextBtnClick selectedEquipment: ", electedEquipment);
     // 대기 현황 없는지 한번 더 확인 필요??
-    await getEquipmentReservationStatus();
+    // await getEquipmentReservationStatus();
 
     // 대기 없으면 운동 시작으로
-    if (!equipmentReservationStatus?.length) {
+    if (selectedEquipment.status.isAvailable) {
       const workoutGoal = {
         totalSets: selectedEquipment.sets,
         restMinutes: selectedEquipment.restMinutes,
@@ -147,7 +147,7 @@ export default function EquipmentDetail() {
       {selectedEquipment?.sets ? (
         <BottomButtonWrapper>
           <button className="btn btn-orange" onClick={handleNextBtnClick}>
-            예약하기
+            {selectedEquipment.status.isAvailable ? "이용하기" : "예약하기"}
           </button>
         </BottomButtonWrapper>
       ) : null}
