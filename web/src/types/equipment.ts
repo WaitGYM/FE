@@ -8,10 +8,3 @@ export type EquipmentType = {
   category: string;
   muscleGroup: string;
 };
-
-export type EquipmentFavoriteType = {
-  id: number;
-  userId: number;
-  equipmentId: number;
-  createdAt: Date;
-};

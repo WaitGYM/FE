@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Star, Equal } from "lucide-react";
 import { useEquipmentStore } from "../stores/equipmentStore";
 import type { EquipmentType } from "../types";
+import { useFavoriteStore } from "../stores/favoriteStore";
 import Equipment from "../components/layout/Equipment";
 import { useUIStore } from "../stores/UIStore";
 import { usePlanStore } from "../stores/planStore";
@@ -13,6 +14,7 @@ export default function EquipmentListPage({
 }) {
   const [selectedList, setSelectedList] = useState<EquipmentType[]>([]);
   const { equipmentList, getEquipments } = useEquipmentStore();
+  const { addFavorite, deleteFavorite } = useFavoriteStore();
 
   useEffect(() => {
     getEquipments();
@@ -32,6 +34,16 @@ export default function EquipmentListPage({
     // }
   }
 
+  function handleToggleFavorite(
+    e: React.MouseEvent<HTMLButtonElement>,
+    equipment: EquipmentType
+  ) {
+    e.stopPropagation();
+    if (equipment.isFavorite) deleteFavorite(equipment.id);
+    else addFavorite(equipment.id);
+    // getEquipments();
+  }
+
   return (
     <ul className="equipment-list">
       {equipmentList.map((equipment: EquipmentType) => (
@@ -48,10 +60,16 @@ export default function EquipmentListPage({
             <div className="info">
               <div className="title">
                 <span className="name">{equipment.name}</span>
-                <div className="favorite">
-                  <Star size={18} strokeWidth="1.5" className="on" />
-                  {/* 즐겨찾기해제는 .on를 빼주세요 */}
-                </div>
+                <button
+                  className="favorite"
+                  onClick={(e) => handleToggleFavorite(e, equipment)}
+                >
+                  <Star
+                    size={18}
+                    strokeWidth="1.5"
+                    className={equipment.isFavorite ? "on" : ""}
+                  />
+                </button>
               </div>
               <div
                 className={`status ${
