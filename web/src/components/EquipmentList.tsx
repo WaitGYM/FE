@@ -41,12 +41,16 @@ export default function EquipmentListPage({
           className={selectedList.includes(equipment) ? "selected" : ""}
         >
           <div className="equipment">
+            <div className="icon-drag">
+              <Equal size={18} strokeWidth="1.5" />
+            </div>
             <img src={equipment.imageUrl || "/equipment_01.png"} />
             <div className="info">
               <div className="title">
                 <span className="name">{equipment.name}</span>
                 <div className="favorite">
-                  <Star size={18} strokeWidth="2" />
+                  <Star size={18} strokeWidth="1.5" className="on" />
+                  {/* 즐겨찾기해제는 .on를 빼주세요 */}
                 </div>
               </div>
               {equipment.reservationCount ? (
@@ -62,9 +66,6 @@ export default function EquipmentListPage({
                   <span>이용가능</span>
                 </div>
               )}
-            </div>
-            <div className="icon-drag">
-              <Equal size={24} strokeWidth="2" />
             </div>
           </div>
         </li>

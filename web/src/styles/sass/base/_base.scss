@@ -84,6 +84,15 @@ button {
   text-align: center;
 }
 
+.lucide-star {
+  color: $c-sub-white;
+  cursor: pointer;
+  transition: fill 0.3s ease;
+  &.on {
+    fill: $c-sub-white;
+  }
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;
