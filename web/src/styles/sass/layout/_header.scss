@@ -29,6 +29,21 @@
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
+
+    .icon-bell {
+      position: relative;
+      &.dot::after {
+        content: "";
+        display: block;
+        position: absolute;
+        right: -4px;
+        top: 0;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: $c-point-orange;
+      }
+    }
   }
 
   // 메인

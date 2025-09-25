@@ -41,7 +41,8 @@ export default function Mission() {
             </div>
           }
           rightContent={
-            <div className="icon-bell">
+            // 읽지않음표시는 옆에 .dot을 붙여주세요
+            <div className="icon-bell dot">
               <Bell size={24} strokeWidth="1.5" />
             </div>
           }
