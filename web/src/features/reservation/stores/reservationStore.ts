@@ -11,7 +11,6 @@ type WorkoutGoalType = {
 interface ReservationStoreType {
   selectedEquipment: WorkoutGoalType | (EquipmentType & WorkoutGoalType);
   equipmentReservationStatus: string;
-  // loading: boolean;
   reservationError: string | null;
   workoutError: string | null;
 
@@ -30,11 +29,10 @@ const { setLoading } = useLoadingStore.getState();
 
 const initialState = {
   selectedEquipment: {
-    sets: 0,
+    sets: 1,
     restMinutes: 0,
   },
   equipmentReservationStatus: "",
-  // loading: false,
   reservationError: null,
   workoutError: null,
 };
@@ -51,12 +49,35 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
     })),
 
   updateSelectedEquipment: (field, changeValue) =>
-    set((state) => ({
-      selectedEquipment: {
-        ...state.selectedEquipment,
-        [field]: Math.max(0, state.selectedEquipment[field] + changeValue),
-      },
-    })),
+    set((state) => {
+      const current = state.selectedEquipment;
+      const updatedValue = Math.max(0, current[field] + changeValue);
+
+      let newEquipment = {
+        ...current,
+        [field]: updatedValue,
+      };
+
+      // 세트수 조절 시 휴식시간 조건 적용
+      if (field === "sets") {
+        if (updatedValue >= 2 && current.restMinutes < 10) {
+          newEquipment.restMinutes = 10;
+        } else if (updatedValue < 2) {
+          newEquipment.restMinutes = 0;
+        }
+      }
+
+      // 휴식시간 조절 시 세트수 조건 고려
+      if (field === "restMinutes") {
+        if (current.sets >= 2 && updatedValue < 10) {
+          newEquipment.restMinutes = 10;
+        } else {
+          newEquipment.restMinutes = updatedValue;
+        }
+      }
+
+      return { selectedEquipment: newEquipment };
+    }),
 
   getEquipmentReservationStatus: async () => {
     setLoading(true);

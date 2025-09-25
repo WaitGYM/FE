@@ -98,11 +98,12 @@ export default function EquipmentDetail() {
                       <button
                         className="btn btn-icon"
                         onClick={() => updateSelectedEquipment("sets", -1)}
+                        disabled={selectedEquipment.sets < 2}
                       >
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
                       <span className="count-num">
-                        {selectedEquipment?.sets}
+                        {selectedEquipment.sets}
                       </span>
                       <button
                         className="btn btn-icon"
@@ -117,6 +118,11 @@ export default function EquipmentDetail() {
                     <div className="controller-wrap">
                       <button
                         className="btn btn-icon"
+                        disabled={
+                          selectedEquipment.restMinutes < 1 ||
+                          (selectedEquipment.sets > 1 &&
+                            selectedEquipment.restMinutes < 11)
+                        }
                         onClick={() =>
                           updateSelectedEquipment("restMinutes", -10)
                         }
@@ -124,12 +130,13 @@ export default function EquipmentDetail() {
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
                       <span className="count-num">
-                        {selectedEquipment?.restMinutes === 0
+                        {selectedEquipment.restMinutes === 0
                           ? "없음"
-                          : formatSecondsToTime(selectedEquipment?.restMinutes)}
+                          : formatSecondsToTime(selectedEquipment.restMinutes)}
                       </span>
                       <button
                         className="btn btn-icon"
+                        disabled={selectedEquipment.sets < 2}
                         onClick={() =>
                           updateSelectedEquipment("restMinutes", 10)
                         }
