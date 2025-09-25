@@ -6,7 +6,7 @@
   height: 100%;
 
   .container {
-    height: 75%;
+    height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,6 +20,10 @@
       align-items: center;
       gap: 0.5rem;
       width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
 
       h6 {
         font-size: 1.25rem;

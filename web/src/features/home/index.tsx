@@ -1,6 +1,7 @@
+import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
+import { Bell, Dumbbell, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUserStore } from "../../stores/userStore";
@@ -9,7 +10,6 @@ import type { RoutineType } from "../../types";
 import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
 import Skeleton from "@mui/material/Skeleton";
-import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function HomePage() {
@@ -59,7 +59,7 @@ export default function HomePage() {
             {routineLoading ? (
               // 1. 로딩 중일 때 -> 스켈레톤 UI
               <ul className="routine-list">
-                {Array.from(new Array(3)).map((_, index) => (
+                {Array.from(new Array(2)).map((_, index) => (
                   <li className="routine" key={index}>
                     <div className="icon">
                       <Skeleton
