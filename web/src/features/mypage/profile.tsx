@@ -14,6 +14,7 @@ export default function Profile() {
         }
         title={<span>개인정보수정</span>}
       />
+
       <div className="container">
         <section className="profile-section">
           <div className="thumb-wrap">

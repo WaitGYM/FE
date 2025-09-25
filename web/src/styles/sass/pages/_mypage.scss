@@ -78,3 +78,189 @@
     color: $c-primary-blue-light;
   }
 }
+
+//하위메뉴
+.mypage-page {
+  .btn-withdraw {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    margin: 1.5rem 0;
+    color: $c-primary-blue-light;
+  }
+
+  &#profile {
+    section {
+      &.profile-section {
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .thumb-wrap {
+          display: block;
+          border-radius: 50%;
+          // overflow: hidden;
+          width: 6.25rem;
+          height: 6.25rem;
+          aspect-ratio: 1/1;
+          background: url("../../../assets/images/thumb-default.jpg") no-repeat
+            center/contain;
+          border: 1px solid $c-sub-gray;
+          position: relative;
+          .btn-file {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 1.5625rem;
+            height: 1.5625rem;
+            padding: 0;
+            color: $c-sub-white;
+            background: $c-sub-gray;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            input[type="file"] {
+              position: absolute;
+              width: 0;
+              height: 0;
+              padding: 0;
+              overflow: hidden;
+              border: 0;
+            }
+          }
+        }
+      }
+      &.info-section {
+        margin-bottom: 1.5rem;
+        label {
+          display: block;
+          margin-bottom: 1rem;
+        }
+        .label-title {
+          font-size: 0.875rem;
+          display: block;
+          font-weight: 400;
+          margin-bottom: 0.5rem;
+        }
+        .input-with-icon {
+          position: relative;
+          display: flex;
+          align-items: center;
+
+          .icon-google {
+            position: absolute;
+            left: 1.5rem;
+            width: 20px;
+            height: 20px;
+          }
+          input[type="text"] {
+            padding-left: calc(1.5rem + 20px + 0.5rem);
+          }
+        }
+      }
+    }
+  }
+
+  input[type="text"] {
+    height: 2.4375rem;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: $c-primary-blue-dark-modal;
+  }
+
+  &#gyms {
+    .category-wrap {
+      padding: 0;
+    }
+
+    .gyms-list {
+      li {
+        border-radius: 0.4rem;
+        cursor: pointer;
+
+        &.selected {
+          background-color: $c-primary-blue-dark-light;
+        }
+      }
+    }
+    .gyms-wrap {
+      margin-top: 1.8rem;
+      .gyms {
+        padding: 0.5em;
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        align-items: center;
+        gap: 1rem;
+
+        .thumb {
+          display: flex;
+          width: 4rem;
+          height: 4rem;
+          padding: 0.5rem;
+          justify-content: center;
+          align-items: center;
+          aspect-ratio: 1/1;
+          color: $c-sub-gray;
+          background-color: #272c34;
+          border-radius: 0.4rem;
+        }
+
+        .info {
+          .title {
+            gap: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+          }
+
+          .name {
+            font-size: 1rem;
+            font-weight: 600;
+          }
+
+          .badge {
+            &.busy {
+              background-color: $c-point-orange;
+              color: $c-sub-white;
+            }
+            &.normal {
+              background-color: $c-primary-blue;
+              color: $c-sub-white;
+            }
+            &.free {
+              color: $c-primary-blue;
+              background-color: $c-primary-navy-lightest;
+            }
+          }
+
+          .address {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: $c-sub-gray;
+            word-break: keep-all;
+            margin-top: 0.25rem;
+            line-height: 140%;
+          }
+        }
+
+        .icon-drag {
+          width: 1.125rem;
+          height: 1.125rem;
+          aspect-ratio: 1/1;
+        }
+      }
+    }
+  }
+
+  &#favorites {
+    .equipment-wrap {
+      margin-top: 0.5rem;
+    }
+  }
+}
