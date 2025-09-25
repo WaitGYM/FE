@@ -4,8 +4,9 @@ import type { WorkoutModeType } from "../types";
 interface UIStateType {
   workoutMode: WorkoutModeType | null;
   setWorkoutMode: (workoutMode: WorkoutModeType) => void;
-  planId: number | null;
-  setPlanId: (planId: number) => void;
+
+  routineId: number | null;
+  setRoutineId: (routineId: number) => void;
   resetWorkoutMode: () => void;
 
   isWorkingOut: boolean;
@@ -17,14 +18,14 @@ interface UIStateType {
 
 export const useUIStore = create<UIStateType>((set, get) => ({
   workoutMode: null,
-  planId: null,
+  routineId: null,
   setWorkoutMode: (workoutMode) => set({ workoutMode }),
-  setPlanId: (planId) => set({ planId }),
+  setRoutineId: (routineId) => set({ routineId }),
   // 운동모드 리셋시 진행중인 루틴값도 리셋
   resetWorkoutMode: () =>
     set({
       workoutMode: null,
-      planId: null,
+      routineId: null,
     }),
 
   isWorkingOut: false,

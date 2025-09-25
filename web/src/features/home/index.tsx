@@ -3,8 +3,9 @@ import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { usePlanStore } from "../../stores/planStore";
-import type { PlanType } from "../../types";
+import { useUserStore } from "../../stores/userStore";
+import { useRoutineStore } from "../routine/store/routineStore";
+import type { RoutineType } from "../../types";
 import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
 import Skeleton from "@mui/material/Skeleton";
@@ -13,16 +14,20 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { planList, planLoading, planError, getPlanList, clearError } =
-    usePlanStore();
-  const { setWorkoutMode, setPlanId, isWorkingOut } = useUIStore();
+  const { userInfo } = useUserStore();
+  const { routineList, routineLoading, getRoutineList } = useRoutineStore();
+  const { setWorkoutMode, setRoutineId, isWorkingOut } = useUIStore();
 
   useEffect(() => {
-    getPlanList();
-  }, [getPlanList]);
+    getRoutineList();
+  }, [getRoutineList]);
 
-  function handleWorkoutMode(mode: WorkoutModeType, selectedPlanId?: number) {
-    if (mode === "plan" && selectedPlanId) setPlanId(selectedPlanId);
+  function handleWorkoutMode(
+    mode: WorkoutModeType,
+    selectedRoutineId?: number
+  ) {
+    if (mode === "routine" && selectedRoutineId)
+      setRoutineId(selectedRoutineId);
     setWorkoutMode(mode);
     navigate("/reservation/select-equipment");
   }
@@ -45,13 +50,13 @@ export default function HomePage() {
         />
 
         <div className="greeting">
-          OO님,
+          {userInfo ? userInfo.name : "회원"}님,
           <br />
           오늘도 루틴대로 운동해볼까요?
         </div>
         <div className="container">
           <section>
-            {planLoading ? (
+            {routineLoading ? (
               // 1. 로딩 중일 때 -> 스켈레톤 UI
               <ul className="routine-list">
                 {Array.from(new Array(3)).map((_, index) => (
@@ -76,7 +81,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-            ) : !planList || planList.length < 1 ? (
+            ) : !routineList || routineList.length < 1 ? (
               // 2. 데이터가 없을 때 -> "루틴 등록" UI
               <ul className="not-routine">
                 <li className="routine">
@@ -91,32 +96,25 @@ export default function HomePage() {
             ) : (
               // 3. 데이터가 있을 때 -> 실제 목록
               <ul className="routine-list">
-                {planList.map((plan: PlanType) => (
+                {routineList.map((routine: RoutineType) => (
                   <li
                     className="routine"
-                    key={plan.id}
-                    onClick={() => handleWorkoutMode("plan", plan.id)}
+                    key={routine.id}
+                    onClick={() => handleWorkoutMode("routine", routine.id)}
                   >
                     <div className="icon">
                       <Dumbbell size={32} strokeWidth="1.5" />
                     </div>
                     <div className="info">
-                      <p className="title">{plan.name}</p>
+                      <p className="title">{routine.name}</p>
                       <div className="detail">
-                        <span>{plan.equipmentNum}개 운동</span>
-                        <span>예상시간 {plan.duration}분</span>
+                        <span>{routine.equipmentNum}개 운동</span>
+                        <span>예상시간 {routine.duration}분</span>
                       </div>
                     </div>
                   </li>
                 ))}
               </ul>
-            )}
-
-            {planError && (
-              <div>
-                {planError}
-                <button onClick={clearError}>×</button>
-              </div>
             )}
           </section>
         </div>
@@ -132,7 +130,7 @@ export default function HomePage() {
             바로운동
           </button>
           <button
-            onClick={() => navigate("/add-plan")}
+            onClick={() => navigate("/add-routine")}
             className="btn btn-orange"
             id="routine-add"
           >

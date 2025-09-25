@@ -7,7 +7,7 @@ import HomePage from "../features/home"; //메인
 import ReservationGoalSetting from "../features/reservation/GoalSetting"; // 세트설정
 import ReservationSelectEquipment from "../features/reservation/SelectEquipment"; // 세트설정
 import ReservationWaitRequest from "../features/reservation/WaitRequest"; // 세트설정
-import Plan from "../features/plan"; // 루틴 추가
+import Plan from "../features/routine"; // 루틴 추가
 import PushList from "../features/home/PushList"; //푸시리스트
 import Mission from "../features/mission"; //미션
 import Ranking from "../features/mission/Ranking"; //랭킹

@@ -4,7 +4,7 @@ import { ChevronLeft, Search, Star } from "lucide-react";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import type { EquipmentType } from "../../types";
 import Equipment from "../../components/layout/Equipment";
-// import { usePlanStore } from "../../stores/planStore";
+// import { useRoutineStore } from "../../stores/routineStore";
 // import Switch from "@mui/material/Switch";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
@@ -34,7 +34,7 @@ export default function EquipmentListPage() {
   }
 
   return (
-    <div className="add-plan-page equipmentList-page">
+    <div className="add-routine-page equipmentList-page">
       <div className="content-scroll">
         <Header
           leftContent={

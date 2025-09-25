@@ -1,6 +1,6 @@
 import type { EquipmentType } from "./equipment";
 
-export type PlanType = {
+export type RoutineType = {
   id: number;
   name: string;
   isActive: boolean;
@@ -8,7 +8,7 @@ export type PlanType = {
   duration: number;
 };
 
-export type PlanDetailType = {
+export type RoutineDetailType = {
   id: number;
   name: string;
   equipmentList: EquipmentType[];
