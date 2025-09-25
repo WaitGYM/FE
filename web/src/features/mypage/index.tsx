@@ -9,9 +9,12 @@ import {
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
+import { useNavigate } from "react-router-dom";
 import thumbDefault from "../../assets/images/thumb-default.jpg"; //프로필 default이미지
 
 export default function Mypage() {
+  const navigate = useNavigate();
+
   return (
     <div className="mypage">
       <div className="content-scroll">
@@ -19,9 +22,13 @@ export default function Mypage() {
           className="header--mypage"
           leftContent={<h1 className="title">내 정보</h1>}
           rightContent={
-            <div className="icon-bell">
+            // 읽지않음표시는 옆에 .dot을 붙여주세요
+            <button
+              className="icon-bell dot"
+              onClick={() => navigate("/home/pushlist")}
+            >
               <Bell size={24} strokeWidth="1.5" />
-            </div>
+            </button>
           }
         />
         <div className="container">

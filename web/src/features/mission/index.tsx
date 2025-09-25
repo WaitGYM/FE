@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bell, AlarmClock } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
@@ -6,8 +6,10 @@ import motion from "@img/motion-strong.png"; //이미지
 import LinearProgress from "@mui/material/LinearProgress";
 
 export default function Mission() {
-  const maxMissionCount = 4;
+  const navigate = useNavigate();
 
+  //최대값 (임의값 4로 설정)
+  const maxMissionCount = 4;
   // 미션 데이터를 객체 배열로 관리
   const missions = [
     {
@@ -42,9 +44,12 @@ export default function Mission() {
           }
           rightContent={
             // 읽지않음표시는 옆에 .dot을 붙여주세요
-            <div className="icon-bell dot">
+            <button
+              className="icon-bell dot"
+              onClick={() => navigate("/home/pushlist")}
+            >
               <Bell size={24} strokeWidth="1.5" />
-            </div>
+            </button>
           }
         />
         <div className="container">

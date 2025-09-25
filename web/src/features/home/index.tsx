@@ -43,9 +43,13 @@ export default function HomePage() {
             </div>
           }
           rightContent={
-            <div className="icon-bell">
+            // 읽지않음표시는 옆에 .dot을 붙여주세요
+            <button
+              className="icon-bell dot"
+              onClick={() => navigate("/home/pushlist")}
+            >
               <Bell size={24} strokeWidth="1.5" />
-            </div>
+            </button>
           }
         />
 
