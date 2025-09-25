@@ -34,14 +34,14 @@ export default function EquipmentListPage({
     // }
   }
 
-  function handleToggleFavorite(
+  async function handleToggleFavorite(
     e: React.MouseEvent<HTMLButtonElement>,
     equipment: EquipmentType
   ) {
     e.stopPropagation();
-    if (equipment.isFavorite) deleteFavorite(equipment.id);
-    else addFavorite(equipment.id);
-    // getEquipments();
+    if (equipment.isFavorite) await deleteFavorite(equipment.id);
+    else await addFavorite(equipment.id);
+    getEquipments();
   }
 
   return (
@@ -73,13 +73,15 @@ export default function EquipmentListPage({
               </div>
               <div
                 className={`status ${
-                  !equipment.status.isAvailable && "waiting"
+                  !equipment.status?.isAvailable && "waiting"
                 }`}
               >
-                {equipment.status.myQueueStatus === "WAITING" && (
+                {equipment?.status?.myQueueStatus === "WAITING" && (
                   <span className="badge waiting">대기중</span>
                 )}
-                {equipment.status.myQueueStatus === "COMPLETE" && (
+                {equipment?.status?.currentUsageInfo?.setStatus ===
+                  "EXERCISING" && <span className="badge waiting">운동중</span>}
+                {equipment.status.completedToday && (
                   <span className="badge complete">운동완</span>
                 )}
                 {equipment.status.isAvailable ? (

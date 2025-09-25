@@ -33,7 +33,8 @@
         font-weight: 700;
         line-height: 140%;
       }
-      p {
+      p,
+      .set-count {
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -59,7 +60,7 @@
     h1 {
       color: $c-primary-blue-light;
     }
-    p {
+    .set-count {
       .lucide-circle {
         color: $c-sub-gray;
       }
@@ -69,7 +70,7 @@
     }
   }
   &#breaktimer .text-wrap {
-    p {
+    .set-count {
       .lucide-circle {
         color: $c-sub-gray;
       }

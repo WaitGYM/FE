@@ -5,7 +5,7 @@ import { useLoadingStore } from "../../../stores/loadingStore";
 
 type WorkoutGoalType = {
   sets: number;
-  restMinutes: number;
+  restSeconds: number;
 };
 
 interface ReservationStoreType {
@@ -16,7 +16,7 @@ interface ReservationStoreType {
 
   setSelectedEquipment: (equipmentInfo: EquipmentType) => void;
   updateSelectedEquipment: (
-    field: "sets" | "restMinutes",
+    field: "sets" | "restSeconds",
     delta: number
   ) => void;
   getEquipmentReservationStatus: () => Promise<void>;
@@ -30,7 +30,7 @@ const { setLoading } = useLoadingStore.getState();
 const initialState = {
   selectedEquipment: {
     sets: 1,
-    restMinutes: 0,
+    restSeconds: 0,
   },
   equipmentReservationStatus: "",
   reservationError: null,
@@ -60,19 +60,19 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
 
       // 세트수 조절 시 휴식시간 조건 적용
       if (field === "sets") {
-        if (updatedValue >= 2 && current.restMinutes < 10) {
-          newEquipment.restMinutes = 10;
+        if (updatedValue >= 2 && current.restSeconds < 10) {
+          newEquipment.restSeconds = 10;
         } else if (updatedValue < 2) {
-          newEquipment.restMinutes = 0;
+          newEquipment.restSeconds = 0;
         }
       }
 
       // 휴식시간 조절 시 세트수 조건 고려
-      if (field === "restMinutes") {
+      if (field === "restSeconds") {
         if (current.sets >= 2 && updatedValue < 10) {
-          newEquipment.restMinutes = 10;
+          newEquipment.restSeconds = 10;
         } else {
-          newEquipment.restMinutes = updatedValue;
+          newEquipment.restSeconds = updatedValue;
         }
       }
 
@@ -109,7 +109,7 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
       if (eq) {
         const reqData = {
           totalSets: eq.sets,
-          restMinutes: eq.restMinutes,
+          restSeconds: eq.restSeconds,
         };
         const response = await reservationApi.createReservation(eq.id, reqData);
         console.log(response.data);
@@ -128,19 +128,20 @@ export const useReservationStore = create<ReservationStoreType>((set, get) => ({
   deleteReservation: async () => {
     setLoading(true);
     try {
+      await get().getEquipmentReservationStatus();
       console.log("예약 취소됨!!!");
 
-      // const eq = get().selectedEquipment;
-      // if (eq) {
-      //   const reqData = {
-      //     totalSets: eq.sets,
-      //     restMinutes: eq.restMinutes,
-      //   };
-      //   const response = await reservationApi.deleteReservation(eq.id,);
-      //   console.log(response.data);
-      // } else {
-      //   throw Error;
-      // }
+      const eq = get().equipmentReservationStatus;
+      if (eq) {
+        const reqData = {
+          totalSets: eq.sets,
+          restSeconds: eq.restSeconds,
+        };
+        const response = await reservationApi.deleteReservation(eq.id);
+        console.log(response.data);
+      } else {
+        throw Error;
+      }
     } catch (error) {
       set({
         reservationError: "기구 예약에 실패했습니다.",

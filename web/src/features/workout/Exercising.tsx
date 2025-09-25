@@ -7,21 +7,7 @@ import { useWorkoutStore } from "./stores/workoutStore";
 
 export default function WorkoutExercising() {
   const navigate = useNavigate();
-  const { stopWorkout } = useWorkoutStore();
-
-  const handleWorkoutFinish = () => {
-    console.log("handleWorkoutFinish");
-
-    setIsRunning(false);
-    setTime(0);
-    stopWorkout();
-    navigate("/workout/complete");
-  };
-
-  const handleSetComplete = () => {
-    navigate("/workout/breaktimer");
-  };
-
+  const { workingOutInfo, stopWorkout, completeWorkoutSet } = useWorkoutStore();
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -40,14 +26,30 @@ export default function WorkoutExercising() {
     };
   }, [isRunning]);
 
-  const formatTime = (ms: number): string => {
+  function formatTime(ms: number) {
     const minutes = Math.floor(ms / 60000);
     const seconds = Math.floor((ms % 60000) / 1000);
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
       2,
       "0"
     )}`;
-  };
+  }
+
+  async function handleWorkoutFinish() {
+    setIsRunning(false);
+    setTime(0);
+    await stopWorkout();
+    navigate("/workout/complete");
+  }
+
+  async function handleSetComplete() {
+    const workoutState = await completeWorkoutSet();
+    if (workoutState !== "completed") {
+      navigate("/workout/breaktimer");
+    } else {
+      handleWorkoutFinish();
+    }
+  }
 
   return (
     <div className="workout-page" id="exercising">
@@ -62,13 +64,25 @@ export default function WorkoutExercising() {
 
       <section className="container">
         <div className="text-wrap">
-          <h6>스텝밀</h6>
+          <h6>{workingOutInfo?.equipmentName}</h6>
           <h1>{formatTime(time)}</h1>
-          <p>
-            <CircleCheck size={18} strokeWidth="2" className="on" />
-            <Circle size={18} strokeWidth="2" />
-            <Circle size={18} strokeWidth="2" />
-          </p>
+          {workingOutInfo && (
+            <div className="set-count">
+              {Array.from({ length: workingOutInfo.totalSets }).map(
+                (_, index) =>
+                  workingOutInfo.currentSet > index ? (
+                    <CircleCheck
+                      size={18}
+                      strokeWidth="2"
+                      className="on"
+                      key={`set${index}`}
+                    />
+                  ) : (
+                    <Circle size={18} strokeWidth="2" key={`set${index}`} />
+                  )
+              )}
+            </div>
+          )}
         </div>
       </section>
 

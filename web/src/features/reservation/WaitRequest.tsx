@@ -22,8 +22,8 @@ export default function WaitRequest() {
 
   async function handleReqBtnClick() {
     await createReservation();
-    // 예약 생성 성공하면 이전 단계로 이동
-    if (!reservationError) navigate(-1);
+    // 예약 생성 성공하면 기구목록으로 이동
+    if (!reservationError) navigate("/reservation/select-equipment");
   }
 
   return (

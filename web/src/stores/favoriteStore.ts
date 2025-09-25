@@ -39,8 +39,7 @@ export const useFavoriteStore = create<FavoriteStoreType>((set, get) => ({
   addFavorite: async (eqId) => {
     setLoading(true);
     try {
-      const response = await favoriteApi.addFavorite(eqId);
-      console.log("addFavorite :", response);
+      await favoriteApi.addFavorite(eqId);
     } catch (error) {
       set({
         error: "즐겨찾기 추가에 실패했습니다.",
@@ -53,8 +52,7 @@ export const useFavoriteStore = create<FavoriteStoreType>((set, get) => ({
   deleteFavorite: async (eqId) => {
     setLoading(true);
     try {
-      const response = await favoriteApi.deleteFavorite(eqId);
-      console.log("deleteFavorite :", response);
+      await favoriteApi.deleteFavorite(eqId);
     } catch (error) {
       set({
         error: "즐겨찾기 삭제에 실패했습니다.",
