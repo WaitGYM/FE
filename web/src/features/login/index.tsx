@@ -16,7 +16,7 @@ export default function Login() {
           <motion.h6
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
           >
             어서오세요!
             <br />
@@ -28,7 +28,7 @@ export default function Login() {
             alt="기다려짐"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: "easeInOut" }}
+            transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
           />
         </div>
 
@@ -38,7 +38,7 @@ export default function Login() {
             className="btn btn-white"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2, ease: "easeInOut" }}
+            transition={{ duration: 0.4, delay: 0.6, ease: "easeInOut" }}
           >
             <img src={googleLogo} className="icon-google" alt="google-logo" />
             구글아이디로 로그인

@@ -1,9 +1,15 @@
 import { ChevronLeft } from "lucide-react";
 import Header from "../../components/layout/Header";
+import { motion } from "framer-motion";
 
 export default function PushList() {
   return (
-    <div className="pushlist-page">
+    <motion.div
+      className="pushlist-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           leftContent={
@@ -51,6 +57,6 @@ export default function PushList() {
           </div>
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 }

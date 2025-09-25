@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useReservationStore } from "./stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
+import { motion } from "framer-motion";
 
 export default function EquipmentDetail() {
   const navigate = useNavigate();
@@ -52,7 +53,12 @@ export default function EquipmentDetail() {
   }
 
   return (
-    <div className="equipmentDetail-page goal-setter">
+    <motion.div
+      className="equipmentDetail-page goal-setter"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           className="header--equipment-detail"
@@ -158,6 +164,6 @@ export default function EquipmentDetail() {
           </button>
         </BottomButtonWrapper>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

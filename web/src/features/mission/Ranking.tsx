@@ -2,7 +2,8 @@
 import { Bell, CalendarClock } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import motion from "@img/motion-trophy.png"; //이미지
+import { motion } from "framer-motion";
+import motionIcon from "@img/motion-trophy.png"; //이미지
 import thumbDefault from "../../assets/images/thumb-default.jpg"; //프로필 default이미지
 
 export default function Ranking() {
@@ -36,7 +37,13 @@ export default function Ranking() {
   ];
 
   return (
-    <div className="ranking" id="ranking-page">
+    <motion.div
+      className="ranking"
+      id="ranking-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           className="header--achive"
@@ -62,7 +69,7 @@ export default function Ranking() {
               <strong>이번주 챔피언은?</strong>
             </div>
             <div className="icon-motion">
-              <img src={motion} alt="화이팅" />
+              <img src={motionIcon} alt="화이팅" />
             </div>
           </div>
           <div className="ranking-wrap">
@@ -97,6 +104,6 @@ export default function Ranking() {
       </div>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 }

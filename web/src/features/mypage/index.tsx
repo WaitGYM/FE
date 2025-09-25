@@ -11,12 +11,18 @@ import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import { useNavigate } from "react-router-dom";
 import thumbDefault from "../../assets/images/thumb-default.jpg"; //프로필 default이미지
+import { motion } from "framer-motion";
 
 export default function Mypage() {
   const navigate = useNavigate();
 
   return (
-    <div className="mypage">
+    <motion.div
+      className="mypage"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           className="header--mypage"
@@ -72,6 +78,6 @@ export default function Mypage() {
       </div>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 }

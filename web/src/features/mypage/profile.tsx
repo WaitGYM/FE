@@ -1,10 +1,17 @@
 import { ChevronLeft, Camera } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function Profile() {
   return (
-    <div className="mypage-page" id="profile">
+    <motion.div
+      className="mypage-page"
+      id="profile"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+    >
       <Header
         className="header--mypage"
         leftContent={
@@ -58,6 +65,6 @@ export default function Profile() {
       <BottomButtonWrapper>
         <button className="btn btn-orange">수정하기</button>
       </BottomButtonWrapper>
-    </div>
+    </motion.div>
   );
 }

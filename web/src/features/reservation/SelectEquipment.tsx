@@ -11,6 +11,7 @@ import Header from "../../components/layout/Header";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
+import { motion } from "framer-motion";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
@@ -48,7 +49,12 @@ export default function ReservationPage() {
   }
 
   return (
-    <div className="equipmentList-page reservation-page">
+    <motion.div
+      className="equipmentList-page reservation-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           leftContent={
@@ -87,6 +93,6 @@ export default function ReservationPage() {
           </button>
         </BottomButtonWrapper>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

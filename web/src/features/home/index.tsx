@@ -11,6 +11,7 @@ import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
 import Skeleton from "@mui/material/Skeleton";
 import { BottomButtonWrapper } from "../../components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -33,7 +34,12 @@ export default function HomePage() {
   }
 
   return (
-    <div className="home-page">
+    <motion.div
+      className="home-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           className="header--home"
@@ -144,6 +150,6 @@ export default function HomePage() {
       )}
 
       <Footer />
-    </div>
+    </motion.div>
   );
 }
