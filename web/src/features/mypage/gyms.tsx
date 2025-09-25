@@ -1,10 +1,17 @@
 import { ChevronLeft, Store, Search, Star } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function Gyms() {
   return (
-    <div className="mypage-page" id="gyms">
+    <motion.div
+      className="mypage-page"
+      id="gyms"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+    >
       <Header
         className="header--mypage"
         leftContent={
@@ -96,6 +103,6 @@ export default function Gyms() {
       <BottomButtonWrapper>
         <button className="btn btn-orange">수정하기</button>
       </BottomButtonWrapper>
-    </div>
+    </motion.div>
   );
 }

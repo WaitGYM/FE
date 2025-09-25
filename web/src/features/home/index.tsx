@@ -1,6 +1,7 @@
+import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import { Bell, Dumbbell, Plus } from "lucide-react";
 import logo from "@img/logo.svg"; //이미지로고
+import { Bell, Dumbbell, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUserStore } from "../../stores/userStore";
@@ -9,8 +10,8 @@ import type { RoutineType } from "../../types";
 import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
 import Skeleton from "@mui/material/Skeleton";
-import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -33,7 +34,12 @@ export default function HomePage() {
   }
 
   return (
-    <div className="home-page">
+    <motion.div
+      className="home-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           className="header--home"
@@ -43,9 +49,13 @@ export default function HomePage() {
             </div>
           }
           rightContent={
-            <div className="icon-bell">
+            // 읽지않음표시는 옆에 .dot을 붙여주세요
+            <button
+              className="icon-bell dot"
+              onClick={() => navigate("/home/pushlist")}
+            >
               <Bell size={24} strokeWidth="1.5" />
-            </div>
+            </button>
           }
         />
 
@@ -59,7 +69,7 @@ export default function HomePage() {
             {routineLoading ? (
               // 1. 로딩 중일 때 -> 스켈레톤 UI
               <ul className="routine-list">
-                {Array.from(new Array(3)).map((_, index) => (
+                {Array.from(new Array(2)).map((_, index) => (
                   <li className="routine" key={index}>
                     <div className="icon">
                       <Skeleton
@@ -140,6 +150,6 @@ export default function HomePage() {
       )}
 
       <Footer />
-    </div>
+    </motion.div>
   );
 }

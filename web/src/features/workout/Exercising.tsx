@@ -4,6 +4,7 @@ import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useEffect, useRef, useState } from "react";
 import { useWorkoutStore } from "./stores/workoutStore";
+import { motion } from "framer-motion";
 
 export default function WorkoutExercising() {
   const navigate = useNavigate();
@@ -52,7 +53,13 @@ export default function WorkoutExercising() {
   }
 
   return (
-    <div className="workout-page" id="exercising">
+    <motion.div
+      className="workout-page"
+      id="exercising"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <Header
         className="header--exercising"
         rightContent={
@@ -91,6 +98,6 @@ export default function WorkoutExercising() {
           세트 완료
         </button>
       </BottomButtonWrapper>
-    </div>
+    </motion.div>
   );
 }

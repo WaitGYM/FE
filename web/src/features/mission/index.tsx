@@ -1,13 +1,16 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bell, AlarmClock } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import motion from "@img/motion-strong.png"; //이미지
+import motionIcon from "@img/motion-strong.png"; //이미지
 import LinearProgress from "@mui/material/LinearProgress";
+import { motion } from "framer-motion";
 
 export default function Mission() {
-  const maxMissionCount = 4;
+  const navigate = useNavigate();
 
+  //최대값 (임의값 4로 설정)
+  const maxMissionCount = 4;
   // 미션 데이터를 객체 배열로 관리
   const missions = [
     {
@@ -28,7 +31,13 @@ export default function Mission() {
   ];
 
   return (
-    <div className="mission" id="mission-page">
+    <motion.div
+      className="mission"
+      id="mission-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="content-scroll">
         <Header
           className="header--achive"
@@ -42,9 +51,12 @@ export default function Mission() {
           }
           rightContent={
             // 읽지않음표시는 옆에 .dot을 붙여주세요
-            <div className="icon-bell dot">
+            <button
+              className="icon-bell dot"
+              onClick={() => navigate("/home/pushlist")}
+            >
               <Bell size={24} strokeWidth="1.5" />
-            </div>
+            </button>
           }
         />
         <div className="container">
@@ -55,7 +67,7 @@ export default function Mission() {
               조금만 더 힘내세요!
             </div>
             <div className="icon-motion">
-              <img src={motion} alt="화이팅" />
+              <img src={motionIcon} alt="화이팅" />
             </div>
           </div>
           <div className="mission-wrap">
@@ -93,6 +105,6 @@ export default function Mission() {
       </div>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 }

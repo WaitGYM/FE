@@ -1,5 +1,7 @@
 import logo from "@img/logo.svg"; //이미지로고
 import googleLogo from "@img/icon-google.svg"; //이미지로고
+import { BottomButtonWrapper } from "../../components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function Login() {
   function handleLogin() {
@@ -11,17 +13,37 @@ export default function Login() {
     <div className="login-page">
       <div className="container">
         <div className="text-wrap">
-          <h6>
+          <motion.h6
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+          >
             어서오세요!
             <br />
             오늘도 운동시작 해볼까요?
-          </h6>
-          <img src={logo} className="logo" alt="logo" />
+          </motion.h6>
+          <motion.img
+            src={logo}
+            className="logo"
+            alt="기다려짐"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
+          />
         </div>
-        <button onClick={handleLogin} className="btn btn-white">
-          <img src={googleLogo} className="icon-google" alt="google-logo" />
-          구글아이디로 로그인
-        </button>
+
+        <BottomButtonWrapper>
+          <motion.button
+            onClick={handleLogin}
+            className="btn btn-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.6, ease: "easeInOut" }}
+          >
+            <img src={googleLogo} className="icon-google" alt="google-logo" />
+            구글아이디로 로그인
+          </motion.button>
+        </BottomButtonWrapper>
       </div>
     </div>
   );

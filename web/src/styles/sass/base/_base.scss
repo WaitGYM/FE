@@ -10,13 +10,14 @@ body {
 
 #root {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
   overflow: hidden;
 }
 
 a {
   text-decoration: none;
+  color: $c-sub-white;
 }
 
 button {

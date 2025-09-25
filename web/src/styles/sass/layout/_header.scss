@@ -32,6 +32,8 @@
 
     .icon-bell {
       position: relative;
+      padding: 0;
+      color: $c-sub-white;
       &.dot::after {
         content: "";
         display: block;

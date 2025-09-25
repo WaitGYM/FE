@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import CircularTimer from "../../components/ui/CircularTimer";
 import Header from "../../components/layout/Header";
@@ -54,7 +55,13 @@ export default function WorkoutBreaktimer() {
   }
 
   return (
-    <div className={`workout-page`} id="breaktimer">
+    <motion.div
+      className={`workout-page`}
+      id="breaktimer"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <Header
         className="header--breaktimer"
         rightContent={
@@ -79,6 +86,6 @@ export default function WorkoutBreaktimer() {
           <Minus />
         </button>
       </BottomButtonWrapper>
-    </div>
+    </motion.div>
   );
 }

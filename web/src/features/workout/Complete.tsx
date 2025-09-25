@@ -1,5 +1,6 @@
+import { motion } from "framer-motion";
 import { Dumbbell, Timer } from "lucide-react";
-import motion from "@img/motion-clap.png"; //이미지
+import motionIcon from "@img/motion-clap.png"; //이미지
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useWorkoutStore } from "./stores/workoutStore";
@@ -14,10 +15,15 @@ export default function WorkoutCompletePage() {
   }
 
   return (
-    <div className="container workout-complete-page">
+    <motion.div
+      className="container workout-complete-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
+    >
       <div className="complete-title">
         <div className="icon-motion" id="clap">
-          <img src={motion} alt="박수" />
+          <img src={motionIcon} alt="박수" />
         </div>
         <h1>
           {workingOutInfo?.equipmentName}을
@@ -47,6 +53,6 @@ export default function WorkoutCompletePage() {
           확인
         </button>
       </BottomButtonWrapper>
-    </div>
+    </motion.div>
   );
 }
