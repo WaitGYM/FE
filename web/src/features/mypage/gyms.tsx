@@ -2,8 +2,11 @@ import { ChevronLeft, Store, Search, Star } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Gyms() {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       className="mypage-page"
@@ -15,7 +18,7 @@ export default function Gyms() {
       <Header
         className="header--mypage"
         leftContent={
-          <button className="btn btn-icon">
+          <button className="btn btn-icon" onClick={() => navigate(-1)}>
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }

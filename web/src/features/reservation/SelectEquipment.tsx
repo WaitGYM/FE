@@ -58,7 +58,7 @@ export default function ReservationPage() {
       <div className="content-scroll">
         <Header
           leftContent={
-            <button className="btn btn-icon" onClick={() => navigate(-1)}>
+            <button className="btn btn-icon" onClick={() => navigate("/")}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }

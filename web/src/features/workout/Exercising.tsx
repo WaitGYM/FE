@@ -40,7 +40,7 @@ export default function WorkoutExercising() {
     setIsRunning(false);
     setTime(0);
     await stopWorkout();
-    navigate("/workout/complete");
+    navigate("/workout/complete", { replace: true });
   }
 
   async function handleSetComplete() {

@@ -5,13 +5,20 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useWorkoutStore } from "./stores/workoutStore";
 import { formatDateStr } from "../../hooks/useDateFormatting";
+import { useUIStore } from "../../stores/UIStore";
+import { useEffect } from "react";
 
 export default function WorkoutCompletePage() {
   const navigate = useNavigate();
   const { workingOutInfo } = useWorkoutStore();
+  const { setWorkingOut } = useUIStore();
+
+  useEffect(() => {
+    setWorkingOut(false);
+  });
 
   function handleWorkoutComplete() {
-    navigate("/reservation/select-equipment");
+    navigate("/reservation/select-equipment", { replace: true });
   }
 
   return (
