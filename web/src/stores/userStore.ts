@@ -4,7 +4,7 @@ import { useLoadingStore } from "./loadingStore";
 import { userApi } from "../services";
 
 interface UserState {
-  userInfo: UserType | null;
+  userInfo: UserType;
 
   // setUser: (user: UserType) => void;
   getUserInfo: () => Promise<void>;
@@ -13,7 +13,9 @@ interface UserState {
 
 const { setLoading } = useLoadingStore.getState();
 const initialState = {
-  userInfo: null,
+  userInfo: {
+    name: "회원",
+  },
 };
 
 export const useUserStore = create<UserState>((set) => ({

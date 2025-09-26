@@ -60,7 +60,7 @@ export default function HomePage() {
         />
 
         <div className="greeting">
-          {userInfo ? userInfo.name : "회원"}님,
+          {userInfo.name}님,
           <br />
           오늘도 루틴대로 운동해볼까요?
         </div>
