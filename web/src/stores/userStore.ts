@@ -15,6 +15,7 @@ const { setLoading } = useLoadingStore.getState();
 const initialState = {
   userInfo: {
     name: "회원",
+    avatar: "/thumb-default.jpg",
   },
 };
 

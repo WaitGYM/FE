@@ -10,11 +10,12 @@ import {
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import { useNavigate } from "react-router-dom";
-import thumbDefault from "../../assets/images/thumb-default.jpg"; //프로필 default이미지
 import { motion } from "framer-motion";
+import { useUserStore } from "../../stores/userStore";
 
 export default function Mypage() {
   const navigate = useNavigate();
+  const { userInfo } = useUserStore();
 
   return (
     <motion.div
@@ -41,16 +42,16 @@ export default function Mypage() {
           <div className="greeting">
             <div className="msg">
               <p>짐박스 구로디지털단지점</p>
-              <strong>박철민</strong>님
+              <strong>{userInfo.name}</strong>님
             </div>
             <div className="profile-img">
-              <img src={thumbDefault} alt="프로필 이미지" />
+              <img src={userInfo.avatar} alt="프로필 이미지" />
             </div>
           </div>
           <div className="menu-wrap">
             <a className="menu" href="/profile">
               <User size={18} strokeWidth="1.5" />
-              개인정보 수정
+              개인정보수정
             </a>
             <a className="menu" href="/gyms">
               <Dumbbell size={18} strokeWidth="1.5" />
@@ -60,14 +61,14 @@ export default function Mypage() {
               <Star size={18} strokeWidth="1.5" />
               즐겨찾기한 기구
             </a>
-            <a className="menu" href="/cs">
+            <a className="menu" href="#">
               <Headset size={18} strokeWidth="1.5" />
               고객센터
             </a>
-            <a className="menu" href="/settings">
+            <a className="menu" href="#">
               <Settings size={18} strokeWidth="1.5" />앱 설정
             </a>
-            <a className="menu" href="/legal">
+            <a className="menu" href="#">
               <FileCheck2 size={18} strokeWidth="1.5" />
               서비스 약관
             </a>

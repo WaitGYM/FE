@@ -104,8 +104,9 @@
           width: 6.25rem;
           height: 6.25rem;
           aspect-ratio: 1/1;
-          background: url("../../../assets/images/thumb-default.jpg") no-repeat
-            center/contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
           border: 1px solid $c-sub-gray;
           position: relative;
           .btn-file {

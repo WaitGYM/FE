@@ -2,8 +2,13 @@ import { ChevronLeft, Camera } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/userStore";
 
 export default function Profile() {
+  const navigate = useNavigate();
+  const { userInfo } = useUserStore();
+
   return (
     <motion.div
       className="mypage-page"
@@ -15,7 +20,7 @@ export default function Profile() {
       <Header
         className="header--mypage"
         leftContent={
-          <button className="btn btn-icon">
+          <button className="btn btn-icon" onClick={() => navigate(-1)}>
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
@@ -24,9 +29,12 @@ export default function Profile() {
 
       <div className="container">
         <section className="profile-section">
-          <div className="thumb-wrap">
+          <div
+            className="thumb-wrap"
+            style={{ background: `url(${userInfo.avatar})` }}
+          >
             <label className="btn-file">
-              <input type="file" id="inputUpload" />
+              {/* <input type="file" id="inputUpload" /> */}
               <Camera size={18} strokeWidth={1.5} />
             </label>
           </div>
@@ -40,31 +48,21 @@ export default function Profile() {
                 className="icon-google"
                 alt="google logo"
               />
-              <input
-                type="text"
-                id="inputId"
-                value="bgy09270@naver.com"
-                readOnly
-              />
+              <input type="text" id="inputId" value={userInfo.email} readOnly />
             </div>
           </label>
           <label htmlFor="inputName">
             <p className="label-title">이름</p>
-            <input
-              type="text"
-              id="inputName"
-              value="박철민"
-              placeholder="이름을 입력해주세요"
-            />
+            <input type="text" id="inputName" value={userInfo.name} readOnly />
           </label>
         </section>
 
         <button className="btn-withdraw">탈퇴하기</button>
       </div>
 
-      <BottomButtonWrapper>
+      {/* <BottomButtonWrapper>
         <button className="btn btn-orange">수정하기</button>
-      </BottomButtonWrapper>
+      </BottomButtonWrapper> */}
     </motion.div>
   );
 }
