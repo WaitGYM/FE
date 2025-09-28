@@ -17,7 +17,7 @@ export default function EquipmentDetail() {
     resetState,
   } = useReservationStore();
   const { startWorkout } = useWorkoutStore();
-  const { setWorkingOut } = useUIStore();
+  const { isWorkingOut, setWorkingOut } = useUIStore();
 
   function handleBackBtnClick() {
     navigate(-1);
@@ -37,8 +37,8 @@ export default function EquipmentDetail() {
     // 대기 현황 없는지 한번 더 확인 필요??
     // await getEquipmentReservationStatus();
 
-    // 대기 없으면 운동 시작으로
-    if (selectedEquipment.status.isAvailable) {
+    // 운동중이 아니고 대기 없으면 운동 시작으로
+    if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
       const workoutGoal = {
         totalSets: selectedEquipment.sets,
         restSeconds: selectedEquipment.restSeconds,
@@ -164,7 +164,9 @@ export default function EquipmentDetail() {
       {selectedEquipment?.sets ? (
         <BottomButtonWrapper>
           <button className="btn btn-orange" onClick={handleNextBtnClick}>
-            {selectedEquipment.status.isAvailable ? "이용하기" : "예약하기"}
+            {!isWorkingOut && selectedEquipment.status?.isAvailable
+              ? "이용하기"
+              : "예약하기"}
           </button>
         </BottomButtonWrapper>
       ) : null}

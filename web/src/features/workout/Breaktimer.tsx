@@ -13,18 +13,7 @@ export default function WorkoutBreaktimer() {
   const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
   const restTime = useWorkoutStore((state) => state.restTime);
   const adjustRest = useWorkoutStore((state) => state.adjustRest);
-  const { skipRest } = useWorkoutStore();
-
-  // 자동 타이머: 1초마다 감소
-  // useEffect(() => {
-  //   if (restTime === 0) return;
-
-  //   const interval = setInterval(() => {
-  //     adjustRest(-1);
-  //   }, 1000);
-
-  //   return () => clearInterval(interval); // 언마운트 시 정리
-  // }, [restTime]);
+  const { increaseSetsCount, skipRest } = useWorkoutStore();
 
   // 0초 되면 자동 이동
   useEffect(() => {
@@ -51,13 +40,13 @@ export default function WorkoutBreaktimer() {
 
   function goWorkoutPage() {
     // navigate("/workout/exercising");
+    increaseSetsCount();
     navigate(-1);
   }
 
   return (
     <motion.div
-      className={`workout-page`}
-      id="breaktimer"
+      className={`workout-page breaktimer`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
@@ -72,18 +61,18 @@ export default function WorkoutBreaktimer() {
       />
 
       <section className="container">
-        <CircularTimer thickness={1.5} title="휴식 타이머" />
+        <CircularTimer thickness={1.5} />
       </section>
 
       <BottomButtonWrapper>
-        <button className="btn btn-gray" onClick={() => adjustRest(+5)}>
-          <Plus />
+        <button className="btn btn-gray" onClick={() => adjustRest(-5)}>
+          <Minus />
         </button>
         <button className="btn btn-orange" onClick={handleSkipRest}>
           휴식중단
         </button>
-        <button className="btn btn-gray" onClick={() => adjustRest(-5)}>
-          <Minus />
+        <button className="btn btn-gray" onClick={() => adjustRest(+5)}>
+          <Plus />
         </button>
       </BottomButtonWrapper>
     </motion.div>

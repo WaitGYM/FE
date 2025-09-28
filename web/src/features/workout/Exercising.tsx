@@ -5,10 +5,17 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useEffect, useRef, useState } from "react";
 import { useWorkoutStore } from "./stores/workoutStore";
 import { motion } from "framer-motion";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function WorkoutExercising() {
   const navigate = useNavigate();
-  const { workingOutInfo, stopWorkout, completeWorkoutSet } = useWorkoutStore();
+  const {
+    workingOutInfo,
+    workoutProgressInfo,
+    stopWorkout,
+    completeWorkoutSet,
+  } = useWorkoutStore();
+  const { setWorkingOut } = useUIStore();
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -36,26 +43,31 @@ export default function WorkoutExercising() {
     )}`;
   }
 
-  async function handleWorkoutFinish() {
-    setIsRunning(false);
-    setTime(0);
-    await stopWorkout();
-    navigate("/workout/complete", { replace: true });
+  async function handleSetComplete() {
+    completeWorkoutSet().then(() => {
+      if (!workoutProgressInfo?.completed) {
+        navigate("/workout/breaktimer");
+      } else {
+        handleWorkoutComplete();
+      }
+    });
   }
 
-  async function handleSetComplete() {
-    const workoutState = await completeWorkoutSet();
-    if (workoutState !== "completed") {
-      navigate("/workout/breaktimer");
-    } else {
-      handleWorkoutFinish();
-    }
+  function handleStopWorkout() {
+    stopWorkout();
+    handleWorkoutComplete();
+  }
+
+  function handleWorkoutComplete() {
+    setIsRunning(false);
+    setTime(0);
+    setWorkingOut(false);
+    navigate("/workout/complete", { replace: true });
   }
 
   return (
     <motion.div
-      className="workout-page"
-      id="exercising"
+      className="workout-page exercising"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
@@ -63,7 +75,7 @@ export default function WorkoutExercising() {
       <Header
         className="header--exercising"
         rightContent={
-          <div className="btn-side" onClick={handleWorkoutFinish}>
+          <div className="btn-side" onClick={handleStopWorkout}>
             <span>운동종료</span>
           </div>
         }
@@ -77,7 +89,7 @@ export default function WorkoutExercising() {
             <div className="set-count">
               {Array.from({ length: workingOutInfo.totalSets }).map(
                 (_, index) =>
-                  workingOutInfo.currentSet > index ? (
+                  workingOutInfo.currentSet - 1 > index ? (
                     <CircleCheck
                       size={18}
                       strokeWidth="2"
@@ -95,7 +107,10 @@ export default function WorkoutExercising() {
 
       <BottomButtonWrapper>
         <button className="btn btn-blue" onClick={handleSetComplete}>
-          세트 완료
+          {workingOutInfo.currentSet !== workingOutInfo.totalSets
+            ? "세트"
+            : "운동"}{" "}
+          완료
         </button>
       </BottomButtonWrapper>
     </motion.div>

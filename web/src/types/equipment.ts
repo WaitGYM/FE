@@ -6,11 +6,11 @@ export type EquipmentType = {
   muscleGroup: string;
   createdAt: Date;
   isFavorite: boolean;
-  reservationCount?: number;
   status: {
-    isAvailable?: boolean;
-    currentUser?: string;
-    currentUserStartedAt?: Date;
+    averageWaitTime: number;
+    canStart?: true;
+    canQueue?: boolean;
+    completedToday?: boolean;
     currentUsageInfo?: {
       totalSets?: number;
       currentSet?: number;
@@ -19,15 +19,20 @@ export type EquipmentType = {
       progress?: number;
       estimatedEndAt?: Date;
     };
-    waitingCount?: number;
+    currentUser?: string;
+    currentUserStartedAt?: Date;
+    currentUserETA: number;
+    estimatedWaitMinutes: boolean;
+    isAvailable: boolean;
+    isUsingOtherEquipment?: boolean;
+    myQueueId?: number;
     myQueuePosition?: number;
-    myQueueStatus?: number;
-    canStart?: true;
-    canQueue?: boolean;
-    completedToday?: boolean;
+    myQueueStatus?: "WAITING" | string;
     lastCompletedAt?: Date;
     lastCompletedSets?: number;
     lastCompletedDuration?: number;
+    queueETAs?: number[];
+    waitingCount?: number;
     wasFullyCompleted?: boolean;
   };
 };

@@ -10,12 +10,7 @@ import { useEffect } from "react";
 
 export default function WorkoutCompletePage() {
   const navigate = useNavigate();
-  const { workingOutInfo } = useWorkoutStore();
-  const { setWorkingOut } = useUIStore();
-
-  useEffect(() => {
-    setWorkingOut(false);
-  });
+  const { workingOutInfo, workoutProgressInfo } = useWorkoutStore();
 
   function handleWorkoutComplete() {
     navigate("/reservation/select-equipment", { replace: true });
@@ -40,20 +35,24 @@ export default function WorkoutCompletePage() {
         {workingOutInfo && <p>{formatDateStr(workingOutInfo.startedAt)}</p>}
       </div>
 
-      <ul className="complete-time">
-        <li>
-          <strong>
-            <Dumbbell /> 총 운동시간
-          </strong>
-          <span id="exercise-time">20:34</span>
-        </li>
-        <li>
-          <strong>
-            <Timer /> 총 휴식시간
-          </strong>
-          <span>02:34</span>
-        </li>
-      </ul>
+      {workoutProgressInfo?.summary && (
+        <ul className="complete-time">
+          <li>
+            <strong>
+              <Dumbbell /> 총 운동시간
+            </strong>
+            <span id="exercise-time">
+              {workoutProgressInfo?.summary?.workTime}
+            </span>
+          </li>
+          <li>
+            <strong>
+              <Timer /> 총 휴식시간
+            </strong>
+            <span>{workoutProgressInfo?.summary?.totalRest}</span>
+          </li>
+        </ul>
+      )}
 
       <BottomButtonWrapper>
         <button className="btn btn-orange" onClick={handleWorkoutComplete}>

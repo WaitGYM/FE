@@ -11,5 +11,5 @@ export const reservationApi = {
   createReservation: (equipmentId: number, data: ReservationCreateType) =>
     apiClient.post(`/waiting/queue/${equipmentId}`, data),
   deleteReservation: (queueId: number) =>
-    apiClient.post(`/waiting/queue/${queueId}`),
+    apiClient.delete(`/waiting/queue/${queueId}`),
 };

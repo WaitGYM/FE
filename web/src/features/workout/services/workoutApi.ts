@@ -12,6 +12,10 @@ export const workoutApi = {
     apiClient.post(`/waiting/complete-set/${equipmentId}`),
   stopWorkout: (equipmentId: number) =>
     apiClient.post(`/waiting/stop-exercise/${equipmentId}`),
+  adjustRest: (adjustValue: number) =>
+    apiClient.post(`/routines/active-usage/rest-time`, {
+      adjustment: adjustValue,
+    }),
   skipRest: (equipmentId: number) =>
     apiClient.post(`/waiting/skip-rest/${equipmentId}`),
 };

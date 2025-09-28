@@ -36,22 +36,21 @@ export default function WaitRequest() {
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
-        rightContent={
-          <div className="btn-side">
-            <span>대기취소</span>
-          </div>
-        }
+        // rightContent={
+        //   <div className="btn-side">
+        //     <span>대기취소</span>
+        //   </div>
+        // }
       />
 
       <section className="container">
         <div className="text-wrap">
           <h6>{selectedEquipment.name}</h6>
-          {/* <h1>20분 대기</h1> */}
-          <h1>{selectedEquipment.reservationCount}분 대기</h1>
+          <h1>{selectedEquipment.status?.estimatedWaitMinutes || 0}분 대기</h1>
           <p>
             <UsersRound size={18} strokeWidth="2" />
             <span className="waiting-user">
-              {selectedEquipment.reservationCount}명
+              {selectedEquipment.status?.waitingCount || 0}명
             </span>
             <span>기다리는중</span>
           </p>

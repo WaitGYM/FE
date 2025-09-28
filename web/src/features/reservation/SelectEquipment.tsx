@@ -3,36 +3,40 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import Switch from "@mui/material/Switch";
 import { useEquipmentStore } from "../../stores/equipmentStore";
-import type { EquipmentType } from "./types";
-import Equipment from "../../components/layout/Equipment";
 import { useUIStore } from "../../stores/UIStore";
-// import { usePlanStore } from "../../stores/planStore";
 import Header from "../../components/layout/Header";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
 import { motion } from "framer-motion";
+import { useUserStore } from "../../stores/userStore";
+import { useRoutineStore } from "../routine/store/routineStore";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
-  // const [selectedList, setSelectedList] = useState<EquipmentType[]>([]);
-  const { equipmentList, loading, error, getEquipments, clearError } =
-    useEquipmentStore();
-  const { workoutMode, planId } = useUIStore();
-  // const { planDetail, planLoading, getPlanDetail } = usePlanStore();
-  const { selectedEquipment, setSelectedEquipment, deleteReservation } =
-    useReservationStore();
+  const { getEquipments } = useEquipmentStore();
+  const { userInfo } = useUserStore();
+  const { workoutMode, routineId } = useUIStore();
+  const { routineDetail, getRoutineDetail } = useRoutineStore();
+  const {
+    selectedEquipment,
+    waitingInfo,
+    setSelectedEquipment,
+    deleteReservation,
+  } = useReservationStore();
   const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
 
-  useEffect(() => {
-    getEquipments();
-  }, [getEquipments]);
+  // useEffect(() => {
+  //   getEquipments();
+  // }, [getEquipments]);
 
   // useEffect(() => {
-  //   if (workoutMode === "plan" && planId) {
-  //     getPlanDetail(planId);
+  //   if (workoutMode === "routine" && routineId) {
+  //     getRoutineDetail(routineId);
+  //   } else {
+  //     getEquipments();
   //   }
-  // }, [getPlanDetail]);
+  // }, [getEquipments, getRoutineDetail]);
 
   // function handleEquipmentToggle(selectEquip: EquipmentType) {
   //   setSelectedEquipment([selectEquip]);
@@ -40,9 +44,9 @@ export default function ReservationPage() {
 
   function handleNextBtnClick() {
     console.log(selectedEquipment);
-    if (selectedEquipment?.status?.myQueueStatus === "WAITING") {
+    if (selectedEquipment?.status?.myQueueId) {
       // 대기 취소
-      deleteReservation();
+      deleteReservation().then(() => getEquipments());
     } else {
       navigate("/reservation/goal-setting");
     }
@@ -70,26 +74,37 @@ export default function ReservationPage() {
             <div className="top">
               <div className="auto-suggest">
                 <span>자동제안</span>
-                <Switch
-                  {...label}
-                  defaultChecked
-                  size="small"
-                  color="warning"
-                />
+                <Switch {...label} size="small" color="warning" />
               </div>
             </div>
 
-            <EquipmentList selectedEquipment={setSelectedEquipment} />
+            <EquipmentList
+              selectMode="SINGLE"
+              selectedList={Array(selectedEquipment)}
+              handleSelectedEquipment={setSelectedEquipment}
+            />
           </div>
         </section>
       </div>
 
-      {selectedEquipment ? (
+      {/* 대기 건 기구를 선택하면 대기취소 버튼 */}
+      {selectedEquipment.status?.myQueueId && (
         <BottomButtonWrapper>
           <button onClick={handleNextBtnClick} className="btn btn-orange">
-            {selectedEquipment?.status?.myQueueStatus === "WAITING"
-              ? "대기취소"
-              : "다음"}
+            대기취소
+          </button>
+        </BottomButtonWrapper>
+      )}
+
+      {/* 내 대기 건이 없고 기구 이용중일땐 다음버튼(대기) */}
+      {/* 내 대기 건이 없고 이용불가 선택시 다음버튼(대기) */}
+      {/* 이용중인 기구가 없고 이용가능 기구일때 다음버튼(운동) */}
+      {(!waitingInfo && workoutMode) ||
+      (!waitingInfo && !selectedEquipment.status?.isAvailable) ||
+      (!workoutMode && selectedEquipment.status?.isAvailable) ? (
+        <BottomButtonWrapper>
+          <button onClick={handleNextBtnClick} className="btn btn-orange">
+            다음
           </button>
         </BottomButtonWrapper>
       ) : null}
