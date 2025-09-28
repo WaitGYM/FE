@@ -94,7 +94,10 @@ export default function HomePage() {
             ) : !routineList || routineList.length < 1 ? (
               // 2. 데이터가 없을 때 -> "루틴 등록" UI
               <ul className="not-routine">
-                <li className="routine">
+                <li
+                  className="routine"
+                  onClick={() => navigate("/add-routine/select-equipment")}
+                >
                   <div className="icon">
                     <Plus size={32} strokeWidth="1.5" />
                   </div>
@@ -118,7 +121,8 @@ export default function HomePage() {
                     <div className="info">
                       <p className="title">{routine.name}</p>
                       <div className="detail">
-                        <span>{routine.equipmentNum}개 운동</span>
+                        {routine.isActive && <strong>운동중!!</strong>}
+                        <span>{routine.exerciseCount}개 운동</span>
                         <span>예상시간 {routine.duration}분</span>
                       </div>
                     </div>
@@ -140,7 +144,7 @@ export default function HomePage() {
             바로운동
           </button>
           <button
-            onClick={() => navigate("/add-routine")}
+            onClick={() => navigate("/add-routine/select-equipment")}
             className="btn btn-orange"
             id="routine-add"
           >

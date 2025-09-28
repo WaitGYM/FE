@@ -14,3 +14,12 @@ export const formatDateStr = (isoString: string): string => {
 
   return `${year}.${month}.${day}.${weekday}`;
 };
+
+export const getFormattedTodayDate = (): string => {
+  const today = new Date();
+  const year = today.getFullYear().toString().slice(-2);
+  const month = today.getMonth() + 1;
+  const day = today.getDate();
+
+  return `${year}년 ${month}월 ${day}일`;
+};

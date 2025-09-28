@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 import type { WorkoutModeType } from "../types";
 
 interface UIStateType {
@@ -16,22 +17,24 @@ interface UIStateType {
   toggleRestTimerMiniView: () => void;
 }
 
-export const useUIStore = create<UIStateType>((set, get) => ({
-  workoutMode: null,
-  routineId: null,
-  setWorkoutMode: (workoutMode) => set({ workoutMode }),
-  setRoutineId: (routineId) => set({ routineId }),
-  // 운동모드 리셋시 진행중인 루틴값도 리셋
-  resetWorkoutMode: () =>
-    set({
-      workoutMode: null,
-      routineId: null,
-    }),
+export const useUIStore = create<UIStateType>()(
+  devtools((set, get) => ({
+    workoutMode: null,
+    routineId: null,
+    setWorkoutMode: (workoutMode) => set({ workoutMode }),
+    setRoutineId: (routineId) => set({ routineId }),
+    // 운동모드 리셋시 진행중인 루틴값도 리셋
+    resetWorkoutMode: () =>
+      set({
+        workoutMode: null,
+        routineId: null,
+      }),
 
-  isWorkingOut: false,
-  setWorkingOut: (isWorkingOut) => set({ isWorkingOut }),
+    isWorkingOut: false,
+    setWorkingOut: (isWorkingOut) => set({ isWorkingOut }),
 
-  isRestTimerMiniView: false,
-  toggleRestTimerMiniView: () =>
-    set((state) => ({ isRestTimerMiniView: !state.isRestTimerMiniView })),
-}));
+    isRestTimerMiniView: false,
+    toggleRestTimerMiniView: () =>
+      set((state) => ({ isRestTimerMiniView: !state.isRestTimerMiniView })),
+  }))
+);
