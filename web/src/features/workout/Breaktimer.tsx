@@ -4,28 +4,30 @@ import CircularTimer from "../../components/ui/CircularTimer";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUIStore } from "../../stores/UIStore";
 import { useWorkoutStore } from "./stores/workoutStore";
 
 export default function WorkoutBreaktimer() {
   const navigate = useNavigate();
   const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
-  const restTime = useWorkoutStore((state) => state.restTime);
   const adjustRest = useWorkoutStore((state) => state.adjustRest);
-  const { increaseSetsCount, skipRest } = useWorkoutStore();
+  const { workingOutInfo, leftRestTime, completeRest, skipRest } =
+    useWorkoutStore();
 
   // 0초 되면 자동 이동
   useEffect(() => {
-    if (restTime === 0) {
+    if (leftRestTime === 0) {
       goWorkoutPage();
     }
-  }, [restTime, navigate]);
+  }, [leftRestTime]);
 
+  // 플로트뷰로 보기 상태값 체크용
   useEffect(() => {
     console.log("isRestTimerMiniView: ", isRestTimerMiniView);
   }, [isRestTimerMiniView]);
 
+  // 기구 현황 보기 버튼
   function handleEquipStatusNavigate() {
     toggleRestTimerMiniView();
     setTimeout(() => {
@@ -33,14 +35,16 @@ export default function WorkoutBreaktimer() {
     }, 200); // animation duration
   }
 
+  // 휴식 건너뛰기
   function handleSkipRest() {
     skipRest();
     goWorkoutPage();
   }
 
+  // 운동 타이머로 이동
   function goWorkoutPage() {
     // navigate("/workout/exercising");
-    increaseSetsCount();
+    completeRest();
     navigate(-1);
   }
 
@@ -65,13 +69,13 @@ export default function WorkoutBreaktimer() {
       </section>
 
       <BottomButtonWrapper>
-        <button className="btn btn-gray" onClick={() => adjustRest(-5)}>
+        <button className="btn btn-gray" onClick={() => adjustRest(-10)}>
           <Minus />
         </button>
         <button className="btn btn-orange" onClick={handleSkipRest}>
           휴식중단
         </button>
-        <button className="btn btn-gray" onClick={() => adjustRest(+5)}>
+        <button className="btn btn-gray" onClick={() => adjustRest(10)}>
           <Plus />
         </button>
       </BottomButtonWrapper>
