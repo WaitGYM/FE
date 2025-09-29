@@ -42,5 +42,6 @@ export type RoutineDetailType = {
   id: number;
   name: string;
   isActive: boolean;
-  equipmentList: EquipmentType[];
+  currentlyUsing: boolean;
+  exercises: EquipmentType[];
 };

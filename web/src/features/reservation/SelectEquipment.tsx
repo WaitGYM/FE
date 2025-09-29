@@ -11,18 +11,21 @@ import { useReservationStore } from "./stores/reservationStore";
 import { motion } from "framer-motion";
 import { useUserStore } from "../../stores/userStore";
 import { useRoutineStore } from "../routine/store/routineStore";
+import { useWorkoutStore } from "../workout/stores/workoutStore";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
   const { getEquipments } = useEquipmentStore();
   const { userInfo } = useUserStore();
-  const { workoutMode, routineId } = useUIStore();
+  const { workoutMode, isWorkingOut, routineId } = useUIStore();
+  const { startWorkout } = useWorkoutStore();
   const { routineDetail, getRoutineDetail } = useRoutineStore();
   const {
     selectedEquipment,
     waitingInfo,
     setSelectedEquipment,
     deleteReservation,
+    resetSelectedEquipmentState,
   } = useReservationStore();
   const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
 
@@ -35,6 +38,11 @@ export default function ReservationPage() {
       setIsRefreshing(false);
     }, 1000);
   };
+
+  function handleBackBtnClick() {
+    resetSelectedEquipmentState();
+    navigate(-1);
+  }
 
   // useEffect(() => {
   //   getEquipments();
@@ -52,14 +60,23 @@ export default function ReservationPage() {
   //   setSelectedEquipment([selectEquip]);
   // }
 
-  function handleNextBtnClick() {
-    console.log(selectedEquipment);
-    if (selectedEquipment?.status?.myQueueId) {
-      // 대기 취소
-      deleteReservation().then(() => getEquipments());
-    } else {
-      navigate("/reservation/goal-setting");
-    }
+  function handleDeleteReservation() {
+    deleteReservation().then(() => getEquipments());
+  }
+
+  function handleNextBtn() {
+    console.log("다음스텝", selectedEquipment);
+    navigate("/reservation/goal-setting");
+  }
+
+  function handleStartWorkout() {
+    console.log("운동시작으로 GO!!", selectedEquipment, waitingInfo);
+    const workoutGoal = {
+      totalSets: waitingInfo?.sets,
+      restSeconds: waitingInfo?.restSeconds,
+    };
+    startWorkout(selectedEquipment.id, workoutGoal);
+    navigate("/workout/exercising");
   }
 
   return (
@@ -72,7 +89,7 @@ export default function ReservationPage() {
       <div className="content-scroll">
         <Header
           leftContent={
-            <button className="btn btn-icon" onClick={() => navigate("/")}>
+            <button className="btn btn-icon" onClick={handleBackBtnClick}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
@@ -115,7 +132,7 @@ export default function ReservationPage() {
       {/* 대기 건 기구를 선택하면 대기취소 버튼 */}
       {selectedEquipment.status?.myQueueId && (
         <BottomButtonWrapper>
-          <button onClick={handleNextBtnClick} className="btn btn-orange">
+          <button onClick={handleDeleteReservation} className="btn btn-orange">
             대기 취소
           </button>
         </BottomButtonWrapper>
@@ -124,24 +141,26 @@ export default function ReservationPage() {
       {/* 내 대기 건이 없고 기구 이용중일땐 다음버튼(대기) */}
       {/* 내 대기 건이 없고 이용불가 선택시 다음버튼(대기) */}
       {/* 이용중인 기구가 없고 이용가능 기구일때 다음버튼(운동) */}
-      {(!waitingInfo && workoutMode) ||
+      {(!waitingInfo && isWorkingOut) ||
       (!waitingInfo && !selectedEquipment.status?.isAvailable) ||
-      (!workoutMode && selectedEquipment.status?.isAvailable) ? (
+      (!isWorkingOut && selectedEquipment.status?.isAvailable) ? (
         <BottomButtonWrapper>
-          <button onClick={handleNextBtnClick} className="btn btn-orange">
+          <button onClick={handleNextBtn} className="btn btn-orange">
             다음
           </button>
         </BottomButtonWrapper>
       ) : null}
 
       {/* 대기중인 기구가 이용가능이 되면 운동시작으로 */}
-      {waitingInfo && selectedEquipment.status?.isAvailable && (
+      {selectedEquipment.status?.isAvailable &&
+      selectedEquipment.status?.myQueuePosition === 1 &&
+      selectedEquipment.status?.myQueueStatus === "NOTIFIED" ? (
         <BottomButtonWrapper>
-          <button onClick={handleNextBtnClick} className="btn btn-orange">
+          <button onClick={handleStartWorkout} className="btn btn-orange">
             운동 시작
           </button>
         </BottomButtonWrapper>
-      )}
+      ) : null}
     </motion.div>
   );
 }

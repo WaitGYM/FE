@@ -23,8 +23,8 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
     getEquipments: async () => {
       setLoading(true);
       try {
-        const equipmentsData = (await equipmentApi.getEquipmentList()).data;
-        set({ equipmentList: equipmentsData });
+        const { data } = await equipmentApi.getEquipmentList();
+        set({ equipmentList: data });
       } catch (error) {
         set({
           error: "기구 목록을 불러오는데 실패했습니다.",

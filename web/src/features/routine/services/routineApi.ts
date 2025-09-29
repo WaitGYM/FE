@@ -8,5 +8,5 @@ export const routineApi = {
     apiClient.put<RoutineType>(`/routines/${id}`, updateData),
   deleteRoutine: (id: number) => apiClient.delete(`/routines/${id}`),
   getRoutineList: () => apiClient.get<RoutineType[]>(`/routines`),
-  getRoutine: (id: number) => apiClient.get<RoutineType[]>(`/routines/${id}`),
+  getRoutine: (id: number) => apiClient.get<RoutineType>(`/routines/${id}`),
 };

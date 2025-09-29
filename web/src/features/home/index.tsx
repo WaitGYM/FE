@@ -27,8 +27,9 @@ export default function HomePage() {
     mode: WorkoutModeType,
     selectedRoutineId?: number
   ) {
-    if (mode === "routine" && selectedRoutineId)
+    if (mode === "routine" && selectedRoutineId) {
       setRoutineId(selectedRoutineId);
+    }
     setWorkoutMode(mode);
     navigate("/reservation/select-equipment");
   }
@@ -113,7 +114,7 @@ export default function HomePage() {
                   <li
                     className="routine"
                     key={routine.id}
-                    onClick={() => handleWorkoutMode("routine", routine.id)}
+                    // onClick={() => handleWorkoutMode("routine", routine.id)}
                   >
                     <div className="icon">
                       <Dumbbell size={32} strokeWidth="1.5" />
