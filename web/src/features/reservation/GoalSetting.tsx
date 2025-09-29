@@ -35,7 +35,7 @@ export default function EquipmentDetail() {
   async function handleNextBtnClick() {
     // console.log("handleNextBtnClick selectedEquipment: ", electedEquipment);
     // 대기 현황 없는지 한번 더 확인 필요??
-    // await getEquipmentReservationStatus();
+    await getEquipmentReservationStatus();
 
     // 운동중이 아니고 대기 없으면 운동 시작으로
     if (!isWorkingOut && selectedEquipment.status?.isAvailable) {

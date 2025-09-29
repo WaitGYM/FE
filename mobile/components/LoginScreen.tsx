@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Button, StyleSheet, Text } from "react-native";
+import { config } from "../constants/appConstants";
 
 interface LoginScreenProps {
   onLoginPress: () => void;
@@ -8,6 +9,7 @@ interface LoginScreenProps {
 export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginPress }) => {
   return (
     <View style={styles.container}>
+      <Text>{config.api.baseUrl}</Text>
       <Button title="Google 계정으로 로그인" onPress={onLoginPress} />
     </View>
   );

@@ -66,7 +66,13 @@ export default function ReservationPage() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          title={<h2>바로운동</h2>}
+          title={
+            <h2>
+              {routineId && workoutMode === "routine"
+                ? routineDetail?.name
+                : "바로운동"}
+            </h2>
+          }
         />
 
         <section className="container">
@@ -91,7 +97,7 @@ export default function ReservationPage() {
       {selectedEquipment.status?.myQueueId && (
         <BottomButtonWrapper>
           <button onClick={handleNextBtnClick} className="btn btn-orange">
-            대기취소
+            대기 취소
           </button>
         </BottomButtonWrapper>
       )}
@@ -108,6 +114,15 @@ export default function ReservationPage() {
           </button>
         </BottomButtonWrapper>
       ) : null}
+
+      {/* 대기중인 기구가 이용가능이 되면 운동시작으로 */}
+      {waitingInfo && selectedEquipment.status?.isAvailable && (
+        <BottomButtonWrapper>
+          <button onClick={handleNextBtnClick} className="btn btn-orange">
+            운동 시작
+          </button>
+        </BottomButtonWrapper>
+      )}
     </motion.div>
   );
 }

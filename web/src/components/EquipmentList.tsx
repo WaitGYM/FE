@@ -5,8 +5,8 @@ import type { EquipmentType } from "../types";
 import { useFavoriteStore } from "../stores/favoriteStore";
 import Equipment from "../components/layout/Equipment";
 import { useUIStore } from "../stores/UIStore";
-import { usePlanStore } from "../stores/planStore";
 import { useUserStore } from "../stores/userStore";
+import { useRoutineStore } from "../features/routine/store/routineStore";
 
 export default function EquipmentListPage({
   selectMode = "SINGLE",
@@ -23,10 +23,20 @@ export default function EquipmentListPage({
   const { equipmentList, getEquipments } = useEquipmentStore();
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
+  const { workoutMode, routineId } = useUIStore();
+  const { routineDetail, getRoutineDetail } = useRoutineStore();
+  // let getList;
+  // useEffect(() => {
+  //   getEquipments();
+  // }, [getEquipments]);
 
   useEffect(() => {
-    getEquipments();
-  }, [getEquipments]);
+    if (workoutMode === "routine" && routineId) {
+      getRoutineDetail(routineId);
+    } else {
+      getEquipments();
+    }
+  }, [getEquipments, getRoutineDetail]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     // setSelectedList([selectEquip]);
