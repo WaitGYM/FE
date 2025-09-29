@@ -38,7 +38,7 @@ const connectWebSocket = (userId: string | number) => {
     try {
       // 데이터는 보통 문자열 형태의 JSON이므로 파싱합니다.
       const data: ServerNotificationPayload = JSON.parse(event.data);
-      console.log("새로운 메시지 수신:", data);
+      // console.log("새로운 메시지 수신:", data);
 
       if (data.type === "EQUIPMENT_AVAILABLE" || data.type === "QUEUE_EXPIRED")
         useNotificationStore.getState().addNotification({
