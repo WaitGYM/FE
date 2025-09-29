@@ -6,7 +6,7 @@ interface ServerNotificationPayload {
 }
 
 let socket: WebSocket | null = null;
-const WEBSOCKET_URL = "ws://localhost:4000/ws"; // "ws://" 또는 "wss://"로 시작
+const WEBSOCKET_URL = `ws://${import.meta.env.VITE_API_BASE_URL}/ws`;
 
 // 재연결 시도를 위한 변수
 let isReconnecting = false;
