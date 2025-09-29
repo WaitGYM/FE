@@ -88,7 +88,7 @@ export default function WorkoutExercising() {
             <div className="set-count">
               {Array.from({ length: workingOutInfo.totalSets }).map(
                 (_, index) =>
-                  workingOutInfo.currentSet - 1 > index ? (
+                  workingOutInfo.currentSet > index ? (
                     <CircleCheck
                       size={18}
                       strokeWidth="2"

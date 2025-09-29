@@ -102,7 +102,13 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       try {
         const { data } = await workoutApi.adjustRest(adjustValue);
         console.log("adjustRest", data);
-        set((state) => ({ leftRestTime: state.leftRestTime + adjustValue }));
+        set((state) => ({
+          leftRestTime: state.leftRestTime + adjustValue,
+          workoutProgressInfo: {
+            ...state.workoutProgressInfo,
+            restSeconds: state.workoutProgressInfo.restSeconds + adjustValue,
+          },
+        }));
       } catch (error) {
         console.log(error);
       } finally {
