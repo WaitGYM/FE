@@ -1,8 +1,11 @@
+import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import Header from "../../components/layout/Header";
-import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function PushList() {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       className="pushlist-page"
@@ -13,7 +16,7 @@ export default function PushList() {
       <div className="content-scroll">
         <Header
           leftContent={
-            <button className="btn btn-icon">
+            <button className="btn btn-icon" onClick={() => navigate(-1)}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
