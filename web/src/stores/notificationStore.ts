@@ -38,8 +38,6 @@ export const useNotificationStore = create<
         unreadCount: 0,
       })),
     clearPopupMessage: () => {
-      console.log("clearPopupMessage");
-
       set({ popupMessage: null });
     },
   }))

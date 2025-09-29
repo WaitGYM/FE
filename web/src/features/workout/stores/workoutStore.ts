@@ -101,7 +101,6 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       setLoading(true);
       try {
         const { data } = await workoutApi.adjustRest(adjustValue);
-        console.log("adjustRest", data);
         set((state) => ({
           leftRestTime: state.leftRestTime + adjustValue,
           workoutProgressInfo: {
@@ -121,7 +120,6 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       try {
         const eqId = get().workingOutInfo?.equipmentId;
         if (eqId) {
-          console.log("skipRest");
           const response = await workoutApi.skipRest(eqId);
           console.log(response.data);
         } else throw Error;
@@ -146,9 +144,9 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       try {
         const eqId = get().workingOutInfo?.equipmentId;
         if (eqId) {
-          console.log("stopWorkout");
-          const response = await workoutApi.stopWorkout(eqId);
-          console.log(response.data);
+          const { data } = await workoutApi.stopWorkout(eqId);
+          console.log("stopWorkout ", data);
+          set({ workoutProgressInfo: data });
           setWorkingOut(false);
         } else throw Error;
       } catch (error) {
