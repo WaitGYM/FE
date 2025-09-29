@@ -13,7 +13,7 @@ type WorkoutGoalType = {
 interface WorkoutStoreType {
   workoutGoal: WorkoutGoalType;
   workingOutInfo: WorkingoutType;
-  workoutProgressInfo: WorkoutProgressInfoType | null;
+  workoutProgressInfo: WorkoutProgressInfoType;
   // workingOutLocalData: {
   //   totalSets: number;
   //   totalWorkoutSeconds: number;
@@ -25,12 +25,14 @@ interface WorkoutStoreType {
   //   setStatus: string;
   //   restSeconds: number;
   // };
-  restTime: number;
+  leftRestTime: number;
 
   startWorkout: (eqId: number, workoutGoal: WorkoutGoalType) => Promise<void>;
+  autoDecreaseRest: () => void;
   adjustRest: (delta: number) => void;
+  resetRestTime: () => void;
   skipRest: () => Promise<void>;
-  increaseSetsCount: () => void;
+  completeRest: () => void;
   stopWorkout: () => Promise<void>;
   completeWorkoutSet: () => Promise<void | string>;
   resetState: () => void;
@@ -45,16 +47,19 @@ const initialState = {
     restSeconds: 0,
   },
   workingOutInfo: {
-    currentSet: 0,
+    currentSet: 1,
     equipmentId: 0,
     equipmentName: "",
     estimatedEndAt: "",
     progress: 0,
-    restSeconds: 0,
+    restSeconds: 10,
     startedAt: "",
-    totalSets: 0,
+    totalSets: 2,
   },
-  workoutProgressInfo: null,
+  workoutProgressInfo: {
+    message: "",
+    setStatus: "EXERCISING",
+  },
   // workingOutLocalData: {
   //   totalSets: 0,
   //   totalWorkoutSeconds: 0,
@@ -66,7 +71,7 @@ const initialState = {
   //   setStatus: "",
   //   restSeconds: 10,
   // },
-  restTime: 10,
+  leftRestTime: 10,
 };
 
 export const useWorkoutStore = create<WorkoutStoreType>()(
@@ -76,8 +81,8 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
     startWorkout: async (eqId, workoutGoal) => {
       setLoading(true);
       try {
-        const response = await workoutApi.startWorkout(eqId, workoutGoal);
-        set({ workingOutInfo: response.data });
+        const { data } = await workoutApi.startWorkout(eqId, workoutGoal);
+        set({ workingOutInfo: data, leftRestTime: data.restSeconds });
         console.log("workingOutInfo :", get().workingOutInfo);
         setWorkingOut(true);
       } catch (error) {
@@ -87,17 +92,17 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       }
     },
 
-    // adjustRest: (delta) =>
-    //   set((state) => ({
-    //     restTime: Math.max(0, state.restTime + delta),
-    //   })),
+    autoDecreaseRest: () =>
+      set((state) => ({
+        leftRestTime: Math.max(0, state.leftRestTime - 1),
+      })),
 
     adjustRest: async (adjustValue) => {
       setLoading(true);
       try {
-        const response = await workoutApi.adjustRest(adjustValue);
-        console.log("adjustRest", response);
-        // set({ workoutProgressInfo: data });
+        const { data } = await workoutApi.adjustRest(adjustValue);
+        console.log("adjustRest", data);
+        set((state) => ({ leftRestTime: state.leftRestTime + adjustValue }));
       } catch (error) {
         console.log(error);
       } finally {
@@ -121,12 +126,13 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       }
     },
 
-    increaseSetsCount: () =>
+    completeRest: () =>
       set((state) => ({
         workingOutInfo: {
           ...state.workingOutInfo,
           currentSet: ++state.workingOutInfo.currentSet,
         },
+        restTime: state.workingOutInfo.restSeconds,
       })),
 
     stopWorkout: async () => {
@@ -153,13 +159,15 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
         if (eqId) {
           const { data } = await workoutApi.completeWorkoutSet(eqId);
           if (!data.completed) {
-            set({ workoutProgressInfo: data, restTime: data.restSeconds });
+            set({ workoutProgressInfo: data, leftRestTime: data.restSeconds });
             console.log("세트 완료!!!", data);
+            return false;
           } else {
             set({ workoutProgressInfo: data });
             console.log("기구 완료!!!", data);
             setWorkingOut(false);
-            get().resetState();
+            // get().resetState();
+            return true;
           }
         } else throw Error;
       } catch (error) {

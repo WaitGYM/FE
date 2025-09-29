@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -10,9 +10,9 @@ interface CircularTimerProps {
   thickness?: number;
 }
 
-const formatTime = (ms: number): string => {
-  const minutes = Math.floor(ms / 60000);
-  const seconds = Math.floor((ms % 60000) / 1000);
+const formatTime = (sec: number): string => {
+  const minutes = Math.floor(sec / 60);
+  const seconds = sec % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
     2,
     "0"
@@ -20,29 +20,29 @@ const formatTime = (ms: number): string => {
 };
 
 export default function CircularTimer({ thickness = 1.5 }: CircularTimerProps) {
-  const { isWorkingOut, isRestTimerMiniView, toggleRestTimerMiniView } =
-    useUIStore();
-  const { workingOutInfo } = useWorkoutStore();
-
-  // let restSeconds: number = workingOutInfo?.restSeconds || 0;
-
-  const restTime = useWorkoutStore((state) => state.restTime);
-  const adjustRest = useWorkoutStore((state) => state.adjustRest);
-  const initialTimeRef = useRef(restTime);
+  const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
+  const {
+    leftRestTime,
+    workingOutInfo,
+    workoutProgressInfo,
+    autoDecreaseRest,
+  } = useWorkoutStore();
 
   // 자동 타이머: 1초마다 감소
   useEffect(() => {
-    if (restTime === 0) return;
+    if (leftRestTime === 0) return;
 
     const interval = setInterval(() => {
-      adjustRest(-1);
+      autoDecreaseRest();
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [restTime]);
+  }, [autoDecreaseRest, leftRestTime]);
 
-  // 남은 시간을 0-100 사이의 진행률 값으로 변환
-  const progressValue = (restTime / initialTimeRef.current) * 100;
+  const progressValue =
+    workoutProgressInfo.restSeconds > 0
+      ? (leftRestTime / workoutProgressInfo.restSeconds) * 100
+      : 0;
 
   return (
     <Box
@@ -71,7 +71,7 @@ export default function CircularTimer({ thickness = 1.5 }: CircularTimerProps) {
         <Typography variant="h2" component="div" color="white">
           <div className="text-wrap">
             <h6>휴식{isRestTimerMiniView ? "" : " 타이머"}</h6>
-            <h1>{formatTime(restTime)}</h1>
+            <h1>{formatTime(leftRestTime)}</h1>
             {!isRestTimerMiniView && (
               <div className="set-count">
                 {Array.from({ length: workingOutInfo.totalSets }).map(

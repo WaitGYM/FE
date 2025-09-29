@@ -44,13 +44,12 @@ export default function WorkoutExercising() {
   }
 
   async function handleSetComplete() {
-    completeWorkoutSet().then(() => {
-      if (!workoutProgressInfo?.completed) {
-        navigate("/workout/breaktimer");
-      } else {
-        handleWorkoutComplete();
-      }
-    });
+    const isWorkoutCompleted = await completeWorkoutSet();
+    if (!isWorkoutCompleted) {
+      navigate("/workout/breaktimer");
+    } else {
+      handleWorkoutComplete();
+    }
   }
 
   function handleStopWorkout() {

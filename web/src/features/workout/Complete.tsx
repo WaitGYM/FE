@@ -5,8 +5,6 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useWorkoutStore } from "./stores/workoutStore";
 import { formatDateStr } from "../../hooks/useDateFormatting";
-import { useUIStore } from "../../stores/UIStore";
-import { useEffect } from "react";
 
 export default function WorkoutCompletePage() {
   const navigate = useNavigate();
@@ -28,7 +26,7 @@ export default function WorkoutCompletePage() {
           <img src={motionIcon} alt="박수" />
         </div>
         <h1>
-          {workingOutInfo?.equipmentName}을
+          {workingOutInfo.equipmentName}을
           <br />
           멋지게 성공하셨군요!
         </h1>
@@ -42,14 +40,14 @@ export default function WorkoutCompletePage() {
               <Dumbbell /> 총 운동시간
             </strong>
             <span id="exercise-time">
-              {workoutProgressInfo?.summary?.workTime}
+              {workoutProgressInfo.summary?.workTime}
             </span>
           </li>
           <li>
             <strong>
               <Timer /> 총 휴식시간
             </strong>
-            <span>{workoutProgressInfo?.summary?.totalRest}</span>
+            <span>{workoutProgressInfo.summary?.totalRest}</span>
           </li>
         </ul>
       )}
