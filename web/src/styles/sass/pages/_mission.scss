@@ -1,0 +1,153 @@
+@use "sass:map";
+@use "@styles/variables" as *;
+
+//미션,랭킹 공통
+.mission,
+.ranking {
+  .greeting {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 1.5rem;
+
+    .msg {
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 140%;
+      strong {
+        font-weight: 600;
+      }
+    }
+    .icon-motion {
+      width: 3.125rem;
+      height: 3.125rem;
+      aspect-ratio: 1/1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &-wrap {
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      span {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        &.time {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+        }
+      }
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      &-item {
+        display: flex;
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0.625rem;
+        border-radius: 0.5rem;
+        background: $c-primary-blue-dark-light;
+
+        .info {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 0.875rem;
+
+          .title {
+            font-weight: 600;
+            color: $c-sub-white;
+          }
+          .score {
+            font-weight: 300;
+            color: $c-primary-blue-light;
+          }
+        }
+        .rank-num {
+          width: 1.25rem;
+          height: 1.25rem;
+          background: $c-primary-blue-dark-modal;
+          color: $c-sub-white;
+          border-radius: 50%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.75rem;
+          font-weight: 600;
+          &.me {
+            background: $c-point-orange;
+          }
+        }
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 0.625rem;
+
+          .profile-thumb {
+            width: 1.5305rem;
+            height: 1.5305rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid $c-sub-gray;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          .name {
+            font-weight: 600;
+          }
+          .total-score {
+          }
+        }
+      }
+
+      .ranking-wrap-list-item {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 0.5rem;
+        &:first-of-type {
+          background: $c-primary-blue;
+        }
+      }
+      .progress-bar {
+        position: relative;
+        width: 100%;
+        .progress {
+          height: 1.25rem;
+          border-radius: 1.25rem;
+          background-color: $c-primary-blue;
+          & .MuiLinearProgress-bar {
+            background-color: $c-point-orange;
+          }
+        }
+        .num-count {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 0.75rem;
+          color: $c-sub-white;
+        }
+      }
+    }
+  }
+}

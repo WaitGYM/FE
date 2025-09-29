@@ -1,1 +1,1 @@
-export type WorkoutModeType = "direct" | "plan" | "addPlan";
+export type WorkoutModeType = "direct" | "routine";

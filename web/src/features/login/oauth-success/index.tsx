@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores/authStore";
+import { useUserStore } from "../../../stores/userStore";
+
+import { CircularProgress } from "@mui/material";
 
 export default function OAuthSuccess() {
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
+  const { getUserInfo } = useUserStore();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -12,7 +16,9 @@ export default function OAuthSuccess() {
 
     if (token) {
       login(token);
-      navigate("/");
+      getUserInfo()
+        .then(() => navigate("/"))
+        .catch(() => navigate("/login"));
     } else {
       navigate("/login");
     }
@@ -21,7 +27,7 @@ export default function OAuthSuccess() {
   return (
     <div className="login-page">
       <div className="container">
-        <h1>로그인 처리중...</h1>
+        <CircularProgress color="inherit" />
       </div>
     </div>
   );

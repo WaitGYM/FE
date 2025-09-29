@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "기다려짐",
+    "slug": "wait-gym-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "waitgymmobile",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
@@ -13,23 +14,33 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.waitgym.mobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.waitgym.mobile"
     },
     "plugins": [
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/react-logo.png",
+          "icon": "./assets/adaptive-icon.png",
           "color": "#000000"
         }
-      ]
-    ]
+      ],
+      "expo-web-browser",
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6d5a9fa3-4e29-4b97-8ba9-08e0c9b40273"
+      }
+    }
   }
 }

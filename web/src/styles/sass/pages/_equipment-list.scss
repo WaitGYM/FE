@@ -9,17 +9,6 @@
   section {
     padding: 0 1.5rem;
 
-    .search-bar {
-      height: 3rem;
-
-      input[type="search"] {
-        background-color: $c-primary-blue-dark-light;
-      }
-      input[type="search"]::placeholder {
-        color: $c-sub-white;
-      }
-    }
-
     .equipment-wrap {
       margin-top: 1.8rem;
 
@@ -54,33 +43,6 @@
         &.selected {
           background-color: $c-primary-blue-dark-light;
         }
-      }
-    }
-  }
-
-  .category-wrap {
-    padding: 0 1.5rem;
-    margin-top: 1rem;
-    height: 2rem;
-    display: flex;
-    overflow-x: scroll;
-
-    button {
-      flex: 0 0 auto;
-      height: 2rem;
-      padding: 0.5rem;
-      color: $c-sub-white;
-      background-color: $c-primary-blue-dark-light;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      display: flex;
-      align-items: center;
-
-      & + button {
-        margin-left: 0.5rem;
-      }
-      &.active {
-        background-color: $c-primary-blue;
       }
     }
   }

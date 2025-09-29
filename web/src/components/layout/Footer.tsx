@@ -11,9 +11,9 @@ export default function Footer() {
         </NavLink>
         <NavLink to="/mission" className="nav">
           <Trophy size={24} strokeWidth="1.5" />
-          <p>미션</p>
+          <p>미션/랭킹</p>
         </NavLink>
-        <NavLink to="/profile" className="nav">
+        <NavLink to="/mypage" className="nav">
           <CircleUserRound size={24} strokeWidth="1.5" />
           <p>내정보</p>
         </NavLink>

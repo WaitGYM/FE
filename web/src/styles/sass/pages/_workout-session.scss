@@ -6,7 +6,7 @@
   height: 100%;
 
   .container {
-    height: 75%;
+    height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,6 +20,10 @@
       align-items: center;
       gap: 0.5rem;
       width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
 
       h6 {
         font-size: 1.25rem;
@@ -33,7 +37,8 @@
         font-weight: 700;
         line-height: 140%;
       }
-      p {
+      p,
+      .set-count {
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -55,11 +60,11 @@
       }
     }
   }
-  &#exercising .text-wrap {
+  &.exercising .text-wrap {
     h1 {
       color: $c-primary-blue-light;
     }
-    p {
+    .set-count {
       .lucide-circle {
         color: $c-sub-gray;
       }
@@ -68,8 +73,8 @@
       }
     }
   }
-  &#breaktimer .text-wrap {
-    p {
+  &.breaktimer .text-wrap {
+    .set-count {
       .lucide-circle {
         color: $c-sub-gray;
       }
@@ -79,10 +84,31 @@
     }
   }
 
-  &#breaktimer .btn-wrap {
+  &.breaktimer .btn-wrap {
     .btn-gray {
       width: 3rem;
       aspect-ratio: 1/1;
     }
   }
+}
+
+.workout-page.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
+.workout-page.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotate 2s linear;
 }

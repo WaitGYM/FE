@@ -1,4 +1,7 @@
 export type { UserType } from "./user";
-export type { EquipmentType } from "./equipment";
-export type { PlanType, PlanDetailType } from "./plan";
 export type { WorkoutModeType } from "./UI";
+export type { EquipmentType } from "./equipment";
+export type { NewRoutineType, RoutineType, RoutineDetailType } from "./routine";
+export type { FavoriteType } from "./favorite";
+export type { WorkingoutType, WorkoutProgressInfoType } from "./workout";
+export type { NotificationType } from "./notification";

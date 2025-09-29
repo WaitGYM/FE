@@ -1,8 +1,10 @@
-import axios from "axios";
+import { apiClient } from "../apiClient";
 import type { EquipmentType } from "../../types";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
-
 export const equipmentApi = {
-  getEquipments: () => axios.get<EquipmentType[]>(`${API_BASE}/api/equipment`),
+  getEquipmentList: () => apiClient.get<EquipmentType[]>("/equipment"),
+  // getEquipmentList: (category: string = "all", searchWord: string = "") =>
+  //   apiClient.get<EquipmentType[]>(
+  //     `/equipment?category=${category}&search=${searchWord}&include_status=true`
+  //   ),
 };
