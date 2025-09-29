@@ -30,6 +30,13 @@ export default function EquipmentListPage({
   //   getEquipments();
   // }, [getEquipments]);
 
+  // 3분마다 자동 새로고침
+  useEffect(() => {
+    const interval = setInterval(() => getEquipments(), 180000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     if (workoutMode === "routine" && routineId) {
       getRoutineDetail(routineId);

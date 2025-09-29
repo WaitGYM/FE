@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, RefreshCcw } from "lucide-react";
 import Switch from "@mui/material/Switch";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import { useUIStore } from "../../stores/UIStore";
@@ -25,6 +25,16 @@ export default function ReservationPage() {
     deleteReservation,
   } = useReservationStore();
   const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
+
+  // 새로고침 아이콘회전
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleRefreshClick = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      getEquipments();
+      setIsRefreshing(false);
+    }, 1000);
+  };
 
   // useEffect(() => {
   //   getEquipments();
@@ -72,6 +82,15 @@ export default function ReservationPage() {
                 ? routineDetail?.name
                 : "바로운동"}
             </h2>
+          }
+          rightContent={
+            <button className="btn btn-icon" onClick={handleRefreshClick}>
+              <RefreshCcw
+                size={18}
+                strokeWidth="2"
+                className={isRefreshing ? "rotating" : ""}
+              />
+            </button>
           }
         />
 
