@@ -23,7 +23,10 @@ import Profile from "../features/mypage"; //개인정보 수정
 import Gyms from "../features/mypage"; //헬스장변경
 import Favorites from "../features/mypage"; //즐겨찾기한기구
 import CircularTimer from "../components/ui/CircularTimer";
+
 import { useUIStore } from "../stores/UIStore";
+import { socketService } from "../services/socketService";
+import NotificationPopup from "../components/ui/NotificationPopup";
 
 // import WorkoutBooking from "../features/workout/Booking"; //예약중
 
@@ -31,6 +34,9 @@ export default function AppRoutes() {
   useAuthInit();
   const token = useAuthStore((state) => state.token);
   const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
+
+  // 웹소켓 연결
+  if (token) socketService.connect(token);
 
   return (
     <BrowserRouter>
@@ -85,6 +91,7 @@ export default function AppRoutes() {
       {isRestTimerMiniView && (
         <CircularTimer thickness={1.5} title="휴식 타이머" />
       )}
+      <NotificationPopup />
     </BrowserRouter>
   );
 }
