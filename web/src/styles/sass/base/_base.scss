@@ -38,6 +38,9 @@ input {
   &::placeholder {
     color: $c-sub-gray !important;
   }
+  &:disabled {
+    color: $c-sub-gray;
+  }
 
   &:focus {
     outline: none;

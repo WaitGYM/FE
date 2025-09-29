@@ -121,7 +121,9 @@ export default function HomePage() {
                     <div className="info">
                       <p className="title">{routine.name}</p>
                       <div className="detail">
-                        {routine.isActive && <strong>운동중!!</strong>}
+                        {routine.isActive && (
+                          <div className="badge ing">운동중</div>
+                        )}
                         <span>{routine.exerciseCount}개 운동</span>
                         <span>예상시간 {routine.duration}분</span>
                       </div>

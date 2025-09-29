@@ -38,6 +38,7 @@
 
         .equipment {
           padding: 0;
+          grid-template-columns: auto 1fr auto;
           .img {
             width: 2.5rem;
             height: 2.5rem;

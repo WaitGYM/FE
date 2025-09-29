@@ -10,7 +10,7 @@
   img {
     flex: 0 0 4em;
     height: 3rem;
-    background-color: #272c34;
+    background-color: #5c697b;
     border-radius: 0.4rem;
   }
 
@@ -29,9 +29,9 @@
 
     .status {
       font-size: 0.7rem;
-      margin-top: 0.6em;
+      // margin-top: 0.6em;
       color: $c-primary-blue-light;
-
+      min-height: 20px;
       display: flex;
       gap: 0.5rem;
 
