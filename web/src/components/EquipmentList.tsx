@@ -30,10 +30,9 @@ export default function EquipmentListPage({
   //   getEquipments();
   // }, [getEquipments]);
 
-  // 3분마다 자동 새로고침
+  // 10초마다 자동 새로고침
   useEffect(() => {
-    const interval = setInterval(() => getEquipments(), 180000);
-
+    const interval = setInterval(() => getEquipments(), 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -106,12 +105,17 @@ export default function EquipmentListPage({
                     : ""
                 }`}
               >
-                {equipment.status.myQueueStatus === "WAITING" && (
-                  <span className="badge waiting">대기중</span>
-                )}
+                {equipment.status.myQueuePosition &&
+                  equipment.status.myQueueStatus === "WAITING" && (
+                    <span className="badge waiting">대기중</span>
+                  )}
                 {equipment.status.completedToday && (
                   <span className="badge complete">운동완</span>
                 )}
+                {equipment.status.myQueueStatus === "NOTIFIED" &&
+                  equipment.status.myQueuePosition === 1 && (
+                    <span className="badge myturn">내차례</span>
+                  )}
                 {equipment.status.currentUser === userInfo.name ? (
                   <span>이용중</span>
                 ) : equipment.status.isAvailable ? (
