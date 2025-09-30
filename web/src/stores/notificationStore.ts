@@ -37,6 +37,7 @@ export const useNotificationStore = create<
         notifications: state.notifications.map((n) => ({ ...n, read: true })),
         unreadCount: 0,
       })),
+
     clearPopupMessage: () => {
       set({ popupMessage: null });
     },

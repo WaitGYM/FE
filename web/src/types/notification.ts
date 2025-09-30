@@ -4,4 +4,9 @@ export interface NotificationType {
   message: string;
   read?: boolean;
   createdAt: string; // ISO 8601 형식의 날짜 문자열을 사용하는 것이 일반적입니다.
+  equipmentId?: number;
+  equipmentName?: string;
+  timestamp?: string;
+  title?: string;
+  waitingCount?: number;
 }

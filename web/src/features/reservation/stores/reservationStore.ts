@@ -31,6 +31,7 @@ interface ReservationStoreType {
   getEquipmentReservationStatus: () => Promise<void>;
   createReservation: () => Promise<void>;
   deleteReservation: () => Promise<void>;
+  resetSelectedEquipmentState: () => void;
   resetState: () => void;
 }
 
@@ -127,8 +128,7 @@ export const useReservationStore = create<ReservationStoreType>()(
           );
           console.log(response.data);
           set({
-            selectedEquipment: { ...initialState.selectedEquipment },
-            waitingInfo: response.data,
+            waitingInfo: { ...reqData, ...response.data },
           });
         } else {
           throw Error;
@@ -137,6 +137,9 @@ export const useReservationStore = create<ReservationStoreType>()(
         set({ reservationError: "기구 예약에 실패했습니다." });
         console.log("기구 예약에 실패", error);
       } finally {
+        set({
+          selectedEquipment: { ...initialState.selectedEquipment },
+        });
         setLoading(false);
       }
     },
@@ -159,6 +162,10 @@ export const useReservationStore = create<ReservationStoreType>()(
       }
     },
 
+    resetSelectedEquipmentState: () =>
+      set({
+        selectedEquipment: { ...initialState.selectedEquipment },
+      }),
     resetState: () => set(initialState),
   }))
 );

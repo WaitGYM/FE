@@ -44,13 +44,14 @@ const connectWebSocket = (userId: string | number) => {
         data.type === "EQUIPMENT_AVAILABLE" ||
         data.type === "QUEUE_EXPIRED" ||
         data.type === "WAITING_COUNT"
-      )
+      ) {
+        // console.log("새로운 메시지 수신:", data.type, data.message);
         useNotificationStore.getState().addNotification({
           id: Date.now(),
           createdAt: new Date().toISOString(),
           ...data,
         });
-      console.log("새로운 메시지 수신:", data);
+      }
     } catch (error) {
       console.error("메시지 파싱 오류:", error);
     }

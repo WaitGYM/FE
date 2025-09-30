@@ -179,22 +179,23 @@ export const useRoutineStore = create<RoutineStoreType>()(
       }
     },
 
-    // getRoutine: async (id: number) => {
-    //   setLoading(true);
-    //   try {
-    //     const response = await routineApi.getRoutine(id);
-    //     // const response = await getRoutineTempData();
-    //     set({
-    //       routineDetail: response.data,
-    //     });
-    //   } catch (error) {
-    //     set({
-    //       routineError: "루틴을 불러오는데 실패했습니다.",
-    //     });
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // },
+    getRoutineDetail: async (id: number) => {
+      setLoading(true);
+      try {
+        const { data } = await routineApi.getRoutine(id);
+        console.log("getRoutineDetail", data);
+
+        set({
+          routineDetail: data,
+        });
+      } catch (error) {
+        set({
+          routineError: "루틴을 불러오는데 실패했습니다.",
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
 
     resetState: () => set(initialState),
   }))
