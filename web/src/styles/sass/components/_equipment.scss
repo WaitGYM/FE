@@ -55,6 +55,10 @@
           color: $c-sub-white;
           background-color: $c-primary-blue;
         }
+        &.myturn {
+          color: $c-primary-blue;
+          background-color: $c-primary-navy-lightest;
+        }
       }
 
       span {

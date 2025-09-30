@@ -6,7 +6,7 @@ interface ServerNotificationPayload {
 }
 
 let socket: WebSocket | null = null;
-const WEBSOCKET_URL = `${import.meta.env.VITE_API_BASE_URL}/ws`;
+const WEBSOCKET_URL = `${import.meta.env.VITE_WS_URL}/ws`;
 
 // 재연결 시도를 위한 변수
 let isReconnecting = false;
