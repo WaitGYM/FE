@@ -6,7 +6,6 @@ const setLoading = useLoadingStore.getState().setLoading;
 
 interface FavoriteStoreType {
   favoriteList: FavoriteType[];
-  error: string | null;
 
   getFavoriteList: () => Promise<void>;
   addFavorite: (eqId: number) => Promise<void>;
@@ -16,7 +15,6 @@ interface FavoriteStoreType {
 
 const initialState = {
   favoriteList: [],
-  error: null,
 };
 
 export const useFavoriteStore = create<FavoriteStoreType>((set, get) => ({
@@ -25,12 +23,10 @@ export const useFavoriteStore = create<FavoriteStoreType>((set, get) => ({
   getFavoriteList: async () => {
     setLoading(true);
     try {
-      const favoritesData = (await favoriteApi.getFavoriteList()).data;
-      set({ favoriteList: favoritesData });
+      const { data } = await favoriteApi.getFavoriteList();
+      set({ favoriteList: data });
     } catch (error) {
-      set({
-        error: "즐겨찾기 목록을 불러오는데 실패했습니다.",
-      });
+      console.log("즐겨찾기 목록 조회 실패!!", error);
     } finally {
       setLoading(false);
     }
@@ -41,9 +37,7 @@ export const useFavoriteStore = create<FavoriteStoreType>((set, get) => ({
     try {
       await favoriteApi.addFavorite(eqId);
     } catch (error) {
-      set({
-        error: "즐겨찾기 추가에 실패했습니다.",
-      });
+      console.log("즐겨찾기 추가에 실패!!", error);
     } finally {
       setLoading(false);
     }
@@ -54,9 +48,7 @@ export const useFavoriteStore = create<FavoriteStoreType>((set, get) => ({
     try {
       await favoriteApi.deleteFavorite(eqId);
     } catch (error) {
-      set({
-        error: "즐겨찾기 삭제에 실패했습니다.",
-      });
+      console.log("즐겨찾기 삭제에 실패!!", error);
     } finally {
       setLoading(false);
     }
