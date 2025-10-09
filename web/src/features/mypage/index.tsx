@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useUserStore } from "../../stores/userStore";
 
@@ -49,32 +49,32 @@ export default function Mypage() {
             </div>
           </div>
           <div className="menu-wrap">
-            <a className="menu" href="/profile">
+            <Link className="menu" to="/profile">
               <User size={18} strokeWidth="1.5" />
               개인정보수정
-            </a>
-            <a className="menu" href="/gyms">
+            </Link>
+            <Link className="menu" to="/gyms">
               <Dumbbell size={18} strokeWidth="1.5" />
               이용 헬스장 변경
-            </a>
-            <a className="menu" href="/favorites">
+            </Link>
+            <Link className="menu" to="/favorites">
               <Star size={18} strokeWidth="1.5" />
               즐겨찾기한 기구
-            </a>
-            <a className="menu" href="#">
+            </Link>
+            <Link className="menu" to="#">
               <Headset size={18} strokeWidth="1.5" />
               고객센터
-            </a>
-            <a className="menu" href="#">
+            </Link>
+            <Link className="menu" to="#">
               <Settings size={18} strokeWidth="1.5" />앱 설정
-            </a>
-            <a className="menu" href="#">
+            </Link>
+            <Link className="menu" to="#">
               <FileCheck2 size={18} strokeWidth="1.5" />
               서비스 약관
-            </a>
+            </Link>
           </div>
 
-          <a className="btn-logout">로그아웃</a>
+          <button className="btn-logout">로그아웃</button>
         </div>
       </div>
 

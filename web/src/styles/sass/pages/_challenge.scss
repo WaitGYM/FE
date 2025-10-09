@@ -1,9 +1,7 @@
 @use "sass:map";
 @use "@styles/variables" as *;
 
-//미션,랭킹 공통
-.mission,
-.ranking {
+.challenge-screen {
   .greeting {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -30,7 +28,8 @@
     }
   }
 
-  &-wrap {
+  .mission-wrap,
+  .ranking-wrap {
     .top {
       display: flex;
       align-items: center;
