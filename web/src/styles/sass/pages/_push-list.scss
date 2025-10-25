@@ -3,33 +3,33 @@
 
 .pushlist-page {
   .container {
-    padding: 0 1.5rem;
+    padding: 0 rem(24);
   }
   .push-wrap {
     .top {
-      font-size: 0.75rem;
+      font-size: rem(12);
       font-weight: 500;
-      margin-bottom: 0.5rem;
+      margin-bottom: rem(8);
     }
     .push-list-wrap {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: rem(8);
 
       .list {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        gap: 0.5rem;
-        padding: 1rem 1.5rem;
-        border-radius: 0.5rem;
+        gap: rem(8);
+        padding: rem(16) rem(24);
+        border-radius: rem(8);
         background: $c-primary-blue-dark-light;
 
         .state {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: rem(8);
 
           .badge {
             &.push-res {
@@ -46,7 +46,7 @@
             }
           }
           .time {
-            font-size: 0.75rem;
+            font-size: rem(12);
             font-weight: 500;
             color: $c-primary-blue-light;
           }
@@ -59,9 +59,9 @@
       }
     }
     .bottom-notice {
-      margin: 1.4rem 0;
+      margin: 1rem (64) 0;
       width: 100%;
-      font-size: 0.75rem;
+      font-size: rem(12);
       text-align: center;
       font-weight: 500;
       color: $c-primary-blue-light;

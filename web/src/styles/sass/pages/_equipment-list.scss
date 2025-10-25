@@ -7,7 +7,7 @@
   overflow: hidden;
 
   section {
-    padding: 0 1.5rem;
+    padding: 0 rem(24);
 
     .equipment-wrap {
       margin-top: 1.8rem;
@@ -15,14 +15,14 @@
       .top {
         display: flex;
         align-items: center;
-        font-size: 0.75rem;
-        margin-bottom: 1rem;
+        font-size: rem(12);
+        margin-bottom: rem(16);
 
         .total-select,
         .auto-suggest {
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: rem(4);
           color: $c-sub-white;
           font-weight: 500;
         }
@@ -37,7 +37,7 @@
       }
 
       li {
-        border-radius: 0.4rem;
+        border-radius: 0rem (64);
         cursor: pointer;
 
         &.selected {

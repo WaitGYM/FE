@@ -6,20 +6,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
+  gap: rem(40);
   height: 100vh;
 
   .complete-title {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: rem(8);
     text-align: center;
 
     .icon-motion {
-      width: 5rem;
-      height: 5rem;
-      margin-bottom: 1rem;
+      width: rem(80);
+      height: rem(80);
+      margin-bottom: rem(16);
 
       img {
         width: 100%;
@@ -30,14 +30,14 @@
 
     h1 {
       color: $c-sub-white;
-      font-size: 1.5rem;
+      font-size: rem(24);
       font-weight: 700;
       line-height: 140%;
     }
 
     p {
       color: $c-primary-blue-light;
-      font-size: 0.75rem;
+      font-size: rem(12);
       font-weight: 500;
       line-height: 140%;
     }
@@ -46,11 +46,11 @@
   .complete-time {
     width: 100%;
     display: flex;
-    padding: 1rem 1.5rem;
+    padding: rem(16) rem(24);
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
-    border-radius: 0.5rem;
+    gap: rem(12);
+    border-radius: rem(8);
     background: $c-primary-blue-dark-light;
 
     li {
@@ -63,20 +63,20 @@
     strong {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: rem(4);
       font-size: 0.875rem;
       font-weight: 700;
       line-height: 140%;
 
       svg {
-        width: 1rem;
-        height: 1rem;
+        width: rem(16);
+        height: rem(16);
         aspect-ratio: 1/1;
       }
     }
 
     span {
-      font-size: 1rem;
+      font-size: rem(16);
       font-weight: 400;
       line-height: 140%;
 
@@ -86,7 +86,7 @@
     }
 
     & + li {
-      margin-top: 1rem;
+      margin-top: rem(16);
     }
   }
 }

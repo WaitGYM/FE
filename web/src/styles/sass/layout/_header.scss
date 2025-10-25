@@ -2,17 +2,17 @@
 @use "@styles/variables" as *;
 
 .header {
-  margin: map.get($spacing, 6) 0;
+  margin: rem(24) 0;
   position: relative;
 
   .header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 3.43rem;
+    height: 3rem (64) (48);
     position: relative;
 
-    padding: 0 map.get($spacing, 6);
+    padding: 0 rem(24);
   }
 
   .page-title {
@@ -51,10 +51,10 @@
   // 메인
   &--home {
     // height: auto;
-    // padding: 0 map.get($spacing, 6);
+    // padding: 0 rem(24);
 
     .logo {
-      width: 6.53rem;
+      width: 6.5rem (48);
       height: 1.39rem;
 
       img {
@@ -69,10 +69,10 @@
     .header-tab {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: rem(8);
       a {
         color: $c-sub-gray;
-        font-size: 1.25rem;
+        font-size: rem(20);
         font-weight: 600;
         &.active {
           color: $c-sub-white;
