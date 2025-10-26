@@ -11,15 +11,25 @@ export default function Equipment({
   return (
     <>
       <div className="equipment">
-        <img src={imgSrc} />
+        <img src={imgSrc} alt={imgSrc} />
         <div className="info">
           <div className="title">
             <span className="name">{name}</span>
-            <div className="favorite">
+            <div className="favorite" aria-label="즐겨찾기">
               {isFavorite ? (
-                <Star size={18} strokeWidth="1.5" className="on" />
+                <Star
+                  size={18}
+                  strokeWidth="1.5"
+                  className="on"
+                  aria-pressed="true"
+                />
               ) : (
-                <Star size={18} strokeWidth="1.5" className="" />
+                <Star
+                  size={18}
+                  strokeWidth="1.5"
+                  className="off"
+                  aria-pressed="false"
+                />
               )}
             </div>
           </div>

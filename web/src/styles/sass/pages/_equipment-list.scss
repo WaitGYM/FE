@@ -37,11 +37,14 @@
       }
 
       li {
-        border-radius: 0rem (64);
-        cursor: pointer;
+        margin-bottom: 1px;
+        button {
+          border-radius: 0.4rem;
+          cursor: pointer;
 
-        &.selected {
-          background-color: $c-primary-blue-dark-light;
+          &.selected {
+            background-color: $c-primary-blue-dark-light;
+          }
         }
       }
     }
