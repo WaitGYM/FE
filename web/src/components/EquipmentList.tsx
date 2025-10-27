@@ -23,26 +23,28 @@ export default function EquipmentListPage({
   const { equipmentList, getEquipments } = useEquipmentStore();
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
-  const { workoutMode, routineId } = useUIStore();
-  const { routineDetail, getRoutineDetail } = useRoutineStore();
+  const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
+  // const { routineDetail, getRoutineDetail } = useRoutineStore();
   // let getList;
   // useEffect(() => {
   //   getEquipments();
   // }, [getEquipments]);
 
-  // 10초마다 자동 새로고침
+  // 1분마다 자동 새로고침
   useEffect(() => {
-    const interval = setInterval(() => getEquipments(), 10000);
-    return () => clearInterval(interval);
-  }, []);
+    if (!isRestTimerModalOpen || isRestTimerMiniView) {
+      const interval = setInterval(() => getEquipments(), 60000);
+      return () => clearInterval(interval);
+    }
+  }, [isRestTimerModalOpen, isRestTimerMiniView]);
 
   useEffect(() => {
-    if (workoutMode === "routine" && routineId) {
-      getRoutineDetail(routineId);
-    } else {
-      getEquipments();
-    }
-  }, [getEquipments, getRoutineDetail]);
+    // if (workoutMode === "routine" && routineId) {
+    //   getRoutineDetail(routineId);
+    // } else {
+    getEquipments();
+    // }
+  }, [getEquipments]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     // setSelectedList([selectEquip]);

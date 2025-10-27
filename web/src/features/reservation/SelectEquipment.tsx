@@ -17,9 +17,9 @@ export default function ReservationPage() {
   const navigate = useNavigate();
   const { getEquipments } = useEquipmentStore();
   const { userInfo } = useUserStore();
-  const { workoutMode, isWorkingOut, routineId } = useUIStore();
-  const { startWorkout } = useWorkoutStore();
-  const { routineDetail, getRoutineDetail } = useRoutineStore();
+  const { workoutMode, isWorkingOut, routineId, resetWorkoutMode } =
+    useUIStore();
+  const { workingOutInfo, startWorkout } = useWorkoutStore();
   const {
     selectedEquipment,
     waitingInfo,
@@ -28,6 +28,7 @@ export default function ReservationPage() {
     resetSelectedEquipmentState,
   } = useReservationStore();
   const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
+  const { routineDetail, getRoutineDetail } = useRoutineStore();
 
   // 새로고침 아이콘회전
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -41,24 +42,9 @@ export default function ReservationPage() {
 
   function handleBackBtnClick() {
     resetSelectedEquipmentState();
-    navigate(-1);
+    resetWorkoutMode();
+    navigate("/");
   }
-
-  // useEffect(() => {
-  //   getEquipments();
-  // }, [getEquipments]);
-
-  // useEffect(() => {
-  //   if (workoutMode === "routine" && routineId) {
-  //     getRoutineDetail(routineId);
-  //   } else {
-  //     getEquipments();
-  //   }
-  // }, [getEquipments, getRoutineDetail]);
-
-  // function handleEquipmentToggle(selectEquip: EquipmentType) {
-  //   setSelectedEquipment([selectEquip]);
-  // }
 
   function handleDeleteReservation() {
     deleteReservation().then(() => getEquipments());
@@ -138,12 +124,13 @@ export default function ReservationPage() {
         </BottomButtonWrapper>
       )}
 
-      {/* 내 대기 건이 없고 기구 이용중일땐 다음버튼(대기) */}
-      {/* 내 대기 건이 없고 이용불가 선택시 다음버튼(대기) */}
-      {/* 이용중인 기구가 없고 이용가능 기구일때 다음버튼(운동) */}
-      {(!waitingInfo && isWorkingOut) ||
-      (!waitingInfo && !selectedEquipment.status?.isAvailable) ||
-      (!isWorkingOut && selectedEquipment.status?.isAvailable) ? (
+      {/* 내 대기건이 없고 내가 이용중이 아닌 이용불가 기구 선택시 다음버튼(대기) */}
+      {/* 운동중이 아니고 이용가능 기구일때 다음버튼(운동) */}
+      {selectedEquipment.id &&
+      ((!waitingInfo &&
+        workingOutInfo.equipmentId !== selectedEquipment.id &&
+        !selectedEquipment.status.isAvailable) ||
+        (!isWorkingOut && selectedEquipment.status.isAvailable)) ? (
         <BottomButtonWrapper>
           <button onClick={handleNextBtn} className="btn btn-orange">
             다음

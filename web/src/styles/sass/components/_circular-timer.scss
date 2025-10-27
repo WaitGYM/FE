@@ -45,36 +45,36 @@
     }
   }
 
-  &.miniview {
-    // position: fixed와 z-index는 Framer Motion이 아닌
-    // Portal 렌더링 시점에만 필요하므로 인라인 스타일에 남겨두는 것이 좋습니다.
-    // 하지만 나머지 시각적 스타일은 여기서 정의합니다.
-    position: absolute;
-    right: 1.5rem;
-    bottom: 6rem;
-    width: 4.375rem;
-    height: 4.375rem;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    box-shadow: (0 2px 15px rgba(0, 0, 0, 0.25));
-    cursor: pointer;
-    // opacity: 0;
-    // animation: zoomIn 0.3s ease-out 0.5s forwards;
+  // &.miniview {
+  //   // position: fixed와 z-index는 Framer Motion이 아닌
+  //   // Portal 렌더링 시점에만 필요하므로 인라인 스타일에 남겨두는 것이 좋습니다.
+  //   // 하지만 나머지 시각적 스타일은 여기서 정의합니다.
+  //   position: absolute;
+  //   right: 1.5rem;
+  //   bottom: 6rem;
+  //   width: 4.375rem;
+  //   height: 4.375rem;
+  //   aspect-ratio: 1/1;
+  //   border-radius: 50%;
+  //   box-shadow: (0 2px 15px rgba(0, 0, 0, 0.25));
+  //   cursor: pointer;
+  //   // opacity: 0;
+  //   // animation: zoomIn 0.3s ease-out 0.5s forwards;
 
-    // &.zoom-out {
-    //   opacity: 1;
-    //   animation: zoomOut 0.3s ease-in 0.5s forwards;
-    // }
+  //   // &.zoom-out {
+  //   //   opacity: 1;
+  //   //   animation: zoomOut 0.3s ease-in 0.5s forwards;
+  //   // }
 
-    .text-wrap {
-      h6 {
-        font-size: 0.75rem;
-        font-weight: 500;
-      }
-      h1 {
-        font-size: 1rem;
-        font-weight: 700;
-      }
-    }
-  }
+  //   .text-wrap {
+  //     h6 {
+  //       font-size: 0.75rem;
+  //       font-weight: 500;
+  //     }
+  //     h1 {
+  //       font-size: 1rem;
+  //       font-weight: 700;
+  //     }
+  //   }
+  // }
 }

@@ -23,5 +23,6 @@ export type WorkoutProgressInfoType = {
     totalRest: string;
     workTimeSec: number;
     workTime: string;
+    restTime?: string;
   };
 };

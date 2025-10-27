@@ -47,7 +47,10 @@ export default function WorkoutCompletePage() {
             <strong>
               <Timer /> 총 휴식시간
             </strong>
-            <span>{workoutProgressInfo.summary?.totalRest}</span>
+            <span>
+              {workoutProgressInfo.summary?.totalRest ||
+                workoutProgressInfo.summary?.restTime}
+            </span>
           </li>
         </ul>
       )}

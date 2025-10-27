@@ -73,21 +73,27 @@
       }
     }
   }
-  &.breaktimer .text-wrap {
-    .set-count {
-      .lucide-circle {
-        color: $c-sub-gray;
-      }
-      .lucide-circle-check {
-        color: $c-point-orange;
+
+  &.breaktimer {
+    .text-wrap {
+      .set-count {
+        .lucide-circle {
+          color: $c-sub-gray;
+        }
+        .lucide-circle-check {
+          color: $c-point-orange;
+        }
       }
     }
-  }
+    .btn-wrap {
+      .btn-gray {
+        width: 3rem;
+        aspect-ratio: 1/1;
 
-  &.breaktimer .btn-wrap {
-    .btn-gray {
-      width: 3rem;
-      aspect-ratio: 1/1;
+        &:disabled {
+          opacity: 0.4;
+        }
+      }
     }
   }
 }

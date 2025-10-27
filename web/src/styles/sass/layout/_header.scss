@@ -2,7 +2,7 @@
 @use "@styles/variables" as *;
 
 .header {
-  margin: map.get($spacing, 6) 0;
+  padding: map.get($spacing, 6) 0;
   position: relative;
 
   .header-top {

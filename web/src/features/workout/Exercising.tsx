@@ -15,10 +15,15 @@ export default function WorkoutExercising() {
     stopWorkout,
     completeWorkoutSet,
   } = useWorkoutStore();
-  const { setWorkingOut } = useUIStore();
+  const { setWorkingOut, isRestTimerModalOpen, toggleRestTimerModalOpen } =
+    useUIStore();
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (!isRestTimerModalOpen) setIsRunning(true);
+  }, [isRestTimerModalOpen]);
 
   useEffect(() => {
     if (isRunning) {
@@ -43,10 +48,17 @@ export default function WorkoutExercising() {
     )}`;
   }
 
+  function handleResetTimer() {
+    setIsRunning(false);
+    setTime(0);
+  }
+
   async function handleSetComplete() {
     const isWorkoutCompleted = await completeWorkoutSet();
     if (!isWorkoutCompleted) {
-      navigate("/workout/breaktimer");
+      // navigate("/workout/breaktimer");
+      handleResetTimer();
+      toggleRestTimerModalOpen();
     } else {
       handleWorkoutComplete();
     }
@@ -58,8 +70,7 @@ export default function WorkoutExercising() {
   }
 
   function handleWorkoutComplete() {
-    setIsRunning(false);
-    setTime(0);
+    handleResetTimer();
     setWorkingOut(false);
     navigate("/workout/complete", { replace: true });
   }

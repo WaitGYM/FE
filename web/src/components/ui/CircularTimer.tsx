@@ -20,7 +20,7 @@ const formatTime = (sec: number): string => {
 };
 
 export default function CircularTimer({ thickness = 1.5 }: CircularTimerProps) {
-  const { isRestTimerMiniView, toggleRestTimerMiniView } = useUIStore();
+  const { isRestTimerMiniView, setIsRestTimerMiniView } = useUIStore();
   const {
     leftRestTime,
     workingOutInfo,
@@ -49,7 +49,7 @@ export default function CircularTimer({ thickness = 1.5 }: CircularTimerProps) {
       className={`circular-timer ${isRestTimerMiniView && "miniview"}`}
       onClick={(e) => {
         e.stopPropagation();
-        isRestTimerMiniView && toggleRestTimerMiniView();
+        isRestTimerMiniView && setIsRestTimerMiniView();
       }}
     >
       {/* 배경 트랙 */}
