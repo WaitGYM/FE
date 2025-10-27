@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { equipmentApi } from "../services";
 import type { EquipmentType } from "../types";
+import { useRoutineStore } from "../features/routine/store/routineStore";
 import { useLoadingStore } from "./loadingStore";
+import { useUIStore } from "./UIStore";
+
 const setLoading = useLoadingStore.getState().setLoading;
 
 interface EquipmentStoreType {
@@ -23,8 +26,29 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
     getEquipments: async () => {
       setLoading(true);
       try {
-        const { data } = await equipmentApi.getEquipmentList();
-        set({ equipmentList: data });
+        const { routineId } = useUIStore.getState();
+        const { getRoutineDetail } = useRoutineStore.getState();
+        console.log("routineId : ", routineId);
+
+        const eqAllData = (await equipmentApi.getEquipmentList()).data;
+        if (routineId) {
+          console.log("기구 스토어에서 루틴 정보 호출----");
+          await getRoutineDetail(routineId);
+
+          const routineDetail = useRoutineStore.getState().routineDetail;
+          const routineData = eqAllData.filter((eq) =>
+            routineDetail.exercises.some((ex) => eq.id === ex.equipment.id)
+          );
+          // console.log("eqAllData : ", eqAllData);
+          console.log(
+            "routineDetail : ",
+            useRoutineStore.getState().routineDetail
+          );
+          console.log("routineData : ", routineData);
+          set({ equipmentList: routineData });
+        } else {
+          set({ equipmentList: eqAllData });
+        }
       } catch (error) {
         set({
           error: "기구 목록을 불러오는데 실패했습니다.",
