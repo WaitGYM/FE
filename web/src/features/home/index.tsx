@@ -54,6 +54,7 @@ export default function HomePage() {
             <button
               className="icon-bell dot"
               onClick={() => navigate("/home/pushlist")}
+              aria-label="푸시알림 목록"
             >
               <Bell size={24} strokeWidth="1.5" />
             </button>
@@ -69,7 +70,7 @@ export default function HomePage() {
           <section>
             {routineLoading ? (
               // 1. 로딩 중일 때 -> 스켈레톤 UI
-              <ul className="routine-list">
+              <ul className="routine-list" aria-hidden="true">
                 {Array.from(new Array(2)).map((_, index) => (
                   <li className="routine" key={index}>
                     <div className="icon">
@@ -95,40 +96,43 @@ export default function HomePage() {
             ) : !routineList || routineList.length < 1 ? (
               // 2. 데이터가 없을 때 -> "루틴 등록" UI
               <ul className="not-routine">
-                <li
-                  className="routine"
-                  onClick={() => navigate("/add-routine/select-equipment")}
-                >
-                  <div className="icon">
-                    <Plus size={32} strokeWidth="1.5" />
-                  </div>
-                  <div className="info">
-                    <p className="title">루틴을 등록해주세요</p>
-                  </div>
+                <li>
+                  <button
+                    className="routine"
+                    onClick={() => navigate("/add-routine/select-equipment")}
+                  >
+                    <div className="icon">
+                      <Plus size={32} strokeWidth="1.5" />
+                    </div>
+                    <div className="info">
+                      <p className="title">루틴을 등록해주세요</p>
+                    </div>
+                  </button>
                 </li>
               </ul>
             ) : (
               // 3. 데이터가 있을 때 -> 실제 목록
               <ul className="routine-list">
                 {routineList.map((routine: RoutineType) => (
-                  <li
-                    className="routine"
-                    key={routine.id}
-                    onClick={() => handleWorkoutMode("routine", routine.id)}
-                  >
-                    <div className="icon">
-                      <Dumbbell size={32} strokeWidth="1.5" />
-                    </div>
-                    <div className="info">
-                      <p className="title">{routine.name}</p>
-                      <div className="detail">
-                        {routine.isActive && (
-                          <div className="badge ing">운동중</div>
-                        )}
-                        <span>{routine.exerciseCount}개 운동</span>
-                        {/* <span>예상시간 {routine.duration}분</span> */}
+                  <li key={routine.id}>
+                    <button
+                      className="routine"
+                      onClick={() => handleWorkoutMode("routine", routine.id)}
+                    >
+                      <div className="icon">
+                        <Dumbbell size={32} strokeWidth="1.5" />
                       </div>
-                    </div>
+                      <div className="info">
+                        <p className="title">{routine.name}</p>
+                        <div className="detail">
+                          {routine.isActive && (
+                            <div className="badge ing">운동중</div>
+                          )}
+                          <span>{routine.exerciseCount}개 운동</span>
+                          {/* <span>예상시간 {routine.duration}분</span> */}
+                        </div>
+                      </div>
+                    </button>
                   </li>
                 ))}
               </ul>

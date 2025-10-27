@@ -6,6 +6,8 @@
   grid-template-columns: auto auto 1fr;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+  color: $c-sub-white;
 
   img {
     flex: 0 0 4em;

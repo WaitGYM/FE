@@ -2,7 +2,7 @@
 @use "@styles/variables" as *;
 
 .header {
-  padding: map.get($spacing, 6) 0;
+  padding: rem(24) 0;
   position: relative;
 
   .header-top {
@@ -12,7 +12,7 @@
     height: 3.43rem;
     position: relative;
 
-    padding: 0 map.get($spacing, 6);
+    padding: 0 rem(24);
   }
 
   .page-title {
@@ -51,7 +51,7 @@
   // 메인
   &--home {
     // height: auto;
-    // padding: 0 map.get($spacing, 6);
+    // padding: 0 rem(24);
 
     .logo {
       width: 6.53rem;
@@ -69,7 +69,7 @@
     .header-tab {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: rem(8);
       a {
         color: $c-sub-gray;
         font-size: 1.25rem;

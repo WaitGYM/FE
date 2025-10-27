@@ -12,92 +12,95 @@
 
   .greeting {
     font-size: 1.12rem;
-    margin: map.get($spacing, 6) 0;
+    margin: rem(24) 0;
     line-height: 1.57rem;
     font-weight: 500;
-    padding: 0 map.get($spacing, 6);
+    padding: 0 rem(24);
   }
 
   .container {
-    padding: 0 map.get($spacing, 6) calc(4.68rem + map.get($spacing, 6));
+    padding: 0 rem(24) calc(4.68rem + rem(24));
   }
   section {
-    li.routine {
-      display: grid;
-      grid-template-columns: 2rem 1fr;
-      column-gap: 1.5rem;
-      align-items: center;
-      min-height: 4.75rem;
+    li {
+      .routine {
+        display: grid;
+        grid-template-columns: rem(32) 1fr;
+        column-gap: rem(24);
+        align-items: center;
+        width: 100%;
+        min-height: 4.75rem;
 
-      border-radius: 0.5rem;
-      background-color: $c-primary-blue-dark-light;
-      padding: 1rem 1.5rem;
-      color: $c-sub-white;
-      cursor: pointer;
+        border-radius: rem(8);
+        background-color: $c-primary-blue-dark-light;
+        padding: rem(16) rem(24);
+        color: $c-sub-white;
+        cursor: pointer;
 
-      .icon {
-        width: 2rem;
-        height: 2rem;
-        color: $c-primary-navy-lightest;
-      }
-
-      .info {
-        .title {
-          font-size: 1.1rem;
-          font-weight: 600;
-          line-height: 1.5rem;
-
-          display: inline-block;
-          width: 100%;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-
-          /* 여러 줄 자르기 추가 스타일 */
-          white-space: normal;
-          line-height: 1.4;
-          max-height: 2.8em;
-          text-align: left;
-          word-wrap: break-word;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
+        .icon {
+          width: rem(32);
+          height: rem(32);
+          color: $c-primary-navy-lightest;
         }
 
-        .detail {
-          margin-top: 0.25rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
+        .info {
+          .title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.5rem;
 
-          span {
-            font-size: 0.81rem;
-            font-weight: 500;
-            position: relative;
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            /* 여러 줄 자르기 추가 스타일 */
+            white-space: normal;
+            line-height: 1.4;
+            max-height: 2.8em;
+            text-align: left;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+
+          .detail {
+            margin-top: rem(4);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: rem(8);
 
-            &:not(:last-child)::after {
-              content: "";
-              display: inline-block;
-              width: 0.25rem;
-              height: 0.25rem;
-              border-radius: 50%;
-              background-color: $c-sub-white;
-              opacity: 0.5;
+            span {
+              font-size: 0.81rem;
+              font-weight: 500;
+              position: relative;
+              display: flex;
+              align-items: center;
+              gap: rem(8);
+
+              &:not(:last-child)::after {
+                content: "";
+                display: inline-block;
+                width: rem(4);
+                height: rem(4);
+                border-radius: 50%;
+                background-color: $c-sub-white;
+                opacity: 0.5;
+              }
             }
-          }
-          .badge {
-            &.ing {
-              background-color: $c-point-orange;
-              color: $c-sub-white;
+            .badge {
+              &.ing {
+                background-color: $c-point-orange;
+                color: $c-sub-white;
+              }
             }
           }
         }
-      }
-      & + li.routine {
-        margin-top: 0.5rem;
+        & + li.routine {
+          margin-top: rem(8);
+        }
       }
     }
   }
@@ -105,6 +108,6 @@
     position: fixed;
     // bottom: calc(4.68rem + 1.5rem);
     bottom: 0;
-    padding: 0 1.5rem 6.18rem;
+    padding: 0 rem(24) 6.18rem;
   }
 }

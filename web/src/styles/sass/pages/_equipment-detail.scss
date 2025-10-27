@@ -7,7 +7,7 @@
   overflow: hidden;
 
   section {
-    margin-bottom: 1.5rem;
+    margin-bottom: rem(24);
     input[type="text"] {
       background-color: $c-primary-blue-dark-light;
     }
@@ -17,7 +17,7 @@
     .label-title {
       font-size: 0.8125rem;
       font-weight: 500;
-      margin-bottom: 0.5rem;
+      margin-bottom: rem(8);
     }
 
     .box-wrap {
@@ -25,25 +25,25 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      gap: 0.5rem;
+      gap: rem(8);
 
       .box {
         width: 100%;
         background-color: $c-primary-blue-dark-light;
-        border-radius: 0.5rem;
-        padding: 1rem;
+        border-radius: rem(8);
+        padding: rem(16);
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: rem(8);
 
         .equipment {
           padding: 0;
           grid-template-columns: auto 1fr auto;
           .img {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: rem(40);
+            height: rem(40);
             aspect-ratio: 1/1;
-            border-radius: 0.5rem;
+            border-radius: rem(8);
             background-color: $c-primary-blue-dark;
 
             img {
@@ -60,7 +60,7 @@
           .btn-delete {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: rem(4);
             color: $c-primary-blue-light;
             font-size: 0.8125rem;
             padding: 0;
@@ -69,15 +69,15 @@
         .count-wrap {
           display: grid;
           grid-template-columns: 50% 50%;
-          gap: 0.5rem;
+          gap: rem(8);
           justify-content: center;
           .count {
-            border-radius: 0.5rem;
-            padding: 0.75rem 0.5rem;
+            border-radius: rem(8);
+            padding: rem(12) rem(8);
             background-color: $c-primary-blue-dark-modal;
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: rem(4);
             .title {
               font-size: 0.875rem;
               text-align: center;
@@ -87,7 +87,7 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              gap: 0.25rem;
+              gap: rem(4);
 
               padding: 0;
               .btn {
@@ -96,7 +96,7 @@
                 &.btn-icon {
                   background-color: transparent;
                   border-radius: 0.375rem;
-                  padding: 0.25rem;
+                  padding: rem(4);
                   display: flex;
                   justify-content: center;
                   align-items: center;
@@ -108,7 +108,7 @@
                 }
               }
               .count-num {
-                font-size: 1.25rem;
+                font-size: rem(20);
                 font-weight: 600;
                 text-align: center;
                 color: $c-point-orange;

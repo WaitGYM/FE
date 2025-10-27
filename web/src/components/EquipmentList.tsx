@@ -7,6 +7,7 @@ import Equipment from "../components/layout/Equipment";
 import { useUIStore } from "../stores/UIStore";
 import { useUserStore } from "../stores/userStore";
 import { useRoutineStore } from "../features/routine/store/routineStore";
+import { li } from "framer-motion/client";
 
 export default function EquipmentListPage({
   selectMode = "SINGLE",
@@ -73,29 +74,33 @@ export default function EquipmentListPage({
   return (
     <ul className="equipment-list">
       {equipmentList.map((equipment: EquipmentType) => (
-        <li
-          key={equipment.id}
-          onClick={() => handleEquipmentToggle(equipment)}
-          className={
-            selectedList.some((x) => x.id === equipment.id) ? "selected" : ""
-          }
-        >
-          <div className="equipment">
-            {/* <div className="icon-drag">
+        <li key={equipment.id}>
+          <button
+            onClick={() => handleEquipmentToggle(equipment)}
+            className={`equipment ${
+              selectedList.some((x) => x.id === equipment.id) ? "selected" : ""
+            }`}
+          >
+            <div className="icon-drag">
               <Equal size={18} strokeWidth="1.5" />
-            </div> */}
-            <img src={equipment.imageUrl || "/equipment_01.png"} />
+            </div>
+            <img
+              src={equipment.imageUrl || "/thumb-default.jpg"}
+              alt={equipment.name}
+            />
             <div className="info">
               <div className="title">
                 <span className="name">{equipment.name}</span>
                 <button
                   className="favorite"
                   onClick={(e) => handleToggleFavorite(e, equipment)}
+                  aria-label="즐겨찾기"
+                  aria-pressed={equipment.isFavorite}
                 >
                   <Star
                     size={18}
                     strokeWidth="1.5"
-                    className={equipment.isFavorite ? "on" : ""}
+                    className={equipment.isFavorite ? "on" : "off"}
                   />
                 </button>
               </div>
@@ -142,7 +147,7 @@ export default function EquipmentListPage({
                 )}
               </div>
             </div>
-          </div>
+          </button>
         </li>
       ))}
     </ul>
