@@ -22,7 +22,7 @@
       height: auto;
       top: auto;
       left: auto;
-      right: 1.5rem;
+      right: rem(24);
       bottom: 6rem;
       opacity: 0;
       animation: zoomIn 0.4s ease forwards;
@@ -38,11 +38,11 @@
 
         .text-wrap {
           h6 {
-            font-size: 0.75rem;
+            font-size: rem(12);
             font-weight: 500;
           }
           h1 {
-            font-size: 1rem;
+            font-size: rem(16);
             font-weight: 700;
           }
         }
