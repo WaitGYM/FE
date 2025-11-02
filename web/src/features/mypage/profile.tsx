@@ -4,6 +4,7 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
+import { image } from "framer-motion/client";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -20,7 +21,11 @@ export default function Profile() {
       <Header
         className="header--mypage"
         leftContent={
-          <button className="btn btn-icon" onClick={() => navigate(-1)}>
+          <button
+            type="button"
+            className="btn btn-icon"
+            onClick={() => navigate(-1)}
+          >
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
@@ -31,12 +36,12 @@ export default function Profile() {
         <section className="profile-section">
           <div
             className="thumb-wrap"
-            style={{ background: `url(${userInfo.avatar})` }}
+            style={{ backgroundImage: `url(${userInfo.avatar})` }}
           >
-            <label className="btn-file">
+            <button type="button" className="btn-file">
               {/* <input type="file" id="inputUpload" /> */}
               <Camera size={18} strokeWidth={1.5} />
-            </label>
+            </button>
           </div>
         </section>
         <section className="info-section">
@@ -57,7 +62,9 @@ export default function Profile() {
           </label>
         </section>
 
-        <button className="btn-withdraw">탈퇴하기</button>
+        <button type="button" className="btn-withdraw">
+          탈퇴하기
+        </button>
       </div>
 
       {/* <BottomButtonWrapper>

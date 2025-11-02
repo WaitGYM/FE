@@ -51,6 +51,16 @@ export default function CircularTimer({ thickness = 1.5 }: CircularTimerProps) {
         e.stopPropagation();
         isRestTimerMiniView && setIsRestTimerMiniView();
       }}
+      //miniview일때 키보드 접근 가능하도록 수정
+      role={isRestTimerMiniView ? "button" : undefined}
+      tabIndex={isRestTimerMiniView ? 0 : undefined}
+      onKeyDown={(e) => {
+        if (isRestTimerMiniView && (e.key === "Enter" || e.key === " ")) {
+          e.stopPropagation();
+          setIsRestTimerMiniView();
+        }
+      }}
+      aria-label={isRestTimerMiniView ? "타이머 원래 크기로 보기" : undefined}
     >
       {/* 배경 트랙 */}
       <CircularProgress

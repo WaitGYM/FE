@@ -85,9 +85,13 @@ export default function WorkoutExercising() {
       <Header
         className="header--exercising"
         rightContent={
-          <div className="btn-side" onClick={handleStopWorkout}>
+          <button
+            type="button"
+            className="btn-side"
+            onClick={handleStopWorkout}
+          >
             <span>운동종료</span>
-          </div>
+          </button>
         }
       />
 
@@ -116,7 +120,11 @@ export default function WorkoutExercising() {
       </section>
 
       <BottomButtonWrapper>
-        <button className="btn btn-blue" onClick={handleSetComplete}>
+        <button
+          className="btn btn-blue"
+          onClick={handleSetComplete}
+          type="button"
+        >
           {workingOutInfo.currentSet !== workingOutInfo.totalSets
             ? "세트"
             : "운동"}{" "}

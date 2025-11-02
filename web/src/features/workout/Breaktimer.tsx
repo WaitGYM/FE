@@ -101,16 +101,17 @@ export default function WorkoutBreaktimer() {
             <Header
               className="header--breaktimer"
               rightContent={
-                <div
+                <button
                   className="btn-side"
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsRestTimerMiniView(true);
                     navigate("/reservation/select-equipment");
                   }}
+                  type="button"
                 >
                   <span>기구 현황 보기</span>
-                </div>
+                </button>
               }
             />
             <section className="container">
@@ -164,28 +165,35 @@ export default function WorkoutBreaktimer() {
                 className="btn btn-gray"
                 onClick={() => adjustRest(-10)}
                 disabled={leftRestTime < 11}
+                type="button"
               >
                 <Minus />
               </button>
-              <button className="btn btn-orange" onClick={handleSkipRest}>
+              <button
+                className="btn btn-orange"
+                onClick={handleSkipRest}
+                type="button"
+              >
                 휴식중단
               </button>
               <button
                 className="btn btn-gray"
                 onClick={() => adjustRest(10)}
                 disabled={workoutProgressInfo.restSeconds > 299}
+                type="button"
               >
                 <Plus />
               </button>
             </BottomButtonWrapper>
           </>
         ) : (
-          <Box
+          <button
             className={`circular-timer`}
             onClick={(e) => {
               e.stopPropagation();
               setIsRestTimerMiniView(false);
             }}
+            type="button"
           >
             {/* 배경 트랙 */}
             <CircularProgress
@@ -210,7 +218,7 @@ export default function WorkoutBreaktimer() {
                 </div>
               </Typography>
             </Box>
-          </Box>
+          </button>
         )}
       </motion.div>
     </AnimatePresence>,

@@ -13,7 +13,7 @@ export default function EquipmentDetail() {
           className="header--equipment-detail"
           title={<h2>루틴수정</h2>}
           leftContent={
-            <button className="btn btn-icon">
+            <button type="button" className="btn btn-icon">
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
@@ -44,7 +44,7 @@ export default function EquipmentDetail() {
                       <span className="name">힙어브덕션</span>
                     </div>
                   </div>
-                  <button className="btn-delete">
+                  <button type="button" className="btn-delete">
                     <Trash size={16} strokeWidth="1.5" />
                     삭제
                   </button>
@@ -54,11 +54,11 @@ export default function EquipmentDetail() {
                   <div className="count set">
                     <span className="title">세트</span>
                     <div className="controller-wrap">
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
                       <span className="count-num">3</span>
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Plus size={20} strokeWidth="1.5" />
                       </button>
                     </div>
@@ -66,11 +66,11 @@ export default function EquipmentDetail() {
                   <div className="count break">
                     <span className="title">휴식</span>
                     <div className="controller-wrap">
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
                       <span className="count-num">00:30</span>
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Plus size={20} strokeWidth="1.5" />
                       </button>
                     </div>
@@ -87,7 +87,7 @@ export default function EquipmentDetail() {
                       <span className="name">트레드밀</span>
                     </div>
                   </div>
-                  <button className="btn-delete">
+                  <button type="button" className="btn-delete">
                     <Trash size={16} strokeWidth="1.5" />
                     삭제
                   </button>
@@ -97,11 +97,11 @@ export default function EquipmentDetail() {
                   <div className="count set">
                     <span className="title">세트</span>
                     <div className="controller-wrap">
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
                       <span className="count-num">1</span>
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Plus size={20} strokeWidth="1.5" />
                       </button>
                     </div>
@@ -109,12 +109,12 @@ export default function EquipmentDetail() {
                   <div className="count break">
                     <span className="title">휴식</span>
                     <div className="controller-wrap">
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
                       <span className="count-num">없음</span>
                       {/* 세트수가 1일때 휴식시간은 당연히 없음 */}
-                      <button className="btn btn-icon">
+                      <button type="button" className="btn btn-icon">
                         <Plus size={20} strokeWidth="1.5" />
                       </button>
                     </div>
@@ -126,7 +126,9 @@ export default function EquipmentDetail() {
         </div>
       </div>
       <BottomButtonWrapper>
-        <button className="btn btn-orange">루틴 수정하기</button>
+        <button type="button" className="btn btn-orange">
+          루틴 수정하기
+        </button>
       </BottomButtonWrapper>
     </div>
   );

@@ -41,6 +41,7 @@ export default function ChallengeScreen() {
             <button
               className="icon-bell dot"
               onClick={() => navigate("/home/pushlist")}
+              type="button"
             >
               <Bell size={24} strokeWidth="1.5" />
             </button>
