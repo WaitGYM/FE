@@ -75,7 +75,7 @@ export default function EquipmentListPage({
     <ul className="equipment-list">
       {equipmentList.map((equipment: EquipmentType) => (
         <li key={equipment.id}>
-          <button
+          <div
             onClick={() => handleEquipmentToggle(equipment)}
             className={`equipment ${
               !(
@@ -85,6 +85,14 @@ export default function EquipmentListPage({
                 ? ""
                 : "selected"
             }`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleEquipmentToggle(equipment);
+              }
+            }}
+            aria-label={equipment.name}
           >
             <div className="icon-drag">
               <Equal size={18} strokeWidth="1.5" />
@@ -101,6 +109,7 @@ export default function EquipmentListPage({
                   onClick={(e) => handleToggleFavorite(e, equipment)}
                   aria-label="즐겨찾기"
                   aria-pressed={equipment.isFavorite}
+                  type="button"
                 >
                   <Star
                     size={18}
@@ -152,7 +161,7 @@ export default function EquipmentListPage({
                 )}
               </div>
             </div>
-          </button>
+          </div>
         </li>
       ))}
     </ul>

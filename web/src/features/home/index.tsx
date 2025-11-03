@@ -55,6 +55,7 @@ export default function HomePage() {
               className="icon-bell dot"
               onClick={() => navigate("/home/pushlist")}
               aria-label="푸시알림 목록"
+              type="button"
             >
               <Bell size={24} strokeWidth="1.5" />
             </button>
@@ -100,6 +101,7 @@ export default function HomePage() {
                   <button
                     className="routine"
                     onClick={() => navigate("/add-routine/select-equipment")}
+                    type="button"
                   >
                     <div className="icon">
                       <Plus size={32} strokeWidth="1.5" />
@@ -118,6 +120,7 @@ export default function HomePage() {
                     <button
                       className="routine"
                       onClick={() => handleWorkoutMode("routine", routine.id)}
+                      type="button"
                     >
                       <div className="icon">
                         <Dumbbell size={32} strokeWidth="1.5" />
@@ -147,6 +150,7 @@ export default function HomePage() {
             onClick={() => handleWorkoutMode("direct")}
             className="btn btn-blue"
             id="no-routine"
+            type="button"
           >
             바로운동
           </button>
@@ -154,6 +158,7 @@ export default function HomePage() {
             onClick={() => navigate("/add-routine/select-equipment")}
             className="btn btn-orange"
             id="routine-add"
+            type="button"
           >
             루틴추가
           </button>

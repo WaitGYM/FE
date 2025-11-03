@@ -35,13 +35,13 @@ export default function TabRanking() {
   return (
     <div className="container">
       <div className="greeting">
-        <div className="msg">
+        <h2 className="msg">
           짐박스 구로디지털단지점
           <br />
           <strong>이번주 챔피언은?</strong>
-        </div>
+        </h2>
         <div className="icon-motion">
-          <img src={motionIcon} alt="화이팅" />
+          <img src={motionIcon} alt="트로피" />
         </div>
       </div>
       <div className="ranking-wrap">
@@ -52,10 +52,10 @@ export default function TabRanking() {
           </span>
           <span>상위 10명</span>
         </div>
-        <div className="ranking-wrap-list">
+        <ul className="ranking-wrap-list">
           {rankings.map((ranking, index) => {
             return (
-              <div className="ranking-wrap-list-item" key={index}>
+              <li className="ranking-wrap-list-item" key={index}>
                 {/* 내 순위는 라벨이 오렌지색이여야 하므로 .me를 붙여주세요 */}
                 <div className="rank-num">{index + 1}</div>
                 {/* <div className="rank-num me">{index + 1}</div> */}
@@ -67,10 +67,10 @@ export default function TabRanking() {
                   <strong className="name">{ranking.userName}</strong>
                 </div>
                 <div className="total-score">{ranking.totalScore}점</div>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </div>
   );

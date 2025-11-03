@@ -12,7 +12,7 @@
   img {
     flex: 0 0 4em;
     height: 3rem;
-    background-color: #5c697b;
+    background-color: $c-primary-navy-lightest;
     border-radius: 0.4rem;
   }
 
@@ -82,5 +82,7 @@
     width: 1.125rem;
     height: 1.125rem;
     aspect-ratio: 1/1;
+    color: $c-sub-white;
+    padding: 0;
   }
 }

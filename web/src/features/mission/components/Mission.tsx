@@ -27,11 +27,11 @@ export default function TabMission() {
   return (
     <div className="container">
       <div className="greeting">
-        <div className="msg">
+        <h2 className="msg">
           철민님, 미션달성을 위해
           <br />
           조금만 더 힘내세요!
-        </div>
+        </h2>
         <div className="icon-motion">
           <img src={motionIcon} alt="화이팅" />
         </div>
@@ -44,10 +44,10 @@ export default function TabMission() {
             8시간
           </span>
         </div>
-        <div className="mission-wrap-list">
+        <ul className="mission-wrap-list">
           {missions.map((mission, index) => {
             return (
-              <div className="mission-wrap-list-item" key={index}>
+              <li className="mission-wrap-list-item" key={index}>
                 <div className="info">
                   <div className="title">{mission.title}</div>
                   <div className="score">{mission.score}점</div>
@@ -62,10 +62,10 @@ export default function TabMission() {
                     {mission.progress}/{maxMissionCount}
                   </p>
                 </div>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </div>
   );

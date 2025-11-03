@@ -55,7 +55,7 @@
   }
 
   .terms {
-    margin: rem(24) 0 map.get($spacing, 4) 0;
+    margin: rem(24) 0 rem(16) 0;
     font-size: rem(12);
     color: $c-sub-gray;
 
@@ -65,7 +65,7 @@
     }
 
     .divider {
-      margin: 0 map.get($spacing, 2);
+      margin: 0 rem(8);
     }
   }
 
@@ -182,7 +182,7 @@
 
     .gyms-list {
       li {
-        border-radius: 0rem (64);
+        border-radius: 0.4rem;
         cursor: pointer;
 
         &.selected {
@@ -193,7 +193,7 @@
     .gyms-wrap {
       margin-top: 1.8rem;
       .gyms {
-        padding: 0.5em;
+        padding: rem(8);
         display: grid;
         grid-template-columns: auto auto 1fr;
         align-items: center;
@@ -209,7 +209,7 @@
           aspect-ratio: 1/1;
           color: $c-sub-gray;
           background-color: #272c34;
-          border-radius: 0rem (64);
+          border-radius: 0.4rem;
         }
 
         .info {

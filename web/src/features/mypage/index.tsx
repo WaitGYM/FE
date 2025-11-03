@@ -33,6 +33,7 @@ export default function Mypage() {
             <button
               className="icon-bell dot"
               onClick={() => navigate("/home/pushlist")}
+              type="button"
             >
               <Bell size={24} strokeWidth="1.5" />
             </button>
@@ -74,7 +75,9 @@ export default function Mypage() {
             </Link>
           </div>
 
-          <button className="btn-logout">로그아웃</button>
+          <button type="button" className="btn-logout">
+            로그아웃
+          </button>
         </div>
       </div>
 
