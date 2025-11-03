@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNotificationStore } from "../../stores/notificationStore";
+import { useNotificationStore } from "../../features/notification/store/notificationStore";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function NotificationPopup() {

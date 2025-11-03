@@ -1,7 +1,11 @@
+import { motion } from "framer-motion";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import logo from "@img/logo.svg"; //이미지로고
-import { Bell, Dumbbell, Plus } from "lucide-react";
+import { Dumbbell, Plus } from "lucide-react";
+import Skeleton from "@mui/material/Skeleton";
+import { BottomButtonWrapper } from "../../components/ui/Button";
+import NotificationButton from "../../components/ui/NotificationButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUserStore } from "../../stores/userStore";
@@ -9,9 +13,6 @@ import { useRoutineStore } from "../routine/store/routineStore";
 import type { RoutineType } from "../../types";
 import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
-import Skeleton from "@mui/material/Skeleton";
-import { BottomButtonWrapper } from "../../components/ui/Button";
-import { motion } from "framer-motion";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -49,17 +50,7 @@ export default function HomePage() {
               <img src={logo} alt="logo" />
             </div>
           }
-          rightContent={
-            // 읽지않음표시는 옆에 .dot을 붙여주세요
-            <button
-              className="icon-bell dot"
-              onClick={() => navigate("/home/pushlist")}
-              aria-label="푸시알림 목록"
-              type="button"
-            >
-              <Bell size={24} strokeWidth="1.5" />
-            </button>
-          }
+          rightContent={<NotificationButton />}
         />
 
         <div className="greeting">

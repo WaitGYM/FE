@@ -1,14 +1,12 @@
 import { motion } from "framer-motion";
-import { NavLink, Route, Routes, useNavigate } from "react-router-dom";
-import { Bell } from "lucide-react";
+import { NavLink, Route, Routes } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import TabMission from "./components/Mission";
 import TabRanking from "./components/Ranking";
+import NotificationButton from "../../components/ui/NotificationButton";
 
 export default function ChallengeScreen() {
-  const navigate = useNavigate();
-
   return (
     <motion.div
       className="challenge-screen"
@@ -37,18 +35,9 @@ export default function ChallengeScreen() {
               </NavLink>
             </nav>
           }
-          rightContent={
-            <button
-              className="icon-bell dot"
-              onClick={() => navigate("/home/pushlist")}
-              type="button"
-            >
-              <Bell size={24} strokeWidth="1.5" />
-            </button>
-          }
+          rightContent={<NotificationButton />}
         />
         <Routes>
-          {/* <Route index element={<Navigate to="mission" replace />} /> */}
           <Route path="mission" element={<TabMission />} />
           <Route path="ranking" element={<TabRanking />} />
         </Routes>

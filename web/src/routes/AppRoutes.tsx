@@ -5,7 +5,7 @@ import { socketService } from "../services/socketService";
 import Login from "../features/login";
 import OAuthSuccess from "../features/login/oauth-success";
 import HomeScreen from "../features/home"; //메인
-import PushList from "../features/home/PushList"; //푸시리스트
+import PushList from "../features/notification/PushList"; //푸시리스트
 
 import ReservationSelectEquipment from "../features/reservation/SelectEquipment"; // 세트설정
 import ReservationGoalSetting from "../features/reservation/GoalSetting"; // 세트설정
@@ -46,7 +46,7 @@ export default function AppRoutes() {
           path="/"
           element={token ? <HomeScreen /> : <Navigate to="/login" replace />}
         />
-        <Route path="/home/pushlist" element={<PushList />} />
+        <Route path="/pushlist" element={<PushList />} />
 
         <Route
           path="/reservation/select-equipment"

@@ -1,5 +1,4 @@
 import {
-  Bell,
   User,
   Dumbbell,
   Star,
@@ -9,12 +8,12 @@ import {
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useUserStore } from "../../stores/userStore";
+import NotificationButton from "../../components/ui/NotificationButton";
 
 export default function Mypage() {
-  const navigate = useNavigate();
   const { userInfo } = useUserStore();
 
   return (
@@ -28,16 +27,7 @@ export default function Mypage() {
         <Header
           className="header--mypage"
           leftContent={<h1 className="title">내 정보</h1>}
-          rightContent={
-            // 읽지않음표시는 옆에 .dot을 붙여주세요
-            <button
-              className="icon-bell dot"
-              onClick={() => navigate("/home/pushlist")}
-              type="button"
-            >
-              <Bell size={24} strokeWidth="1.5" />
-            </button>
-          }
+          rightContent={<NotificationButton />}
         />
         <div className="container">
           <div className="greeting">
