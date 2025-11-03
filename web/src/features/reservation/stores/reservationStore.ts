@@ -18,7 +18,7 @@ type WaitingInfoType = {
 };
 
 interface ReservationStoreType {
-  selectedEquipment: WorkoutGoalType | (EquipmentType & WorkoutGoalType);
+  selectedEquipment: EquipmentType & WorkoutGoalType;
   equipmentReservationStatus: string;
   waitingInfo: WaitingInfoType | null;
   reservationError: string | null;
@@ -38,10 +38,7 @@ interface ReservationStoreType {
 const { setLoading } = useLoadingStore.getState();
 
 const initialState = {
-  selectedEquipment: {
-    sets: 1,
-    restSeconds: 0,
-  },
+  selectedEquipment: [],
   equipmentReservationStatus: "",
   waitingInfo: null,
   reservationError: null,
@@ -52,10 +49,11 @@ export const useReservationStore = create<ReservationStoreType>()(
     ...initialState,
 
     setSelectedEquipment: (equipmentInfo) =>
-      set((state) => ({
+      set(() => ({
         selectedEquipment: {
-          ...state.selectedEquipment,
           ...equipmentInfo,
+          sets: equipmentInfo.sets || 1,
+          restSeconds: equipmentInfo.restSeconds || 0,
         },
       })),
 

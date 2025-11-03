@@ -1,27 +1,38 @@
+import { motion } from "framer-motion";
 import { ChevronLeft, Trash, Plus, Minus } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import { useReservationStore } from "./stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
-import { motion } from "framer-motion";
+import { useRoutineStore } from "../routine/store/routineStore";
 
 export default function EquipmentDetail() {
   const navigate = useNavigate();
   const {
     selectedEquipment,
     updateSelectedEquipment,
-    equipmentReservationStatus,
     getEquipmentReservationStatus,
+    resetSelectedEquipmentState,
     resetState,
   } = useReservationStore();
   const { startWorkout } = useWorkoutStore();
-  const { isWorkingOut, setWorkingOut } = useUIStore();
+  const { isWorkingOut, setWorkingOut, resetWorkoutMode } = useUIStore();
+  const { routineDetail, deleteRoutine, resetRoutineState } = useRoutineStore();
 
   function handleBackBtnClick() {
     navigate(-1);
     resetState();
+  }
+
+  async function handleRoutineDelete() {
+    await deleteRoutine();
+    resetState();
+    resetSelectedEquipmentState();
+    resetWorkoutMode();
+    resetRoutineState();
+    navigate("/", { replace: true });
   }
 
   function formatSecondsToTime(seconds: number): string {
@@ -68,19 +79,21 @@ export default function EquipmentDetail() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
+          rightContent={
+            <button className="btn-side" onClick={handleRoutineDelete}>
+              삭제
+            </button>
+          }
         />
         <div className="container">
-          {/* <section>
-            <label htmlFor="routine-name">
-              <p className="label-title">루틴 이름</p>
-            </label>
-            <input
-              type="text"
-              placeholder="루틴 이름을 입력해주세요"
-              value="8월 22일 운동 루틴"
-              id="routine-name"
-            />
-          </section> */}
+          {routineDetail && (
+            <section>
+              <label htmlFor="routine-name">
+                <p className="label-title">루틴 이름</p>
+              </label>
+              <input type="text" value={routineDetail.name} id="routine-name" />
+            </section>
+          )}
           <section>
             <p className="label-title">운동 상세 설정</p>
             <ul className="box-wrap">

@@ -31,14 +31,23 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
         console.log("routineId : ", routineId);
 
         const eqAllData = (await equipmentApi.getEquipmentList()).data;
-        if (routineId) {
+        if (routineId && eqAllData) {
           console.log("기구 스토어에서 루틴 정보 호출----");
           await getRoutineDetail(routineId);
 
           const routineDetail = useRoutineStore.getState().routineDetail;
-          const routineData = eqAllData.filter((eq) =>
-            routineDetail.exercises.some((ex) => eq.id === ex.equipment.id)
-          );
+          const routineData = eqAllData.reduce((arr, cur) => {
+            const routineEq = routineDetail.exercises.find(
+              (ex) => cur.id === ex.equipment.id
+            );
+            if (routineEq) {
+              let newItem = { ...cur };
+              newItem.sets = routineEq.targetSets;
+              newItem.restSeconds = routineEq.restSeconds;
+              arr.push(newItem);
+            }
+            return arr;
+          }, []);
           // console.log("eqAllData : ", eqAllData);
           console.log(
             "routineDetail : ",

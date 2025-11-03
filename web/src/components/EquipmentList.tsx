@@ -78,7 +78,12 @@ export default function EquipmentListPage({
           <button
             onClick={() => handleEquipmentToggle(equipment)}
             className={`equipment ${
-              selectedList.some((x) => x.id === equipment.id) ? "selected" : ""
+              !(
+                selectedList.length &&
+                selectedList.some((x) => x.id === equipment.id)
+              )
+                ? ""
+                : "selected"
             }`}
           >
             <div className="icon-drag">

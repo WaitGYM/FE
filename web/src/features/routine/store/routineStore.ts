@@ -36,11 +36,11 @@ interface RoutineStoreType {
     id: number,
     routine: Omit<RoutineType, "id">
   ) => Promise<void>;
-  deleteRoutine: (id: number) => Promise<void>;
+  deleteRoutine: () => Promise<void>;
   getRoutineList: () => Promise<void>;
   getRoutineDetail: (id: number) => Promise<void>;
 
-  resetState: () => void;
+  resetRoutineState: () => void;
 }
 
 const { setLoading } = useLoadingStore.getState();
@@ -135,7 +135,7 @@ export const useRoutineStore = create<RoutineStoreType>()(
       } catch (error) {
         console.log("⛔루틴 생성 실패!!!!", error);
       } finally {
-        get().resetState();
+        get().resetRoutineState();
         setLoading(false);
       }
     },
@@ -152,11 +152,17 @@ export const useRoutineStore = create<RoutineStoreType>()(
       }
     },
 
-    deleteRoutine: async (id) => {
+    deleteRoutine: async () => {
       setLoading(true);
       try {
-        const response = await routineApi.deleteRoutine(id);
-        console.log("루틴 삭제 성공!!!", response);
+        if (get().routineDetail) {
+          const response = await routineApi.deleteRoutine(
+            get().routineDetail.id
+          );
+          console.log("루틴 삭제 성공!!!", response);
+        } else {
+          console.log("루틴 정보가 없음!!!");
+        }
       } catch (error) {
         console.log("⛔루틴 삭제 실패!!!!", error);
       } finally {
@@ -197,6 +203,6 @@ export const useRoutineStore = create<RoutineStoreType>()(
       }
     },
 
-    resetState: () => set(initialState),
+    resetRoutineState: () => set(initialState),
   }))
 );
