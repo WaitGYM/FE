@@ -44,11 +44,11 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
               let newItem = { ...cur };
               newItem.sets = routineEq.targetSets;
               newItem.restSeconds = routineEq.restSeconds;
-              arr.push(newItem);
+              newItem.routineExId = routineEq.id;
+              arr[routineEq.order - 1] = newItem;
             }
             return arr;
           }, []);
-          // console.log("eqAllData : ", eqAllData);
           console.log(
             "routineDetail : ",
             useRoutineStore.getState().routineDetail

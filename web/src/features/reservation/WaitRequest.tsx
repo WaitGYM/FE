@@ -36,11 +36,6 @@ export default function WaitRequest() {
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
-        // rightContent={
-        //   <div className="btn-side">
-        //     <span>대기취소</span>
-        //   </div>
-        // }
       />
 
       <section className="container">
