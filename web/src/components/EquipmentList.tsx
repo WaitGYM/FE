@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Star, Equal } from "lucide-react";
+import { Skeleton } from "@mui/material";
 import { useEquipmentStore } from "../stores/equipmentStore";
 import type { EquipmentType } from "../types";
 import { useFavoriteStore } from "../stores/favoriteStore";
-import Equipment from "../components/layout/Equipment";
 import { useUIStore } from "../stores/UIStore";
 import { useUserStore } from "../stores/userStore";
 import { useRoutineStore } from "../features/routine/store/routineStore";
-import { li } from "framer-motion/client";
 
 export default function EquipmentListPage({
   selectMode = "SINGLE",
@@ -20,16 +19,11 @@ export default function EquipmentListPage({
     equipmentInfo: EquipmentType | EquipmentType[]
   ) => void;
 }) {
-  // const [selectedList, setSelectedList] = useState<EquipmentType[]>([]);
+  const [isImgLoading, setIsImgLoading] = useState(true);
   const { equipmentList, getEquipments } = useEquipmentStore();
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
   const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
-  // const { routineDetail, getRoutineDetail } = useRoutineStore();
-  // let getList;
-  // useEffect(() => {
-  //   getEquipments();
-  // }, [getEquipments]);
 
   // 1분마다 자동 새로고침
   useEffect(() => {
@@ -48,16 +42,6 @@ export default function EquipmentListPage({
   }, [getEquipments]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
-    // setSelectedList([selectEquip]);
-    // if (selectMode === "MULTI") {
-    //   setSelectedList((prevSelected) =>
-    //     prevSelected.includes(selectEquip)
-    //       ? prevSelected.filter((v) => v !== selectEquip)
-    //       : [...prevSelected, selectEquip]
-    //   );
-    // } else {
-    //   setSelectedList([selectEquip]);
-    // }
     handleSelectedEquipment(selectEquip);
   }
 
@@ -97,9 +81,21 @@ export default function EquipmentListPage({
             <div className="icon-drag">
               <Equal size={18} strokeWidth="1.5" />
             </div>
+            {isImgLoading && (
+              <Skeleton
+                variant="rounded"
+                width={48}
+                height={48}
+                animation="wave"
+              />
+            )}
             <img
-              src={equipment.imageUrl || "/thumb-default.jpg"}
+              src={equipment.imageUrl}
               alt={equipment.name}
+              style={{ display: `${isImgLoading ? "none" : "block"}` }}
+              onLoad={() => {
+                setIsImgLoading(false);
+              }}
             />
             <div className="info">
               <div className="title">
