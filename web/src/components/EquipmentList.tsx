@@ -78,9 +78,6 @@ export default function EquipmentListPage({
             }}
             aria-label={equipment.name}
           >
-            <div className="icon-drag">
-              <Equal size={18} strokeWidth="1.5" />
-            </div>
             {isImgLoading && (
               <Skeleton
                 variant="rounded"
