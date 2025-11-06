@@ -27,8 +27,8 @@ export default function ReservationPage() {
     deleteReservation,
     resetSelectedEquipmentState,
   } = useReservationStore();
-  const label = { inputProps: { "aria-label": "자동제안" } }; //자동제안 토글
   const { routineDetail, resetRoutineState } = useRoutineStore();
+  const [switchChecked, setSwitchChecked] = useState(false);
 
   // 새로고침 아이콘회전
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -103,7 +103,13 @@ export default function ReservationPage() {
             <div className="top">
               <div className="auto-suggest">
                 <span>자동제안</span>
-                <Switch {...label} size="small" color="warning" />
+                <Switch
+                  checked={switchChecked}
+                  size="small"
+                  color="warning"
+                  slotProps={{ input: { "aria-label": "자동제안" } }}
+                  onChange={(e) => setSwitchChecked(e.target.checked)}
+                />
               </div>
             </div>
 

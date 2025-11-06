@@ -28,6 +28,11 @@ interface WorkoutStoreType {
   leftRestTime: number;
 
   startWorkout: (eqId: number, workoutGoal: WorkoutGoalType) => Promise<void>;
+  startRoutineWorkout: (
+    routineId: number,
+    routineExId: number,
+    workoutGoal: WorkoutGoalType
+  ) => Promise<void>;
   autoDecreaseRest: () => void;
   adjustRest: (delta: number) => void;
   resetRestTime: () => void;
@@ -87,6 +92,27 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
         setWorkingOut(true);
       } catch (error) {
         console.log("운동 시작에 실패했습니다.", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+
+    startRoutineWorkout: async (routineId, routineExId, workoutGoal) => {
+      setLoading(true);
+      try {
+        const { data } = await workoutApi.startRoutineWorkout(
+          routineId,
+          routineExId,
+          workoutGoal
+        );
+        set({
+          workingOutInfo: { ...data, currentSet: 1 },
+          leftRestTime: data.restSeconds,
+        });
+        console.log("workingOutInfo :", get().workingOutInfo);
+        setWorkingOut(true);
+      } catch (error) {
+        console.log("루틴운동 시작에 실패했습니다.", error);
       } finally {
         setLoading(false);
       }
@@ -159,7 +185,8 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
     completeWorkoutSet: async () => {
       setLoading(true);
       try {
-        const eqId = get().workingOutInfo?.equipmentId;
+        const eqId =
+          get().workingOutInfo?.equipmentId || get().workingOutInfo?.usageId;
         if (eqId) {
           const { data } = await workoutApi.completeWorkoutSet(eqId);
           if (!data.completed) {

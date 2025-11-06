@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { ChevronLeft, Trash, Plus, Minus } from "lucide-react";
+import { ChevronLeft, Plus, Minus } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useReservationStore } from "./stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
@@ -17,7 +17,7 @@ export default function EquipmentDetail() {
     resetSelectedEquipmentState,
     resetState,
   } = useReservationStore();
-  const { startWorkout } = useWorkoutStore();
+  const { startWorkout, startRoutineWorkout } = useWorkoutStore();
   const { isWorkingOut, setWorkingOut, resetWorkoutMode } = useUIStore();
   const { routineDetail, deleteRoutine, resetRoutineState } = useRoutineStore();
 
@@ -54,9 +54,17 @@ export default function EquipmentDetail() {
         totalSets: selectedEquipment.sets,
         restSeconds: selectedEquipment.restSeconds,
       };
-      startWorkout(selectedEquipment.id, workoutGoal);
+      if (routineDetail) {
+        startRoutineWorkout(
+          routineDetail.id,
+          selectedEquipment.routineExId,
+          workoutGoal
+        );
+      } else {
+        startWorkout(selectedEquipment.id, workoutGoal);
+      }
       setWorkingOut(true);
-      navigate("/workout/exercising");
+      navigate("/workout/exercising", { replace: true });
     } else {
       // 대기 있으면 예약으로
       navigate("/reservation/wait-request");
@@ -91,7 +99,12 @@ export default function EquipmentDetail() {
               <label htmlFor="routine-name">
                 <p className="label-title">루틴 이름</p>
               </label>
-              <input type="text" value={routineDetail.name} id="routine-name" />
+              <input
+                type="text"
+                id="routine-name"
+                value={routineDetail.name}
+                readOnly
+              />
             </section>
           )}
           <section>

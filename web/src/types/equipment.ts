@@ -35,4 +35,5 @@ export type EquipmentType = {
     waitingCount?: number;
     wasFullyCompleted?: boolean;
   };
+  routineExId?: number; // 루틴운동시 루틴운동 기본데이터에서 추출용 타입
 };
