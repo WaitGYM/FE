@@ -94,9 +94,9 @@ export default function EquipmentListPage({
             }}
             aria-label={equipment.name}
           >
-            <div className="icon-drag">
+            {/* <div className="icon-drag">
               <Equal size={18} strokeWidth="1.5" />
-            </div>
+            </div> */}
             <img
               src={equipment.imageUrl || "/thumb-default.jpg"}
               alt={equipment.name}
