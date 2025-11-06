@@ -4,6 +4,8 @@ import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useRoutineStore } from "./store/routineStore";
+import { useReservationStore } from "../reservation/stores/reservationStore";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function RoutineSetting() {
   const navigate = useNavigate();
@@ -14,8 +16,12 @@ export default function RoutineSetting() {
     setSelectedEquipList,
     updateSelectedEquipment,
     createRoutine,
-    resetState,
+    updateRoutine,
+    deleteRoutine,
+    resetRoutineState,
   } = useRoutineStore();
+  const { resetSelectedEquipmentState } = useReservationStore();
+  const { routineId, resetWorkoutMode } = useUIStore();
 
   function formatSecondsToTime(seconds: number): string {
     const min = Math.floor(seconds / 60);
@@ -26,12 +32,26 @@ export default function RoutineSetting() {
   }
 
   function handleBackBtnClick() {
+    // 수정모드에서 뒤로가기시 업데이트 유무 알럿 띄울건지?
     navigate(-1);
-    resetState();
+  }
+
+  async function handleRoutineDelete() {
+    await deleteRoutine();
+    resetRoutineState();
+    resetSelectedEquipmentState();
+    resetWorkoutMode();
+    navigate("/", { replace: true });
   }
 
   function handleNextBtnClick() {
-    createRoutine().then(() => navigate("/"));
+    if (routineId) {
+      // 수정모드
+      // updateRoutine().then(() => navigate("/reservation/select-equipment", { replace: true }));
+    } else {
+      // 등록 모드
+      createRoutine().then(() => navigate("/", { replace: true }));
+    }
   }
 
   return (
@@ -49,6 +69,13 @@ export default function RoutineSetting() {
             <button className="btn btn-icon" onClick={handleBackBtnClick}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
+          }
+          rightContent={
+            routineId && (
+              <button className="btn-side" onClick={handleRoutineDelete}>
+                삭제
+              </button>
+            )
           }
         />
         <div className="container">
@@ -157,7 +184,7 @@ export default function RoutineSetting() {
       </div>
       <BottomButtonWrapper>
         <button className="btn btn-orange" onClick={handleNextBtnClick}>
-          루틴 등록
+          {routineId ? "루틴 수정" : "루틴 등록"}
         </button>
       </BottomButtonWrapper>
     </motion.div>

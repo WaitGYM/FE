@@ -17,9 +17,15 @@ export default function ReservationPage() {
   const navigate = useNavigate();
   const { getEquipments } = useEquipmentStore();
   const { userInfo } = useUserStore();
-  const { workoutMode, isWorkingOut, routineId, resetWorkoutMode } =
-    useUIStore();
-  const { workingOutInfo, startWorkout } = useWorkoutStore();
+  const {
+    workoutMode,
+    isWorkingOut,
+    routineId,
+    setWorkingOut,
+    resetWorkoutMode,
+  } = useUIStore();
+  const { workingOutInfo, startWorkout, startRoutineWorkout } =
+    useWorkoutStore();
   const {
     selectedEquipment,
     waitingInfo,
@@ -44,7 +50,12 @@ export default function ReservationPage() {
     resetSelectedEquipmentState();
     resetWorkoutMode();
     if (routineDetail) resetRoutineState();
-    navigate("/");
+    navigate("/", { replace: true });
+  }
+
+  function handleRotineUpdateBtnClick() {
+    if (!routineDetail) return;
+    navigate("/add-routine/routine-setting");
   }
 
   function handleDeleteReservation() {
@@ -53,7 +64,28 @@ export default function ReservationPage() {
 
   function handleNextBtn() {
     console.log("다음스텝", selectedEquipment);
-    navigate("/reservation/goal-setting");
+    if (routineDetail) {
+      // 운동중이 아니고 대기 없으면 운동 시작으로
+      if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
+        console.log("루틴 운동 시작!");
+        // const workoutGoal = {
+        //   totalSets: selectedEquipment.sets,
+        //   restSeconds: selectedEquipment.restSeconds,
+        // };
+        // startRoutineWorkout(
+        //   routineDetail.id,
+        //   selectedEquipment.routineExId,
+        //   workoutGoal
+        // );
+        // navigate("/workout/exercising", { replace: true });
+      } else {
+        console.log("루틴 기구 대기!!");
+        // 대기 있으면 예약으로
+        // navigate("/reservation/wait-request");
+      }
+    } else {
+      navigate("/reservation/goal-setting");
+    }
   }
 
   function handleStartWorkout() {
@@ -88,13 +120,11 @@ export default function ReservationPage() {
             </h2>
           }
           rightContent={
-            <button className="btn btn-icon" onClick={handleRefreshClick}>
-              <RefreshCcw
-                size={18}
-                strokeWidth="2"
-                className={isRefreshing ? "rotating" : ""}
-              />
-            </button>
+            routineId && (
+              <button className="btn-side" onClick={handleRotineUpdateBtnClick}>
+                <span>수정</span>
+              </button>
+            )
           }
         />
 
@@ -111,6 +141,13 @@ export default function ReservationPage() {
                   onChange={(e) => setSwitchChecked(e.target.checked)}
                 />
               </div>
+              <button className="btn btn-icon" onClick={handleRefreshClick}>
+                <RefreshCcw
+                  size={18}
+                  strokeWidth="2"
+                  className={isRefreshing ? "rotating" : ""}
+                />
+              </button>
             </div>
 
             <EquipmentList

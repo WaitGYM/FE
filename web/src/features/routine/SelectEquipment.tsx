@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Search, Star } from "lucide-react";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import Header from "../../components/layout/Header";
 import EquipmentList from "../../components/EquipmentList";
@@ -44,6 +44,29 @@ export default function RoutineSelectEquipPage() {
           }
           title={<h2>루틴추가</h2>}
         />
+
+        <section className="container">
+          <div className="search-bar">
+            <input type="search" placeholder="기구명, 부위를 검색해주세요" />
+            <button className="btn-search">
+              <Search size={18} strokeWidth="1.5" />
+            </button>
+          </div>
+        </section>
+        <div className="category-wrap">
+          <button className="btn-like active">
+            <Star size={18} strokeWidth="1.5" />
+            즐겨찾기
+          </button>
+          <button>허벅지</button>
+          <button>어깨</button>
+          <button>가슴</button>
+          <button>팔</button>
+          <button>등</button>
+          <button>엉덩이</button>
+          <button>엉덩이</button>
+          <button>복근</button>
+        </div>
 
         <section className="container">
           <div className="equipment-wrap">

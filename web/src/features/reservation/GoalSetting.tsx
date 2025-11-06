@@ -26,14 +26,14 @@ export default function EquipmentDetail() {
     resetState();
   }
 
-  async function handleRoutineDelete() {
-    await deleteRoutine();
-    resetState();
-    resetSelectedEquipmentState();
-    resetWorkoutMode();
-    resetRoutineState();
-    navigate("/", { replace: true });
-  }
+  // async function handleRoutineDelete() {
+  //   await deleteRoutine();
+  //   resetState();
+  //   resetSelectedEquipmentState();
+  //   resetWorkoutMode();
+  //   resetRoutineState();
+  //   navigate("/", { replace: true });
+  // }
 
   function formatSecondsToTime(seconds: number): string {
     const min = Math.floor(seconds / 60);
@@ -87,11 +87,11 @@ export default function EquipmentDetail() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          rightContent={
-            <button className="btn-side" onClick={handleRoutineDelete}>
-              삭제
-            </button>
-          }
+          // rightContent={
+          //   <button className="btn-side" onClick={handleRoutineDelete}>
+          //     삭제
+          //   </button>
+          // }
         />
         <div className="container">
           {routineDetail && (
