@@ -87,7 +87,7 @@ export default function WorkoutExercising() {
         rightContent={
           <button
             type="button"
-            className="btn-side"
+            className="btn-delete"
             onClick={handleStopWorkout}
           >
             <span>운동종료</span>

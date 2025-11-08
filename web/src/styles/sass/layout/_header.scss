@@ -20,7 +20,8 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    h2 {
+    h2,
+    span {
       text-align: center;
       font-size: 1.125rem;
       font-weight: 600;
@@ -94,7 +95,7 @@
   &--exercising,
   &--breaktimer,
   &--equipment-detail {
-    .btn-side {
+    .btn-delete {
       color: $c-sub-gray;
     }
   }

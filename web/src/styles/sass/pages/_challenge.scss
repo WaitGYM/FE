@@ -36,7 +36,7 @@
       justify-content: space-between;
       margin-bottom: rem(8);
       span {
-        font-size: 0.8125rem;
+        font-size: rem(13);
         font-weight: 500;
         &.time {
           display: flex;
@@ -66,14 +66,15 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          font-size: 0.875rem;
 
           .title {
+            font-size: rem(13);
             font-weight: 600;
             color: $c-sub-white;
           }
           .score {
-            font-weight: 300;
+            font-size: rem(14);
+            // font-weight: 300;
             color: $c-primary-blue-light;
           }
         }
@@ -111,8 +112,12 @@
             }
           }
           .name {
+            font-size: rem(13);
             font-weight: 600;
           }
+        }
+        .total-score {
+          font-size: rem(14);
         }
       }
 

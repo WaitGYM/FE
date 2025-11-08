@@ -107,6 +107,7 @@ export default function ReservationPage() {
     >
       <div className="content-scroll">
         <Header
+          className="header--equipment-detail"
           leftContent={
             <button className="btn btn-icon" onClick={handleBackBtnClick}>
               <ChevronLeft size={24} strokeWidth="2" />
@@ -121,8 +122,12 @@ export default function ReservationPage() {
           }
           rightContent={
             routineId && (
-              <button className="btn-side" onClick={handleRotineUpdateBtnClick}>
-                <span>수정</span>
+              <button
+                type="button"
+                className="btn-delete"
+                onClick={handleRotineUpdateBtnClick}
+              >
+                수정
               </button>
             )
           }
@@ -141,12 +146,13 @@ export default function ReservationPage() {
                   onChange={(e) => setSwitchChecked(e.target.checked)}
                 />
               </div>
-              <button className="btn btn-icon" onClick={handleRefreshClick}>
+              <button className="btn-refresh" onClick={handleRefreshClick}>
                 <RefreshCcw
                   size={18}
                   strokeWidth="2"
                   className={isRefreshing ? "rotating" : ""}
                 />
+                <span>새로고침</span>
               </button>
             </div>
 

@@ -1,4 +1,5 @@
-import { useState } from "react";
+//백업용 페이지 나중에 작업다하시면 삭제하셔도 됩니다
+
 import { motion } from "framer-motion";
 import {
   ChevronLeft,
@@ -10,36 +11,29 @@ import {
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
-import { useNavigate } from "react-router-dom";
-import { useRoutineStore } from "./store/routineStore";
-import { useReservationStore } from "../reservation/stores/reservationStore";
-import { useUIStore } from "../../stores/UIStore";
+import { useState } from "react";
+//수정,삭제 모달
+import CustomDialog from "../../components/ui/CustomDialog";
 
-import CustomDialog from "../../components/ui/CustomDialog"; //수정,삭제 모달
-
-export default function RoutineSetting() {
-  const navigate = useNavigate();
-  const {
-    selectedEquipList,
-    newRoutineName,
-    setNewRoutineName,
-    setSelectedEquipList,
-    updateSelectedEquipment,
-    createRoutine,
-    updateRoutine,
-    deleteRoutine,
-    resetRoutineState,
-  } = useRoutineStore();
-  const { resetSelectedEquipmentState } = useReservationStore();
-  const { routineId, resetWorkoutMode } = useUIStore();
-
-  function formatSecondsToTime(seconds: number): string {
-    const min = Math.floor(seconds / 60);
-    const sec = seconds % 60;
-    const paddedHrs = String(min).padStart(2, "0");
-    const paddedMins = String(sec).padStart(2, "0");
-    return `${paddedHrs}:${paddedMins}`;
-  }
+// This is a preview component with hardcoded data for UI testing.
+export default function RoutineSettingPreview() {
+  const [newRoutineName, setNewRoutineName] = useState("오늘의 운동 루틴");
+  const [selectedEquipList, setSelectedEquipList] = useState([
+    {
+      id: 1,
+      name: "Treadmill",
+      imageUrl: "/assets/images/machine-treadmill.png",
+      sets: 3,
+      restSeconds: 60,
+    },
+    {
+      id: 2,
+      name: "Bench Press",
+      imageUrl: "/assets/images/machine-bench.png",
+      sets: 5,
+      restSeconds: 120,
+    },
+  ]);
 
   // 모달 상태 관리
   const [open, setOpen] = useState(false);
@@ -49,10 +43,20 @@ export default function RoutineSetting() {
     setOpen(false);
   };
 
-  function handleBackBtnClick() {
-    // 수정모드에서 뒤로가기시 업데이트 유무 알럿 띄울건지? => 넹 모달 만들어놧어여
-    navigate(-1);
+  function formatSecondsToTime(seconds: number): string {
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    let timeString = "";
+    if (min > 0) {
+      timeString += `${min}분 `;
+    }
+    if (sec > 0) {
+      timeString += `${sec}초`;
+    }
+    return timeString.trim();
+  }
 
+  function handleBackBtnClick() {
     setModalContent(
       <h6 className="title">
         변경사항을 <strong className="text-orange">저장</strong>하지 않고
@@ -72,13 +76,7 @@ export default function RoutineSetting() {
       </h6>
     );
     setOpen(true);
-    // await deleteRoutine();
-    // resetRoutineState();
-    // resetSelectedEquipmentState();
-    // resetWorkoutMode();
-    // navigate("/", { replace: true });
   }
-
   function handleEquipDelete() {
     setModalContent(
       <h6 className="title">
@@ -91,13 +89,6 @@ export default function RoutineSetting() {
   }
 
   function handleNextBtnClick() {
-    if (routineId) {
-      // 수정모드
-      // updateRoutine().then(() => navigate("/reservation/select-equipment", { replace: true }));
-    } else {
-      // 등록 모드
-      createRoutine().then(() => navigate("/", { replace: true }));
-    }
     setModalContent(
       <h6 className="title">
         이 루틴을
@@ -106,6 +97,48 @@ export default function RoutineSetting() {
       </h6>
     );
     setOpen(true);
+  }
+
+  function updateSelectedEquipment(
+    eqId: number,
+    field: "sets" | "restSeconds",
+    changeValue: number
+  ) {
+    const newEquipmentList = selectedEquipList.map((curEq) => {
+      if (curEq.id !== eqId) {
+        return curEq;
+      } else {
+        const updatedValue = Math.max(0, curEq[field] + changeValue);
+        let newEquipment = {
+          ...curEq,
+          [field]: updatedValue,
+        };
+        // 세트수 조절 시 휴식시간 조건 적용
+        if (field === "sets") {
+          if (updatedValue >= 2 && newEquipment.restSeconds < 10) {
+            newEquipment.restSeconds = 10;
+          } else if (updatedValue < 2) {
+            newEquipment.restSeconds = 0;
+          }
+        }
+        // 휴식시간 조절 시 세트수 조건 고려
+        if (field === "restSeconds") {
+          if (newEquipment.sets >= 2 && updatedValue < 10) {
+            newEquipment.restSeconds = 10;
+          } else {
+            newEquipment.restSeconds = updatedValue;
+          }
+        }
+        return newEquipment;
+      }
+    });
+    setSelectedEquipList(newEquipmentList);
+  }
+
+  function handleRemoveEquipment(equipId: number) {
+    setSelectedEquipList((prevList) =>
+      prevList.filter((equip) => equip.id !== equipId)
+    );
   }
 
   return (
@@ -118,18 +151,20 @@ export default function RoutineSetting() {
       <div className="content-scroll">
         <Header
           className="header--equipment-detail"
-          title={<h2>루틴 설정</h2>}
+          title={<h2>루틴설정</h2>}
           leftContent={
             <button className="btn btn-icon" onClick={handleBackBtnClick}>
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
           rightContent={
-            routineId && (
-              <button className="btn-delete" onClick={handleRoutineDelete}>
-                삭제
-              </button>
-            )
+            <button
+              type="button"
+              className="btn-delete"
+              onClick={handleRoutineDelete}
+            >
+              삭제
+            </button>
           }
         />
         <div className="container">
@@ -148,16 +183,16 @@ export default function RoutineSetting() {
           <section>
             <p className="label-title">운동 설정</p>
             <button type="button" className="btn-add">
-              <CirclePlus size={20} strokeWidth="2" />
-              운동추가
+              <CirclePlus />
+              운동 추가
             </button>
             <ul className="box-wrap">
-              {selectedEquipList.map((equip, idx) => (
-                <li className="box" key={idx}>
+              {selectedEquipList.map((equip) => (
+                <li className="box" key={equip.id}>
                   <div className="equipment">
                     <input type="checkbox" id={`select-${equip?.name}`} />
                     <label htmlFor={`select-${equip?.name}`}>
-                      <CircleCheck size={20} strokeWidth="2" />
+                      <CircleCheck />
                     </label>
                     <div className="info">
                       <div className="img">
@@ -170,13 +205,14 @@ export default function RoutineSetting() {
                     {/* {selectedEquipList.length > 1 && (
                       <button
                         className="btn-delete"
-                        onClick={() => setSelectedEquipList(equip)}
+                        onClick={() => handleRemoveEquipment(equip.id)}
                       >
+                        <Trash size={16} strokeWidth="1.5" />
                         삭제
                       </button>
                     )} */}
                     <button type="button" className="btn-drag-drop">
-                      <GripVertical size={20} strokeWidth="2" />
+                      <GripVertical />
                     </button>
                   </div>
                   <div className="count-wrap">
@@ -254,7 +290,7 @@ export default function RoutineSetting() {
           {/* 비활성화일때 .disabled를 붙여주세요 */}
           {/* <button className="btn btn-blue disabled">운동 삭제</button> */}
           {/* <button className="btn btn-orange disabled" onClick={handleNextBtnClick}> */}
-          {routineId ? "루틴 수정" : "루틴 등록"}
+          루틴 수정
         </button>
       </BottomButtonWrapper>
 
@@ -275,6 +311,7 @@ export default function RoutineSetting() {
           </button>
         </BottomButtonWrapper>
       </CustomDialog>
+      {/* 모달 */}
     </motion.div>
   );
 }

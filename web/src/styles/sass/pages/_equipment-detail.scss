@@ -15,9 +15,22 @@
       color: $c-sub-white;
     }
     .label-title {
-      font-size: 0.8125rem;
+      font-size: rem(13);
       font-weight: 500;
       margin-bottom: rem(8);
+    }
+    .btn-add {
+      width: 100%;
+      background-color: $c-primary-blue-dark-light;
+      color: $c-sub-white;
+      border-radius: rem(8);
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: rem(16);
+      padding: rem(16);
+      margin-bottom: rem(8);
+      font-weight: 600;
     }
 
     .box-wrap {
@@ -34,22 +47,38 @@
         padding: rem(16);
         display: flex;
         flex-direction: column;
-        gap: rem(8);
+        gap: rem(16);
 
         .equipment {
           padding: 0;
           grid-template-columns: auto 1fr auto;
-          .img {
-            width: rem(40);
-            height: rem(40);
-            aspect-ratio: 1/1;
-            border-radius: rem(8);
-            background-color: $c-primary-blue-dark;
+          input[type="checkbox"] {
+            display: none;
+          }
+          input[type="checkbox"] + label {
+            opacity: 0.4;
+            color: $c-sub-white;
+          }
+          input[type="checkbox"]:checked + label {
+            opacity: 1;
+          }
+          .info {
+            display: flex;
+            align-items: center;
+            gap: rem(12);
+            .img {
+              width: rem(40);
+              height: rem(40);
+              aspect-ratio: 1/1;
+              border-radius: rem(8);
+              background-color: $c-primary-blue-dark;
 
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                flex: 1 1 0;
+              }
             }
           }
           .title {
@@ -65,10 +94,13 @@
             font-size: 0.8125rem;
             padding: 0;
           }
+          .btn-drag-drop {
+            color: $c-primary-blue-light;
+          }
         }
         .count-wrap {
           display: grid;
-          grid-template-columns: 50% 50%;
+          grid-template-columns: 1fr 1fr;
           gap: rem(8);
           justify-content: center;
           .count {

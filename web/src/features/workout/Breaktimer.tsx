@@ -102,7 +102,7 @@ export default function WorkoutBreaktimer() {
               className="header--breaktimer"
               rightContent={
                 <button
-                  className="btn-side"
+                  className="btn-delete"
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsRestTimerMiniView(true);

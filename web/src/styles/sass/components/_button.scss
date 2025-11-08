@@ -29,6 +29,7 @@
   font-size: rem(16);
   font-weight: 600;
   line-height: 140%;
+  opacity: 1;
 
   &.btn-orange {
     background: $c-point-orange;
@@ -41,6 +42,9 @@
   &.btn-gray {
     background: $c-sub-gray;
     color: $c-sub-white;
+  }
+  &.disabled {
+    opacity: 0.4;
   }
 
   &-icon {
