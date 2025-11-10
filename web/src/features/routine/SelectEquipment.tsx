@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Search, Star } from "lucide-react";
 import { useEquipmentStore } from "../../stores/equipmentStore";
@@ -10,8 +10,8 @@ import { useRoutineStore } from "./store/routineStore";
 
 export default function RoutineSelectEquipPage() {
   const navigate = useNavigate();
-  const { equipmentList, getEquipments } = useEquipmentStore();
-  const { selectedEquipList, setSelectedEquipList, resetState } =
+  const { getEquipments } = useEquipmentStore();
+  const { selectedEquipList, setSelectedEquipList, resetRoutineState } =
     useRoutineStore();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function RoutineSelectEquipPage() {
 
   function handleBackBtn() {
     navigate("/");
-    resetState;
+    resetRoutineState;
   }
 
   function handleNextBtnClick() {

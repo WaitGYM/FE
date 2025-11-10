@@ -14,7 +14,7 @@ export type WorkingoutType = {
 export type WorkoutProgressInfoType = {
   message: string;
   setStatus?: string;
-  restSeconds: number;
+  restSeconds?: number;
   completed?: boolean;
   summary?: {
     totalDurationSec: number;

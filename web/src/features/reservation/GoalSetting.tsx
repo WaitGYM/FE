@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useReservationStore } from "./stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
-import { useRoutineStore } from "../routine/store/routineStore";
 
 export default function EquipmentDetail() {
   const navigate = useNavigate();
@@ -17,23 +16,13 @@ export default function EquipmentDetail() {
     resetSelectedEquipmentState,
     resetState,
   } = useReservationStore();
-  const { startWorkout, startRoutineWorkout } = useWorkoutStore();
-  const { isWorkingOut, setWorkingOut, resetWorkoutMode } = useUIStore();
-  const { routineDetail, deleteRoutine, resetRoutineState } = useRoutineStore();
+  const { startWorkout } = useWorkoutStore();
+  const { isWorkingOut, setWorkingOut } = useUIStore();
 
   function handleBackBtnClick() {
     navigate(-1);
     resetState();
   }
-
-  // async function handleRoutineDelete() {
-  //   await deleteRoutine();
-  //   resetState();
-  //   resetSelectedEquipmentState();
-  //   resetWorkoutMode();
-  //   resetRoutineState();
-  //   navigate("/", { replace: true });
-  // }
 
   function formatSecondsToTime(seconds: number): string {
     const min = Math.floor(seconds / 60);
@@ -54,15 +43,7 @@ export default function EquipmentDetail() {
         totalSets: selectedEquipment.sets,
         restSeconds: selectedEquipment.restSeconds,
       };
-      if (routineDetail) {
-        startRoutineWorkout(
-          routineDetail.id,
-          selectedEquipment.routineExId,
-          workoutGoal
-        );
-      } else {
-        startWorkout(selectedEquipment.id, workoutGoal);
-      }
+      startWorkout(selectedEquipment.id, workoutGoal);
       setWorkingOut(true);
       navigate("/workout/exercising", { replace: true });
     } else {
@@ -87,26 +68,8 @@ export default function EquipmentDetail() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          // rightContent={
-          //   <button className="btn-side" onClick={handleRoutineDelete}>
-          //     삭제
-          //   </button>
-          // }
         />
         <div className="container">
-          {routineDetail && (
-            <section>
-              <label htmlFor="routine-name">
-                <p className="label-title">루틴 이름</p>
-              </label>
-              <input
-                type="text"
-                id="routine-name"
-                value={routineDetail.name}
-                readOnly
-              />
-            </section>
-          )}
           <section>
             <p className="label-title">운동 상세 설정</p>
             <ul className="box-wrap">

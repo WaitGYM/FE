@@ -10,21 +10,14 @@ export const workoutApi = {
     apiClient.post(`/waiting/start-using/${equipmentId}`, data),
   startRoutineWorkout: (
     routineId: number,
-    routineExId: number,
+    equipmentId: number,
     data: WorkoutCreateType
-  ) =>
-    apiClient.post(
-      `/routines/${routineId}/exercises/${routineExId}/start`,
-      data
-    ),
-  completeWorkoutSet: (equipmentId: number) =>
-    apiClient.post(`/waiting/complete-set/${equipmentId}`),
-  stopWorkout: (equipmentId: number) =>
-    apiClient.post(`/waiting/stop-exercise/${equipmentId}`),
+  ) => apiClient.post(`/routines/${routineId}/start/${equipmentId}`, data),
+  completeWorkoutSet: () => apiClient.post(`/waiting/complete-set`),
+  stopWorkout: () => apiClient.post(`/waiting/stop-exercise`),
   adjustRest: (adjustValue: number) =>
     apiClient.put(`/routines/active-usage/rest-time`, {
       adjustment: adjustValue,
     }),
-  skipRest: (equipmentId: number) =>
-    apiClient.post(`/waiting/skip-rest/${equipmentId}`),
+  skipRest: () => apiClient.post(`/waiting/skip-rest`),
 };

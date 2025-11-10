@@ -68,20 +68,19 @@ export default function ReservationPage() {
       // 운동중이 아니고 대기 없으면 운동 시작으로
       if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
         console.log("루틴 운동 시작!");
-        // const workoutGoal = {
-        //   totalSets: selectedEquipment.sets,
-        //   restSeconds: selectedEquipment.restSeconds,
-        // };
-        // startRoutineWorkout(
-        //   routineDetail.id,
-        //   selectedEquipment.routineExId,
-        //   workoutGoal
-        // );
-        // navigate("/workout/exercising", { replace: true });
+        const workoutGoal = {
+          totalSets: selectedEquipment.sets,
+          restSeconds: selectedEquipment.restSeconds,
+        };
+        startRoutineWorkout(
+          routineDetail.id,
+          selectedEquipment.id,
+          workoutGoal
+        );
+        navigate("/workout/exercising", { replace: true });
       } else {
         console.log("루틴 기구 대기!!");
-        // 대기 있으면 예약으로
-        // navigate("/reservation/wait-request");
+        navigate("/reservation/wait-request");
       }
     } else {
       navigate("/reservation/goal-setting");
