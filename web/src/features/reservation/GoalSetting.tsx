@@ -75,12 +75,12 @@ export default function EquipmentDetail() {
             <ul className="box-wrap">
               <li className="box">
                 <div className="equipment">
-                  <div className="img">
-                    <img
-                      src={selectedEquipment?.imageUrl || "/equipment_01.png"}
-                    />
-                  </div>
                   <div className="info">
+                    <div className="img">
+                      <img
+                        src={selectedEquipment?.imageUrl || "/equipment_01.png"}
+                      />
+                    </div>
                     <div className="title">
                       <span className="name">{selectedEquipment?.name}</span>
                     </div>

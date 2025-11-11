@@ -86,14 +86,16 @@ export default function EquipmentListPage({
                 animation="wave"
               />
             )}
-            <img
-              src={equipment.imageUrl}
-              alt={equipment.name}
-              style={{ display: `${isImgLoading ? "none" : "block"}` }}
-              onLoad={() => {
-                setIsImgLoading(false);
-              }}
-            />
+            <div className="img">
+              <img
+                src={equipment.imageUrl}
+                alt={equipment.name}
+                style={{ display: `${isImgLoading ? "none" : "block"}` }}
+                onLoad={() => {
+                  setIsImgLoading(false);
+                }}
+              />
+            </div>
             <div className="info">
               <div className="title">
                 <span className="name">{equipment.name}</span>
