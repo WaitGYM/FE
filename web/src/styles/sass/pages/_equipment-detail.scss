@@ -51,7 +51,7 @@
 
         .equipment {
           padding: 0;
-          grid-template-columns: auto 1fr auto;
+          grid-template-columns: 1fr auto;
           input[type="checkbox"] {
             display: none;
           }

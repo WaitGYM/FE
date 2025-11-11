@@ -142,16 +142,15 @@ export default function RoutineSetting() {
               {selectedEquipList.map((equip, idx) => (
                 <li className="box" key={idx}>
                   <div className="equipment">
-                    {routineId && (
-                      <>
-                        <input type="checkbox" id={`select-${equip?.name}`} />
-                        <label htmlFor={`select-${equip?.name}`}>
-                          <CircleCheck size={20} strokeWidth="2" />
-                        </label>
-                      </>
-                    )}
-
                     <div className="info">
+                      {routineId && (
+                        <>
+                          <input type="checkbox" id={`select-${equip?.name}`} />
+                          <label htmlFor={`select-${equip?.name}`}>
+                            <CircleCheck size={20} strokeWidth="2" />
+                          </label>
+                        </>
+                      )}
                       <div className="img">
                         <img src={equip?.imageUrl || "/equipment_01.png"} />
                       </div>
@@ -166,6 +165,7 @@ export default function RoutineSetting() {
                       </button>
                     ) : selectedEquipList.length > 1 ? (
                       <button
+                        type="button"
                         className="btn-delete"
                         onClick={() => setSelectedEquipList(equip)}
                       >
