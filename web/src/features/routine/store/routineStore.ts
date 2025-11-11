@@ -1,11 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { routineApi } from "../services/routineApi";
-import type {
-  NewRoutineType,
-  RoutineType,
-  RoutineDetailType,
-} from "../../../types";
+import type { RoutineType, RoutineDetailType } from "../../../types";
 import type { EquipmentType } from "../../../types";
 import { useLoadingStore } from "../../../stores/loadingStore";
 import { getFormattedTodayDate } from "../../../hooks/useDateFormatting";
@@ -23,9 +19,10 @@ interface RoutineStoreType {
   routineDetail: RoutineDetailType | null;
   routineLoading: boolean;
   routineError: string | null;
+  originRoutineDetail: RoutineDetailType | null;
 
   setSelectedEquipList: (selectEquip: EquipmentType) => void;
-  setNewRoutineName: (name: string) => void;
+  setRoutineName: (name: string) => void;
   updateSelectedEquipment: (
     equipmentId: number,
     field: "sets" | "restSeconds",
@@ -56,6 +53,7 @@ const initialState = {
   routineDetail: null,
   routineLoading: false,
   routineError: null,
+  originRoutineDetail: null,
 };
 
 export const useRoutineStore = create<RoutineStoreType>()(
@@ -81,9 +79,11 @@ export const useRoutineStore = create<RoutineStoreType>()(
         }
       }),
 
-    setNewRoutineName: (newRoutineName) =>
-      set({
-        newRoutineName,
+    setRoutineName: (newName) =>
+      set((state) => {
+        return state.routineDetail
+          ? { routineDetail: { ...state.routineDetail, name: newName } }
+          : { newRoutineName: newName };
       }),
 
     updateSelectedEquipment: (eqId, field, changeValue) =>
@@ -174,7 +174,6 @@ export const useRoutineStore = create<RoutineStoreType>()(
       set({ routineLoading: true });
       try {
         const response = await routineApi.getRoutineList();
-        // const response = await getRoutineListTempData();
         set({ routineList: response.data });
       } catch (error) {
         set({
@@ -193,11 +192,10 @@ export const useRoutineStore = create<RoutineStoreType>()(
 
         set({
           routineDetail: data,
+          originRoutineDetail: data,
         });
       } catch (error) {
-        set({
-          routineError: "루틴을 불러오는데 실패했습니다.",
-        });
+        console.log("루틴을 불러오는데 실패했습니다.", error);
       } finally {
         setLoading(false);
       }

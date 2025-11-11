@@ -1,43 +1,41 @@
-import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import { motion } from "framer-motion";
+import { Drawer } from "@mui/material";
+import { BottomButtonWrapper } from "./Button";
+import { useEffect, useRef } from "react";
 
-// mui 모달 강제 스타일링
-const CustomDialogStyle = styled(Dialog)(() => ({
-  "& .MuiDialog-container": {
-    alignItems: "end",
-    "& .MuiDialog-paper": {
-      margin: 0,
-      position: "absolute",
-      bottom: 0,
-      width: "100%",
-      background: "#334155",
-      borderRadius: "0.75rem 0.75rem 0 0",
-      "& .modal-contents": {
-        "& .title": {
-          fontSize: "1.125rem",
-          fontWeight: "600",
-          textAlign: "center",
-          padding: "1.5rem",
-          lineHeight: "1.4rem",
-          color: "#fff",
-          "& .text-orange": {
-            color: "#ee6c4d",
-          },
-        },
-      },
-      "& .btn-wrap": {
-        position: "relative",
-      },
-    },
-  },
-}));
+export default function CustomDialog({
+  open,
+  onClose,
+  onConfirm,
+  children,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  children: React.ReactNode;
+}) {
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
 
-function CustomDialog({ open, onClose, children }) {
+  useEffect(() => {
+    if (open && confirmButtonRef.current) {
+      confirmButtonRef.current.focus();
+    }
+  }, [open]);
+
   return (
-    <CustomDialogStyle open={open} onClose={onClose}>
-      {children}
-    </CustomDialogStyle>
+    <Drawer anchor="bottom" open={open} onClose={onClose}>
+      <div className="modal-contents">{children}</div>
+      <BottomButtonWrapper>
+        <button className="btn btn-blue" onClick={onClose}>
+          취소
+        </button>
+        <button
+          className="btn btn-orange"
+          ref={confirmButtonRef}
+          onClick={onConfirm}
+        >
+          확인
+        </button>
+      </BottomButtonWrapper>
+    </Drawer>
   );
 }
-export default motion(CustomDialog);

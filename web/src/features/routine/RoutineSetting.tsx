@@ -14,15 +14,30 @@ import { useNavigate } from "react-router-dom";
 import { useRoutineStore } from "./store/routineStore";
 import { useReservationStore } from "../reservation/stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
-
 import CustomDialog from "../../components/ui/CustomDialog"; //수정,삭제 모달
 
+function formatSecondsToTime(seconds: number): string {
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  const paddedHrs = String(min).padStart(2, "0");
+  const paddedMins = String(sec).padStart(2, "0");
+  return `${paddedHrs}:${paddedMins}`;
+}
+
 export default function RoutineSetting() {
+  const [isOpenBackConfirmDialog, setIsOpenBackConfirmDialog] = useState(false);
+  const [isOpenRoutineDeleteDialog, setIsOpenRoutineDeleteDialog] =
+    useState(false);
+  const [isOpenEquipDeleteDialog, setIsOpenEquipDeleteDialog] = useState(false);
+  const [isOpenRoutineUpdateDialog, setIsOpenRoutineUpdateDialog] =
+    useState(false);
+
   const navigate = useNavigate();
   const {
     selectedEquipList,
     newRoutineName,
-    setNewRoutineName,
+    routineDetail,
+    setRoutineName,
     setSelectedEquipList,
     updateSelectedEquipment,
     createRoutine,
@@ -33,79 +48,32 @@ export default function RoutineSetting() {
   const { resetSelectedEquipmentState } = useReservationStore();
   const { routineId, resetWorkoutMode } = useUIStore();
 
-  function formatSecondsToTime(seconds: number): string {
-    const min = Math.floor(seconds / 60);
-    const sec = seconds % 60;
-    const paddedHrs = String(min).padStart(2, "0");
-    const paddedMins = String(sec).padStart(2, "0");
-    return `${paddedHrs}:${paddedMins}`;
-  }
-
-  // 모달 상태 관리
-  const [open, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<any>(null);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  function handleBackBtnClick() {
-    // 수정모드에서 뒤로가기시 업데이트 유무 알럿 띄울건지? => 넹 모달 만들어놧어여
+  function handleNavigatingBack() {
     navigate(-1);
-
-    setModalContent(
-      <h6 className="title">
-        변경사항을 <strong className="text-orange">저장</strong>하지 않고
-        <br />
-        페이지를 나가시겠어요?
-      </h6>
-    );
-    setOpen(true);
   }
 
-  function handleRoutineDelete() {
-    setModalContent(
-      <h6 className="title">
-        정말 루틴을
-        <br />
-        <strong className="text-orange">삭제</strong> 하시겠어요?
-      </h6>
-    );
-    setOpen(true);
-    // await deleteRoutine();
-    // resetRoutineState();
-    // resetSelectedEquipmentState();
-    // resetWorkoutMode();
-    // navigate("/", { replace: true });
+  async function handleDeleteRoutine() {
+    await deleteRoutine();
+    resetRoutineState();
+    resetSelectedEquipmentState();
+    resetWorkoutMode();
+    navigate("/", { replace: true });
   }
 
-  function handleEquipDelete() {
-    setModalContent(
-      <h6 className="title">
-        정말 운동을
-        <br />
-        <strong className="text-orange">삭제</strong> 하시겠어요?
-      </h6>
-    );
-    setOpen(true);
+  function handleAddEquip() {
+    navigate("/add-routine/select-equipment");
   }
 
-  function handleNextBtnClick() {
-    if (routineId) {
-      // 수정모드
-      // updateRoutine().then(() => navigate("/reservation/select-equipment", { replace: true }));
-    } else {
-      // 등록 모드
-      createRoutine().then(() => navigate("/", { replace: true }));
-    }
-    setModalContent(
-      <h6 className="title">
-        이 루틴을
-        <br />
-        <strong className="text-orange">수정</strong>하시겠어요?
-      </h6>
-    );
-    setOpen(true);
+  function handleEquipDelete() {}
+
+  async function handleUpdateRoutine() {
+    // await updateRoutine();
+    // navigate("/reservation/select-equipment", { replace: true });
+  }
+
+  async function handleCreateRoutine() {
+    await createRoutine();
+    navigate("/", { replace: true });
   }
 
   return (
@@ -118,15 +86,23 @@ export default function RoutineSetting() {
       <div className="content-scroll">
         <Header
           className="header--equipment-detail"
-          title={<h2>루틴 설정</h2>}
+          title={<h2>{routineId ? "루틴 설정" : "세트설정"}</h2>}
           leftContent={
-            <button className="btn btn-icon" onClick={handleBackBtnClick}>
+            <button
+              className="btn btn-icon"
+              onClick={() =>
+                routineId ? setIsOpenBackConfirmDialog(true) : navigate(-1)
+              }
+            >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
           rightContent={
             routineId && (
-              <button className="btn-delete" onClick={handleRoutineDelete}>
+              <button
+                className="btn-delete"
+                onClick={() => setIsOpenRoutineDeleteDialog(true)}
+              >
                 삭제
               </button>
             )
@@ -141,24 +117,40 @@ export default function RoutineSetting() {
               type="text"
               id="routine-name"
               placeholder="루틴 이름을 입력해주세요"
-              value={newRoutineName}
-              onChange={(e) => setNewRoutineName(e.target.value)}
+              value={
+                routineId && routineDetail ? routineDetail.name : newRoutineName
+              }
+              onChange={(e) => setRoutineName(e.target.value)}
             />
           </section>
+
           <section>
             <p className="label-title">운동 설정</p>
-            <button type="button" className="btn-add">
-              <CirclePlus size={20} strokeWidth="2" />
-              운동추가
-            </button>
+
+            {routineId && (
+              <button
+                type="button"
+                className="btn-add"
+                onClick={handleAddEquip}
+              >
+                <CirclePlus size={20} strokeWidth="2" />
+                운동추가
+              </button>
+            )}
+
             <ul className="box-wrap">
               {selectedEquipList.map((equip, idx) => (
                 <li className="box" key={idx}>
                   <div className="equipment">
-                    <input type="checkbox" id={`select-${equip?.name}`} />
-                    <label htmlFor={`select-${equip?.name}`}>
-                      <CircleCheck size={20} strokeWidth="2" />
-                    </label>
+                    {routineId && (
+                      <>
+                        <input type="checkbox" id={`select-${equip?.name}`} />
+                        <label htmlFor={`select-${equip?.name}`}>
+                          <CircleCheck size={20} strokeWidth="2" />
+                        </label>
+                      </>
+                    )}
+
                     <div className="info">
                       <div className="img">
                         <img src={equip?.imageUrl || "/equipment_01.png"} />
@@ -167,18 +159,23 @@ export default function RoutineSetting() {
                         <span className="name">{equip?.name}</span>
                       </div>
                     </div>
-                    {/* {selectedEquipList.length > 1 && (
+
+                    {routineId ? (
+                      <button type="button" className="btn-drag-drop">
+                        <GripVertical size={20} strokeWidth="2" />
+                      </button>
+                    ) : selectedEquipList.length > 1 ? (
                       <button
                         className="btn-delete"
                         onClick={() => setSelectedEquipList(equip)}
                       >
                         삭제
                       </button>
-                    )} */}
-                    <button type="button" className="btn-drag-drop">
-                      <GripVertical size={20} strokeWidth="2" />
-                    </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
+
                   <div className="count-wrap">
                     <div className="count set">
                       <span className="title">세트</span>
@@ -247,33 +244,75 @@ export default function RoutineSetting() {
         </div>
       </div>
       <BottomButtonWrapper>
-        <button className="btn btn-blue" onClick={handleEquipDelete}>
-          운동 삭제
-        </button>
-        <button className="btn btn-orange" onClick={handleNextBtnClick}>
+        {routineId && (
+          <button
+            className="btn btn-blue"
+            onClick={() => setIsOpenEquipDeleteDialog(true)}
+          >
+            운동 삭제
+          </button>
+        )}
+        <button
+          className="btn btn-orange"
+          onClick={() =>
+            routineId
+              ? setIsOpenRoutineUpdateDialog(true)
+              : handleCreateRoutine()
+          }
+        >
           {/* 비활성화일때 .disabled를 붙여주세요 */}
           {/* <button className="btn btn-blue disabled">운동 삭제</button> */}
-          {/* <button className="btn btn-orange disabled" onClick={handleNextBtnClick}> */}
+          {/* <button className="btn btn-orange disabled" onClick={handleCreateRoutine}> */}
           {routineId ? "루틴 수정" : "루틴 등록"}
         </button>
       </BottomButtonWrapper>
 
-      {/* 모달 */}
       <CustomDialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        open={isOpenBackConfirmDialog}
+        onClose={() => setIsOpenBackConfirmDialog(false)}
+        onConfirm={handleNavigatingBack}
       >
-        <div className="modal-contents">{modalContent}</div>
-        <BottomButtonWrapper>
-          <button className="btn btn-blue" onClick={handleClose}>
-            취소
-          </button>
-          <button className="btn btn-orange" onClick={handleClose}>
-            확인
-          </button>
-        </BottomButtonWrapper>
+        <h6 className="title">
+          변경사항을 <strong className="text-orange">저장</strong>하지 않고
+          <br />
+          페이지를 나가시겠어요?
+        </h6>
+      </CustomDialog>
+
+      <CustomDialog
+        open={isOpenRoutineDeleteDialog}
+        onClose={() => setIsOpenRoutineDeleteDialog(false)}
+        onConfirm={handleDeleteRoutine}
+      >
+        <h6 className="title">
+          이 루틴을
+          <br />
+          <strong className="text-orange">삭제</strong>하시겠어요?
+        </h6>
+      </CustomDialog>
+
+      <CustomDialog
+        open={isOpenEquipDeleteDialog}
+        onClose={() => setIsOpenEquipDeleteDialog(false)}
+        onConfirm={handleEquipDelete}
+      >
+        <h6 className="title">
+          정말 운동을
+          <br />
+          <strong className="text-orange">삭제</strong> 하시겠어요?
+        </h6>
+      </CustomDialog>
+
+      <CustomDialog
+        open={isOpenRoutineUpdateDialog}
+        onClose={() => setIsOpenRoutineUpdateDialog(false)}
+        onConfirm={handleUpdateRoutine}
+      >
+        <h6 className="title">
+          이 루틴을
+          <br />
+          <strong className="text-orange">수정</strong>하시겠어요?
+        </h6>
       </CustomDialog>
     </motion.div>
   );
