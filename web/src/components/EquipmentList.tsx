@@ -6,7 +6,6 @@ import type { EquipmentType } from "../types";
 import { useFavoriteStore } from "../stores/favoriteStore";
 import { useUIStore } from "../stores/UIStore";
 import { useUserStore } from "../stores/userStore";
-import { useRoutineStore } from "../features/routine/store/routineStore";
 
 export default function EquipmentListPage({
   selectMode = "SINGLE",
@@ -24,6 +23,7 @@ export default function EquipmentListPage({
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
   const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
+  const isEquipAutoSorting = useUIStore((s) => s.isEquipAutoSorting);
 
   // 1분마다 자동 새로고침
   useEffect(() => {
@@ -34,12 +34,14 @@ export default function EquipmentListPage({
   }, [isRestTimerModalOpen, isRestTimerMiniView]);
 
   useEffect(() => {
-    // if (workoutMode === "routine" && routineId) {
-    //   getRoutineDetail(routineId);
-    // } else {
     getEquipments();
-    // }
-  }, [getEquipments]);
+  }, []);
+
+  useEffect(() => {
+    if (isEquipAutoSorting) {
+      getEquipments();
+    }
+  }, [isEquipAutoSorting]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     handleSelectedEquipment(selectEquip);

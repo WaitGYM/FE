@@ -18,9 +18,11 @@ export default function ReservationPage() {
   const { getEquipments } = useEquipmentStore();
   const { userInfo } = useUserStore();
   const {
+    isEquipAutoSorting,
     workoutMode,
     isWorkingOut,
     routineId,
+    setIsEquipAutoSorting,
     setWorkingOut,
     resetWorkoutMode,
   } = useUIStore();
@@ -34,7 +36,6 @@ export default function ReservationPage() {
     resetSelectedEquipmentState,
   } = useReservationStore();
   const { routineDetail, resetRoutineState } = useRoutineStore();
-  const [switchChecked, setSwitchChecked] = useState(false);
 
   // 새로고침 아이콘회전
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -138,11 +139,11 @@ export default function ReservationPage() {
               <div className="auto-suggest">
                 <span>자동제안</span>
                 <Switch
-                  checked={switchChecked}
+                  checked={isEquipAutoSorting}
                   size="small"
                   color="warning"
                   slotProps={{ input: { "aria-label": "자동제안" } }}
-                  onChange={(e) => setSwitchChecked(e.target.checked)}
+                  onChange={(e) => setIsEquipAutoSorting(e.target.checked)}
                 />
               </div>
               <button className="btn-refresh" onClick={handleRefreshClick}>

@@ -6,8 +6,6 @@ import { useRoutineStore } from "../features/routine/store/routineStore";
 import { useLoadingStore } from "./loadingStore";
 import { useUIStore } from "./UIStore";
 
-const setLoading = useLoadingStore.getState().setLoading;
-
 interface EquipmentStoreType {
   equipmentList: EquipmentType[];
   loading: boolean;
@@ -16,6 +14,8 @@ interface EquipmentStoreType {
   getEquipments: () => Promise<void>;
   clearError: () => void;
 }
+
+const setLoading = useLoadingStore.getState().setLoading;
 
 export const useEquipmentStore = create<EquipmentStoreType>()(
   devtools((set, get) => ({
@@ -26,11 +26,13 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
     getEquipments: async () => {
       setLoading(true);
       try {
-        const { routineId } = useUIStore.getState();
+        const { routineId, isEquipAutoSorting } = useUIStore.getState();
         const { getRoutineDetail } = useRoutineStore.getState();
         console.log("routineId : ", routineId);
 
-        const eqAllData = (await equipmentApi.getEquipmentList()).data;
+        const eqAllData = (
+          await equipmentApi.getEquipmentList(isEquipAutoSorting)
+        ).data;
         if (routineId && eqAllData) {
           console.log("기구 스토어에서 루틴 정보 호출----");
           await getRoutineDetail(routineId);
@@ -56,6 +58,14 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
           console.log("routineData : ", routineData);
           set({ equipmentList: routineData });
         } else {
+          // 대기 건 기구 있으면 최상단 배치
+          const waitingEqIdx = eqAllData.findIndex(
+            (eq) => eq.status.myQueuePosition
+          );
+          if (waitingEqIdx !== -1) {
+            const [matched] = eqAllData.splice(waitingEqIdx, 1);
+            eqAllData.unshift(matched);
+          }
           set({ equipmentList: eqAllData });
         }
       } catch (error) {
