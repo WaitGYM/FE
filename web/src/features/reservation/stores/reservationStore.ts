@@ -3,6 +3,7 @@ import { devtools } from "zustand/middleware";
 import { reservationApi } from "../services/reservationApi";
 import type { EquipmentType } from "../../../types";
 import { useLoadingStore } from "../../../stores/loadingStore";
+import { useRoutineStore } from "../../../features/routine/store/routineStore";
 
 type WorkoutGoalType = {
   sets: number;
@@ -115,28 +116,30 @@ export const useReservationStore = create<ReservationStoreType>()(
       setLoading(true);
       try {
         const eq = get().selectedEquipment;
-        if (eq) {
+        if (!eq) throw Error;
+
+        let res;
+        const { routineDetail } = useRoutineStore.getState();
+        if (routineDetail) {
+          res = await reservationApi.createRoutineEquipReservation(
+            routineDetail.id,
+            eq.id
+          );
+        } else {
           const reqData = {
             totalSets: eq.sets,
             restSeconds: eq.restSeconds,
           };
-          const response = await reservationApi.createReservation(
-            eq.id,
-            reqData
-          );
-          console.log(response.data);
-          set({
-            waitingInfo: { ...reqData, ...response.data },
-          });
-        } else {
-          throw Error;
+          res = await reservationApi.createReservation(eq.id, reqData);
         }
+        set({
+          waitingInfo: { ...res.data },
+        });
       } catch (error) {
-        set({ reservationError: "기구 예약에 실패했습니다." });
         console.log("기구 예약에 실패", error);
       } finally {
         set({
-          selectedEquipment: { ...initialState.selectedEquipment },
+          selectedEquipment: initialState.selectedEquipment,
         });
         setLoading(false);
       }
