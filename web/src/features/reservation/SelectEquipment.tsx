@@ -15,7 +15,7 @@ import { useWorkoutStore } from "../workout/stores/workoutStore";
 
 export default function ReservationPage() {
   const navigate = useNavigate();
-  const { getEquipments } = useEquipmentStore();
+  const { equipmentList, getEquipments } = useEquipmentStore();
   const { userInfo } = useUserStore();
   const {
     isEquipAutoSorting,
@@ -35,7 +35,12 @@ export default function ReservationPage() {
     deleteReservation,
     resetSelectedEquipmentState,
   } = useReservationStore();
-  const { routineDetail, resetRoutineState } = useRoutineStore();
+  const {
+    routineDetail,
+    setSelectedEquipList,
+    setRoutineName,
+    resetRoutineState,
+  } = useRoutineStore();
 
   // 새로고침 아이콘회전
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -56,6 +61,8 @@ export default function ReservationPage() {
 
   function handleRotineUpdateBtnClick() {
     if (!routineDetail) return;
+    setRoutineName(routineDetail.name);
+    setSelectedEquipList(equipmentList);
     navigate("/add-routine/routine-setting");
   }
 

@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { routineApi } from "../services/routineApi";
-import type { RoutineType, RoutineDetailType } from "../../../types";
+import type {
+  NewRoutineType,
+  RoutineType,
+  RoutineDetailType,
+} from "../../../types";
 import type { EquipmentType } from "../../../types";
 import { useLoadingStore } from "../../../stores/loadingStore";
 import { getFormattedTodayDate } from "../../../hooks/useDateFormatting";
@@ -15,28 +19,30 @@ interface RoutineStoreType {
   workoutGoal: WorkoutGoalType;
   selectedEquipList: (EquipmentType & WorkoutGoalType)[];
   newRoutineName: string;
+  routineDataBody: NewRoutineType;
   routineList: RoutineType[];
   routineDetail: RoutineDetailType | null;
   routineLoading: boolean;
   routineError: string | null;
-  originRoutineDetail: RoutineDetailType | null;
+  originRoutineDetail: NewRoutineType | null;
 
-  setSelectedEquipList: (selectEquip: EquipmentType) => void;
+  setSelectedEquipList: (selectEquip: EquipmentType | EquipmentType[]) => void;
   setRoutineName: (name: string) => void;
+  getRoutineFilteringData: () => NewRoutineType;
+  setRoutineEquipSorting: (
+    reoderingData: (EquipmentType & WorkoutGoalType)[]
+  ) => void;
   updateSelectedEquipment: (
     equipmentId: number,
     field: "sets" | "restSeconds",
     delta: number
   ) => void;
   createRoutine: () => Promise<void>;
-  updateRoutine: (
-    id: number,
-    routine: Omit<RoutineType, "id">
-  ) => Promise<void>;
+  updateRoutine: () => Promise<void>;
   deleteRoutine: () => Promise<void>;
   getRoutineList: () => Promise<void>;
   getRoutineDetail: (id: number) => Promise<void>;
-
+  resetSelectedEquipList: () => void;
   resetRoutineState: () => void;
 }
 
@@ -49,6 +55,8 @@ const initialState = {
   },
   selectedEquipList: [],
   newRoutineName: `${getFormattedTodayDate()} 운동 루틴`,
+  routineDataBody: null,
+
   routineList: [],
   routineDetail: null,
   routineLoading: false,
@@ -63,28 +71,65 @@ export const useRoutineStore = create<RoutineStoreType>()(
     setSelectedEquipList: (selectEquip) =>
       set((state) => {
         const prevList = state.selectedEquipList;
-        const isSelected = prevList.some((x) => x.id === selectEquip.id);
-        if (isSelected) {
-          return {
-            selectedEquipList: prevList.filter((v) => v.id !== selectEquip.id),
-          };
+        const isArray = Array.isArray(selectEquip);
+
+        if (isArray) {
+          const selectedIds = selectEquip.map((item) => item.id);
+          const alreadySelectedIds = prevList.map((item) => item.id);
+          const isAllSelected = selectedIds.every((id) =>
+            alreadySelectedIds.includes(id)
+          );
+
+          if (isAllSelected) {
+            return {
+              selectedEquipList: prevList.filter(
+                (item) => !selectedIds.includes(item.id)
+              ),
+            };
+          } else {
+            const newItems = selectEquip
+              .filter((item) => !alreadySelectedIds.includes(item.id))
+              .map((item) => ({
+                ...item,
+                sets: item.sets || state.workoutGoal.sets,
+                restSeconds: item.restSeconds || state.workoutGoal.restSeconds,
+              }));
+            return {
+              selectedEquipList: [...prevList, ...newItems],
+            };
+          }
         } else {
-          const newEquip = {
-            ...selectEquip,
-            ...state.workoutGoal,
-          };
-          return {
-            selectedEquipList: [...state.selectedEquipList, newEquip],
-          };
+          const isSelected = prevList.some((x) => x.id === selectEquip.id);
+          if (isSelected) {
+            return {
+              selectedEquipList: prevList.filter(
+                (v) => v.id !== selectEquip.id
+              ),
+            };
+          } else {
+            const newEquip = {
+              ...selectEquip,
+              ...state.workoutGoal,
+            };
+            return {
+              selectedEquipList: [...prevList, newEquip],
+            };
+          }
         }
       }),
+    setRoutineName: (newName) => set({ newRoutineName: newName }),
 
-    setRoutineName: (newName) =>
-      set((state) => {
-        return state.routineDetail
-          ? { routineDetail: { ...state.routineDetail, name: newName } }
-          : { newRoutineName: newName };
-      }),
+    getRoutineFilteringData: () => ({
+      name: get().newRoutineName,
+      exercises: get().selectedEquipList.map((eq) => ({
+        equipmentId: eq.id,
+        targetSets: eq.sets,
+        restSeconds: eq.restSeconds,
+      })),
+    }),
+
+    setRoutineEquipSorting: (reoderingData) =>
+      set({ selectedEquipList: reoderingData }),
 
     updateSelectedEquipment: (eqId, field, changeValue) =>
       set((state) => {
@@ -122,15 +167,9 @@ export const useRoutineStore = create<RoutineStoreType>()(
     createRoutine: async () => {
       setLoading(true);
       try {
-        const newRoutine = {
-          name: get().newRoutineName,
-          exercises: get().selectedEquipList.map((eq) => ({
-            equipmentId: eq.id,
-            targetSets: eq.sets,
-            restSeconds: eq.restSeconds,
-          })),
-        };
-        const response = await routineApi.createRoutine(newRoutine);
+        const response = await routineApi.createRoutine(
+          get().getRoutineFilteringData()
+        );
         console.log("루틴 생성 성공!!!", response);
       } catch (error) {
         console.log("⛔루틴 생성 실패!!!!", error);
@@ -140,10 +179,13 @@ export const useRoutineStore = create<RoutineStoreType>()(
       }
     },
 
-    updateRoutine: async (id, updateData) => {
+    updateRoutine: async () => {
       setLoading(true);
       try {
-        const response = await routineApi.updateRoutine(id, updateData);
+        const response = await routineApi.updateRoutine(
+          get().routineDetail.id,
+          get().getRoutineFilteringData()
+        );
         console.log("루틴 업데이트 성공!!!", response);
       } catch (error) {
         console.log("⛔루틴 업데이트 실패!!!!", error);
@@ -188,12 +230,18 @@ export const useRoutineStore = create<RoutineStoreType>()(
       setLoading(true);
       try {
         const { data } = await routineApi.getRoutine(id);
-        console.log("getRoutineDetail", data);
-
         set({
           routineDetail: data,
-          originRoutineDetail: data,
+          originRoutineDetail: {
+            name: data.name,
+            exercises: data.exercises.map((val) => ({
+              equipmentId: val.equipment.id,
+              targetSets: val.targetSets,
+              restSeconds: val.restSeconds,
+            })),
+          },
         });
+        console.log("originRoutineDetail", get().originRoutineDetail);
       } catch (error) {
         console.log("루틴을 불러오는데 실패했습니다.", error);
       } finally {
@@ -201,6 +249,7 @@ export const useRoutineStore = create<RoutineStoreType>()(
       }
     },
 
+    resetSelectedEquipList: () => set({ selectedEquipList: [] }),
     resetRoutineState: () => set(initialState),
   }))
 );

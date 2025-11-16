@@ -16,6 +16,15 @@ type ExercisesType = {
   };
 };
 
+export type NewRoutineType = {
+  name: string;
+  exercises: {
+    equipmentId: number;
+    targetSets: number;
+    restSeconds: number;
+  }[];
+};
+
 export type RoutineType = {
   id: number;
   name: string;

@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  Plus,
-  Minus,
-  CirclePlus,
-  GripVertical,
-  CircleCheck,
-} from "lucide-react";
+import { ChevronLeft, CirclePlus } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
@@ -15,14 +8,23 @@ import { useRoutineStore } from "./store/routineStore";
 import { useReservationStore } from "../reservation/stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
 import CustomDialog from "../../components/ui/CustomDialog"; //수정,삭제 모달
-
-function formatSecondsToTime(seconds: number): string {
-  const min = Math.floor(seconds / 60);
-  const sec = seconds % 60;
-  const paddedHrs = String(min).padStart(2, "0");
-  const paddedMins = String(sec).padStart(2, "0");
-  return `${paddedHrs}:${paddedMins}`;
-}
+import { isEqual } from "lodash";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import WorkoutGoal from "../../components/WorkoutGoal";
 
 export default function RoutineSetting() {
   const [isOpenBackConfirmDialog, setIsOpenBackConfirmDialog] = useState(false);
@@ -31,25 +33,46 @@ export default function RoutineSetting() {
   const [isOpenEquipDeleteDialog, setIsOpenEquipDeleteDialog] = useState(false);
   const [isOpenRoutineUpdateDialog, setIsOpenRoutineUpdateDialog] =
     useState(false);
-
   const navigate = useNavigate();
   const {
     selectedEquipList,
     newRoutineName,
-    routineDetail,
-    setRoutineName,
+    originRoutineDetail,
     setSelectedEquipList,
-    updateSelectedEquipment,
+    setRoutineName,
+    getRoutineFilteringData,
+    setRoutineEquipSorting,
     createRoutine,
     updateRoutine,
     deleteRoutine,
+    resetSelectedEquipList,
     resetRoutineState,
   } = useRoutineStore();
   const { resetSelectedEquipmentState } = useReservationStore();
   const { routineId, resetWorkoutMode } = useUIStore();
+  const [deleteList, setDeleteList] = useState([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   function handleNavigatingBack() {
+    if (routineId) resetSelectedEquipList();
     navigate(-1);
+  }
+
+  function checkDataChange() {
+    getRoutineFilteringData();
+
+    if (!isEqual(originRoutineDetail, getRoutineFilteringData())) {
+      setIsOpenBackConfirmDialog(true);
+    } else {
+      handleNavigatingBack();
+    }
   }
 
   async function handleDeleteRoutine() {
@@ -64,15 +87,22 @@ export default function RoutineSetting() {
     navigate("/add-routine/select-equipment");
   }
 
-  function handleEquipDelete() {}
+  function handleEquipDelete() {
+    setSelectedEquipList(deleteList);
+    setIsOpenEquipDeleteDialog(false);
+    setDeleteList([]);
+  }
 
   async function handleUpdateRoutine() {
-    // await updateRoutine();
-    // navigate("/reservation/select-equipment", { replace: true });
+    await updateRoutine();
+    resetSelectedEquipList();
+    resetSelectedEquipmentState();
+    navigate("/reservation/select-equipment", { replace: true });
   }
 
   async function handleCreateRoutine() {
     await createRoutine();
+    resetSelectedEquipList();
     navigate("/", { replace: true });
   }
 
@@ -91,7 +121,7 @@ export default function RoutineSetting() {
             <button
               className="btn btn-icon"
               onClick={() =>
-                routineId ? setIsOpenBackConfirmDialog(true) : navigate(-1)
+                routineId ? checkDataChange() : handleNavigatingBack()
               }
             >
               <ChevronLeft size={24} strokeWidth="2" />
@@ -117,10 +147,8 @@ export default function RoutineSetting() {
               type="text"
               id="routine-name"
               placeholder="루틴 이름을 입력해주세요"
-              value={
-                routineId && routineDetail ? routineDetail.name : newRoutineName
-              }
-              onChange={(e) => setRoutineName(e.target.value)}
+              value={newRoutineName}
+              onChange={(e) => setRoutineName(e.target.value.trim())}
             />
           </section>
 
@@ -139,106 +167,33 @@ export default function RoutineSetting() {
             )}
 
             <ul className="box-wrap">
-              {selectedEquipList.map((equip, idx) => (
-                <li className="box" key={idx}>
-                  <div className="equipment">
-                    <div className="info">
-                      {routineId && (
-                        <>
-                          <input type="checkbox" id={`select-${equip?.name}`} />
-                          <label htmlFor={`select-${equip?.name}`}>
-                            <CircleCheck size={20} strokeWidth="2" />
-                          </label>
-                        </>
-                      )}
-                      <div className="img">
-                        <img src={equip?.imageUrl || "/equipment_01.png"} />
-                      </div>
-                      <div className="title">
-                        <span className="name">{equip?.name}</span>
-                      </div>
-                    </div>
-
-                    {routineId ? (
-                      <button type="button" className="btn-drag-drop">
-                        <GripVertical size={20} strokeWidth="2" />
-                      </button>
-                    ) : selectedEquipList.length > 1 ? (
-                      <button
-                        type="button"
-                        className="btn-delete"
-                        onClick={() => setSelectedEquipList(equip)}
-                      >
-                        삭제
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-
-                  <div className="count-wrap">
-                    <div className="count set">
-                      <span className="title">세트</span>
-                      <div className="controller-wrap">
-                        <button
-                          className="btn btn-icon"
-                          onClick={() =>
-                            updateSelectedEquipment(equip.id, "sets", -1)
-                          }
-                          disabled={equip.sets < 2}
-                        >
-                          <Minus size={20} strokeWidth="1.5" />
-                        </button>
-                        <span className="count-num">{equip.sets}</span>
-                        <button
-                          className="btn btn-icon"
-                          onClick={() =>
-                            updateSelectedEquipment(equip.id, "sets", 1)
-                          }
-                          disabled={equip.sets > 7}
-                        >
-                          <Plus size={20} strokeWidth="1.5" />
-                        </button>
-                      </div>
-                    </div>
-                    <div className="count break">
-                      <span className="title">휴식</span>
-                      <div className="controller-wrap">
-                        <button
-                          className="btn btn-icon"
-                          disabled={
-                            equip.restSeconds < 1 ||
-                            (equip.sets > 1 && equip.restSeconds < 11)
-                          }
-                          onClick={() =>
-                            updateSelectedEquipment(
-                              equip.id,
-                              "restSeconds",
-                              -10
-                            )
-                          }
-                        >
-                          <Minus size={20} strokeWidth="1.5" />
-                        </button>
-                        <span className="count-num">
-                          {equip.restSeconds === 0
-                            ? "없음"
-                            : formatSecondsToTime(equip.restSeconds)}
-                        </span>
-                        <button
-                          className="btn btn-icon"
-                          disabled={equip.sets < 2 || equip.restSeconds > 299}
-                          onClick={() =>
-                            updateSelectedEquipment(equip.id, "restSeconds", 10)
-                          }
-                        >
-                          <Plus size={20} strokeWidth="1.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              ))}
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={(event) => {
+                  const { active, over } = event;
+                  if (active.id !== over.id) {
+                    const oldIndex = selectedEquipList.findIndex(
+                      (i) => i.id === active.id
+                    );
+                    const newIndex = selectedEquipList.findIndex(
+                      (i) => i.id === over.id
+                    );
+                    setRoutineEquipSorting(
+                      arrayMove(selectedEquipList, oldIndex, newIndex)
+                    );
+                  }
+                }}
+              >
+                <SortableContext
+                  items={selectedEquipList.map((equip) => equip.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {selectedEquipList.map((equip) => (
+                    <WorkoutGoal key={equip.id} equipmentInfo={equip} />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </ul>
           </section>
         </div>
@@ -246,8 +201,9 @@ export default function RoutineSetting() {
       <BottomButtonWrapper>
         {routineId && (
           <button
-            className="btn btn-blue"
+            className={`btn btn-blue ${!deleteList.length && "disabled"}`}
             onClick={() => setIsOpenEquipDeleteDialog(true)}
+            disabled={!deleteList.length}
           >
             운동 삭제
           </button>

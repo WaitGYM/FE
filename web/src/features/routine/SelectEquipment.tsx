@@ -20,7 +20,7 @@ export default function RoutineSelectEquipPage() {
 
   function handleBackBtn() {
     navigate("/");
-    resetRoutineState;
+    resetRoutineState();
   }
 
   function handleNextBtnClick() {
