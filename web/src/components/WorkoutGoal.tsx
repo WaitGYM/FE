@@ -1,10 +1,8 @@
 import type { EquipmentType } from "../types";
-import { useState } from "react";
 import { Plus, Minus, GripVertical, CircleCheck } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useRoutineStore } from "../features/routine/store/routineStore";
-import { useUIStore } from "../stores/UIStore";
 
 function formatSecondsToTime(seconds: number): string {
   const min = Math.floor(seconds / 60);
@@ -16,8 +14,14 @@ function formatSecondsToTime(seconds: number): string {
 
 export default function WorkoutGoal({
   equipmentInfo,
+  mode,
+  selectedList,
+  setSelectedList,
 }: {
   equipmentInfo: EquipmentType;
+  mode: "create" | "update";
+  selectedList: EquipmentType[];
+  setSelectedList: React.Dispatch<React.SetStateAction<EquipmentType[]>>;
 }) {
   const {
     attributes,
@@ -33,29 +37,27 @@ export default function WorkoutGoal({
   };
   const { selectedEquipList, setSelectedEquipList, updateSelectedEquipment } =
     useRoutineStore();
-  const { routineId } = useUIStore();
-  const [deleteList, setDeleteList] = useState([]);
 
   return (
     <>
       <li className="box" ref={setNodeRef} style={style} {...attributes}>
         <div className="equipment">
           <div className="info">
-            {routineId && (
+            {mode == "update" && (
               <>
                 <input
                   type="checkbox"
                   id={`select-${equipmentInfo?.name}`}
-                  checked={deleteList.some(
+                  checked={selectedList.some(
                     (item) => item.id == equipmentInfo.id
                   )}
                   onChange={(e) => {
                     const newArr = e.target.checked
-                      ? [...deleteList, equipmentInfo]
-                      : [...deleteList].filter(
+                      ? [...selectedList, equipmentInfo]
+                      : [...selectedList].filter(
                           (item) => item.id != equipmentInfo.id
                         );
-                    setDeleteList(newArr);
+                    setSelectedList(newArr);
                   }}
                 />
                 <label htmlFor={`select-${equipmentInfo?.name}`}>
@@ -71,7 +73,7 @@ export default function WorkoutGoal({
             </div>
           </div>
 
-          {routineId ? (
+          {mode == "update" ? (
             <button
               type="button"
               className="btn-drag-drop"

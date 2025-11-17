@@ -32,7 +32,9 @@ export default function HomePage() {
       setRoutineId(selectedRoutineId);
     }
     setWorkoutMode(mode);
-    navigate("/reservation/select-equipment");
+    navigate(
+      `/reservation/select-equipment${mode === "routine" ? "/routine" : ""}`
+    );
   }
 
   return (

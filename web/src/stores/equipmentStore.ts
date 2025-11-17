@@ -11,7 +11,7 @@ interface EquipmentStoreType {
   loading: boolean;
   error: string | null;
 
-  getEquipments: () => Promise<void>;
+  getEquipments: (filter: string) => Promise<void>;
   clearError: () => void;
 }
 
@@ -23,7 +23,7 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
     loading: false,
     error: null,
 
-    getEquipments: async () => {
+    getEquipments: async (filter) => {
       setLoading(true);
       try {
         const { routineId, isEquipAutoSorting } = useUIStore.getState();
@@ -33,7 +33,7 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
         const eqAllData = (
           await equipmentApi.getEquipmentList(isEquipAutoSorting)
         ).data;
-        if (routineId && eqAllData) {
+        if (filter === "routine") {
           console.log("기구 스토어에서 루틴 정보 호출----");
           await getRoutineDetail(routineId);
 

@@ -1,31 +1,37 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ChevronLeft, Search, Star } from "lucide-react";
-import { useEquipmentStore } from "../../stores/equipmentStore";
 import Header from "../../components/layout/Header";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useRoutineStore } from "./store/routineStore";
 
 export default function RoutineSelectEquipPage() {
+  const { filter } = useParams();
   const navigate = useNavigate();
-  const { getEquipments } = useEquipmentStore();
-  const { selectedEquipList, setSelectedEquipList, resetRoutineState } =
-    useRoutineStore();
-
-  useEffect(() => {
-    getEquipments();
-  }, [getEquipments]);
+  const {
+    selectedEquipList,
+    routineDetail,
+    setSelectedEquipList,
+    resetRoutineState,
+  } = useRoutineStore();
 
   function handleBackBtn() {
-    navigate("/");
-    resetRoutineState();
+    if (!routineDetail) {
+      navigate("/");
+      resetRoutineState();
+    } else {
+      navigate(-1);
+    }
   }
 
   function handleNextBtnClick() {
-    console.log(selectedEquipList);
     navigate("/add-routine/routine-setting");
+  }
+
+  function handleAddBtnClick() {
+    navigate(-1);
   }
 
   return (
@@ -42,7 +48,7 @@ export default function RoutineSelectEquipPage() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          title={<h2>루틴추가</h2>}
+          title={<h2>{!routineDetail ? "루틴추가" : "운동 추가"}</h2>}
         />
 
         <section className="container">
@@ -78,6 +84,7 @@ export default function RoutineSelectEquipPage() {
             </div>
 
             <EquipmentList
+              filter={filter}
               selectMode="MULTI"
               selectedList={selectedEquipList}
               handleSelectedEquipment={setSelectedEquipList}
@@ -86,13 +93,18 @@ export default function RoutineSelectEquipPage() {
         </section>
       </div>
 
-      {selectedEquipList.length ? (
+      {selectedEquipList.length && (
         <BottomButtonWrapper>
-          <button onClick={handleNextBtnClick} className="btn btn-orange">
-            다음
+          <button
+            onClick={() =>
+              !routineDetail ? handleNextBtnClick() : handleAddBtnClick()
+            }
+            className="btn btn-orange"
+          >
+            {!routineDetail ? "다음" : "추가하기"}
           </button>
         </BottomButtonWrapper>
-      ) : null}
+      )}
     </motion.div>
   );
 }

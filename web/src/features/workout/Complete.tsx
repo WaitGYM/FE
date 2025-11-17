@@ -5,13 +5,22 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useWorkoutStore } from "./stores/workoutStore";
 import { formatDateStr } from "../../hooks/useDateFormatting";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function WorkoutCompletePage() {
   const navigate = useNavigate();
-  const { workingOutInfo, workoutProgressInfo } = useWorkoutStore();
+  const { workingOutInfo, workoutProgressInfo, resetWorkoutState } =
+    useWorkoutStore();
+  const { workoutMode } = useUIStore();
 
   function handleWorkoutComplete() {
-    navigate("/reservation/select-equipment", { replace: true });
+    navigate(
+      `/reservation/select-equipment${
+        workoutMode === "routine" ? "/routine" : ""
+      }`,
+      { replace: true }
+    );
+    resetWorkoutState();
   }
 
   return (

@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, RefreshCcw } from "lucide-react";
 import Switch from "@mui/material/Switch";
@@ -8,22 +10,19 @@ import Header from "../../components/layout/Header";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
-import { motion } from "framer-motion";
-import { useUserStore } from "../../stores/userStore";
 import { useRoutineStore } from "../routine/store/routineStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
 
 export default function ReservationPage() {
+  const { filter } = useParams();
   const navigate = useNavigate();
   const { equipmentList, getEquipments } = useEquipmentStore();
-  const { userInfo } = useUserStore();
   const {
     isEquipAutoSorting,
     workoutMode,
     isWorkingOut,
     routineId,
     setIsEquipAutoSorting,
-    setWorkingOut,
     resetWorkoutMode,
   } = useUIStore();
   const { workingOutInfo, startWorkout, startRoutineWorkout } =
@@ -47,9 +46,9 @@ export default function ReservationPage() {
   const handleRefreshClick = () => {
     setIsRefreshing(true);
     setTimeout(() => {
-      getEquipments();
+      getEquipments(filter);
       setIsRefreshing(false);
-    }, 1000);
+    }, 500);
   };
 
   function handleBackBtnClick() {
@@ -67,7 +66,7 @@ export default function ReservationPage() {
   }
 
   function handleDeleteReservation() {
-    deleteReservation().then(() => getEquipments());
+    deleteReservation().then(() => getEquipments(filter));
   }
 
   function handleNextBtn() {
@@ -164,6 +163,7 @@ export default function ReservationPage() {
             </div>
 
             <EquipmentList
+              filter={filter}
               selectMode="SINGLE"
               selectedList={Array(selectedEquipment)}
               handleSelectedEquipment={setSelectedEquipment}

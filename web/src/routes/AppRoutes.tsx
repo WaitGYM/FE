@@ -49,7 +49,7 @@ export default function AppRoutes() {
         <Route path="/pushlist" element={<PushList />} />
 
         <Route
-          path="/reservation/select-equipment"
+          path="/reservation/select-equipment/:filter?"
           element={<ReservationSelectEquipment />}
         />
         <Route
@@ -62,7 +62,7 @@ export default function AppRoutes() {
         />
 
         <Route
-          path="/add-routine/select-equipment"
+          path="/add-routine/select-equipment/:filter?"
           element={<RoutineSelectEquipment />}
         />
         <Route

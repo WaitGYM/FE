@@ -25,6 +25,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import WorkoutGoal from "../../components/WorkoutGoal";
+import type { EquipmentType } from "../../types";
 
 export default function RoutineSetting() {
   const [isOpenBackConfirmDialog, setIsOpenBackConfirmDialog] = useState(false);
@@ -50,7 +51,7 @@ export default function RoutineSetting() {
   } = useRoutineStore();
   const { resetSelectedEquipmentState } = useReservationStore();
   const { routineId, resetWorkoutMode } = useUIStore();
-  const [deleteList, setDeleteList] = useState([]);
+  const [deleteList, setDeleteList] = useState<EquipmentType[]>([]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -61,8 +62,12 @@ export default function RoutineSetting() {
   );
 
   function handleNavigatingBack() {
-    if (routineId) resetSelectedEquipList();
-    navigate(-1);
+    if (routineId) {
+      navigate("/reservation/select-equipment/routine", { replace: true });
+      resetSelectedEquipList();
+    } else {
+      navigate(-1);
+    }
   }
 
   function checkDataChange() {
@@ -97,7 +102,7 @@ export default function RoutineSetting() {
     await updateRoutine();
     resetSelectedEquipList();
     resetSelectedEquipmentState();
-    navigate("/reservation/select-equipment", { replace: true });
+    navigate("/reservation/select-equipment/routine", { replace: true });
   }
 
   async function handleCreateRoutine() {
@@ -190,7 +195,13 @@ export default function RoutineSetting() {
                   strategy={verticalListSortingStrategy}
                 >
                   {selectedEquipList.map((equip) => (
-                    <WorkoutGoal key={equip.id} equipmentInfo={equip} />
+                    <WorkoutGoal
+                      key={equip.id}
+                      equipmentInfo={equip}
+                      mode={routineId ? "update" : "create"}
+                      selectedList={deleteList}
+                      setSelectedList={setDeleteList}
+                    />
                   ))}
                 </SortableContext>
               </DndContext>
@@ -202,14 +213,17 @@ export default function RoutineSetting() {
         {routineId && (
           <button
             className={`btn btn-blue ${!deleteList.length && "disabled"}`}
-            onClick={() => setIsOpenEquipDeleteDialog(true)}
             disabled={!deleteList.length}
+            onClick={() => setIsOpenEquipDeleteDialog(true)}
           >
             운동 삭제
           </button>
         )}
         <button
-          className="btn btn-orange"
+          className={`btn btn-orange ${
+            !selectedEquipList.length && "disabled"
+          }`}
+          disabled={!selectedEquipList.length}
           onClick={() =>
             routineId
               ? setIsOpenRoutineUpdateDialog(true)

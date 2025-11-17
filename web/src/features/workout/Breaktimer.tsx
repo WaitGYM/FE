@@ -25,6 +25,7 @@ const formatTime = (sec: number): string => {
 export default function WorkoutBreaktimer() {
   const navigate = useNavigate();
   const {
+    workoutMode,
     isRestTimerModalOpen,
     toggleRestTimerModalOpen,
     isRestTimerMiniView,
@@ -106,7 +107,11 @@ export default function WorkoutBreaktimer() {
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsRestTimerMiniView(true);
-                    navigate("/reservation/select-equipment");
+                    navigate(
+                      `/reservation/select-equipment${
+                        workoutMode === "routine" ? "/routine" : ""
+                      }`
+                    );
                   }}
                   type="button"
                 >

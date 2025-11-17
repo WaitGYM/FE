@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Star, Equal } from "lucide-react";
+import { Star } from "lucide-react";
 import { Skeleton } from "@mui/material";
 import { useEquipmentStore } from "../stores/equipmentStore";
 import type { EquipmentType } from "../types";
@@ -8,10 +8,12 @@ import { useUIStore } from "../stores/UIStore";
 import { useUserStore } from "../stores/userStore";
 
 export default function EquipmentListPage({
+  filter = "all",
   selectMode = "SINGLE",
   selectedList,
   handleSelectedEquipment,
 }: {
+  filter?: string;
   selectMode?: "SINGLE" | "MULTI";
   selectedList: EquipmentType[];
   handleSelectedEquipment: (
@@ -28,18 +30,18 @@ export default function EquipmentListPage({
   // 1분마다 자동 새로고침
   useEffect(() => {
     if (!isRestTimerModalOpen || isRestTimerMiniView) {
-      const interval = setInterval(() => getEquipments(), 60000);
+      const interval = setInterval(() => getEquipments(filter), 60000);
       return () => clearInterval(interval);
     }
   }, [isRestTimerModalOpen, isRestTimerMiniView]);
 
   useEffect(() => {
-    getEquipments();
+    getEquipments(filter);
   }, []);
 
   useEffect(() => {
     if (isEquipAutoSorting) {
-      getEquipments();
+      getEquipments(filter);
     }
   }, [isEquipAutoSorting]);
 
@@ -54,7 +56,7 @@ export default function EquipmentListPage({
     e.stopPropagation();
     if (equipment.isFavorite) await deleteFavorite(equipment.id);
     else await addFavorite(equipment.id);
-    getEquipments();
+    getEquipments(filter);
   }
 
   return (

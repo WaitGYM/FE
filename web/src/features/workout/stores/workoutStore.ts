@@ -29,7 +29,7 @@ interface WorkoutStoreType {
   completeRest: () => void;
   stopWorkout: () => Promise<void>;
   completeWorkoutSet: () => Promise<void | string>;
-  resetState: () => void;
+  resetWorkoutState: () => void;
 }
 
 const setLoading = useLoadingStore.getState().setLoading;
@@ -170,7 +170,6 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
           set({ workoutProgressInfo: data });
           console.log("기구 완료!!!", data);
           setWorkingOut(false);
-          get().resetState();
           return true;
         }
       } catch (error) {
@@ -180,6 +179,6 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       }
     },
 
-    resetState: () => set(initialState),
+    resetWorkoutState: () => set(initialState),
   }))
 );
