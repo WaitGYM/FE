@@ -1,10 +1,15 @@
 import { Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useNotificationStore } from "../../features/notification/store/notificationStore";
+import { useEffect } from "react";
 
 export default function NotificationButton() {
   const navigate = useNavigate();
-  const { unreadNotiCount } = useNotificationStore();
+  const { unreadNotiCount, getUnreadNotiCount } = useNotificationStore();
+
+  useEffect(() => {
+    getUnreadNotiCount();
+  }, []);
 
   return (
     <button

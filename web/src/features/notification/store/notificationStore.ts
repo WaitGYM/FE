@@ -13,9 +13,10 @@ interface NotificationState {
 
 interface NotificationActions {
   addNotification: (notification: NotificationType) => void;
-  // markAllAsRead: () => void;
   clearPopupMessage: () => void;
   getNotificationList: () => void;
+  getUnreadNotiCount: () => void;
+  markAllAsRead: () => void;
 }
 
 const { setLoading } = useLoadingStore.getState();
@@ -42,12 +43,6 @@ export const useNotificationStore = create<
         // unreadNotiCount: state.unreadNotiCount + 1,
         popupMessage: { ...newNotification, read: false },
       })),
-
-    // markAllAsRead: () =>
-    //   set((state) => ({
-    //     notifications: state.notifications.map((n) => ({ ...n, read: true })),
-    //     unreadNotiCount: 0,
-    //   })),
 
     clearPopupMessage: () => {
       set({ popupMessage: null });
@@ -83,6 +78,14 @@ export const useNotificationStore = create<
         console.log("⛔알림 안읽음 카운팅 조회 실패!!!!", error);
       } finally {
         setLoading(false);
+      }
+    },
+
+    markAllAsRead: async () => {
+      try {
+        await notificationApi.allRead();
+      } catch (error) {
+        console.log("⛔알림 모두 읽음 처리 실패!!!", error);
       }
     },
   }))

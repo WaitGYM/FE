@@ -8,11 +8,17 @@ import { formatDateStr } from "../../hooks/useDateFormatting";
 
 export default function PushList() {
   const navigate = useNavigate();
-  const { notificationList, getNotificationList } = useNotificationStore();
+  const { notificationList, getNotificationList, markAllAsRead } =
+    useNotificationStore();
 
   useEffect(() => {
     getNotificationList();
   }, [getNotificationList]);
+
+  function handleBackBtn() {
+    markAllAsRead();
+    navigate(-1);
+  }
 
   return (
     <motion.div
@@ -27,7 +33,7 @@ export default function PushList() {
             <button
               type="button"
               className="btn btn-icon"
-              onClick={() => navigate(-1)}
+              onClick={handleBackBtn}
             >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
@@ -40,7 +46,10 @@ export default function PushList() {
 
             <ul className="push-list-wrap">
               {notificationList.map((noti) => (
-                <li className="list" key={noti.id}>
+                <li
+                  className={`list ${noti.isRead ? "read" : ""}`}
+                  key={noti.id}
+                >
                   <div className="state">
                     {noti.type === "EQUIPMENT_AVAILABLE" && (
                       <span className="badge push-res">예약</span>
