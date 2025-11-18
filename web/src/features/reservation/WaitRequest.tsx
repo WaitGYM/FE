@@ -3,29 +3,21 @@ import { ChevronLeft, UsersRound } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
-import { useEffect } from "react";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function WaitRequest() {
   const navigate = useNavigate();
-  const {
-    selectedEquipment,
-    reservationError,
-    equipmentReservationStatus,
-    getEquipmentReservationStatus,
-    createReservation,
-  } = useReservationStore();
-
-  // 이전 단계에서 조회했는데 페이지 바꼈다고 또 조회해야할지??
-  // useEffect(() => {
-  //   getEquipmentReservationStatus();
-  // }, [getEquipmentReservationStatus]);
+  const { selectedEquipment, reservationError, createReservation } =
+    useReservationStore();
+  const { routineId } = useUIStore();
 
   async function handleReqBtnClick() {
     await createReservation();
-    // 예약 생성 성공하면 기구목록으로 이동
     if (!reservationError)
-      navigate("/reservation/select-equipment", { replace: true });
+      navigate(`/reservation/select-equipment${routineId ? "/routine" : ""}`, {
+        replace: true,
+      });
   }
 
   return (
