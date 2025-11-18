@@ -8,7 +8,7 @@ import { useUIStore } from "./UIStore";
 
 interface EquipmentStoreType {
   equipmentList: EquipmentType[];
-  loading: boolean;
+  equipmentListLoading: boolean;
   error: string | null;
 
   getEquipments: (filter: string) => Promise<void>;
@@ -20,11 +20,12 @@ const setLoading = useLoadingStore.getState().setLoading;
 export const useEquipmentStore = create<EquipmentStoreType>()(
   devtools((set, get) => ({
     equipmentList: [],
-    loading: false,
+    equipmentListLoading: false,
     error: null,
 
     getEquipments: async (filter) => {
-      setLoading(true);
+      // setLoading(true);
+      set({ equipmentListLoading: true });
       try {
         const { routineId, isEquipAutoSorting } = useUIStore.getState();
         const { getRoutineDetail } = useRoutineStore.getState();
@@ -73,7 +74,8 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
           error: "기구 목록을 불러오는데 실패했습니다.",
         });
       } finally {
-        setLoading(false);
+        // setLoading(false);
+        set({ equipmentListLoading: false });
       }
     },
 

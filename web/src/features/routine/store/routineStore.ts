@@ -227,7 +227,7 @@ export const useRoutineStore = create<RoutineStoreType>()(
     },
 
     getRoutineDetail: async (id: number) => {
-      setLoading(true);
+      // setLoading(true);
       try {
         const { data } = await routineApi.getRoutine(id);
         set({
@@ -245,7 +245,7 @@ export const useRoutineStore = create<RoutineStoreType>()(
       } catch (error) {
         console.log("루틴을 불러오는데 실패했습니다.", error);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     },
 

@@ -62,9 +62,16 @@ export default function Favorites() {
             {favoriteList.map((favorite: FavoriteType) => (
               <li key={favorite.id}>
                 <div className="equipment">
-                  <img
-                    src={favorite.equipment.imageUrl || "/equipment_01.png"}
-                  />
+                  <div className="img">
+                    <img
+                      src={favorite.equipment.imageUrl}
+                      alt={favorite.equipment.name}
+                      loading="lazy"
+                      onLoad={({ target }) => {
+                        target.classList.add("visible");
+                      }}
+                    />
+                  </div>
                   <div className="info">
                     <div className="title">
                       <span className="name">{favorite.equipment.name}</span>

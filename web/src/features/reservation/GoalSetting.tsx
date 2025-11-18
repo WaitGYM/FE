@@ -78,7 +78,12 @@ export default function EquipmentDetail() {
                   <div className="info">
                     <div className="img">
                       <img
-                        src={selectedEquipment?.imageUrl || "/equipment_01.png"}
+                        src={selectedEquipment.imageUrl}
+                        alt={selectedEquipment.name}
+                        loading="lazy"
+                        onLoad={({ target }) => {
+                          target.classList.add("visible");
+                        }}
                       />
                     </div>
                     <div className="title">

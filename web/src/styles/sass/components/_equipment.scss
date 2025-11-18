@@ -3,7 +3,7 @@
 .equipment {
   padding: 0.5em;
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: rem(48) auto;
   align-items: center;
   gap: 1rem;
   width: 100%;
@@ -17,6 +17,12 @@
     object-fit: cover;
     // background-color: $c-primary-navy-lightest;
     border-radius: 0.4rem;
+    opacity: 0;
+
+    &.visible {
+      transition: all 0.25s;
+      opacity: 1;
+    }
   }
 
   .info {

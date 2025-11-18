@@ -20,8 +20,8 @@ export default function EquipmentListPage({
     equipmentInfo: EquipmentType | EquipmentType[]
   ) => void;
 }) {
-  const [isImgLoading, setIsImgLoading] = useState(true);
-  const { equipmentList, getEquipments } = useEquipmentStore();
+  const { equipmentList, equipmentListLoading, getEquipments } =
+    useEquipmentStore();
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
   const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
@@ -59,110 +59,132 @@ export default function EquipmentListPage({
     getEquipments(filter);
   }
 
-  return (
-    <ul className="equipment-list">
-      {equipmentList.map((equipment: EquipmentType) => (
-        <li key={equipment.id}>
-          <div
-            onClick={() => handleEquipmentToggle(equipment)}
-            className={`equipment ${
-              !(
-                selectedList.length &&
-                selectedList.some((x) => x.id === equipment.id)
-              )
-                ? ""
-                : "selected"
-            }`}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                handleEquipmentToggle(equipment);
-              }
-            }}
-            aria-label={equipment.name}
-          >
-            {isImgLoading && (
-              <Skeleton
-                variant="rounded"
-                width={48}
-                height={48}
-                animation="wave"
-              />
-            )}
-            <div className="img">
-              <img
-                src={equipment.imageUrl}
-                alt={equipment.name}
-                style={{ display: `${isImgLoading ? "none" : "block"}` }}
-                onLoad={() => {
-                  setIsImgLoading(false);
-                }}
-              />
+  if (equipmentListLoading) {
+    return (
+      <ul className="equipment-list" aria-hidden="true">
+        {Array.from(new Array(6)).map((_, index) => (
+          <li key={index}>
+            <div className="equipment">
+              <div>
+                <Skeleton
+                  variant="rounded"
+                  width={48}
+                  height={48}
+                  animation="wave"
+                />
+              </div>
+              <div className="info">
+                <Skeleton
+                  variant="text"
+                  width="70%"
+                  style={{ marginBottom: "0.5" }}
+                  animation="wave"
+                />
+                <Skeleton variant="text" width="90%" animation="wave" />
+              </div>
             </div>
-            <div className="info">
-              <div className="title">
-                <span className="name">{equipment.name}</span>
-                <button
-                  className="favorite"
-                  onClick={(e) => handleToggleFavorite(e, equipment)}
-                  aria-label="즐겨찾기"
-                  aria-pressed={equipment.isFavorite}
-                  type="button"
+          </li>
+        ))}
+      </ul>
+    );
+  } else {
+    return (
+      <ul className="equipment-list">
+        {equipmentList.map((equipment: EquipmentType) => (
+          <li key={equipment.id}>
+            <div
+              onClick={() => handleEquipmentToggle(equipment)}
+              className={`equipment ${
+                !(
+                  selectedList.length &&
+                  selectedList.some((x) => x.id === equipment.id)
+                )
+                  ? ""
+                  : "selected"
+              }`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleEquipmentToggle(equipment);
+                }
+              }}
+              aria-label={equipment.name}
+            >
+              <div className="img">
+                <img
+                  src={equipment.imageUrl}
+                  alt={equipment.name}
+                  loading="lazy"
+                  onLoad={({ target }) => {
+                    target.classList.add("visible");
+                  }}
+                />
+              </div>
+              <div className="info">
+                <div className="title">
+                  <span className="name">{equipment.name}</span>
+                  <button
+                    className="favorite"
+                    onClick={(e) => handleToggleFavorite(e, equipment)}
+                    aria-label="즐겨찾기"
+                    aria-pressed={equipment.isFavorite}
+                    type="button"
+                  >
+                    <Star
+                      size={18}
+                      strokeWidth="1.5"
+                      className={equipment.isFavorite ? "on" : "off"}
+                    />
+                  </button>
+                </div>
+                <div
+                  className={`status ${
+                    !equipment.status.isAvailable &&
+                    equipment.status.currentUser !== userInfo.name
+                      ? "waiting"
+                      : ""
+                  }`}
                 >
-                  <Star
-                    size={18}
-                    strokeWidth="1.5"
-                    className={equipment.isFavorite ? "on" : "off"}
-                  />
-                </button>
-              </div>
-              <div
-                className={`status ${
-                  !equipment.status.isAvailable &&
-                  equipment.status.currentUser !== userInfo.name
-                    ? "waiting"
-                    : ""
-                }`}
-              >
-                {equipment.status.myQueuePosition &&
-                  equipment.status.myQueueStatus === "WAITING" && (
-                    <span className="badge waiting">대기중</span>
+                  {equipment.status.myQueuePosition &&
+                    equipment.status.myQueueStatus === "WAITING" && (
+                      <span className="badge waiting">대기중</span>
+                    )}
+                  {equipment.status.completedToday && (
+                    <span className="badge complete">운동완</span>
                   )}
-                {equipment.status.completedToday && (
-                  <span className="badge complete">운동완</span>
-                )}
-                {equipment.status.myQueueStatus === "NOTIFIED" &&
-                  equipment.status.myQueuePosition === 1 && (
-                    <span className="badge myturn">내차례</span>
+                  {equipment.status.myQueueStatus === "NOTIFIED" &&
+                    equipment.status.myQueuePosition === 1 && (
+                      <span className="badge myturn">내차례</span>
+                    )}
+                  {equipment.status.currentUser === userInfo.name ? (
+                    <span>이용중</span>
+                  ) : equipment.status.isAvailable ? (
+                    <span>이용가능</span>
+                  ) : (
+                    <>
+                      <span>
+                        대기&nbsp;
+                        {equipment.status.myQueueStatus === "WAITING"
+                          ? equipment.status.currentUserETA
+                          : equipment.status.estimatedWaitMinutes}
+                        분
+                      </span>
+                      <span className="dot"></span>
+                      <span>
+                        {equipment.status.myQueueStatus === "WAITING"
+                          ? equipment.status.myQueuePosition
+                          : equipment.status.waitingCount}
+                        명
+                      </span>
+                    </>
                   )}
-                {equipment.status.currentUser === userInfo.name ? (
-                  <span>이용중</span>
-                ) : equipment.status.isAvailable ? (
-                  <span>이용가능</span>
-                ) : (
-                  <>
-                    <span>
-                      대기&nbsp;
-                      {equipment.status.myQueueStatus === "WAITING"
-                        ? equipment.status.currentUserETA
-                        : equipment.status.estimatedWaitMinutes}
-                      분
-                    </span>
-                    <span className="dot"></span>
-                    <span>
-                      {equipment.status.myQueueStatus === "WAITING"
-                        ? equipment.status.myQueuePosition
-                        : equipment.status.waitingCount}
-                      명
-                    </span>
-                  </>
-                )}
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+          </li>
+        ))}
+      </ul>
+    );
+  }
 }

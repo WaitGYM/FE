@@ -66,7 +66,14 @@ export default function WorkoutGoal({
               </>
             )}
             <div className="img">
-              <img src={equipmentInfo?.imageUrl || "/equipment_01.png"} />
+              <img
+                src={equipmentInfo.imageUrl}
+                alt={equipmentInfo.name}
+                loading="lazy"
+                onLoad={({ target }) => {
+                  target.classList.add("visible");
+                }}
+              />
             </div>
             <div className="title">
               <span className="name">{equipmentInfo?.name}</span>
