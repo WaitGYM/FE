@@ -32,7 +32,7 @@ export type RoutineType = {
   exerciseCount: number;
   createdAt: "string";
   updatedAt: "string";
-  duration?: number;
+  estimatedMinutes?: number;
   exercises: ExercisesType[];
 };
 

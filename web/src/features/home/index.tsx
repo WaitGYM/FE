@@ -125,7 +125,7 @@ export default function HomePage() {
                             <div className="badge ing">운동중</div>
                           )}
                           <span>{routine.exerciseCount}개 운동</span>
-                          {/* <span>예상시간 {routine.duration}분</span> */}
+                          <span>예상시간 {routine.estimatedMinutes}분</span>
                         </div>
                       </div>
                     </button>
