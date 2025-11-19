@@ -33,7 +33,7 @@ interface WorkoutStoreType {
 }
 
 const setLoading = useLoadingStore.getState().setLoading;
-const { setWorkingOut } = useUIStore.getState();
+const { setWorkingOut, isWorkingOut } = useUIStore.getState();
 
 const initialState = {
   workoutGoal: {
@@ -91,7 +91,6 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
           },
           leftRestTime: data.workout.restSeconds,
         });
-        console.log("workingOutInfo :", get().workingOutInfo);
         setWorkingOut(true);
       } catch (error) {
         console.log("루틴운동 시작에 실패했습니다.", error);

@@ -9,14 +9,8 @@ import { useUIStore } from "../../stores/UIStore";
 
 export default function WorkoutExercising() {
   const navigate = useNavigate();
-  const {
-    workingOutInfo,
-    workoutProgressInfo,
-    stopWorkout,
-    completeWorkoutSet,
-  } = useWorkoutStore();
-  const { setWorkingOut, isRestTimerModalOpen, toggleRestTimerModalOpen } =
-    useUIStore();
+  const { workingOutInfo, stopWorkout, completeWorkoutSet } = useWorkoutStore();
+  const { isRestTimerModalOpen, toggleRestTimerModalOpen } = useUIStore();
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -48,7 +42,7 @@ export default function WorkoutExercising() {
     )}`;
   }
 
-  function handleResetTimer() {
+  function handleTimerReset() {
     setIsRunning(false);
     setTime(0);
   }
@@ -56,22 +50,20 @@ export default function WorkoutExercising() {
   async function handleSetComplete() {
     const isWorkoutCompleted = await completeWorkoutSet();
     if (!isWorkoutCompleted) {
-      // navigate("/workout/breaktimer");
-      handleResetTimer();
+      handleTimerReset();
       toggleRestTimerModalOpen();
     } else {
       handleWorkoutComplete();
     }
   }
 
-  function handleStopWorkout() {
+  function handleWorkoutStop() {
     stopWorkout();
     handleWorkoutComplete();
   }
 
   function handleWorkoutComplete() {
-    handleResetTimer();
-    setWorkingOut(false);
+    handleTimerReset();
     navigate("/workout/complete", { replace: true });
   }
 
@@ -88,7 +80,7 @@ export default function WorkoutExercising() {
           <button
             type="button"
             className="btn-delete"
-            onClick={handleStopWorkout}
+            onClick={handleWorkoutStop}
           >
             <span>운동종료</span>
           </button>

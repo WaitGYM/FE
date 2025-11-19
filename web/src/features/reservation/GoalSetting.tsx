@@ -44,7 +44,6 @@ export default function EquipmentDetail() {
         restSeconds: selectedEquipment.restSeconds,
       };
       startWorkout(selectedEquipment.id, workoutGoal);
-      setWorkingOut(true);
       navigate("/workout/exercising", { replace: true });
     } else {
       // 대기 있으면 예약으로

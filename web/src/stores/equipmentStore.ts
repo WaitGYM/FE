@@ -10,19 +10,26 @@ interface EquipmentStoreType {
   equipmentList: EquipmentType[];
   equipmentListLoading: boolean;
   error: string | null;
+  isRoutineCompelte: boolean;
 
   getEquipments: (filter: string) => Promise<void>;
   clearError: () => void;
+  setIsRoutineCompelte: (val: boolean) => void;
+  resetEquipmentState: () => void;
 }
 
 const setLoading = useLoadingStore.getState().setLoading;
 
+const initialState = {
+  equipmentList: [],
+  equipmentListLoading: false,
+  error: null,
+  isRoutineCompelte: false,
+};
+
 export const useEquipmentStore = create<EquipmentStoreType>()(
   devtools((set, get) => ({
-    equipmentList: [],
-    equipmentListLoading: false,
-    error: null,
-
+    ...initialState,
     getEquipments: async (filter) => {
       // setLoading(true);
       set({ equipmentListLoading: true });
@@ -57,7 +64,9 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
             useRoutineStore.getState().routineDetail
           );
           console.log("routineData : ", routineData);
-          set({ equipmentList: routineData });
+          set({
+            equipmentList: routineData,
+          });
         } else {
           // 대기 건 기구 있으면 최상단 배치
           const waitingEqIdx = eqAllData.findIndex(
@@ -76,9 +85,20 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
       } finally {
         // setLoading(false);
         set({ equipmentListLoading: false });
+
+        const { isWorkingOut } = useUIStore.getState();
+        if (!isWorkingOut && !get().error && filter === "routine") {
+          get().setIsRoutineCompelte(
+            get().equipmentList.every((eq) => eq.status.completedToday)
+          );
+        }
       }
     },
 
     clearError: () => set({ error: null }),
+
+    setIsRoutineCompelte: (isRoutineCompelte) => set({ isRoutineCompelte }),
+
+    resetEquipmentState: () => set(initialState),
   }))
 );
