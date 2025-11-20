@@ -35,17 +35,19 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
       set({ equipmentListLoading: true });
       try {
         const { routineId, isEquipAutoSorting } = useUIStore.getState();
-        const { getRoutineDetail } = useRoutineStore.getState();
-        console.log("routineId : ", routineId);
 
         const eqAllData = (
           await equipmentApi.getEquipmentList(isEquipAutoSorting)
         ).data;
+
         if (filter === "routine") {
           console.log("기구 스토어에서 루틴 정보 호출----");
-          await getRoutineDetail(routineId);
+          if (!useRoutineStore.getState().routineDetail)
+            await useRoutineStore.getState().getRoutineDetail(routineId);
 
-          const routineDetail = useRoutineStore.getState().routineDetail;
+          const { routineDetail } = useRoutineStore.getState();
+          console.log("기구 스토어에서 루틴 정보", routineDetail);
+
           const routineData = eqAllData.reduce((arr, cur) => {
             const routineEq = routineDetail.exercises.find(
               (ex) => cur.id === ex.equipment.id
@@ -59,10 +61,6 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
             }
             return arr;
           }, []);
-          console.log(
-            "routineDetail : ",
-            useRoutineStore.getState().routineDetail
-          );
           console.log("routineData : ", routineData);
           set({
             equipmentList: routineData,

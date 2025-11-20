@@ -62,13 +62,14 @@ export default function ReservationPage() {
 
   // 페이지 진입시 루틴 완료 체크해서 콩그레츄
   const [modalOpen, setModalOpen] = useState(false);
+  const [shownOnce, setShownOnce] = useState(false);
   useEffect(() => {
-    if (!equipmentList || !equipmentList.length) return;
-    if (isRoutineCompelte) {
+    if (isRoutineCompelte && !shownOnce) {
       setModalOpen(true);
 
       const timer = setTimeout(() => {
         setModalOpen(false);
+        setShownOnce(true);
         setIsRoutineCompelte(false);
       }, 5000);
 

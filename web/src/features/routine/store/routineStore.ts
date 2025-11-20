@@ -187,6 +187,7 @@ export const useRoutineStore = create<RoutineStoreType>()(
           get().getRoutineFilteringData()
         );
         console.log("루틴 업데이트 성공!!!", response);
+        get().resetRoutineState();
       } catch (error) {
         console.log("⛔루틴 업데이트 실패!!!!", error);
       } finally {
