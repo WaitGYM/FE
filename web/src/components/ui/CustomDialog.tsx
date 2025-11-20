@@ -7,11 +7,13 @@ export default function CustomDialog({
   onClose,
   onConfirm,
   children,
+  showButtons = true,
 }: {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   children: React.ReactNode;
+  showButtons?: boolean;
 }) {
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -24,18 +26,20 @@ export default function CustomDialog({
   return (
     <Drawer anchor="bottom" open={open} onClose={onClose}>
       <div className="modal-contents">{children}</div>
-      <BottomButtonWrapper>
-        <button className="btn btn-blue" onClick={onClose}>
-          취소
-        </button>
-        <button
-          className="btn btn-orange"
-          ref={confirmButtonRef}
-          onClick={onConfirm}
-        >
-          확인
-        </button>
-      </BottomButtonWrapper>
+      {showButtons && (
+        <BottomButtonWrapper>
+          <button className="btn btn-blue" onClick={onClose}>
+            취소
+          </button>
+          <button
+            className="btn btn-orange"
+            ref={confirmButtonRef}
+            onClick={onConfirm}
+          >
+            확인
+          </button>
+        </BottomButtonWrapper>
+      )}
     </Drawer>
   );
 }

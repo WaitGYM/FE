@@ -12,6 +12,7 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
 import { useRoutineStore } from "../routine/store/routineStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
+import CustomDialog from "../../components/ui/CustomDialog";
 
 import motionIconSrc from "@img/motion-party.png";
 
@@ -237,37 +238,22 @@ export default function ReservationPage() {
       </motion.div>
 
       {modalOpen && (
-        <div
-          className="backdrop"
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: "99",
-          }}
+        <CustomDialog
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          showButtons={false}
         >
-          <div
-            style={{
-              width: "200px",
-              height: "220px",
-              background: "rgba(255, 255, 255, 0.2)",
-              padding: "20px",
-              borderRadius: "12px",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-              textAlign: "center",
-            }}
-          >
-            <img src={motionIconSrc} alt="폭죽" style={{ width: "140px" }} />
-            <p style={{ fontWeight: "bolder", marginTop: "10px" }}>
-              루틴 완료 추카추!!!
-            </p>
-          </div>
-        </div>
+          <h6 className="title">
+            <img
+              src={motionIconSrc}
+              alt="폭죽"
+              style={{ display: "block", width: "5rem", margin: "0 auto 1rem" }}
+            />
+            오늘도 루틴을
+            <br />
+            멋지게 성공하셨군요!
+          </h6>
+        </CustomDialog>
       )}
     </>
   );
