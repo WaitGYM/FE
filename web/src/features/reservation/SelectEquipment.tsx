@@ -61,21 +61,31 @@ export default function ReservationPage() {
   };
 
   // 페이지 진입시 루틴 완료 체크해서 콩그레츄
-  const [modalOpen, setModalOpen] = useState(false);
-  const [shownOnce, setShownOnce] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false); //모달 DOM 렌더링 상태
+  const [modalOpen, setModalOpen] = useState(false); //모달 열림 상태
+  const [shownOnce, setShownOnce] = useState(false); //이미 표시했는지 체크
   useEffect(() => {
     if (isRoutineCompelte && !shownOnce) {
-      setModalOpen(true);
+      setShouldRender(true); //Drawer 컴포넌트 렌더링
+
+      setTimeout(() => {
+        setModalOpen(true); // 약간 후에 슬라이드 업
+      }, 10);
 
       const timer = setTimeout(() => {
-        setModalOpen(false);
-        setShownOnce(true);
-        setIsRoutineCompelte(false);
-      }, 5000);
+        setModalOpen(false); // 3초 후 닫기
+
+        setTimeout(() => {
+          // 슬라이드 다운 애니메이션 후 cleanup
+          setShouldRender(false); // 애니메이션 후 DOM 제거
+          setShownOnce(true); // 다시 안보이게 설정
+          setIsRoutineCompelte(false); // 상태 초기화
+        }, 300);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, [isRoutineCompelte]);
+  }, [isRoutineCompelte, shownOnce]);
 
   function handleBackBtnClick() {
     resetSelectedEquipmentState();
@@ -238,7 +248,7 @@ export default function ReservationPage() {
         ) : null}
       </motion.div>
 
-      {modalOpen && (
+      {shouldRender && (
         <CustomDialog
           open={modalOpen}
           onClose={() => setModalOpen(false)}
@@ -248,7 +258,11 @@ export default function ReservationPage() {
             <img
               src={motionIconSrc}
               alt="폭죽"
-              style={{ display: "block", width: "5rem", margin: "0 auto 1rem" }}
+              style={{
+                display: "block",
+                width: "5rem",
+                margin: "0 auto 1rem",
+              }}
             />
             오늘도 루틴을
             <br />
