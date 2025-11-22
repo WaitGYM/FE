@@ -43,17 +43,6 @@
           &.selected {
             background-color: $c-primary-blue-dark-light;
           }
-
-          .img {
-            display: flex;
-            width: rem(48);
-            aspect-ratio: 1/1;
-            background-color: $c-sub-white;
-            border-radius: 0.4rem;
-            overflow: hidden;
-            // padding: rem(4);
-            box-sizing: border-box;
-          }
         }
       }
     }
