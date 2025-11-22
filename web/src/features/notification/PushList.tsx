@@ -68,9 +68,11 @@ export default function PushList() {
                 </li>
               ))}
             </ul>
-
             <p className="bottom-notice">
-              최근 30일간의 알림내역을 제공합니다.
+              최근 7일간 알림내역
+              {notificationList.length === 0
+                ? "이 없습니다."
+                : "을 제공합니다."}
             </p>
           </div>
         </section>
