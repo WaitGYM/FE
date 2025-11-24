@@ -13,7 +13,6 @@ import { useReservationStore } from "./stores/reservationStore";
 import { useRoutineStore } from "../routine/store/routineStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
 import CustomDialog from "../../components/ui/CustomDialog";
-
 import motionIconSrc from "@img/motion-party.png";
 
 export default function ReservationPage() {
@@ -61,26 +60,16 @@ export default function ReservationPage() {
   };
 
   // 페이지 진입시 루틴 완료 체크해서 콩그레츄
-  const [shouldRender, setShouldRender] = useState(false); //모달 DOM 렌더링 상태
   const [modalOpen, setModalOpen] = useState(false); //모달 열림 상태
   const [shownOnce, setShownOnce] = useState(false); //이미 표시했는지 체크
   useEffect(() => {
     if (isRoutineCompelte && !shownOnce) {
-      setShouldRender(true); //Drawer 컴포넌트 렌더링
-
-      setTimeout(() => {
-        setModalOpen(true); // 약간 후에 슬라이드 업
-      }, 10);
+      setModalOpen(true);
 
       const timer = setTimeout(() => {
         setModalOpen(false); // 3초 후 닫기
-
-        setTimeout(() => {
-          // 슬라이드 다운 애니메이션 후 cleanup
-          setShouldRender(false); // 애니메이션 후 DOM 제거
-          setShownOnce(true); // 다시 안보이게 설정
-          setIsRoutineCompelte(false); // 상태 초기화
-        }, 300);
+        setShownOnce(true); // 다시 안보이게 설정
+        setIsRoutineCompelte(false); // 상태 초기화
       }, 3000);
 
       return () => clearTimeout(timer);
@@ -88,10 +77,11 @@ export default function ReservationPage() {
   }, [isRoutineCompelte, shownOnce]);
 
   function handleBackBtnClick() {
+    navigate("/", { replace: true });
+
+    if (routineDetail) resetRoutineState();
     resetSelectedEquipmentState();
     resetWorkoutMode();
-    if (routineDetail) resetRoutineState();
-    navigate("/", { replace: true });
     resetEquipmentState();
   }
 
@@ -248,28 +238,26 @@ export default function ReservationPage() {
         ) : null}
       </motion.div>
 
-      {shouldRender && (
-        <CustomDialog
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          showButtons={false}
-        >
-          <h6 className="title">
-            <img
-              src={motionIconSrc}
-              alt="폭죽"
-              style={{
-                display: "block",
-                width: "5rem",
-                margin: "0 auto 1rem",
-              }}
-            />
-            오늘도 루틴을
-            <br />
-            멋지게 성공하셨군요!
-          </h6>
-        </CustomDialog>
-      )}
+      <CustomDialog
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        showButtons={false}
+      >
+        <h6 className="title">
+          <img
+            src={motionIconSrc}
+            alt="폭죽"
+            style={{
+              display: "block",
+              width: "5rem",
+              margin: "0 auto 1rem",
+            }}
+          />
+          오늘도 루틴을
+          <br />
+          멋지게 성공하셨군요!
+        </h6>
+      </CustomDialog>
     </>
   );
 }
