@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { useWorkoutStore } from "./stores/workoutStore";
 import { formatDateStr } from "../../hooks/useDateFormatting";
 import { useUIStore } from "../../stores/UIStore";
+import { useEulReul } from "../../hooks/useEulReul";
 
 export default function WorkoutCompletePage() {
   const navigate = useNavigate();
   const { workingOutInfo, workoutProgressInfo, resetWorkoutState } =
     useWorkoutStore();
   const { workoutMode } = useUIStore();
+  const { pickEulReul } = useEulReul();
 
   function handleWorkoutComplete() {
     navigate(
@@ -35,7 +37,7 @@ export default function WorkoutCompletePage() {
           <img src={motionIcon} alt="박수" />
         </div>
         <h1>
-          {workingOutInfo.equipmentName}을
+          {pickEulReul(workingOutInfo.equipmentName)}
           <br />
           멋지게 성공하셨군요!
         </h1>
