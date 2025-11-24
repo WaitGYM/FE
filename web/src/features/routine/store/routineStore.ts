@@ -15,17 +15,19 @@ type WorkoutGoalType = {
   restSeconds: number;
 };
 
-interface RoutineStoreType {
+interface RoutineStateType {
   workoutGoal: WorkoutGoalType;
   selectedEquipList: (EquipmentType & WorkoutGoalType)[];
   newRoutineName: string;
-  routineDataBody: NewRoutineType;
+  routineDataBody: NewRoutineType | null;
   routineList: RoutineType[];
-  routineDetail: RoutineDetailType | null;
   routineLoading: boolean;
   routineError: string | null;
+  routineDetail: RoutineDetailType | null;
   originRoutineDetail: NewRoutineType | null;
+}
 
+interface RoutineStoreActionType {
   setSelectedEquipList: (selectEquip: EquipmentType | EquipmentType[]) => void;
   setRoutineName: (name: string) => void;
   getRoutineFilteringData: () => NewRoutineType;
@@ -58,13 +60,15 @@ const initialState = {
   routineDataBody: null,
 
   routineList: [],
-  routineDetail: null,
   routineLoading: false,
   routineError: null,
+  routineDetail: null,
   originRoutineDetail: null,
 };
 
-export const useRoutineStore = create<RoutineStoreType>()(
+export const useRoutineStore = create<
+  RoutineStateType & RoutineStoreActionType
+>()(
   devtools((set, get) => ({
     ...initialState,
 
@@ -120,7 +124,7 @@ export const useRoutineStore = create<RoutineStoreType>()(
     setRoutineName: (newName) => set({ newRoutineName: newName }),
 
     getRoutineFilteringData: () => ({
-      name: get().newRoutineName,
+      name: get().newRoutineName.trim(),
       exercises: get().selectedEquipList.map((eq) => ({
         equipmentId: eq.id,
         targetSets: eq.sets,

@@ -82,10 +82,14 @@ export default function RoutineSetting() {
 
   async function handleDeleteRoutine() {
     await deleteRoutine();
-    resetRoutineState();
-    resetSelectedEquipmentState();
-    resetWorkoutMode();
     navigate("/", { replace: true });
+
+    const timer = setTimeout(() => {
+      resetRoutineState();
+      resetSelectedEquipmentState();
+      resetWorkoutMode();
+    }, 100);
+    return () => clearTimeout(timer);
   }
 
   function handleAddEquip() {
@@ -124,6 +128,7 @@ export default function RoutineSetting() {
           title={<h2>{routineId ? "루틴 설정" : "세트설정"}</h2>}
           leftContent={
             <button
+              aria-haspopup="dialog"
               className="btn btn-icon"
               onClick={() =>
                 routineId ? checkDataChange() : handleNavigatingBack()
@@ -135,6 +140,7 @@ export default function RoutineSetting() {
           rightContent={
             routineId && (
               <button
+                aria-haspopup="dialog"
                 className="btn-delete"
                 onClick={() => setIsOpenRoutineDeleteDialog(true)}
               >
@@ -153,7 +159,7 @@ export default function RoutineSetting() {
               id="routine-name"
               placeholder="루틴 이름을 입력해주세요"
               value={newRoutineName}
-              onChange={(e) => setRoutineName(e.target.value.trim())}
+              onChange={(e) => setRoutineName(e.target.value)}
             />
           </section>
 
@@ -212,6 +218,7 @@ export default function RoutineSetting() {
       <BottomButtonWrapper>
         {routineId && (
           <button
+            aria-haspopup="dialog"
             className={`btn btn-blue ${!deleteList.length && "disabled"}`}
             disabled={!deleteList.length}
             onClick={() => setIsOpenEquipDeleteDialog(true)}
@@ -220,6 +227,7 @@ export default function RoutineSetting() {
           </button>
         )}
         <button
+          aria-haspopup="dialog"
           className={`btn btn-orange ${
             !selectedEquipList.length && "disabled"
           }`}

@@ -13,15 +13,18 @@ export default function EquipmentDetail() {
     selectedEquipment,
     updateSelectedEquipment,
     getEquipmentReservationStatus,
-    resetSelectedEquipmentState,
     resetState,
   } = useReservationStore();
   const { startWorkout } = useWorkoutStore();
-  const { isWorkingOut, setWorkingOut } = useUIStore();
+  const { isWorkingOut } = useUIStore();
 
   function handleBackBtnClick() {
     navigate(-1);
-    resetState();
+
+    const timer = setTimeout(() => {
+      resetState();
+    }, 100);
+    return () => clearTimeout(timer);
   }
 
   function formatSecondsToTime(seconds: number): string {

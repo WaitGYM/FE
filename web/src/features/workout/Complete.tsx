@@ -22,7 +22,11 @@ export default function WorkoutCompletePage() {
       }`,
       { replace: true }
     );
-    resetWorkoutState();
+
+    const timer = setTimeout(() => {
+      resetWorkoutState();
+    }, 100);
+    return () => clearTimeout(timer);
   }
 
   return (
