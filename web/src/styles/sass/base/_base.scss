@@ -47,7 +47,7 @@ input {
   padding: rem(12) rem(16);
   box-sizing: border-box;
   color: $c-sub-white;
-  font-size: rem(14);
+  font-size: rem(16);
 
   &::placeholder {
     color: $c-sub-gray !important;
@@ -83,7 +83,7 @@ button {
 }
 
 .container {
-  padding: 0 rem(24) 4.6875rem;
+  padding: 0 rem(16) 4.6875rem;
 }
 
 .content-scroll {
@@ -97,7 +97,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 0.7rem;
+  font-size: rem(12);
   border-radius: rem(4);
   padding: 0 rem(8);
   text-align: center;
@@ -125,7 +125,7 @@ button {
 }
 
 .category-wrap {
-  padding: 0 rem(24);
+  padding: 0 rem(16);
   margin: rem(16) 0;
   height: rem(32);
   display: flex;

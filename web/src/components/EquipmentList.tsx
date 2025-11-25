@@ -132,7 +132,7 @@ export default function EquipmentListPage({
                     type="button"
                   >
                     <Star
-                      size={18}
+                      size={20}
                       strokeWidth="1.5"
                       className={equipment.isFavorite ? "on" : "off"}
                     />

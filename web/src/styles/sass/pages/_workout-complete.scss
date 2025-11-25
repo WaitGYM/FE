@@ -37,7 +37,7 @@
 
     p {
       color: $c-primary-blue-light;
-      font-size: rem(12);
+      font-size: rem(16);
       font-weight: 500;
       line-height: 140%;
     }
@@ -46,7 +46,7 @@
   .complete-time {
     width: 100%;
     display: flex;
-    padding: rem(16) rem(24);
+    padding: rem(16) rem(16);
     flex-direction: column;
     align-items: flex-start;
     gap: rem(12);
@@ -64,7 +64,7 @@
       display: flex;
       align-items: center;
       gap: rem(4);
-      font-size: 0.875rem;
+      font-size: rem(16);
       font-weight: 700;
       line-height: 140%;
 

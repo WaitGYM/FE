@@ -80,7 +80,7 @@ export default function Favorites() {
                         onClick={(e) => handleToggleFavorite(e, favorite)}
                       >
                         <Star
-                          size={18}
+                          size={20}
                           strokeWidth="1.5"
                           className={favorite.equipment.isFavorite ? "on" : ""}
                         />

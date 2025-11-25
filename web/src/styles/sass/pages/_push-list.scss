@@ -22,7 +22,7 @@
         justify-content: center;
         align-items: flex-start;
         gap: rem(8);
-        padding: rem(16) rem(24);
+        padding: rem(16) rem(16);
         border-radius: rem(8);
         background: $c-primary-blue-dark-light;
 
@@ -51,13 +51,13 @@
             }
           }
           .time {
-            font-size: rem(12);
+            font-size: rem(13);
             font-weight: 500;
             color: $c-primary-blue-light;
           }
         }
         .msg {
-          font-size: 0.875rem;
+          font-size: rem(16);
           font-weight: 500;
           color: $c-sub-white;
         }
@@ -66,7 +66,7 @@
     .bottom-notice {
       margin: 1.4rem 0;
       width: 100%;
-      font-size: rem(12);
+      font-size: rem(13);
       text-align: center;
       font-weight: 500;
       color: $c-primary-blue-light;

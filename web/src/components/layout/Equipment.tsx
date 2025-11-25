@@ -22,9 +22,9 @@ export default function Equipment({
               aria-pressed={isFavorite}
             >
               {isFavorite ? (
-                <Star size={18} strokeWidth="1.5" className="on" />
+                <Star size={20} strokeWidth="1.5" className="on" />
               ) : (
-                <Star size={18} strokeWidth="1.5" className="" />
+                <Star size={20} strokeWidth="1.5" className="" />
               )}
             </button>
           </div>

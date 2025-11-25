@@ -70,8 +70,8 @@ export default function HomePage() {
                     <div className="icon">
                       <Skeleton
                         variant="rounded"
-                        width={32}
-                        height={32}
+                        width={48}
+                        height={48}
                         animation="wave"
                       />
                     </div>
@@ -97,7 +97,7 @@ export default function HomePage() {
                     type="button"
                   >
                     <div className="icon">
-                      <Plus size={32} strokeWidth="1.5" />
+                      <Plus size={24} strokeWidth="1.5" />
                     </div>
                     <div className="info">
                       <p className="title">루틴을 등록해주세요</p>
@@ -116,7 +116,7 @@ export default function HomePage() {
                       type="button"
                     >
                       <div className="icon">
-                        <Dumbbell size={32} strokeWidth="1.5" />
+                        <Dumbbell size={24} strokeWidth="1.5" />
                       </div>
                       <div className="info">
                         <p className="title">{routine.name}</p>

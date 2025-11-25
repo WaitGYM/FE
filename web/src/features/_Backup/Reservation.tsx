@@ -45,7 +45,7 @@ export default function WorkoutReservation({
           rightContent={
             <button className="btn btn-icon" onClick={handleRefreshClick}>
               <RefreshCcw
-                size={18}
+                size={20}
                 strokeWidth="2"
                 className={isRefreshing ? "rotating" : ""}
               />
@@ -55,14 +55,14 @@ export default function WorkoutReservation({
         <section className="container">
           <div className="equipment">
             <div className="icon-drag">
-              <Equal size={18} strokeWidth="2" />
+              <Equal size={20} strokeWidth="2" />
             </div>
             <img src={imgSrc} />
             <div className="info">
               <div className="title">
                 <span className="name">{name}</span>
                 <div className="favorite">
-                  <Star size={18} strokeWidth="2" />
+                  <Star size={20} strokeWidth="2" />
                 </div>
               </div>
               <div className={`status ${waitingTime ? "waiting" : null}`}>
@@ -75,14 +75,14 @@ export default function WorkoutReservation({
           </div>
           <div className="equipment">
             <div className="icon-drag">
-              <Equal size={18} strokeWidth="2" />
+              <Equal size={20} strokeWidth="2" />
             </div>
             <img src={imgSrc} />
             <div className="info">
               <div className="title">
                 <span className="name">{name}</span>
                 <div className="favorite">
-                  <Star size={18} strokeWidth="2" />
+                  <Star size={20} strokeWidth="2" />
                 </div>
               </div>
               <div className="status">
@@ -93,14 +93,14 @@ export default function WorkoutReservation({
           </div>
           <div className="equipment">
             <div className="icon-drag">
-              <Equal size={18} strokeWidth="2" />
+              <Equal size={20} strokeWidth="2" />
             </div>
             <img src={imgSrc} />
             <div className="info">
               <div className="title">
                 <span className="name">{name}</span>
                 <div className="favorite">
-                  <Star size={18} strokeWidth="2" />
+                  <Star size={20} strokeWidth="2" />
                 </div>
               </div>
               <div className={`status ${waitingTime ? "waiting" : null}`}>

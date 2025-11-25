@@ -146,14 +146,14 @@ export default function WorkoutBreaktimer() {
                           (_, index) =>
                             workingOutInfo.currentSet > index ? (
                               <CircleCheck
-                                size={18}
+                                size={20}
                                 strokeWidth="2"
                                 className="on"
                                 key={`set${index}check`}
                               />
                             ) : (
                               <Circle
-                                size={18}
+                                size={20}
                                 strokeWidth="2"
                                 key={`set${index}`}
                               />

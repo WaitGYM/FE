@@ -29,9 +29,9 @@ export default function WorkoutExercising() {
           <h6>스텝밀</h6>
           <h1>01:20</h1>
           <p>
-            <CircleCheck size={18} strokeWidth="2" className="on" />
-            <Circle size={18} strokeWidth="2" />
-            <Circle size={18} strokeWidth="2" />
+            <CircleCheck size={20} strokeWidth="2" className="on" />
+            <Circle size={20} strokeWidth="2" />
+            <Circle size={20} strokeWidth="2" />
           </p>
         </div>
       </section>
