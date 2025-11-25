@@ -2,14 +2,22 @@ import { ChevronLeft, Camera } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
+import googleLogo from "@img/icon-google.svg"; //이미지로고
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
-import { image } from "framer-motion/client";
-import googleLogo from "@img/icon-google.svg"; //이미지로고
+import { useAuthStore } from "../../stores/authStore";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { userInfo } = useUserStore();
+  const { userInfo, deleteUser } = useUserStore();
+  const logout = useAuthStore((state) => state.logout);
+
+  async function handleDeleteUser() {
+    // api 미작업으로 보류
+    // await deleteUser();
+    // logout();
+    // navigate("/login");
+  }
 
   return (
     <motion.div
@@ -60,7 +68,11 @@ export default function Profile() {
           </label>
         </section>
 
-        <button type="button" className="btn-withdraw">
+        <button
+          type="button"
+          className="btn-withdraw"
+          onClick={handleDeleteUser}
+        >
           탈퇴하기
         </button>
       </div>

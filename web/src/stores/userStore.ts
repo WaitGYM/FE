@@ -9,7 +9,7 @@ interface UserState {
 
   // setUser: (user: UserType) => void;
   getUserInfo: () => Promise<void>;
-  // clearUser: () => void;
+  deleteUser: () => Promise<void>;
 }
 
 const { setLoading } = useLoadingStore.getState();
@@ -28,14 +28,24 @@ export const useUserStore = create<UserState>()(
     getUserInfo: async () => {
       setLoading(true);
       try {
-        const resData = (await userApi.getUserInfo()).data;
-        set({ userInfo: resData });
+        const { data } = await userApi.getUserInfo();
+        set({ userInfo: data });
       } catch (error) {
         console.log("사용자 정보 호출 실패!!", error);
       } finally {
         setLoading(false);
       }
     },
-    // clearUser: () => set({ user: null }),
+
+    deleteUser: async () => {
+      setLoading(true);
+      try {
+        await userApi.getUserInfo();
+      } catch (error) {
+        console.log("탈퇴하기 실패!!", error);
+      } finally {
+        setLoading(false);
+      }
+    },
   }))
 );
