@@ -22,4 +22,17 @@ export default defineConfig({
       },
     ],
   },
+  build: {
+    // 청크 크기 경고 기준 상 (기본 500kB → 1000kB)
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        // 큰 라이브러리를 vendor 청크로 분리
+        manualChunks: {
+          react: ["react", "react-dom"],
+          zustand: ["zustand"],
+        },
+      },
+    },
+  },
 });
