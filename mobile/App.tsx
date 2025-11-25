@@ -143,6 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#293241",
     margin: 0,
     padding: 0,
-    marginBottom: Platform.OS === "ios" ? -34 : 0,
+    // marginBottom: Platform.OS === "ios" ? -34 : 0,
   },
 });
