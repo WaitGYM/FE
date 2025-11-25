@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   User,
   Dumbbell,
@@ -8,13 +9,20 @@ import {
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { useUserStore } from "../../stores/userStore";
 import NotificationButton from "../../components/ui/NotificationButton";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/userStore";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function Mypage() {
+  const navigate = useNavigate();
   const { userInfo } = useUserStore();
+  const logout = useAuthStore((state) => state.logout);
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
 
   return (
     <motion.div
@@ -65,7 +73,7 @@ export default function Mypage() {
             </Link>
           </div>
 
-          <button type="button" className="btn-logout">
+          <button type="button" className="btn-logout" onClick={handleLogout}>
             로그아웃
           </button>
         </div>
