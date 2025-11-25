@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
 import { image } from "framer-motion/client";
+import googleLogo from "@img/icon-google.svg"; //이미지로고
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -48,11 +49,8 @@ export default function Profile() {
           <label htmlFor="inputId">
             <p className="label-title">아이디</p>
             <div className="input-with-icon">
-              <img
-                src={"/src/assets/images/icon-google.svg"}
-                className="icon-google"
-                alt="google logo"
-              />
+              <img src={googleLogo} className="icon-google" alt="google-logo" />
+
               <input type="text" id="inputId" value={userInfo.email} readOnly />
             </div>
           </label>
