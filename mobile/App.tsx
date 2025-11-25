@@ -107,20 +107,22 @@ export default function App() {
           sharedCookiesEnabled={true}
           thirdPartyCookiesEnabled={true}
           style={styles.webview}
+          // 성능 및 기능 활성화
           javaScriptEnabled={true}
           domStorageEnabled={true}
           startInLoadingState={true}
-          scalesPageToFit={true}
           originWhitelist={["*"]}
+          // 사용자 경험 (UX) 및 제스처
+          scalesPageToFit={true}
+          scrollEnabled={true}
           allowsBackForwardNavigationGestures={true}
           // iOS 전용 설정
-          automaticallyAdjustContentInsets={false}
           contentInsetAdjustmentBehavior="never"
-          scrollEnabled={false}
+          automaticallyAdjustContentInsets={false}
           bounces={false}
-          // 추가 iOS 최적화
           allowsInlineMediaPlayback={true}
           mediaPlaybackRequiresUserAction={false}
+          // 통신 및 이벤트 처리
           onMessage={handleMessage}
           onNavigationStateChange={(navState) =>
             setCanGoBack(navState.canGoBack)
@@ -135,13 +137,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#293241",
-    // iOS에서 추가 안전 영역 확보
-    // paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight,
   },
   webview: {
     flex: 1,
     backgroundColor: "#293241",
     margin: 0,
     padding: 0,
+    marginBottom: Platform.OS === "ios" ? -34 : 0,
   },
 });
