@@ -8,7 +8,7 @@
     margin-bottom: rem(24);
 
     .msg {
-      font-size: 1.125rem;
+      font-size: rem(18);
       font-weight: 400;
       line-height: 140%;
       strong {
@@ -68,12 +68,12 @@
           justify-content: space-between;
 
           .title {
-            font-size: rem(13);
+            font-size: rem(16);
             font-weight: 600;
             color: $c-sub-white;
           }
           .score {
-            font-size: rem(14);
+            font-size: rem(16);
             // font-weight: 300;
             color: $c-primary-blue-light;
           }
@@ -88,7 +88,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: rem(12);
+          font-size: rem(13);
           font-weight: 600;
           &.me {
             background: $c-point-orange;
@@ -112,12 +112,12 @@
             }
           }
           .name {
-            font-size: rem(13);
+            font-size: rem(16);
             font-weight: 600;
           }
         }
         .total-score {
-          font-size: rem(14);
+          font-size: rem(16);
         }
       }
 

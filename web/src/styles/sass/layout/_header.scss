@@ -2,7 +2,7 @@
 @use "@styles/variables" as *;
 
 .header {
-  padding: rem(24) 0;
+  padding: 0 0 rem(16) 0;
   position: relative;
 
   .header-top {
@@ -12,7 +12,7 @@
     height: 3.43rem;
     position: relative;
 
-    padding: 0 rem(24);
+    padding: 0 rem(16);
   }
 
   .page-title {
@@ -75,7 +75,7 @@
       gap: rem(8);
       a {
         color: $c-sub-gray;
-        font-size: 1.25rem;
+        font-size: rem(24);
         font-weight: 600;
         &.active {
           color: $c-sub-white;
@@ -85,7 +85,7 @@
   }
   &--mypage {
     .title {
-      font-size: 1.125rem;
+      font-size: rem(24);
       font-weight: 600;
       color: $c-sub-white;
     }

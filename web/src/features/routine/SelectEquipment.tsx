@@ -55,13 +55,13 @@ export default function RoutineSelectEquipPage() {
           <div className="search-bar">
             <input type="search" placeholder="기구명, 부위를 검색해주세요" />
             <button className="btn-search">
-              <Search size={18} strokeWidth="1.5" />
+              <Search size={20} strokeWidth="1.5" />
             </button>
           </div>
         </section>
         <div className="category-wrap">
           <button className="btn-like active">
-            <Star size={18} strokeWidth="1.5" />
+            <Star size={20} strokeWidth="1.5" />
             즐겨찾기
           </button>
           <button>허벅지</button>

@@ -2,13 +2,22 @@ import { ChevronLeft, Camera } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
+import googleLogo from "@img/icon-google.svg"; //이미지로고
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
-import { image } from "framer-motion/client";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { userInfo } = useUserStore();
+  const { userInfo, deleteUser } = useUserStore();
+  const logout = useAuthStore((state) => state.logout);
+
+  async function handleDeleteUser() {
+    // api 미작업으로 보류
+    // await deleteUser();
+    // logout();
+    // navigate("/login");
+  }
 
   return (
     <motion.div
@@ -40,7 +49,7 @@ export default function Profile() {
           >
             <button type="button" className="btn-file">
               {/* <input type="file" id="inputUpload" /> */}
-              <Camera size={18} strokeWidth={1.5} />
+              <Camera size={20} strokeWidth={1.5} />
             </button>
           </div>
         </section>
@@ -48,11 +57,8 @@ export default function Profile() {
           <label htmlFor="inputId">
             <p className="label-title">아이디</p>
             <div className="input-with-icon">
-              <img
-                src={"/src/assets/images/icon-google.svg"}
-                className="icon-google"
-                alt="google logo"
-              />
+              <img src={googleLogo} className="icon-google" alt="google-logo" />
+
               <input type="text" id="inputId" value={userInfo.email} readOnly />
             </div>
           </label>
@@ -62,7 +68,11 @@ export default function Profile() {
           </label>
         </section>
 
-        <button type="button" className="btn-withdraw">
+        <button
+          type="button"
+          className="btn-withdraw"
+          onClick={handleDeleteUser}
+        >
           탈퇴하기
         </button>
       </div>

@@ -97,13 +97,13 @@ export default function WorkoutExercising() {
                 (_, index) =>
                   workingOutInfo.currentSet > index ? (
                     <CircleCheck
-                      size={18}
+                      size={20}
                       strokeWidth="2"
                       className="on"
                       key={`set${index}`}
                     />
                   ) : (
-                    <Circle size={18} strokeWidth="2" key={`set${index}`} />
+                    <Circle size={20} strokeWidth="2" key={`set${index}`} />
                   )
               )}
             </div>

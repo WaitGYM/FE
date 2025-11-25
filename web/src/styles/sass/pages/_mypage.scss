@@ -12,7 +12,7 @@
     .msg {
       font-size: rem(20);
       p {
-        font-size: 0.875rem;
+        font-size: rem(15);
         font-weight: 400;
         margin-bottom: rem(8);
       }
@@ -45,11 +45,11 @@
       display: flex;
       align-items: center;
       gap: rem(8);
-      padding: rem(16) rem(24);
+      padding: rem(16) rem(16);
       color: $c-sub-white;
       background: $c-primary-blue-dark-light;
       border-radius: rem(8);
-      font-size: 0.875rem;
+      font-size: rem(16);
       font-weight: 600;
     }
   }
@@ -73,7 +73,7 @@
     display: block;
     width: 100%;
     text-align: center;
-    font-size: rem(12);
+    font-size: rem(14);
     margin: rem(24) 0;
     color: $c-primary-blue-light;
   }
@@ -143,7 +143,7 @@
           margin-bottom: rem(16);
         }
         .label-title {
-          font-size: 0.875rem;
+          font-size: rem(13);
           display: block;
           font-weight: 400;
           margin-bottom: rem(8);
@@ -221,7 +221,7 @@
           }
 
           .name {
-            font-size: rem(16);
+            font-size: rem(18);
             font-weight: 600;
           }
 

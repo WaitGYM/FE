@@ -1,7 +1,7 @@
 @use "@styles/variables" as *;
 
 .MuiDrawer-root {
-  [class$="-MuiPaper-root-MuiDrawer-paper"] {
+  .MuiPaper-root.MuiDrawer-paper {
     background-color: $c-primary-blue-dark-light;
     border-radius: 0.75rem 0.75rem 0 0;
 
