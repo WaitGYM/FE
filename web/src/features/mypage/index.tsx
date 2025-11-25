@@ -49,26 +49,26 @@ export default function Mypage() {
           </div>
           <div className="menu-wrap">
             <Link className="menu" to="/profile">
-              <User size={18} strokeWidth="1.5" />
+              <User size={20} strokeWidth="1.5" />
               개인정보수정
             </Link>
             <Link className="menu" to="/gyms">
-              <Dumbbell size={18} strokeWidth="1.5" />
+              <Dumbbell size={20} strokeWidth="1.5" />
               이용 헬스장 변경
             </Link>
             <Link className="menu" to="/favorites">
-              <Star size={18} strokeWidth="1.5" />
+              <Star size={20} strokeWidth="1.5" />
               즐겨찾기한 기구
             </Link>
             <Link className="menu" to="#">
-              <Headset size={18} strokeWidth="1.5" />
+              <Headset size={20} strokeWidth="1.5" />
               고객센터
             </Link>
             <Link className="menu" to="#">
-              <Settings size={18} strokeWidth="1.5" />앱 설정
+              <Settings size={20} strokeWidth="1.5" />앱 설정
             </Link>
             <Link className="menu" to="#">
-              <FileCheck2 size={18} strokeWidth="1.5" />
+              <FileCheck2 size={20} strokeWidth="1.5" />
               서비스 약관
             </Link>
           </div>

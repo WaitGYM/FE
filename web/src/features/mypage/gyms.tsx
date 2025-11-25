@@ -29,12 +29,12 @@ export default function Gyms() {
         <div className="search-bar">
           <input type="search" placeholder="헬스장 이름을 검색해주세요" />
           <button className="btn-search">
-            <Search size={18} strokeWidth="1.5" />
+            <Search size={20} strokeWidth="1.5" />
           </button>
         </div>
         <div className="category-wrap">
           <button className="btn-like active">
-            <Star size={18} strokeWidth="1.5" />
+            <Star size={20} strokeWidth="1.5" />
             즐겨찾기
           </button>
         </div>
@@ -51,8 +51,8 @@ export default function Gyms() {
                     <span className="badge busy">혼잡</span>
                     <span className="name">짐박스 신림점</span>
                     <div className="favorite">
-                      <Star size={18} strokeWidth="1.5" className="on" />
-                      {/* <Star size={18} strokeWidth="1.5" className="" /> */}
+                      <Star size={20} strokeWidth="1.5" className="on" />
+                      {/* <Star size={20} strokeWidth="1.5" className="" /> */}
                     </div>
                   </div>
                   <div className="address">
@@ -71,7 +71,7 @@ export default function Gyms() {
                     <span className="badge normal">보통</span>
                     <span className="name">짐박스 신림점</span>
                     <div className="favorite">
-                      <Star size={18} strokeWidth="1.5" className="" />
+                      <Star size={20} strokeWidth="1.5" className="" />
                     </div>
                   </div>
                   <div className="address">
@@ -90,7 +90,7 @@ export default function Gyms() {
                     <span className="badge free">여유</span>
                     <span className="name">짐박스 신림점</span>
                     <div className="favorite">
-                      <Star size={18} strokeWidth="1.5" className="" />
+                      <Star size={20} strokeWidth="1.5" className="" />
                     </div>
                   </div>
                   <div className="address">

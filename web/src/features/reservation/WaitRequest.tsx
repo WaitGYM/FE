@@ -36,7 +36,7 @@ export default function WaitRequest() {
           <h6>{selectedEquipment.name}</h6>
           <h1>{selectedEquipment.status?.estimatedWaitMinutes || 0}분 대기</h1>
           <p>
-            <UsersRound size={18} strokeWidth="2" />
+            <UsersRound size={20} strokeWidth="2" />
             <span className="waiting-user">
               {selectedEquipment.status?.waitingCount || 0}명
             </span>

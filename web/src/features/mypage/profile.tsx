@@ -41,7 +41,7 @@ export default function Profile() {
           >
             <button type="button" className="btn-file">
               {/* <input type="file" id="inputUpload" /> */}
-              <Camera size={18} strokeWidth={1.5} />
+              <Camera size={20} strokeWidth={1.5} />
             </button>
           </div>
         </section>

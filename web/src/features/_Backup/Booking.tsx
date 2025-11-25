@@ -27,7 +27,7 @@ export default function WorkoutBooking() {
           <h6>트레드밀</h6>
           <h1>20분 대기</h1>
           <p>
-            <UsersRound size={18} strokeWidth="2" />
+            <UsersRound size={20} strokeWidth="2" />
             <span className="waiting-user">2명</span> 기다리는중
           </p>
         </div>

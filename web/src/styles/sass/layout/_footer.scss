@@ -4,7 +4,7 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 4.68rem;
+  height: rem(50);
   border-top: 1px solid $c-primary-blue;
   background: $c-primary-blue-dark;
 
@@ -35,7 +35,7 @@ footer {
     }
 
     & p {
-      font-size: rem(12);
+      font-size: rem(10);
     }
   }
 }

@@ -182,7 +182,7 @@ export default function ReservationPage() {
                 </div>
                 <button className="btn-refresh" onClick={handleRefreshClick}>
                   <RefreshCcw
-                    size={18}
+                    size={20}
                     strokeWidth="2"
                     className={isRefreshing ? "rotating" : ""}
                   />

@@ -36,6 +36,9 @@
   }
 
   .info {
+    display: flex;
+    flex-direction: column;
+    gap: rem(4);
     & > div {
       display: flex;
       align-items: center;
@@ -45,11 +48,11 @@
     }
 
     .name {
-      font-size: 1rem;
+      font-size: rem(18);
     }
 
     .status {
-      font-size: 0.7rem;
+      font-size: rem(13);
       // margin-top: 0.6em;
       color: $c-primary-blue-light;
       min-height: 20px;
