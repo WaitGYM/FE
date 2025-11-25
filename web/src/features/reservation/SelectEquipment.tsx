@@ -201,16 +201,17 @@ export default function ReservationPage() {
         </div>
 
         {/* 대기 건 기구를 선택하면 대기취소 버튼 */}
-        {selectedEquipment?.status?.myQueueId && (
-          <BottomButtonWrapper>
-            <button
-              onClick={handleDeleteReservation}
-              className="btn btn-orange"
-            >
-              대기 취소
-            </button>
-          </BottomButtonWrapper>
-        )}
+        {selectedEquipment?.status?.myQueueId &&
+          selectedEquipment?.status?.myQueueStatus !== "NOTIFIED" && (
+            <BottomButtonWrapper>
+              <button
+                onClick={handleDeleteReservation}
+                className="btn btn-orange"
+              >
+                대기 취소
+              </button>
+            </BottomButtonWrapper>
+          )}
 
         {/* 내 대기건이 없고 내가 이용중이 아닌 이용불가 기구 선택시 다음버튼(대기) */}
         {/* 운동중이 아니고 이용가능 기구일때 다음버튼(운동) */}
@@ -227,8 +228,7 @@ export default function ReservationPage() {
         ) : null}
 
         {/* 대기중인 기구가 이용가능이 되면 운동시작으로 */}
-        {selectedEquipment?.status?.isAvailable &&
-        selectedEquipment?.status?.myQueuePosition === 1 &&
+        {selectedEquipment?.status?.myQueuePosition === 1 &&
         selectedEquipment?.status?.myQueueStatus === "NOTIFIED" ? (
           <BottomButtonWrapper>
             <button onClick={handleStartWorkout} className="btn btn-orange">

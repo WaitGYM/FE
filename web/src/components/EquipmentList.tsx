@@ -146,6 +146,7 @@ export default function EquipmentListPage({
                       : ""
                   }`}
                 >
+                  {/* 상태 뱃지 표현 */}
                   {equipment.status.myQueuePosition &&
                     equipment.status.myQueueStatus === "WAITING" && (
                       <span className="badge waiting">대기중</span>
@@ -157,9 +158,12 @@ export default function EquipmentListPage({
                     equipment.status.myQueuePosition === 1 && (
                       <span className="badge myturn">내차례</span>
                     )}
+
+                  {/* 기구 현황 데이터 표현 */}
                   {equipment.status.currentUser === userInfo.name ? (
                     <span>이용중</span>
-                  ) : equipment.status.isAvailable ? (
+                  ) : !equipment.status.estimatedWaitMinutes &&
+                    !equipment.status.waitingCount ? (
                     <span>이용가능</span>
                   ) : (
                     <>
