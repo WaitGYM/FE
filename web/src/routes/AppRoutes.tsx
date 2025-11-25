@@ -32,7 +32,7 @@ export default function AppRoutes() {
   const token = useAuthStore((state) => state.token);
 
   // 웹소켓 연결
-  // if (token) socketService.connect(token);
+  if (token) socketService.connect(token);
 
   return (
     <BrowserRouter>
