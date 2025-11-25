@@ -5,13 +5,28 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useWorkoutStore } from "./stores/workoutStore";
 import { formatDateStr } from "../../hooks/useDateFormatting";
+import { useUIStore } from "../../stores/UIStore";
+import { useEulReul } from "../../hooks/useEulReul";
 
 export default function WorkoutCompletePage() {
   const navigate = useNavigate();
-  const { workingOutInfo, workoutProgressInfo } = useWorkoutStore();
+  const { workingOutInfo, workoutProgressInfo, resetWorkoutState } =
+    useWorkoutStore();
+  const { workoutMode } = useUIStore();
+  const { pickEulReul } = useEulReul();
 
   function handleWorkoutComplete() {
-    navigate("/reservation/select-equipment", { replace: true });
+    navigate(
+      `/reservation/select-equipment${
+        workoutMode === "routine" ? "/routine" : ""
+      }`,
+      { replace: true }
+    );
+
+    const timer = setTimeout(() => {
+      resetWorkoutState();
+    }, 100);
+    return () => clearTimeout(timer);
   }
 
   return (
@@ -26,7 +41,7 @@ export default function WorkoutCompletePage() {
           <img src={motionIcon} alt="박수" />
         </div>
         <h1>
-          {workingOutInfo.equipmentName}을
+          {pickEulReul(workingOutInfo.equipmentName)}
           <br />
           멋지게 성공하셨군요!
         </h1>
@@ -47,13 +62,20 @@ export default function WorkoutCompletePage() {
             <strong>
               <Timer /> 총 휴식시간
             </strong>
-            <span>{workoutProgressInfo.summary?.totalRest}</span>
+            <span>
+              {workoutProgressInfo.summary?.totalRest ||
+                workoutProgressInfo.summary?.restTime}
+            </span>
           </li>
         </ul>
       )}
 
       <BottomButtonWrapper>
-        <button className="btn btn-orange" onClick={handleWorkoutComplete}>
+        <button
+          type="button"
+          className="btn btn-orange"
+          onClick={handleWorkoutComplete}
+        >
           확인
         </button>
       </BottomButtonWrapper>

@@ -1,4 +1,20 @@
-import type { EquipmentType } from "./equipment";
+type ExercisesType = {
+  id: number;
+  routineId: number;
+  equipmentId: number;
+  order: number;
+  targetSets: number;
+  targetReps?: number | string;
+  restSeconds: number;
+  notes?: string;
+  equipment: {
+    id: number;
+    name: string;
+    imageUrl: string;
+    category: string;
+    muscleGroup: string;
+  };
+};
 
 export type NewRoutineType = {
   name: string;
@@ -16,32 +32,14 @@ export type RoutineType = {
   exerciseCount: number;
   createdAt: "string";
   updatedAt: "string";
-  duration?: number;
-  exercises: [
-    {
-      id: number;
-      routineId: number;
-      equipmentId: number;
-      order: number;
-      targetSets: number;
-      targetReps?: number | string;
-      restSeconds: number;
-      notes?: string;
-      equipment: {
-        id: number;
-        name: string;
-        imageUrl: string;
-        category: string;
-        muscleGroup: string;
-      };
-    }
-  ];
+  estimatedMinutes?: number;
+  exercises: ExercisesType[];
 };
 
 export type RoutineDetailType = {
   id: number;
   name: string;
   isActive: boolean;
-  currentlyUsing: boolean;
-  exercises: EquipmentType[];
+  currentlyUsing?: boolean;
+  exercises: ExercisesType[];
 };

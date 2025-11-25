@@ -1,4 +1,4 @@
-import { useNotificationStore } from "../stores/notificationStore";
+import { useNotificationStore } from "../features/notification/store/notificationStore";
 
 interface ServerNotificationPayload {
   type: string;

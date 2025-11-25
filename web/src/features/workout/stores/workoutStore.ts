@@ -14,20 +14,14 @@ interface WorkoutStoreType {
   workoutGoal: WorkoutGoalType;
   workingOutInfo: WorkingoutType;
   workoutProgressInfo: WorkoutProgressInfoType;
-  // workingOutLocalData: {
-  //   totalSets: number;
-  //   totalWorkoutSeconds: number;
-  //   restSeconds: number;
-  //   totalRestSeconds: number;
-  // };
-  // restStatus: {
-  //   message: string;
-  //   setStatus: string;
-  //   restSeconds: number;
-  // };
   leftRestTime: number;
 
   startWorkout: (eqId: number, workoutGoal: WorkoutGoalType) => Promise<void>;
+  startRoutineWorkout: (
+    routineId: number,
+    routineExId: number,
+    workoutGoal: WorkoutGoalType
+  ) => Promise<void>;
   autoDecreaseRest: () => void;
   adjustRest: (delta: number) => void;
   resetRestTime: () => void;
@@ -35,11 +29,11 @@ interface WorkoutStoreType {
   completeRest: () => void;
   stopWorkout: () => Promise<void>;
   completeWorkoutSet: () => Promise<void | string>;
-  resetState: () => void;
+  resetWorkoutState: () => void;
 }
 
 const setLoading = useLoadingStore.getState().setLoading;
-const { setWorkingOut } = useUIStore.getState();
+const { setWorkingOut, isWorkingOut } = useUIStore.getState();
 
 const initialState = {
   workoutGoal: {
@@ -60,17 +54,6 @@ const initialState = {
     message: "",
     setStatus: "EXERCISING",
   },
-  // workingOutLocalData: {
-  //   totalSets: 0,
-  //   totalWorkoutSeconds: 0,
-  //   restSeconds: 0,
-  //   totalRestSeconds: 0,
-  // },
-  // restStatus: {
-  //   message: "",
-  //   setStatus: "",
-  //   restSeconds: 10,
-  // },
   leftRestTime: 10,
 };
 
@@ -92,6 +75,30 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       }
     },
 
+    startRoutineWorkout: async (routineId, routineExId, workoutGoal) => {
+      setLoading(true);
+      try {
+        const { data } = await workoutApi.startRoutineWorkout(
+          routineId,
+          routineExId,
+          workoutGoal
+        );
+        set({
+          workingOutInfo: {
+            ...data.workout,
+            equipmentId: data.equipment.id,
+            equipmentName: data.equipment.name,
+          },
+          leftRestTime: data.workout.restSeconds,
+        });
+        setWorkingOut(true);
+      } catch (error) {
+        console.log("루틴운동 시작에 실패했습니다.", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+
     autoDecreaseRest: () =>
       set((state) => ({
         leftRestTime: Math.max(0, state.leftRestTime - 1),
@@ -105,7 +112,7 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
           leftRestTime: state.leftRestTime + adjustValue,
           workoutProgressInfo: {
             ...state.workoutProgressInfo,
-            restSeconds: state.workoutProgressInfo.restSeconds + adjustValue,
+            restSeconds: data.newRestSeconds,
           },
         }));
       } catch (error) {
@@ -118,11 +125,8 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
     skipRest: async () => {
       setLoading(true);
       try {
-        const eqId = get().workingOutInfo?.equipmentId;
-        if (eqId) {
-          const response = await workoutApi.skipRest(eqId);
-          console.log(response.data);
-        } else throw Error;
+        const response = await workoutApi.skipRest();
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -142,13 +146,10 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
     stopWorkout: async () => {
       setLoading(true);
       try {
-        const eqId = get().workingOutInfo?.equipmentId;
-        if (eqId) {
-          const { data } = await workoutApi.stopWorkout(eqId);
-          console.log("stopWorkout ", data);
-          set({ workoutProgressInfo: data });
-          setWorkingOut(false);
-        } else throw Error;
+        const { data } = await workoutApi.stopWorkout();
+        console.log("stopWorkout ", data);
+        set({ workoutProgressInfo: data });
+        setWorkingOut(false);
       } catch (error) {
         console.log(error);
       } finally {
@@ -159,21 +160,17 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
     completeWorkoutSet: async () => {
       setLoading(true);
       try {
-        const eqId = get().workingOutInfo?.equipmentId;
-        if (eqId) {
-          const { data } = await workoutApi.completeWorkoutSet(eqId);
-          if (!data.completed) {
-            set({ workoutProgressInfo: data, leftRestTime: data.restSeconds });
-            console.log("세트 완료!!!", data);
-            return false;
-          } else {
-            set({ workoutProgressInfo: data });
-            console.log("기구 완료!!!", data);
-            setWorkingOut(false);
-            // get().resetState();
-            return true;
-          }
-        } else throw Error;
+        const { data } = await workoutApi.completeWorkoutSet();
+        if (!data.completed) {
+          set({ workoutProgressInfo: data, leftRestTime: data.restSeconds });
+          console.log("세트 완료!!!", data);
+          return false;
+        } else {
+          set({ workoutProgressInfo: data });
+          console.log("기구 완료!!!", data);
+          setWorkingOut(false);
+          return true;
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -181,6 +178,6 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       }
     },
 
-    resetState: () => set(initialState),
+    resetWorkoutState: () => set(initialState),
   }))
 );

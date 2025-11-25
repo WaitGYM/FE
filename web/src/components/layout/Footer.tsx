@@ -5,15 +5,15 @@ export default function Footer() {
   return (
     <footer>
       <nav>
-        <NavLink to="/" className="nav">
+        <NavLink to="/" replace className="nav">
           <Dumbbell size={24} strokeWidth="1.5" />
           <p>홈</p>
         </NavLink>
-        <NavLink to="/mission" className="nav">
+        <NavLink to="/challenge" replace className="nav">
           <Trophy size={24} strokeWidth="1.5" />
           <p>미션/랭킹</p>
         </NavLink>
-        <NavLink to="/mypage" className="nav">
+        <NavLink to="/mypage" replace className="nav">
           <CircleUserRound size={24} strokeWidth="1.5" />
           <p>내정보</p>
         </NavLink>

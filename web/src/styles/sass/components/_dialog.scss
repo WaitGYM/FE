@@ -1,0 +1,26 @@
+@use "@styles/variables" as *;
+
+.MuiDrawer-root {
+  [class$="-MuiPaper-root-MuiDrawer-paper"] {
+    background-color: $c-primary-blue-dark-light;
+    border-radius: 0.75rem 0.75rem 0 0;
+
+    .modal-contents {
+      .title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        text-align: center;
+        padding: 1.5rem;
+        line-height: 1.4rem;
+        color: $c-sub-white;
+
+        .text-orange {
+          color: $c-point-orange;
+        }
+      }
+    }
+    .btn-wrap {
+      position: relative;
+    }
+  }
+}

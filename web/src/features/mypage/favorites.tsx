@@ -1,14 +1,30 @@
+import { motion } from "framer-motion";
 import { ChevronLeft, Store, Search, Star } from "lucide-react";
 import Header from "../../components/layout/Header";
-import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFavoriteStore } from "../../stores/favoriteStore";
+import type { FavoriteType } from "../../types";
 
-export default function Gyms({
-  name = "힙어브덕션",
-  imgSrc = "/equipment_01.png",
-  isFavorite = true,
-}: EquipmentType) {
+export default function Favorites() {
   const navigate = useNavigate();
+  const { favoriteList, getFavoriteList, addFavorite, deleteFavorite } =
+    useFavoriteStore();
+
+  async function handleToggleFavorite(
+    e: React.MouseEvent<HTMLButtonElement>,
+    favorite: FavoriteType
+  ) {
+    e.stopPropagation();
+    if (favorite.equipment.isFavorite)
+      await deleteFavorite(favorite.equipment.id);
+    else await addFavorite(favorite.equipment.id);
+    getFavoriteList();
+  }
+
+  useEffect(() => {
+    getFavoriteList();
+  }, [getFavoriteList]);
 
   return (
     <motion.div
@@ -39,77 +55,41 @@ export default function Gyms({
         <button>엉덩이</button>
         <button>복근</button>
       </div>
+
       <div className="container">
         <div className="equipment-wrap">
           <ul className="equipment-list">
-            <li className="">
-              <div className="equipment">
-                <img src={imgSrc} />
-                <div className="info">
-                  <div className="title">
-                    <span className="name">{name}</span>
-                    <div className="favorite">
-                      {isFavorite ? (
-                        <Star size={18} strokeWidth="1.5" className="on" />
-                      ) : (
-                        <Star size={18} strokeWidth="1.5" className="" />
-                      )}
+            {favoriteList.map((favorite: FavoriteType) => (
+              <li key={favorite.id}>
+                <div className="equipment">
+                  <div className="img">
+                    <img
+                      src={favorite.equipment.imageUrl}
+                      alt={favorite.equipment.name}
+                      loading="lazy"
+                      onLoad={({ target }) => {
+                        target.classList.add("visible");
+                      }}
+                    />
+                  </div>
+                  <div className="info">
+                    <div className="title">
+                      <span className="name">{favorite.equipment.name}</span>
+                      <button
+                        className="favorite"
+                        onClick={(e) => handleToggleFavorite(e, favorite)}
+                      >
+                        <Star
+                          size={18}
+                          strokeWidth="1.5"
+                          className={favorite.equipment.isFavorite ? "on" : ""}
+                        />
+                      </button>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-            <li className="">
-              <div className="equipment">
-                <img src={imgSrc} />
-                <div className="info">
-                  <div className="title">
-                    <span className="name">{name}</span>
-                    <div className="favorite">
-                      {isFavorite ? (
-                        <Star size={18} strokeWidth="1.5" className="on" />
-                      ) : (
-                        <Star size={18} strokeWidth="1.5" className="" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="">
-              <div className="equipment">
-                <img src={imgSrc} />
-                <div className="info">
-                  <div className="title">
-                    <span className="name">{name}</span>
-                    <div className="favorite">
-                      {isFavorite ? (
-                        <Star size={18} strokeWidth="1.5" className="on" />
-                      ) : (
-                        <Star size={18} strokeWidth="1.5" className="" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="">
-              <div className="equipment">
-                <img src={imgSrc} />
-                <div className="info">
-                  <div className="title">
-                    <span className="name">{name}</span>
-                    <div className="favorite">
-                      {isFavorite ? (
-                        <Star size={18} strokeWidth="1.5" className="on" />
-                      ) : (
-                        <Star size={18} strokeWidth="1.5" className="" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

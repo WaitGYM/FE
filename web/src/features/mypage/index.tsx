@@ -1,5 +1,4 @@
 import {
-  Bell,
   User,
   Dumbbell,
   Star,
@@ -9,12 +8,12 @@ import {
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useUserStore } from "../../stores/userStore";
+import NotificationButton from "../../components/ui/NotificationButton";
 
 export default function Mypage() {
-  const navigate = useNavigate();
   const { userInfo } = useUserStore();
 
   return (
@@ -28,15 +27,7 @@ export default function Mypage() {
         <Header
           className="header--mypage"
           leftContent={<h1 className="title">내 정보</h1>}
-          rightContent={
-            // 읽지않음표시는 옆에 .dot을 붙여주세요
-            <button
-              className="icon-bell dot"
-              onClick={() => navigate("/home/pushlist")}
-            >
-              <Bell size={24} strokeWidth="1.5" />
-            </button>
-          }
+          rightContent={<NotificationButton />}
         />
         <div className="container">
           <div className="greeting">
@@ -49,32 +40,34 @@ export default function Mypage() {
             </div>
           </div>
           <div className="menu-wrap">
-            <a className="menu" href="/profile">
+            <Link className="menu" to="/profile">
               <User size={18} strokeWidth="1.5" />
               개인정보수정
-            </a>
-            <a className="menu" href="/gyms">
+            </Link>
+            <Link className="menu" to="/gyms">
               <Dumbbell size={18} strokeWidth="1.5" />
               이용 헬스장 변경
-            </a>
-            <a className="menu" href="/favorites">
+            </Link>
+            <Link className="menu" to="/favorites">
               <Star size={18} strokeWidth="1.5" />
               즐겨찾기한 기구
-            </a>
-            <a className="menu" href="#">
+            </Link>
+            <Link className="menu" to="#">
               <Headset size={18} strokeWidth="1.5" />
               고객센터
-            </a>
-            <a className="menu" href="#">
+            </Link>
+            <Link className="menu" to="#">
               <Settings size={18} strokeWidth="1.5" />앱 설정
-            </a>
-            <a className="menu" href="#">
+            </Link>
+            <Link className="menu" to="#">
               <FileCheck2 size={18} strokeWidth="1.5" />
               서비스 약관
-            </a>
+            </Link>
           </div>
 
-          <a className="btn-logout">로그아웃</a>
+          <button type="button" className="btn-logout">
+            로그아웃
+          </button>
         </div>
       </div>
 

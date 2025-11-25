@@ -2,7 +2,7 @@
 @use "@styles/variables" as *;
 
 .header {
-  margin: map.get($spacing, 6) 0;
+  padding: rem(24) 0;
   position: relative;
 
   .header-top {
@@ -12,7 +12,7 @@
     height: 3.43rem;
     position: relative;
 
-    padding: 0 map.get($spacing, 6);
+    padding: 0 rem(24);
   }
 
   .page-title {
@@ -20,9 +20,12 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
-    font-size: 1.125rem;
-    font-weight: 600;
+    h2,
+    span {
+      text-align: center;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
   }
 
   .btn-side {
@@ -51,7 +54,7 @@
   // 메인
   &--home {
     // height: auto;
-    // padding: 0 map.get($spacing, 6);
+    // padding: 0 rem(24);
 
     .logo {
       width: 6.53rem;
@@ -69,7 +72,7 @@
     .header-tab {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: rem(8);
       a {
         color: $c-sub-gray;
         font-size: 1.25rem;
@@ -91,8 +94,8 @@
   &--booking,
   &--exercising,
   &--breaktimer,
-  &--equipment--detail {
-    .btn-side {
+  &--equipment-detail {
+    .btn-delete {
       color: $c-sub-gray;
     }
   }

@@ -1,7 +1,11 @@
+import { motion } from "framer-motion";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import logo from "@img/logo.svg"; //이미지로고
-import { Bell, Dumbbell, Plus } from "lucide-react";
+import { Dumbbell, Plus } from "lucide-react";
+import Skeleton from "@mui/material/Skeleton";
+import { BottomButtonWrapper } from "../../components/ui/Button";
+import NotificationButton from "../../components/ui/NotificationButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUserStore } from "../../stores/userStore";
@@ -9,9 +13,6 @@ import { useRoutineStore } from "../routine/store/routineStore";
 import type { RoutineType } from "../../types";
 import { useUIStore } from "../../stores/UIStore";
 import type { WorkoutModeType } from "../../types";
-import Skeleton from "@mui/material/Skeleton";
-import { BottomButtonWrapper } from "../../components/ui/Button";
-import { motion } from "framer-motion";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ export default function HomePage() {
       setRoutineId(selectedRoutineId);
     }
     setWorkoutMode(mode);
-    navigate("/reservation/select-equipment");
+    navigate(
+      `/reservation/select-equipment${mode === "routine" ? "/routine" : ""}`
+    );
   }
 
   return (
@@ -49,15 +52,7 @@ export default function HomePage() {
               <img src={logo} alt="logo" />
             </div>
           }
-          rightContent={
-            // 읽지않음표시는 옆에 .dot을 붙여주세요
-            <button
-              className="icon-bell dot"
-              onClick={() => navigate("/home/pushlist")}
-            >
-              <Bell size={24} strokeWidth="1.5" />
-            </button>
-          }
+          rightContent={<NotificationButton />}
         />
 
         <div className="greeting">
@@ -69,7 +64,7 @@ export default function HomePage() {
           <section>
             {routineLoading ? (
               // 1. 로딩 중일 때 -> 스켈레톤 UI
-              <ul className="routine-list">
+              <ul className="routine-list" aria-hidden="true">
                 {Array.from(new Array(2)).map((_, index) => (
                   <li className="routine" key={index}>
                     <div className="icon">
@@ -95,40 +90,45 @@ export default function HomePage() {
             ) : !routineList || routineList.length < 1 ? (
               // 2. 데이터가 없을 때 -> "루틴 등록" UI
               <ul className="not-routine">
-                <li
-                  className="routine"
-                  onClick={() => navigate("/add-routine/select-equipment")}
-                >
-                  <div className="icon">
-                    <Plus size={32} strokeWidth="1.5" />
-                  </div>
-                  <div className="info">
-                    <p className="title">루틴을 등록해주세요</p>
-                  </div>
+                <li>
+                  <button
+                    className="routine"
+                    onClick={() => navigate("/add-routine/select-equipment")}
+                    type="button"
+                  >
+                    <div className="icon">
+                      <Plus size={32} strokeWidth="1.5" />
+                    </div>
+                    <div className="info">
+                      <p className="title">루틴을 등록해주세요</p>
+                    </div>
+                  </button>
                 </li>
               </ul>
             ) : (
               // 3. 데이터가 있을 때 -> 실제 목록
               <ul className="routine-list">
                 {routineList.map((routine: RoutineType) => (
-                  <li
-                    className="routine"
-                    key={routine.id}
-                    // onClick={() => handleWorkoutMode("routine", routine.id)}
-                  >
-                    <div className="icon">
-                      <Dumbbell size={32} strokeWidth="1.5" />
-                    </div>
-                    <div className="info">
-                      <p className="title">{routine.name}</p>
-                      <div className="detail">
-                        {/* {routine.isActive && (
-                          <div className="badge ing">운동중</div>
-                        )} */}
-                        <span>{routine.exerciseCount}개 운동</span>
-                        {/* <span>예상시간 {routine.duration}분</span> */}
+                  <li key={routine.id}>
+                    <button
+                      className="routine"
+                      onClick={() => handleWorkoutMode("routine", routine.id)}
+                      type="button"
+                    >
+                      <div className="icon">
+                        <Dumbbell size={32} strokeWidth="1.5" />
                       </div>
-                    </div>
+                      <div className="info">
+                        <p className="title">{routine.name}</p>
+                        <div className="detail">
+                          {routine.isActive && (
+                            <div className="badge ing">운동중</div>
+                          )}
+                          <span>{routine.exerciseCount}개 운동</span>
+                          <span>예상시간 {routine.estimatedMinutes}분</span>
+                        </div>
+                      </div>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -143,6 +143,7 @@ export default function HomePage() {
             onClick={() => handleWorkoutMode("direct")}
             className="btn btn-blue"
             id="no-routine"
+            type="button"
           >
             바로운동
           </button>
@@ -150,6 +151,7 @@ export default function HomePage() {
             onClick={() => navigate("/add-routine/select-equipment")}
             className="btn btn-orange"
             id="routine-add"
+            type="button"
           >
             루틴추가
           </button>

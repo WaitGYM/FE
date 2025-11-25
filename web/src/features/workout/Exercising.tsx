@@ -9,16 +9,15 @@ import { useUIStore } from "../../stores/UIStore";
 
 export default function WorkoutExercising() {
   const navigate = useNavigate();
-  const {
-    workingOutInfo,
-    workoutProgressInfo,
-    stopWorkout,
-    completeWorkoutSet,
-  } = useWorkoutStore();
-  const { setWorkingOut } = useUIStore();
+  const { workingOutInfo, stopWorkout, completeWorkoutSet } = useWorkoutStore();
+  const { isRestTimerModalOpen, toggleRestTimerModalOpen } = useUIStore();
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (!isRestTimerModalOpen) setIsRunning(true);
+  }, [isRestTimerModalOpen]);
 
   useEffect(() => {
     if (isRunning) {
@@ -43,24 +42,28 @@ export default function WorkoutExercising() {
     )}`;
   }
 
+  function handleTimerReset() {
+    setIsRunning(false);
+    setTime(0);
+  }
+
   async function handleSetComplete() {
     const isWorkoutCompleted = await completeWorkoutSet();
     if (!isWorkoutCompleted) {
-      navigate("/workout/breaktimer");
+      handleTimerReset();
+      toggleRestTimerModalOpen();
     } else {
       handleWorkoutComplete();
     }
   }
 
-  function handleStopWorkout() {
+  function handleWorkoutStop() {
     stopWorkout();
     handleWorkoutComplete();
   }
 
   function handleWorkoutComplete() {
-    setIsRunning(false);
-    setTime(0);
-    setWorkingOut(false);
+    handleTimerReset();
     navigate("/workout/complete", { replace: true });
   }
 
@@ -74,9 +77,13 @@ export default function WorkoutExercising() {
       <Header
         className="header--exercising"
         rightContent={
-          <div className="btn-side" onClick={handleStopWorkout}>
+          <button
+            type="button"
+            className="btn-delete"
+            onClick={handleWorkoutStop}
+          >
             <span>운동종료</span>
-          </div>
+          </button>
         }
       />
 
@@ -105,7 +112,11 @@ export default function WorkoutExercising() {
       </section>
 
       <BottomButtonWrapper>
-        <button className="btn btn-blue" onClick={handleSetComplete}>
+        <button
+          className="btn btn-blue"
+          onClick={handleSetComplete}
+          type="button"
+        >
           {workingOutInfo.currentSet !== workingOutInfo.totalSets
             ? "세트"
             : "운동"}{" "}

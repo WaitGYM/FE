@@ -7,22 +7,24 @@
   overflow: hidden;
 
   section {
-    padding: 0 1.5rem;
+    padding: 0 rem(24);
 
     .equipment-wrap {
-      margin-top: 1.8rem;
+      // margin-top: 1.8rem;
 
       .top {
         display: flex;
         align-items: center;
-        font-size: 0.75rem;
-        margin-bottom: 1rem;
+        justify-content: space-between;
+        font-size: rem(13);
+        margin-bottom: rem(16);
 
         .total-select,
-        .auto-suggest {
+        .auto-suggest,
+        .btn-refresh {
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: rem(4);
           color: $c-sub-white;
           font-weight: 500;
         }
@@ -30,18 +32,17 @@
         .total-select {
           margin-right: auto;
         }
-
-        .auto-suggest {
-          margin-left: auto;
-        }
       }
 
       li {
-        border-radius: 0.4rem;
-        cursor: pointer;
+        margin-bottom: rem(4);
+        & > .equipment {
+          border-radius: 0.4rem;
+          cursor: pointer;
 
-        &.selected {
-          background-color: $c-primary-blue-dark-light;
+          &.selected {
+            background-color: $c-primary-blue-dark-light;
+          }
         }
       }
     }

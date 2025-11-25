@@ -1,27 +1,30 @@
-import { ChevronLeft, Trash, Plus, Minus } from "lucide-react";
+import { motion } from "framer-motion";
+import { ChevronLeft, Plus, Minus } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useReservationStore } from "./stores/reservationStore";
 import { useUIStore } from "../../stores/UIStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
-import { motion } from "framer-motion";
 
 export default function EquipmentDetail() {
   const navigate = useNavigate();
   const {
     selectedEquipment,
     updateSelectedEquipment,
-    equipmentReservationStatus,
     getEquipmentReservationStatus,
     resetState,
   } = useReservationStore();
   const { startWorkout } = useWorkoutStore();
-  const { isWorkingOut, setWorkingOut } = useUIStore();
+  const { isWorkingOut } = useUIStore();
 
   function handleBackBtnClick() {
     navigate(-1);
-    resetState();
+
+    const timer = setTimeout(() => {
+      resetState();
+    }, 100);
+    return () => clearTimeout(timer);
   }
 
   function formatSecondsToTime(seconds: number): string {
@@ -44,8 +47,7 @@ export default function EquipmentDetail() {
         restSeconds: selectedEquipment.restSeconds,
       };
       startWorkout(selectedEquipment.id, workoutGoal);
-      setWorkingOut(true);
-      navigate("/workout/exercising");
+      navigate("/workout/exercising", { replace: true });
     } else {
       // 대기 있으면 예약으로
       navigate("/reservation/wait-request");
@@ -70,28 +72,22 @@ export default function EquipmentDetail() {
           }
         />
         <div className="container">
-          {/* <section>
-            <label htmlFor="routine-name">
-              <p className="label-title">루틴 이름</p>
-            </label>
-            <input
-              type="text"
-              placeholder="루틴 이름을 입력해주세요"
-              value="8월 22일 운동 루틴"
-              id="routine-name"
-            />
-          </section> */}
           <section>
             <p className="label-title">운동 상세 설정</p>
             <ul className="box-wrap">
               <li className="box">
                 <div className="equipment">
-                  <div className="img">
-                    <img
-                      src={selectedEquipment?.imageUrl || "/equipment_01.png"}
-                    />
-                  </div>
                   <div className="info">
+                    <div className="img">
+                      <img
+                        src={selectedEquipment.imageUrl}
+                        alt={selectedEquipment.name}
+                        loading="lazy"
+                        onLoad={({ target }) => {
+                          target.classList.add("visible");
+                        }}
+                      />
+                    </div>
                     <div className="title">
                       <span className="name">{selectedEquipment?.name}</span>
                     </div>

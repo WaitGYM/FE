@@ -7,14 +7,14 @@
     align-items: center;
     justify-content: space-between;
 
-    margin: 1.5rem 0;
+    margin: 0 0 rem(24);
 
     .msg {
-      font-size: 1.25rem;
+      font-size: rem(20);
       p {
         font-size: 0.875rem;
         font-weight: 400;
-        margin-bottom: 0.5rem;
+        margin-bottom: rem(8);
       }
       strong {
         font-weight: 600;
@@ -39,24 +39,24 @@
   .menu-wrap {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: rem(8);
 
     .menu {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 1.5rem;
+      gap: rem(8);
+      padding: rem(16) rem(24);
       color: $c-sub-white;
       background: $c-primary-blue-dark-light;
-      border-radius: 0.5rem;
+      border-radius: rem(8);
       font-size: 0.875rem;
       font-weight: 600;
     }
   }
 
   .terms {
-    margin: map.get($spacing, 6) 0 map.get($spacing, 4) 0;
-    font-size: 0.75rem;
+    margin: rem(24) 0 rem(16) 0;
+    font-size: rem(12);
     color: $c-sub-gray;
 
     a {
@@ -65,7 +65,7 @@
     }
 
     .divider {
-      margin: 0 map.get($spacing, 2);
+      margin: 0 rem(8);
     }
   }
 
@@ -73,8 +73,8 @@
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 0.75rem;
-    margin: 1.5rem 0;
+    font-size: rem(12);
+    margin: rem(24) 0;
     color: $c-primary-blue-light;
   }
 }
@@ -85,15 +85,15 @@
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 0.75rem;
-    margin: 1.5rem 0;
+    font-size: rem(12);
+    margin: rem(24) 0;
     color: $c-primary-blue-light;
   }
 
   &#profile {
     section {
       &.profile-section {
-        margin-bottom: 2rem;
+        margin-bottom: rem(32);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -137,16 +137,16 @@
         }
       }
       &.info-section {
-        margin-bottom: 1.5rem;
+        margin-bottom: rem(24);
         label {
           display: block;
-          margin-bottom: 1rem;
+          margin-bottom: rem(16);
         }
         .label-title {
           font-size: 0.875rem;
           display: block;
           font-weight: 400;
-          margin-bottom: 0.5rem;
+          margin-bottom: rem(8);
         }
         .input-with-icon {
           position: relative;
@@ -155,12 +155,12 @@
 
           .icon-google {
             position: absolute;
-            left: 1.5rem;
+            left: rem(24);
             width: 20px;
             height: 20px;
           }
           input[type="text"] {
-            padding-left: calc(1.5rem + 20px + 0.5rem);
+            padding-left: calc(rem(24) + 20px + rem(8));
           }
         }
       }
@@ -168,9 +168,9 @@
   }
 
   input[type="text"] {
-    height: 2.4375rem;
-    padding: 0 1.5rem;
-    font-size: 0.875rem;
+    // height: 2.4375rem;
+    // padding: rem(12) rem(16);
+    // font-size: 0.875rem;
     font-weight: 500;
     background: $c-primary-blue-dark-modal;
   }
@@ -193,17 +193,17 @@
     .gyms-wrap {
       margin-top: 1.8rem;
       .gyms {
-        padding: 0.5em;
+        padding: rem(8);
         display: grid;
         grid-template-columns: auto auto 1fr;
         align-items: center;
-        gap: 1rem;
+        gap: rem(16);
 
         .thumb {
           display: flex;
-          width: 4rem;
-          height: 4rem;
-          padding: 0.5rem;
+          width: rem(64);
+          height: rem(64);
+          padding: rem(8);
           justify-content: center;
           align-items: center;
           aspect-ratio: 1/1;
@@ -214,14 +214,14 @@
 
         .info {
           .title {
-            gap: 0.25rem;
+            gap: rem(4);
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: rem(4);
           }
 
           .name {
-            font-size: 1rem;
+            font-size: rem(16);
             font-weight: 600;
           }
 
@@ -241,11 +241,11 @@
           }
 
           .address {
-            font-size: 0.75rem;
+            font-size: rem(12);
             font-weight: 400;
             color: $c-sub-gray;
             word-break: keep-all;
-            margin-top: 0.25rem;
+            margin-top: rem(4);
             line-height: 140%;
           }
         }
@@ -261,7 +261,7 @@
 
   &#favorites {
     .equipment-wrap {
-      margin-top: 0.5rem;
+      margin-top: rem(8);
     }
   }
 }

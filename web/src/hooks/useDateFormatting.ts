@@ -3,8 +3,10 @@ export const formatDateStr = (isoString: string): string => {
 
   // UTC → KST 보정: +9시간 오프셋 적용
   // 한국 시간으로 보정
-  const offsetMs = 9 * 60 * 60 * 1000;
-  const localDate = new Date(date.getTime() + offsetMs);
+  // const offsetMs = 9 * 60 * 60 * 1000;
+  // const localDate = new Date(date.getTime() + offsetMs);
+
+  const localDate = new Date(date.getTime());
 
   const year = String(localDate.getFullYear()).slice(2);
   const month = String(localDate.getMonth() + 1).padStart(2, "0");

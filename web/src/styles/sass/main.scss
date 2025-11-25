@@ -6,16 +6,18 @@
 
 @use "layout/header";
 @use "layout/footer";
+@use "layout/modal";
 
 @use "components/pushmsg";
 @use "components/button";
 @use "components/equipment";
 @use "components/circular-timer";
 @use "components/loading-overlay";
+@use "components/dialog";
 
 @use "pages/home";
 @use "pages/push-list";
-@use "pages/mission";
+@use "pages/challenge";
 @use "pages/mypage";
 
 @use "pages/login";

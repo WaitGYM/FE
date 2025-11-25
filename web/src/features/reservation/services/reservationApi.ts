@@ -10,6 +10,8 @@ export const reservationApi = {
     apiClient.get(`/waiting/status/${equipmentId}`),
   createReservation: (equipmentId: number, data: ReservationCreateType) =>
     apiClient.post(`/waiting/queue/${equipmentId}`, data),
+  createRoutineEquipReservation: (routineId: number, equipmentId: number) =>
+    apiClient.post(`/routines/${routineId}/queue/${equipmentId}`),
   deleteReservation: (queueId: number) =>
     apiClient.delete(`/waiting/queue/${queueId}`),
 };

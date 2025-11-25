@@ -1,31 +1,37 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
-import { useEquipmentStore } from "../../stores/equipmentStore";
+import { useParams } from "react-router-dom";
+import { ChevronLeft, Search, Star } from "lucide-react";
 import Header from "../../components/layout/Header";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useRoutineStore } from "./store/routineStore";
 
 export default function RoutineSelectEquipPage() {
+  const { filter } = useParams();
   const navigate = useNavigate();
-  const { equipmentList, getEquipments } = useEquipmentStore();
-  const { selectedEquipList, setSelectedEquipList, resetState } =
-    useRoutineStore();
-
-  useEffect(() => {
-    getEquipments();
-  }, [getEquipments]);
+  const {
+    selectedEquipList,
+    routineDetail,
+    setSelectedEquipList,
+    resetRoutineState,
+  } = useRoutineStore();
 
   function handleBackBtn() {
-    navigate("/");
-    resetState;
+    if (!routineDetail) {
+      navigate("/");
+      resetRoutineState();
+    } else {
+      navigate(-1);
+    }
   }
 
   function handleNextBtnClick() {
-    console.log(selectedEquipList);
     navigate("/add-routine/routine-setting");
+  }
+
+  function handleAddBtnClick() {
+    navigate(-1);
   }
 
   return (
@@ -42,8 +48,31 @@ export default function RoutineSelectEquipPage() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          title={<h2>루틴추가</h2>}
+          title={<h2>{!routineDetail ? "루틴추가" : "운동 추가"}</h2>}
         />
+
+        <section className="container">
+          <div className="search-bar">
+            <input type="search" placeholder="기구명, 부위를 검색해주세요" />
+            <button className="btn-search">
+              <Search size={18} strokeWidth="1.5" />
+            </button>
+          </div>
+        </section>
+        <div className="category-wrap">
+          <button className="btn-like active">
+            <Star size={18} strokeWidth="1.5" />
+            즐겨찾기
+          </button>
+          <button>허벅지</button>
+          <button>어깨</button>
+          <button>가슴</button>
+          <button>팔</button>
+          <button>등</button>
+          <button>엉덩이</button>
+          <button>엉덩이</button>
+          <button>복근</button>
+        </div>
 
         <section className="container">
           <div className="equipment-wrap">
@@ -55,6 +84,7 @@ export default function RoutineSelectEquipPage() {
             </div>
 
             <EquipmentList
+              filter={filter}
               selectMode="MULTI"
               selectedList={selectedEquipList}
               handleSelectedEquipment={setSelectedEquipList}
@@ -63,13 +93,18 @@ export default function RoutineSelectEquipPage() {
         </section>
       </div>
 
-      {selectedEquipList.length ? (
+      {selectedEquipList.length && (
         <BottomButtonWrapper>
-          <button onClick={handleNextBtnClick} className="btn btn-orange">
-            다음
+          <button
+            onClick={() =>
+              !routineDetail ? handleNextBtnClick() : handleAddBtnClick()
+            }
+            className="btn btn-orange"
+          >
+            {!routineDetail ? "다음" : "추가하기"}
           </button>
         </BottomButtonWrapper>
-      ) : null}
+      )}
     </motion.div>
   );
 }

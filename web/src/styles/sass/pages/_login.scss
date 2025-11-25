@@ -14,23 +14,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: rem(32);
     text-align: center;
     .text-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.25rem;
+      gap: rem(20);
       h6 {
-        font-size: 1rem;
+        font-size: rem(16);
         font-style: normal;
         font-weight: 400;
         line-height: 140%;
       }
       .logo {
         width: 9.38rem;
-        height: 2rem;
+        height: rem(32);
       }
     }
   }
@@ -39,8 +39,8 @@
     color: $c-primary-blue-dark;
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    font-size: 1rem;
+    gap: rem(4);
+    font-size: rem(16);
     font-style: normal;
     font-weight: 700;
 

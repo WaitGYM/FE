@@ -56,7 +56,6 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <LoadingOverlay />
-      <div id="portal-root" />
       <AppRoutes />
     </ThemeProvider>
   </StrictMode>

@@ -1,6 +1,19 @@
 @use "sass:map";
 @use "@styles/variables" as *;
 
+//스크린리더만 읽을수있는 텍스트
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 body {
   background-color: $c-primary-blue-dark;
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
@@ -23,17 +36,18 @@ a {
 button {
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 input {
   width: 100%;
   background: none;
   border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  border-radius: rem(8);
+  padding: rem(12) rem(16);
   box-sizing: border-box;
   color: $c-sub-white;
-  font-size: 0.75rem;
+  font-size: rem(14);
 
   &::placeholder {
     color: $c-sub-gray !important;
@@ -58,7 +72,7 @@ input {
   }
   &[type="search"],
   &[type="text"] {
-    height: 2.25rem;
+    // height: 2.25rem;
   }
 }
 
@@ -69,23 +83,23 @@ button {
 }
 
 .container {
-  padding: 0 1.5rem 4.6875rem;
+  padding: 0 rem(24) 4.6875rem;
 }
 
 .content-scroll {
   height: 100%;
   overflow-y: scroll;
-  padding-bottom: map.get($spacing, 24);
+  padding-bottom: rem(96);
 }
 
 .badge {
-  height: 1.25rem;
+  height: rem(20);
   display: inline-flex;
   align-items: center;
   justify-content: space-around;
   font-size: 0.7rem;
-  border-radius: 0.25rem;
-  padding: 0 0.5rem;
+  border-radius: rem(4);
+  padding: 0 rem(8);
   text-align: center;
 }
 
@@ -104,32 +118,32 @@ button {
     align-items: center;
     justify-content: center;
     color: $c-sub-white;
-    padding: 0.5rem 1rem;
+    padding: rem(8) rem(16);
     background-color: $c-primary-blue-dark-light;
-    border-radius: 0.5rem;
+    border-radius: rem(8);
   }
 }
 
 .category-wrap {
-  padding: 0 1.5rem;
-  margin-top: 1rem;
-  height: 2rem;
+  padding: 0 rem(24);
+  margin: rem(16) 0;
+  height: rem(32);
   display: flex;
   overflow-x: scroll;
 
   button {
     flex: 0 0 auto;
-    height: 2rem;
-    padding: 0.5rem;
+    height: rem(32);
+    padding: rem(8);
     color: $c-sub-white;
     background-color: $c-primary-blue-dark-light;
-    border-radius: 0.5rem;
-    font-size: 0.75rem;
+    border-radius: rem(8);
+    font-size: rem(12);
     display: flex;
     align-items: center;
 
     & + button {
-      margin-left: 0.5rem;
+      margin-left: rem(8);
     }
     &.active {
       background-color: $c-primary-blue;
@@ -139,7 +153,7 @@ button {
 .btn-like {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: rem(4);
   font-weight: 600;
   // background: $c-sub-white !important;
   // color: $c-primary-blue !important;
