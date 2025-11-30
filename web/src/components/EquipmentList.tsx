@@ -162,21 +162,6 @@ export default function EquipmentListPage({
               <div className="info">
                 <div className="title">
                   <span className="name">{equipment.name}</span>
-                  <button
-                    className="favorite"
-                    onClick={(e) => handleToggleFavorite(e, equipment)}
-                    aria-label={
-                      equipment.isFavorite ? "즐겨찾기 취소" : "즐겨찾기"
-                    }
-                    aria-pressed={equipment.isFavorite}
-                    type="button"
-                  >
-                    <Star
-                      size={20}
-                      strokeWidth="1.5"
-                      className={equipment.isFavorite ? "on" : "off"}
-                    />
-                  </button>
                 </div>
                 <div
                   className={`status ${
@@ -225,6 +210,19 @@ export default function EquipmentListPage({
                   )}
                 </div>
               </div>
+            </button>
+            <button
+              className="favorite"
+              onClick={(e) => handleToggleFavorite(e, equipment)}
+              aria-label={equipment.isFavorite ? "즐겨찾기 취소" : "즐겨찾기"}
+              aria-pressed={equipment.isFavorite}
+              type="button"
+            >
+              <Star
+                size={20}
+                strokeWidth="1.5"
+                className={equipment.isFavorite ? "on" : "off"}
+              />
             </button>
           </li>
         ))}

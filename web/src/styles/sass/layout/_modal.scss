@@ -23,7 +23,8 @@
       top: auto;
       left: auto;
       right: rem(16);
-      bottom: calc(rem(50) + rem(16));
+      // bottom: calc(rem(16));
+      bottom: calc(rem(50) + rem(8));
       opacity: 0;
       animation: zoomIn 0.4s ease forwards;
 
