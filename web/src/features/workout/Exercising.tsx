@@ -89,24 +89,30 @@ export default function WorkoutExercising() {
 
       <section className="container">
         <div className="text-wrap">
-          <h6>{workingOutInfo?.equipmentName}</h6>
-          <h1>{formatTime(time)}</h1>
+          <h1>{workingOutInfo?.equipmentName}</h1>
+          <h2 className="timer-text">{formatTime(time)}</h2>
           {workingOutInfo && (
-            <div className="set-count">
-              {Array.from({ length: workingOutInfo.totalSets }).map(
-                (_, index) =>
-                  workingOutInfo.currentSet > index ? (
-                    <CircleCheck
-                      size={20}
-                      strokeWidth="2"
-                      className="on"
-                      key={`set${index}`}
-                    />
-                  ) : (
-                    <Circle size={20} strokeWidth="2" key={`set${index}`} />
-                  )
-              )}
-            </div>
+            <>
+              <div className="set-count" aria-hidden="true">
+                {Array.from({ length: workingOutInfo.totalSets }).map(
+                  (_, index) =>
+                    workingOutInfo.currentSet > index ? (
+                      <CircleCheck
+                        size={20}
+                        strokeWidth="2"
+                        className="on"
+                        key={`set${index}`}
+                      />
+                    ) : (
+                      <Circle size={20} strokeWidth="2" key={`set${index}`} />
+                    )
+                )}
+              </div>
+              <p className="visually-hidden" aria-live="polite">
+                {workingOutInfo.totalSets}개 중 {workingOutInfo.currentSet}세트
+                완료
+              </p>
+            </>
           )}
         </div>
       </section>

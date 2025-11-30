@@ -139,8 +139,8 @@ export default function WorkoutBreaktimer() {
                 <Box className="circular-timer__text-box">
                   <Typography variant="h2" component="div" color="white">
                     <div className="text-wrap">
-                      <h6>휴식타이머</h6>
-                      <h1>{formatTime(leftRestTime)}</h1>
+                      <h1>휴식타이머</h1>
+                      <h2 className="timer-text">{formatTime(leftRestTime)}</h2>
                       <div className="set-count">
                         {Array.from({ length: workingOutInfo.totalSets }).map(
                           (_, index) =>
@@ -218,8 +218,8 @@ export default function WorkoutBreaktimer() {
             <Box className="circular-timer__text-box">
               <Typography variant="h2" component="div" color="white">
                 <div className="text-wrap">
-                  <h6>휴식</h6>
-                  <h1>{formatTime(leftRestTime)}</h1>
+                  <h1>휴식</h1>
+                  <h2 className="timer-text">{formatTime(leftRestTime)}</h2>
                 </div>
               </Typography>
             </Box>

@@ -25,13 +25,13 @@
       left: 0;
       transform: translateY(-50%);
 
-      h6 {
+      h1 {
         font-size: rem(20);
         font-style: normal;
         font-weight: 700;
         line-height: 140%;
       }
-      h1 {
+      .timer-text {
         font-size: rem(80);
         font-style: normal;
         font-weight: 700;
@@ -51,7 +51,7 @@
     }
   }
   &#booking .text-wrap {
-    h1 {
+    .timer-text {
       color: $c-point-orange;
     }
     p {
@@ -61,7 +61,7 @@
     }
   }
   &.exercising .text-wrap {
-    h1 {
+    .timer-text {
       color: $c-primary-blue-light;
     }
     .set-count {
