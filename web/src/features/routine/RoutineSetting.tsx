@@ -134,6 +134,7 @@ export default function RoutineSetting() {
               onClick={() =>
                 routineId ? checkDataChange() : handleNavigatingBack()
               }
+              aria-label="뒤로 가기"
             >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>

@@ -143,7 +143,7 @@ export default function ReservationPage() {
           <Header
             className="header--equipment-detail"
             leftContent={
-              <button className="btn btn-icon" onClick={handleBackBtnClick}>
+              <button className="btn btn-icon" onClick={handleBackBtnClick} aria-label="뒤로 가기">
                 <ChevronLeft size={24} strokeWidth="2" />
               </button>
             }

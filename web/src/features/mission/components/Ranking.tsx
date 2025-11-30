@@ -47,7 +47,7 @@ export default function TabRanking() {
       <div className="ranking-wrap">
         <div className="top">
           <span className="time">
-            <CalendarClock size={20} strokeWidth="1.5" />
+            <CalendarClock size={20} strokeWidth="1.5" aria-hidden="true" />
             25/09/01 ~ 25/09/08
           </span>
           <span>상위 10명</span>
@@ -62,7 +62,7 @@ export default function TabRanking() {
 
                 <div className="user-info">
                   <div className="profile-thumb">
-                    <img src={ranking.imgSrc} alt="기본 이미지" />
+                    <img src={ranking.imgSrc} alt="프로필 이미지" />
                   </div>
                   <strong className="name">{ranking.userName}</strong>
                 </div>
