@@ -3,6 +3,8 @@ import { Plus, Minus, GripVertical, CircleCheck } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useRoutineStore } from "../features/routine/store/routineStore";
+import { useState, useEffect } from "react";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 function formatSecondsToTime(seconds: number): string {
   const min = Math.floor(seconds / 60);
@@ -38,6 +40,17 @@ export default function WorkoutGoal({
   const { selectedEquipList, setSelectedEquipList, updateSelectedEquipment } =
     useRoutineStore();
 
+  //툴팁관련
+  const [isDragTooltipOpen, setIsDragTooltipOpen] = useState(false);
+
+  useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem("hasDragTooltip");
+
+    if (!hasSeenTooltip) {
+      setTimeout(() => setIsDragTooltipOpen(true), 1000);
+      localStorage.setItem("hasDragTooltip", "true");
+    }
+  }, []);
   return (
     <>
       <li className="box" ref={setNodeRef} style={style} {...attributes}>
@@ -87,7 +100,41 @@ export default function WorkoutGoal({
               ref={setActivatorNodeRef}
               {...listeners}
             >
-              <GripVertical size={20} strokeWidth="2" />
+              <Tooltip
+                title={<>드래그로 순서를 바꿀 수 있어요.</>}
+                open={isDragTooltipOpen}
+                slotProps={{
+                  popper: {
+                    onClick: () => setIsDragTooltipOpen(false),
+                    sx: {
+                      [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
+                        {
+                          marginBottom: "1.3rem",
+                        },
+                    },
+                  },
+                  tooltip: {
+                    sx: {
+                      bgcolor: "#fff",
+                      color: "#293241",
+                      fontSize: "13px",
+                      padding: "12px 16px",
+                      borderRadius: "4px",
+                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                      textAlign: "center",
+                      lineHeight: "1.4",
+                    },
+                  },
+                  arrow: {
+                    sx: {
+                      color: "#fff",
+                    },
+                  },
+                }}
+                arrow
+              >
+                <GripVertical size={20} strokeWidth="2" />
+              </Tooltip>
             </button>
           ) : selectedEquipList.length > 1 ? (
             <button
