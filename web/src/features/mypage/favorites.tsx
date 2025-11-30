@@ -52,7 +52,6 @@ export default function Favorites() {
         <button>팔</button>
         <button>등</button>
         <button>엉덩이</button>
-        <button>엉덩이</button>
         <button>복근</button>
       </div>
 
@@ -78,6 +77,7 @@ export default function Favorites() {
                       <button
                         className="favorite"
                         onClick={(e) => handleToggleFavorite(e, favorite)}
+                        aria-label="즐겨찾기 취소"
                       >
                         <Star
                           size={20}

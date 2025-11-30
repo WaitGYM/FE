@@ -42,7 +42,7 @@ export default function Gyms() {
         <div className="gyms-wrap">
           <ul className="gyms-list">
             <li className="selected">
-              <div className="gyms">
+              <button className="gyms">
                 <div className="thumb">
                   <Store size={24} strokeWidth="1.5" />
                 </div>
@@ -51,18 +51,22 @@ export default function Gyms() {
                     <span className="badge busy">혼잡</span>
                     <span className="name">짐박스 신림점</span>
                     <div className="favorite">
-                      <Star size={20} strokeWidth="1.5" className="on" />
-                      {/* <Star size={20} strokeWidth="1.5" className="" /> */}
+                      <Star
+                        size={20}
+                        strokeWidth="1.5"
+                        aria-hidden="true"
+                        className="on"
+                      />
                     </div>
                   </div>
                   <div className="address">
                     서울 관악구 신림로59길 14 민속순대타운 5층
                   </div>
                 </div>
-              </div>
+              </button>
             </li>
             <li className="">
-              <div className="gyms">
+              <button className="gyms">
                 <div className="thumb">
                   <Store size={24} strokeWidth="1.5" />
                 </div>
@@ -71,17 +75,22 @@ export default function Gyms() {
                     <span className="badge normal">보통</span>
                     <span className="name">짐박스 신림점</span>
                     <div className="favorite">
-                      <Star size={20} strokeWidth="1.5" className="" />
+                      <Star
+                        size={20}
+                        strokeWidth="1.5"
+                        aria-hidden="true"
+                        className=""
+                      />
                     </div>
                   </div>
                   <div className="address">
                     서울 관악구 신림로59길 14 민속순대타운 5층
                   </div>
                 </div>
-              </div>
+              </button>
             </li>
             <li className="">
-              <div className="gyms">
+              <button className="gyms">
                 <div className="thumb">
                   <Store size={24} strokeWidth="1.5" />
                 </div>
@@ -90,14 +99,19 @@ export default function Gyms() {
                     <span className="badge free">여유</span>
                     <span className="name">짐박스 신림점</span>
                     <div className="favorite">
-                      <Star size={20} strokeWidth="1.5" className="" />
+                      <Star
+                        size={20}
+                        strokeWidth="1.5"
+                        aria-hidden="true"
+                        className=""
+                      />
                     </div>
                   </div>
                   <div className="address">
                     서울 관악구 신림로59길 14 민속순대타운 5층
                   </div>
                 </div>
-              </div>
+              </button>
             </li>
           </ul>
         </div>

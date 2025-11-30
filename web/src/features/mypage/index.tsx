@@ -24,6 +24,10 @@ export default function Mypage() {
     navigate("/login");
   }
 
+  function comingSoon() {
+    alert("메뉴 준비 중 입니다.");
+  }
+
   return (
     <motion.div
       className="mypage"
@@ -49,26 +53,42 @@ export default function Mypage() {
           </div>
           <div className="menu-wrap">
             <Link className="menu" to="/profile">
-              <User size={20} strokeWidth="1.5" />
+              <User size={20} strokeWidth="1.5" aria-hidden="true" />
               개인정보수정
             </Link>
             <Link className="menu" to="/gyms">
-              <Dumbbell size={20} strokeWidth="1.5" />
+              <Dumbbell size={20} strokeWidth="1.5" aria-hidden="true" />
               이용 헬스장 변경
             </Link>
             <Link className="menu" to="/favorites">
-              <Star size={20} strokeWidth="1.5" />
+              <Star size={20} strokeWidth="1.5" aria-hidden="true" />
               즐겨찾기한 기구
             </Link>
-            <Link className="menu" to="#">
-              <Headset size={20} strokeWidth="1.5" />
+            <Link className="menu" to="#" onClick={comingSoon}>
+              <Headset
+                size={20}
+                strokeWidth="1.5"
+                aria-hidden="true"
+                aria-label="메뉴 준비 중"
+              />
               고객센터
             </Link>
-            <Link className="menu" to="#">
-              <Settings size={20} strokeWidth="1.5" />앱 설정
+            <Link className="menu" to="#" onClick={comingSoon}>
+              <Settings
+                size={20}
+                strokeWidth="1.5"
+                aria-hidden="true"
+                aria-label="메뉴 준비 중"
+              />
+              앱 설정
             </Link>
-            <Link className="menu" to="#">
-              <FileCheck2 size={20} strokeWidth="1.5" />
+            <Link className="menu" to="#" onClick={comingSoon}>
+              <FileCheck2
+                size={20}
+                strokeWidth="1.5"
+                aria-hidden="true"
+                aria-label="메뉴 준비 중"
+              />
               서비스 약관
             </Link>
           </div>

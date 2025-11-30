@@ -141,7 +141,7 @@ export default function WorkoutBreaktimer() {
                     <div className="text-wrap">
                       <h1>휴식타이머</h1>
                       <h2 className="timer-text">{formatTime(leftRestTime)}</h2>
-                      <div className="set-count">
+                      <div className="set-count" aria-hidden="true">
                         {Array.from({ length: workingOutInfo.totalSets }).map(
                           (_, index) =>
                             workingOutInfo.currentSet > index ? (
@@ -160,6 +160,10 @@ export default function WorkoutBreaktimer() {
                             )
                         )}
                       </div>
+                      <p className="visually-hidden" aria-live="polite">
+                        {workingOutInfo.totalSets}개 중{" "}
+                        {workingOutInfo.currentSet}세트 완료
+                      </p>
                     </div>
                   </Typography>
                 </Box>
@@ -171,6 +175,7 @@ export default function WorkoutBreaktimer() {
                 onClick={() => adjustRest(-10)}
                 disabled={leftRestTime < 11}
                 type="button"
+                aria-label="휴식 시간 10초 줄이기"
               >
                 <Minus />
               </button>
@@ -186,6 +191,7 @@ export default function WorkoutBreaktimer() {
                 onClick={() => adjustRest(10)}
                 disabled={workoutProgressInfo.restSeconds > 299}
                 type="button"
+                aria-label="휴식 시간 10초 늘리기"
               >
                 <Plus />
               </button>
@@ -199,6 +205,9 @@ export default function WorkoutBreaktimer() {
               setIsRestTimerMiniView(false);
             }}
             type="button"
+            aria-label={`휴식 타이머: ${formatTime(
+              leftRestTime
+            )}. 전체 화면으로 보려면 클릭하세요.`}
           >
             {/* 배경 트랙 */}
             <CircularProgress
