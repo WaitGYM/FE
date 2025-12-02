@@ -40,7 +40,7 @@ export default function TabMission() {
         <div className="top">
           <span>총 {missions.length}개 미션</span>
           <span className="time">
-            <AlarmClock size={20} strokeWidth="1.5" />
+            <AlarmClock size={20} strokeWidth="1.5" aria-hidden="true" />
             8시간
           </span>
         </div>
@@ -57,6 +57,7 @@ export default function TabMission() {
                     className="progress"
                     variant="determinate"
                     value={(mission.progress / maxMissionCount) * 100}
+                    aria-label={`${mission.title} 미션 진행률`}
                   />
                   <p className="num-count">
                     {mission.progress}/{maxMissionCount}

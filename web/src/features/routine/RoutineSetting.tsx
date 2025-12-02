@@ -24,6 +24,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import WorkoutGoal from "../../components/WorkoutGoal";
 import type { EquipmentType } from "../../types";
 
@@ -133,6 +134,7 @@ export default function RoutineSetting() {
               onClick={() =>
                 routineId ? checkDataChange() : handleNavigatingBack()
               }
+              aria-label="뒤로 가기"
             >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
@@ -181,6 +183,7 @@ export default function RoutineSetting() {
               <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
+                modifiers={[restrictToVerticalAxis]}
                 onDragEnd={(event) => {
                   const { active, over } = event;
                   if (active.id !== over.id) {

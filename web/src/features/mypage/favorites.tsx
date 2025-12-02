@@ -37,7 +37,7 @@ export default function Favorites() {
       <Header
         className="header--mypage"
         leftContent={
-          <button className="btn btn-icon" onClick={() => navigate(-1)}>
+          <button className="btn btn-icon" onClick={() => navigate(-1)} aria-label="뒤로 가기">
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
@@ -52,7 +52,6 @@ export default function Favorites() {
         <button>팔</button>
         <button>등</button>
         <button>엉덩이</button>
-        <button>엉덩이</button>
         <button>복근</button>
       </div>
 
@@ -61,7 +60,7 @@ export default function Favorites() {
           <ul className="equipment-list">
             {favoriteList.map((favorite: FavoriteType) => (
               <li key={favorite.id}>
-                <div className="equipment">
+                <button className="equipment">
                   <div className="img">
                     <img
                       src={favorite.equipment.imageUrl}
@@ -75,19 +74,20 @@ export default function Favorites() {
                   <div className="info">
                     <div className="title">
                       <span className="name">{favorite.equipment.name}</span>
-                      <button
-                        className="favorite"
-                        onClick={(e) => handleToggleFavorite(e, favorite)}
-                      >
-                        <Star
-                          size={20}
-                          strokeWidth="1.5"
-                          className={favorite.equipment.isFavorite ? "on" : ""}
-                        />
-                      </button>
                     </div>
                   </div>
-                </div>
+                </button>
+                <button
+                  className="favorite"
+                  onClick={(e) => handleToggleFavorite(e, favorite)}
+                  aria-label="즐겨찾기 취소"
+                >
+                  <Star
+                    size={20}
+                    strokeWidth="1.5"
+                    className={favorite.equipment.isFavorite ? "on" : ""}
+                  />
+                </button>
               </li>
             ))}
           </ul>

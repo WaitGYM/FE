@@ -38,7 +38,7 @@ export default function EquipmentListPage() {
       <div className="content-scroll">
         <Header
           leftContent={
-            <button className="btn btn-icon" onClick={() => navigate(-1)}>
+            <button className="btn btn-icon" onClick={() => navigate(-1)} aria-label="뒤로 가기">
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }

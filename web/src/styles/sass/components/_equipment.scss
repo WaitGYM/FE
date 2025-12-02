@@ -3,7 +3,7 @@
 .equipment {
   padding: 0.5em;
   display: grid;
-  grid-template-columns: rem(48) auto;
+  grid-template-columns: rem(60) auto;
   align-items: center;
   gap: 1rem;
   width: 100%;
@@ -11,7 +11,7 @@
 
   .img {
     display: flex;
-    width: rem(48);
+    width: rem(60);
     aspect-ratio: 1/1;
     background-color: $c-sub-white;
     border-radius: 0.4rem;
@@ -22,7 +22,6 @@
   img {
     width: 100%;
     height: 100%;
-    max-width: rem(48);
     aspect-ratio: 1/1;
     object-fit: cover;
     // background-color: $c-primary-navy-lightest;

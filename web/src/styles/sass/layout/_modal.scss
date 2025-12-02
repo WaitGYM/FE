@@ -22,8 +22,9 @@
       height: auto;
       top: auto;
       left: auto;
-      right: rem(26);
-      bottom: rem(112.75);
+      right: rem(16);
+      // bottom: calc(rem(16));
+      bottom: calc(rem(50) + rem(8));
       opacity: 0;
       animation: zoomIn 0.4s ease forwards;
 
@@ -38,12 +39,12 @@
         padding: 0;
 
         .text-wrap {
-          h6 {
-            font-size: rem(12);
+          h1 {
+            font-size: rem(14);
             font-weight: 500;
           }
-          h1 {
-            font-size: rem(16);
+          .timer-text {
+            font-size: rem(18);
             font-weight: 700;
           }
         }

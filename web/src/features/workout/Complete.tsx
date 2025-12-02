@@ -52,7 +52,7 @@ export default function WorkoutCompletePage() {
         <ul className="complete-time">
           <li>
             <strong>
-              <Dumbbell /> 총 운동시간
+              <Dumbbell aria-hidden="true" /> 총 운동시간
             </strong>
             <span id="exercise-time">
               {workoutProgressInfo.summary?.workTime}
@@ -60,7 +60,7 @@ export default function WorkoutCompletePage() {
           </li>
           <li>
             <strong>
-              <Timer /> 총 휴식시간
+              <Timer aria-hidden="true" /> 총 휴식시간
             </strong>
             <span>
               {workoutProgressInfo.summary?.totalRest ||

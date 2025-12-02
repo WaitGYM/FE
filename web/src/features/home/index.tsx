@@ -49,16 +49,17 @@ export default function HomePage() {
           className="header--home"
           leftContent={
             <div className="logo">
-              <img src={logo} alt="logo" />
+              <img src={logo} alt="기다려짐" />
             </div>
           }
           rightContent={<NotificationButton />}
         />
 
         <div className="greeting">
-          {userInfo.name}님,
-          <br />
-          오늘도 루틴대로 운동해볼까요?
+          <p>
+            <strong>{userInfo.name}님,</strong>
+          </p>
+          <h1>오늘도 루틴대로 운동해볼까요?</h1>
         </div>
         <div className="container">
           <section>
@@ -108,29 +109,38 @@ export default function HomePage() {
             ) : (
               // 3. 데이터가 있을 때 -> 실제 목록
               <ul className="routine-list">
-                {routineList.map((routine: RoutineType) => (
-                  <li key={routine.id}>
-                    <button
-                      className="routine"
-                      onClick={() => handleWorkoutMode("routine", routine.id)}
-                      type="button"
-                    >
-                      <div className="icon">
-                        <Dumbbell size={24} strokeWidth="1.5" />
-                      </div>
-                      <div className="info">
-                        <p className="title">{routine.name}</p>
-                        <div className="detail">
-                          {routine.isActive && (
-                            <div className="badge ing">운동중</div>
-                          )}
-                          <span>{routine.exerciseCount}개 운동</span>
-                          <span>예상시간 {routine.estimatedMinutes}분</span>
+                {routineList.map((routine: RoutineType) => {
+                  // 접근성관련 aria 추가
+                  const ariaLabel = `${routine.name}, ${
+                    routine.isActive ? "현재 운동중인 루틴, " : ""
+                  }${routine.exerciseCount}개 운동, 예상시간 ${
+                    routine.estimatedMinutes
+                  }분`;
+                  return (
+                    <li key={routine.id}>
+                      <button
+                        className="routine"
+                        onClick={() => handleWorkoutMode("routine", routine.id)}
+                        type="button"
+                        aria-label={ariaLabel}
+                      >
+                        <div className="icon">
+                          <Dumbbell size={24} strokeWidth="1.5" />
                         </div>
-                      </div>
-                    </button>
-                  </li>
-                ))}
+                        <div className="info">
+                          <p className="title">{routine.name}</p>
+                          <div className="detail">
+                            {routine.isActive && (
+                              <div className="badge ing">운동중</div>
+                            )}
+                            <span>{routine.exerciseCount}개 운동</span>
+                            <span>예상시간 {routine.estimatedMinutes}분</span>
+                          </div>
+                        </div>
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </section>
@@ -142,7 +152,7 @@ export default function HomePage() {
           <button
             onClick={() => handleWorkoutMode("direct")}
             className="btn btn-blue"
-            id="no-routine"
+            // id="no-routine"
             type="button"
           >
             바로운동
@@ -150,7 +160,7 @@ export default function HomePage() {
           <button
             onClick={() => navigate("/add-routine/select-equipment")}
             className="btn btn-orange"
-            id="routine-add"
+            // id="routine-add"
             type="button"
           >
             루틴추가

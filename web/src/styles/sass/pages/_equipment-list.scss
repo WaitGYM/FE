@@ -36,6 +36,7 @@
 
       li {
         margin-bottom: rem(4);
+        position: relative;
         & > .equipment {
           border-radius: 0.4rem;
           cursor: pointer;
@@ -43,6 +44,12 @@
           &.selected {
             background-color: $c-primary-blue-dark-light;
           }
+        }
+        .favorite {
+          position: absolute;
+          right: rem(8);
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
     }

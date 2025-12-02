@@ -44,7 +44,11 @@ export default function RoutineSelectEquipPage() {
       <div className="content-scroll">
         <Header
           leftContent={
-            <button className="btn btn-icon" onClick={handleBackBtn}>
+            <button
+              className="btn btn-icon"
+              onClick={handleBackBtn}
+              aria-label="뒤로 가기"
+            >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
@@ -69,7 +73,6 @@ export default function RoutineSelectEquipPage() {
           <button>가슴</button>
           <button>팔</button>
           <button>등</button>
-          <button>엉덩이</button>
           <button>엉덩이</button>
           <button>복근</button>
         </div>

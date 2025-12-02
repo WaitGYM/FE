@@ -14,6 +14,7 @@ import { useRoutineStore } from "../routine/store/routineStore";
 import { useWorkoutStore } from "../workout/stores/workoutStore";
 import CustomDialog from "../../components/ui/CustomDialog";
 import motionIconSrc from "@img/motion-party.png";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 export default function ReservationPage() {
   const { filter } = useParams();
@@ -131,6 +132,17 @@ export default function ReservationPage() {
     navigate("/workout/exercising");
   }
 
+  //툴팁관련
+  const [isSortTooltipOpen, setIsSortTooltipOpen] = useState(false);
+
+  useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem("hasSortTooltip");
+
+    if (!hasSeenTooltip) {
+      setTimeout(() => setIsSortTooltipOpen(true), 3000);
+      localStorage.setItem("hasSortTooltip", "true");
+    }
+  }, []);
   return (
     <>
       <motion.div
@@ -143,7 +155,11 @@ export default function ReservationPage() {
           <Header
             className="header--equipment-detail"
             leftContent={
-              <button className="btn btn-icon" onClick={handleBackBtnClick}>
+              <button
+                className="btn btn-icon"
+                onClick={handleBackBtnClick}
+                aria-label="뒤로 가기"
+              >
                 <ChevronLeft size={24} strokeWidth="2" />
               </button>
             }
@@ -172,13 +188,54 @@ export default function ReservationPage() {
               <div className="top">
                 <div className="auto-suggest">
                   <span>자동제안</span>
-                  <Switch
-                    checked={isEquipAutoSorting}
-                    size="small"
-                    color="warning"
-                    slotProps={{ input: { "aria-label": "자동제안" } }}
-                    onChange={(e) => setIsEquipAutoSorting(e.target.checked)}
-                  />
+
+                  <Tooltip
+                    title={
+                      <>
+                        대기 시간을 최소
+                        <br />
+                        순서로 제안해드려요!
+                      </>
+                    }
+                    open={isSortTooltipOpen}
+                    slotProps={{
+                      popper: {
+                        onClick: () => setIsSortTooltipOpen(false),
+                        sx: {
+                          [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
+                            {
+                              marginBottom: "1.3rem",
+                            },
+                        },
+                      },
+                      tooltip: {
+                        sx: {
+                          bgcolor: "#fff",
+                          color: "#293241",
+                          fontSize: "13px",
+                          padding: "12px 16px",
+                          borderRadius: "4px",
+                          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                          textAlign: "center",
+                          lineHeight: "1.4",
+                        },
+                      },
+                      arrow: {
+                        sx: {
+                          color: "#fff",
+                        },
+                      },
+                    }}
+                    arrow
+                  >
+                    <Switch
+                      checked={isEquipAutoSorting}
+                      size="small"
+                      color="warning"
+                      slotProps={{ input: { "aria-label": "자동제안" } }}
+                      onChange={(e) => setIsEquipAutoSorting(e.target.checked)}
+                    />
+                  </Tooltip>
                 </div>
                 <button className="btn-refresh" onClick={handleRefreshClick}>
                   <RefreshCcw

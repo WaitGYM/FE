@@ -3,8 +3,8 @@
 .circular-timer {
   position: relative;
   display: inline-flex;
-  width: 17rem;
-  height: 17rem;
+  width: 20rem;
+  height: 20rem;
   // transition: background-color 0.3s ease, border-color 0.3s ease;
 
   .MuiCircularProgress-root {
@@ -35,11 +35,11 @@
     text-align: center;
 
     .text-wrap {
-      h6 {
+      h1 {
         color: $c-sub-white;
       }
 
-      h1 {
+      .timer-text {
         color: $c-point-orange;
       }
     }

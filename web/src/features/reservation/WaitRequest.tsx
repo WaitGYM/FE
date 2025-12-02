@@ -5,12 +5,25 @@ import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { useUIStore } from "../../stores/UIStore";
+import { useState, useEffect } from "react";
 
 export default function WaitRequest() {
   const navigate = useNavigate();
   const { selectedEquipment, reservationError, createReservation } =
     useReservationStore();
   const { routineId } = useUIStore();
+
+  //툴팁관련
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
+  useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem("hasSeenWaitRequestTooltip");
+
+    if (!hasSeenTooltip) {
+      setTimeout(() => setIsTooltipOpen(true), 1000);
+      localStorage.setItem("hasSeenWaitRequestTooltip", "true");
+    }
+  }, []);
 
   async function handleReqBtnClick() {
     await createReservation();
@@ -25,7 +38,11 @@ export default function WaitRequest() {
       <Header
         className="header--booking"
         leftContent={
-          <button className="btn btn-icon" onClick={() => navigate(-1)}>
+          <button
+            className="btn btn-icon"
+            onClick={() => navigate(-1)}
+            aria-label="뒤로 가기"
+          >
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
@@ -33,8 +50,10 @@ export default function WaitRequest() {
 
       <section className="container">
         <div className="text-wrap">
-          <h6>{selectedEquipment.name}</h6>
-          <h1>{selectedEquipment.status?.estimatedWaitMinutes || 0}분 대기</h1>
+          <h1>{selectedEquipment.name}</h1>
+          <h2 className="timer-text">
+            {selectedEquipment.status?.estimatedWaitMinutes || 0}분 대기
+          </h2>
           <p>
             <UsersRound size={20} strokeWidth="2" />
             <span className="waiting-user">
@@ -54,9 +73,10 @@ export default function WaitRequest() {
               '사용 요청'을 보내 알림을 전달하세요!
             </>
           }
-          open={true}
+          open={isTooltipOpen}
           slotProps={{
             popper: {
+              onClick: () => setIsTooltipOpen(false),
               sx: {
                 [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
                   {

@@ -34,6 +34,7 @@ export default function Profile() {
             type="button"
             className="btn btn-icon"
             onClick={() => navigate(-1)}
+            aria-label="뒤로 가기"
           >
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
@@ -45,19 +46,19 @@ export default function Profile() {
         <section className="profile-section">
           <div
             className="thumb-wrap"
-            style={{ backgroundImage: `url(${userInfo.avatar})` }}
+            // style={{ backgroundImage: `url(${userInfo.avatar})` }}
           >
-            <button type="button" className="btn-file">
-              {/* <input type="file" id="inputUpload" /> */}
+            <img src={`${userInfo.avatar}`} alt="현재 프로필 이미지" />
+            {/* <button type="button" className="btn-file">
               <Camera size={20} strokeWidth={1.5} />
-            </button>
+            </button> */}
           </div>
         </section>
         <section className="info-section">
           <label htmlFor="inputId">
             <p className="label-title">아이디</p>
             <div className="input-with-icon">
-              <img src={googleLogo} className="icon-google" alt="google-logo" />
+              <img src={googleLogo} className="icon-google" alt="" />
 
               <input type="text" id="inputId" value={userInfo.email} readOnly />
             </div>

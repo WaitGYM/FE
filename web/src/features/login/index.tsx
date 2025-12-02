@@ -13,7 +13,7 @@ export default function Login() {
     <div className="login-page">
       <div className="container">
         <div className="text-wrap">
-          <motion.h6
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
@@ -21,7 +21,7 @@ export default function Login() {
             어서오세요!
             <br />
             오늘도 운동시작 해볼까요?
-          </motion.h6>
+          </motion.h1>
           <motion.img
             src={logo}
             className="logo"
@@ -40,7 +40,7 @@ export default function Login() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.6, ease: "easeInOut" }}
           >
-            <img src={googleLogo} className="icon-google" alt="google-logo" />
+            <img src={googleLogo} className="icon-google" alt="" />
             구글아이디로 로그인
           </motion.button>
         </BottomButtonWrapper>

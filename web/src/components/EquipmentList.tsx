@@ -59,6 +59,51 @@ export default function EquipmentListPage({
     getEquipments(filter);
   }
 
+  //aria 접근성관련 함수
+  function createEquipmentAriaLabel(equipment: EquipmentType): string {
+    let label = equipment.name;
+
+    // 이용 상태
+    if (equipment.status.currentUser === userInfo.name) {
+      label += ", 현재 이용 중";
+    } else if (
+      !equipment.status.estimatedWaitMinutes &&
+      !equipment.status.waitingCount
+    ) {
+      label += ", 이용 가능";
+    } else {
+      const waitMinutes =
+        equipment.status.myQueueStatus === "WAITING"
+          ? equipment.status.currentUserETA
+          : equipment.status.estimatedWaitMinutes;
+      const waitingCount =
+        equipment.status.myQueueStatus === "WAITING"
+          ? equipment.status.myQueuePosition
+          : equipment.status.waitingCount;
+      label += `, 예상 대기 시간 ${waitMinutes}분, ${waitingCount}명 대기 중`;
+    }
+
+    // 나의 대기 상태
+    if (
+      equipment.status.myQueuePosition &&
+      equipment.status.myQueueStatus === "WAITING"
+    ) {
+      label += ", 내가 대기 중인 기구";
+    } else if (
+      equipment.status.myQueueStatus === "NOTIFIED" &&
+      equipment.status.myQueuePosition === 1
+    ) {
+      label += ", 내 차례 알림 도착";
+    }
+
+    // 오늘 운동 완료 여부
+    if (equipment.status.completedToday) {
+      label += ", 오늘 운동 완료";
+    }
+
+    return label;
+  }
+
   if (equipmentListLoading) {
     return (
       <ul className="equipment-list" aria-hidden="true">
@@ -92,8 +137,9 @@ export default function EquipmentListPage({
       <ul className="equipment-list">
         {equipmentList.map((equipment: EquipmentType) => (
           <li key={equipment.id}>
-            <div
+            <button
               onClick={() => handleEquipmentToggle(equipment)}
+              aria-label={createEquipmentAriaLabel(equipment)}
               className={`equipment ${
                 !(
                   selectedList.length &&
@@ -102,14 +148,6 @@ export default function EquipmentListPage({
                   ? ""
                   : "selected"
               }`}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleEquipmentToggle(equipment);
-                }
-              }}
-              aria-label={equipment.name}
             >
               <div className="img">
                 <img
@@ -124,19 +162,6 @@ export default function EquipmentListPage({
               <div className="info">
                 <div className="title">
                   <span className="name">{equipment.name}</span>
-                  <button
-                    className="favorite"
-                    onClick={(e) => handleToggleFavorite(e, equipment)}
-                    aria-label="즐겨찾기"
-                    aria-pressed={equipment.isFavorite}
-                    type="button"
-                  >
-                    <Star
-                      size={20}
-                      strokeWidth="1.5"
-                      className={equipment.isFavorite ? "on" : "off"}
-                    />
-                  </button>
                 </div>
                 <div
                   className={`status ${
@@ -185,7 +210,20 @@ export default function EquipmentListPage({
                   )}
                 </div>
               </div>
-            </div>
+            </button>
+            <button
+              className="favorite"
+              onClick={(e) => handleToggleFavorite(e, equipment)}
+              aria-label={equipment.isFavorite ? "즐겨찾기 취소" : "즐겨찾기"}
+              aria-pressed={equipment.isFavorite}
+              type="button"
+            >
+              <Star
+                size={20}
+                strokeWidth="1.5"
+                className={equipment.isFavorite ? "on" : "off"}
+              />
+            </button>
           </li>
         ))}
       </ul>

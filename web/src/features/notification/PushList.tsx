@@ -34,6 +34,7 @@ export default function PushList() {
               type="button"
               className="btn btn-icon"
               onClick={handleBackBtn}
+              aria-label="뒤로 가기"
             >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
