@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, UsersRound } from "lucide-react";
+import { ChevronLeft, UsersRound, X } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
@@ -71,6 +71,7 @@ export default function WaitRequest() {
               기구 사용이 필요하다면
               <br />
               '사용 요청'을 보내 알림을 전달하세요!
+              <X size={20} color="#9498A0" />
             </>
           }
           open={isTooltipOpen}
@@ -88,12 +89,17 @@ export default function WaitRequest() {
               sx: {
                 bgcolor: "#fff",
                 color: "#293241",
-                fontSize: "13px",
-                padding: "12px 16px",
+                fontSize: "15px",
+                padding: "12px 12px",
                 borderRadius: "4px",
                 boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                textAlign: "center",
-                lineHeight: "1.4",
+                textAlign: "left",
+                lineHeight: "1.5",
+                maxWidth: "300px",
+                minWidth: "160px",
+                display: "grid",
+                gridTemplateColumns: "1fr 20px",
+                wordBreak: "keep-all",
               },
             },
             arrow: {
