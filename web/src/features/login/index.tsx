@@ -43,6 +43,16 @@ export default function Login() {
             <img src={googleLogo} className="icon-google" alt="" />
             구글아이디로 로그인
           </motion.button>
+
+          <motion.button
+            onClick={handleLogin}
+            className="btn btn-blue"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.6, ease: "easeInOut" }}
+          >
+            게스트로 로그인
+          </motion.button>
         </BottomButtonWrapper>
       </div>
     </div>

@@ -34,20 +34,24 @@
       }
     }
   }
-  .btn-white {
-    background: $c-sub-white;
-    color: $c-primary-blue-dark;
-    display: flex;
-    align-items: center;
-    gap: rem(4);
-    font-size: rem(16);
-    font-style: normal;
-    font-weight: 700;
+  .btn-wrap {
+    flex-direction: column;
 
-    .icon-google {
-      width: 1.125rem;
-      height: 1.125rem;
-      aspect-ratio: 1/1;
+    .btn-white {
+      background: $c-sub-white;
+      color: $c-primary-blue-dark;
+      display: flex;
+      align-items: center;
+      gap: rem(4);
+      font-size: rem(16);
+      font-style: normal;
+      font-weight: 700;
+
+      .icon-google {
+        width: 1.125rem;
+        height: 1.125rem;
+        aspect-ratio: 1/1;
+      }
     }
   }
 }
