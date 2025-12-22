@@ -9,10 +9,12 @@
 ![Expo](https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=white)
 
+<br>
+
 ## 🏗️ System Architecture
 
-모바일 앱 쉘(Native)과 비즈니스 로직(Web)을 분리하여 유지보수성을 높인 **하이브리드 아키텍처**
-인증(Auth)을 포함한 주요 로직은 Web에서 수행되며, Native는 환경 설정과 하드웨어 제어를 담당
+- 모바일 앱 쉘(Native)과 비즈니스 로직(Web)을 분리하여 유지보수성을 높인 **하이브리드 아키텍처**
+- 인증(Auth)을 포함한 주요 로직은 Web에서 수행되며, Native는 환경 설정과 하드웨어 제어를 담당
 
 ```mermaid
 graph TD
@@ -49,6 +51,8 @@ graph TD
 └── web/          # 🌐 React (Vite) - 구글/게스트 로그인 및 핵심 서비스 로직
 ```
 
+<br>
+
 ## 🚀 Quick Start
 
 각 폴더의 README에서 상세 실행 방법을 확인하세요.
@@ -56,9 +60,11 @@ graph TD
 - **Web 실행**: [./web/README.md](./web/README.md) 참고
 - **Mobile 실행**: [./mobile/README.md](./mobile/README.md) 참고
 
+<br>
+
 ## 🤝 Collaboration & Convention
 
-협업과 코드 일관성을 위해 다음과 같은 규칙을 준수했습니다.
+협업과 코드 일관성을 위해 다음과 같은 규칙을 준수함
 
 ### Git Flow & Branch Strategy
 

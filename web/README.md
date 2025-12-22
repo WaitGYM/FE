@@ -2,6 +2,8 @@
 
 실질적인 비즈니스 로직과 UI가 구현된 React 기반 웹앱
 
+<br>
+
 ## 🏗️ Architecture & Design Pattern
 
 유지보수성과 기능별 응집도를 높이기 위해 **기능 중심(Feature-based) 아키텍처**를 채택
@@ -20,6 +22,8 @@ src/
 └── services/          # 외부 통신 (Axios, WebSocket)
 ```
 
+<br>
+
 ## 🛠 Tech Stack Details
 
 - **Core**: React 19, TypeScript
@@ -28,6 +32,8 @@ src/
 - **Styling**: SCSS, MUI Base
 - **Animation**: Framer Motion
 - **Networking**: Axios (API), WebSocket (Notification)
+
+<br>
 
 ## 💡 Key Features & Engineering Decisions
 
@@ -46,6 +52,8 @@ src/
 ### 3. 하이브리드 최적화
 
 - **모달 제어**: `window.addEventListener('message')`를 통해 앱의 물리 백버튼 신호를 감지하여 모달 제어
+
+<br>
 
 ## 🚀 Setup & Run
 

@@ -3,12 +3,16 @@
 - React Native(Expo) 기반의 하이브리드 앱 쉘
 - 웹뷰를 통해 웹앱을 래핑하고, 네이티브 기능을 제공
 
+<br>
+
 ## 🛠 Tech Stack
 
 - **Framework**: Expo 54, React Native 0.81
 - **Language**: TypeScript 5.9
 - **Key Libraries**:
   - `react-native-webview`: 웹뷰 통합 및 브릿지 통신
+
+<br>
 
 ## ⚙️ Development Environment Setup
 
@@ -19,10 +23,12 @@
 - **WebView URL**: Production URL (`https://waitgym.life`) 사용
 - **Local Debugging**: UI/UX 수정 사항은 로컬 웹 환경에서 우선 검증 후 배포하여 모바일에서 확인
 
-### Prerequisites
+### 🔧 Prerequisites
 
 - Node.js 18+
 - Expo Go App (On Real Device)
+
+<br>
 
 ## 📱 Key Features & Implementation
 
@@ -42,12 +48,16 @@
 
 웹뷰 내에서 모달이 열려있을 때 앱이 종료되지 않도록 `BackHandler` 이벤트를 가로채어 웹으로 신호를 전달
 
+<br>
+
 ## 🌉 Bridge Protocol
 
 | Action Type           | Payload       | 설명                               |
 | --------------------- | ------------- | ---------------------------------- |
 | `native-back-press`   | `MODAL_CLOSE` | 웹의 모달 닫힘 상태 동기화         |
 | `ANDROID_BACK_BUTTON` | -             | 안드로이드 물리 백버튼 이벤트 전달 |
+
+<br>
 
 ## 🚀 Setup & Run
 
@@ -59,5 +69,5 @@ npm install
 EXPO_PUBLIC_WEBVIEW_URL=[https://waitgym.life](https://waitgym.life)
 
 # 3. 개발 서버 실행
-npm start
+npm run start
 ```
