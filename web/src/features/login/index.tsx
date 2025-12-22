@@ -2,11 +2,23 @@ import logo from "@img/logo.svg"; //이미지로고
 import googleLogo from "@img/icon-google.svg"; //이미지로고
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/userStore";
 
 export default function Login() {
-  function handleLogin() {
+  const navigate = useNavigate();
+  const { guestLogin } = useUserStore();
+
+  function handleGoogleLogin() {
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
     window.location.href = `${API_BASE}/api/auth/google`;
+  }
+
+  async function handleGuestLogin() {
+    const success = await guestLogin();
+    success
+      ? navigate("/")
+      : alert("게스트 로그인에 실패했습니다. 다시 시도해주세요.");
   }
 
   return (
@@ -34,7 +46,7 @@ export default function Login() {
 
         <BottomButtonWrapper>
           <motion.button
-            onClick={handleLogin}
+            onClick={handleGoogleLogin}
             className="btn btn-white"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,7 +57,7 @@ export default function Login() {
           </motion.button>
 
           <motion.button
-            onClick={handleLogin}
+            onClick={handleGuestLogin}
             className="btn btn-blue"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

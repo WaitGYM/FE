@@ -51,6 +51,10 @@
       border-radius: rem(8);
       font-size: rem(16);
       font-weight: 600;
+
+      &:disabled {
+        opacity: 0.5;
+      }
     }
   }
 
