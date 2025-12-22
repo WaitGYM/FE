@@ -2,9 +2,9 @@
 
 > 헬스장에서 지루한 대기시간이 **기다려짐**
 
+[![React](https://img.shields.io/badge/React-19.1-61dafb?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deploy-black?logo=vercel)](https://waitgym-fe-web-two.vercel.app)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18-61dafb?logo=react)](https://react.dev/)
 
 [🌐 서비스 바로가기](https://waitgym-fe-web-two.vercel.app) | [📱 Mobile Repository](https://github.com/WaitGYM/FE/tree/main/mobile) | [🔗 Organization](https://github.com/WaitGYM)
 
@@ -12,14 +12,29 @@
 
 ## 📖 프로젝트 소개
 
-헬스장에서 불편한 대면 및 대기상황으로 인해 플랜진행이 어려운 문제해결을 위한 효율적인 플랜진행을 돕는 **기구 대기 서비스 "기다려짐"** 의 프론트엔드입니다.
+헬스장에서 불편한 대면 및 대기상황으로 인해 플랜진행이 어려운 문제해결을 위한  
+효율적인 플랜진행을 돕는 **기구 대기 서비스 "기다려짐"** 의 프론트엔드입니다.
 
 ### 🎯 핵심 기능
 
-- 💺 **기구 예약 시스템** - 실시간으로 기구를 예약하고 대기열 관리
-- 📋 **운동 루틴 관리** - 개인 맞춤형 운동 루틴 생성 및 관리
-- 🔔 **실시간 알림** - 대기 순서 및 운동 순서 알림
-- 👤 **게스트 로그인** - 회원가입 없이 서비스 체험 가능
+#### 1. 👤 **게스트 로그인**
+
+> 회원가입 없이 서비스 체험 가능
+
+#### 2. 📋 **운동 루틴 관리**
+
+> 내가 사용하고싶은 운동기구와 세트수를 추가,수정,삭제해  
+> **나의 운동루틴**을 관리할수 있습니다.
+
+![운동루틴관리](./images/mockup01.gif)
+
+#### 3. 💺 **기구 예약 시스템**
+
+> 실시간으로 기구를 예약하고 대기열 관리
+
+#### 4. 🔔 **실시간 알림**
+
+> 대기 순서 및 운동 순서 알림
 
 ---
 
@@ -28,7 +43,7 @@
 ### Web Application
 
 ```
-Frontend Framework    React 18 + TypeScript
+Frontend Framework    React 19 + TypeScript
 Build Tool           Vite
 State Management     Zustand
 Styling              Sass (SCSS)
@@ -207,16 +222,24 @@ HTML5 시맨틱 태그를 사용하여 웹 페이지 구조를 명확하게 하�
 - 사용자 초기 허들 완화 및 접근성 향상
 - 게스트 세션 관리로 임시 데이터 저장 지원
 
-### Web/Mobile 인증 동기화
+### 웹 폰트 최적화: 2MB → 107KB (95% 감소)
 
 **🚨 문제**
 
-- 웹과 모바일에서 각각 다른 인증 프로세스로 인한 사용자 경험 불일치
+- Pretendard 웹 폰트 용량이 2MB로 초기 로딩 속도 저하
+- 실제 사용하지 않는 11,172개의 한글 글자가 모두 포함
 
 **✅ 해결**
 
-- `expo-auth-session`으로 모바일에서도 웹과 동일한 OAuth 플로우 구현
-- WebView를 통한 토큰 공유로 원활한 크로스 플랫폼 경험 제공
+- fonttools와 pyftsubset으로 Font Subsetting 구현
+- 프로젝트에서 실제 사용하는 글자만 추출하여 서브셋 폰트 생성
+- <link rel="preload">로 폰트 로딩 우선순위 설정
+- CDN 대신 자체 호스팅으로 서버 장애 대응 및 속도 개선
+
+**📊 결과**
+
+- 폰트 용량 95% 감소 (2MB → 107KB)
+- Lighthouse Performance 점수 대폭 개선
 
 ---
 
@@ -244,7 +267,7 @@ PascalCase: User, EquipmentData, ApiResponse;
 
 ---
 
-## 👥 Team Members
+## 👥 멤버 소개
 
 <div align="center">
 <table>
@@ -253,7 +276,7 @@ PascalCase: User, EquipmentData, ApiResponse;
       <a href="https://github.com/uri122">
         <img src="https://avatars.githubusercontent.com/u/64038879?v=4" width="100" alt="uri"/>
       </a><br />
-      <a href="https://github.com/uri122"><b>uri</b></a><br />
+      <a href="https://github.com/uri122"><b>최우리</b></a><br />
       Frontend Developer
     </td>
     <td align="center">
@@ -279,6 +302,6 @@ PascalCase: User, EquipmentData, ApiResponse;
 
 <div align="center">
 
-**Made with ❤️ by WaitGYM Team**
+Copyright 기다려짐. All rights reserved.
 
 </div>
