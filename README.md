@@ -17,13 +17,13 @@
 graph TD
     User((User))
 
-    subgraph Mobile [Mobile App (Expo)]
+    subgraph Mobile ["Mobile App (Expo)"]
         AppShell[App Shell]
         NativeAuth[Auth Session]
         Bridge[WebView Bridge]
     end
 
-    subgraph Web [Web Frontend (React)]
+    subgraph Web ["Web Frontend (React)"]
         Pages[Pages / UI]
         State[Zustand Store]
         API_Client[Axios Client]
