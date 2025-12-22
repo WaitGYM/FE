@@ -11,41 +11,42 @@
 
 ## 🏗️ System Architecture
 
-모바일 앱 쉘(Native)과 비즈니스 로직(Web)을 분리하여 유지보수성을 높인 **하이브리드 아키텍처**입니다.
+모바일 앱 쉘(Native)과 비즈니스 로직(Web)을 분리하여 유지보수성을 높인 **하이브리드 아키텍처**
+인증(Auth)을 포함한 주요 로직은 Web에서 수행되며, Native는 환경 설정과 하드웨어 제어를 담당
 
 ```mermaid
 graph TD
     User((User))
 
     subgraph Mobile ["Mobile App (Expo)"]
-        AppShell[App Shell]
-        NativeAuth[Auth Session]
-        Bridge[WebView Bridge]
+        AppShell["App Shell"]
+        EnvConfig["Env Config (UserAgent)"]
+        Bridge["WebView Bridge"]
     end
 
     subgraph Web ["Web Frontend (React)"]
-        Pages[Pages / UI]
-        State[Zustand Store]
-        API_Client[Axios Client]
+        Pages["Pages / UI"]
+        Auth["Auth Logic (Google / Guest)"]
+        State["Zustand Store"]
     end
 
-    subgraph Server [Backend Server]
-        API[API Server]
-        Socket[WebSocket]
+    subgraph Server ["Backend Server"]
+        API["API Server"]
+        Socket["WebSocket"]
     end
 
     User --> AppShell
     AppShell -->|Wrap| Web
-    NativeAuth -->|Token| Bridge
+    EnvConfig -.->|Bypass OAuth| Auth
     Bridge <-->|postMessage| Web
-    Web <-->|REST / WS| Server
+    Web -->|Login Request| Server
 ```
 
 ## 📁 Repository Structure
 
 ```bash
-├── mobile/       # 📱 Expo (React Native) - 네이티브 기능 & 웹뷰 쉘
-└── web/          # 🌐 React (Vite) - 핵심 서비스 로직 & UI
+├── mobile/       # 📱 Expo (React Native) - 네이티브 쉘 & WebView 환경 설정
+└── web/          # 🌐 React (Vite) - 구글/게스트 로그인 및 핵심 서비스 로직
 ```
 
 ## 🚀 Quick Start

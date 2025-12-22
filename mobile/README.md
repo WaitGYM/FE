@@ -24,52 +24,40 @@
 - Node.js 18+
 - Expo Go App (On Real Device)
 
-## 🏃 Getting Started
+## 📱 Key Features & Implementation
+
+### 1. Google OAuth WebView 호환성 처리
+
+- Google의 보안 정책상 일반적인 WebView에서는 로그인이 차단
+- 이를 해결하기 위해 Native 단에서 UserAgent를 모바일 브라우저 환경으로 위장하여 로그인을 지원
+
+```typescript
+<WebView
+  userAgent="Mozilla/5.0 (Linux; Android 8.0.0; SM-G935S Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Mobile Safari/537.36"
+  // ... other props
+/>
+```
+
+### 2. 안드로이드 백버튼 제어 (UX 최적화)
+
+웹뷰 내에서 모달이 열려있을 때 앱이 종료되지 않도록 `BackHandler` 이벤트를 가로채어 웹으로 신호를 전달
+
+## 🌉 Bridge Protocol
+
+| Action Type           | Payload       | 설명                               |
+| --------------------- | ------------- | ---------------------------------- |
+| `native-back-press`   | `MODAL_CLOSE` | 웹의 모달 닫힘 상태 동기화         |
+| `ANDROID_BACK_BUTTON` | -             | 안드로이드 물리 백버튼 이벤트 전달 |
+
+## 🚀 Setup & Run
 
 ```bash
 # 1. 의존성 설치
 npm install
 
 # 2. 환경 변수 설정 (.env 파일 생성)
-# 주의: CORS 정책으로 인해 로컬 IP 대신 배포된 URL을 사용
 EXPO_PUBLIC_WEBVIEW_URL=[https://waitgym.life](https://waitgym.life)
 
 # 3. 개발 서버 실행
 npm start
-```
-
-## 🌉 WebView Bridge Protocol (핵심 기능)
-
-앱(Native)과 웹(Web)은 `postMessage`를 통해 유기적으로 통신
-
-### 1. Web ➡️ Native (웹이 앱에게 요청)
-
-| Action Type         | Payload       | 설명                                          |
-| ------------------- | ------------- | --------------------------------------------- |
-| `native-back-press` | `MODAL_CLOSE` | 웹의 모달이 닫혔음을 앱에 알림 (앱 종료 방지) |
-
-### 2. Native ➡️ Web (앱이 웹에게 요청)
-
-| Action Type           | Payload | 설명                                        |
-| --------------------- | ------- | ------------------------------------------- |
-| `ANDROID_BACK_BUTTON` | -       | 안드로이드 물리 백버튼 이벤트를 웹으로 전달 |
-
-## 📱 주요 기능 구현
-
-### 안드로이드 백버튼 제어 (UX 최적화)
-
-웹뷰 내에서 모달이 열려있을 때 앱이 종료되지 않도록 `BackHandler` 이벤트를 가로채어 웹으로 신호를 전달
-
-```typescript
-// 예시 코드
-const backAction = () => {
-  if (webViewRef.current) {
-    // 웹에게 백버튼 눌림 신호 전송
-    webViewRef.current.postMessage(
-      JSON.stringify({ type: "ANDROID_BACK_BUTTON" })
-    );
-    return true; // 앱 종료 방지
-  }
-  return false;
-};
 ```
