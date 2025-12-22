@@ -8,7 +8,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deploy-black?logo=vercel)](https://waitgym-fe-web-two.vercel.app)
 
-[🌐 서비스 바로가기](https://waitgym-fe-web-two.vercel.app) | [📱 Mobile Repository](https://github.com/WaitGYM/FE/tree/main/mobile) | [🔗 Organization](https://github.com/WaitGYM)
+[🌐 서비스 바로가기](https://waitgym.life) |
+[🔗 Organization](https://github.com/WaitGYM) |
+[🔙 Backend Repository](https://github.com/WaitGYM/BE)
 
 ---
 
@@ -309,14 +311,7 @@ PascalCase: User, EquipmentData, ApiResponse;
 
 ## 📆 프로젝트 기간
 
-- 전체 기간: `2024.10 ~ 진행중`
 - 개발 기간: `2025.08 ~ 진행중`
-
-## 🔗 Links
-
-- 🌐 [기다려짐 바로가기](https://waitgym.life)
-- 📂 [Organization](https://github.com/WaitGYM)
-- 🔙 [Backend Repository](https://github.com/WaitGYM/BE)
 
 ---
 
