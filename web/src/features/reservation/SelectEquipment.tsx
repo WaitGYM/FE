@@ -86,7 +86,7 @@ export default function ReservationPage() {
     resetEquipmentState();
   }
 
-  function handleRotineUpdateBtnClick() {
+  function handleRoutineUpdateBtnClick() {
     if (!routineDetail) return;
     setRoutineName(routineDetail.name);
     setSelectedEquipList(equipmentList);
@@ -113,6 +113,7 @@ export default function ReservationPage() {
           workoutGoal
         );
         navigate("/workout/exercising", { replace: true });
+        resetSelectedEquipmentState();
       } else {
         console.log("루틴 기구 대기!!");
         navigate("/reservation/wait-request");
@@ -185,7 +186,7 @@ export default function ReservationPage() {
                 <button
                   type="button"
                   className="btn-delete"
-                  onClick={handleRotineUpdateBtnClick}
+                  onClick={handleRoutineUpdateBtnClick}
                 >
                   수정
                 </button>
@@ -298,7 +299,7 @@ export default function ReservationPage() {
           </BottomButtonWrapper>
         ) : null}
 
-        {/* 대기중인 기구가 이용가능이 되면 운동시작으로 */}
+        {/* 대기중인 기구의 차례 되면 운동시작으로 */}
         {selectedEquipment?.status?.myQueuePosition === 1 &&
         selectedEquipment?.status?.myQueueStatus === "NOTIFIED" ? (
           <BottomButtonWrapper>
