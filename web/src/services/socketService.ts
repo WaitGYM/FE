@@ -45,7 +45,7 @@ const connectWebSocket = (userId: string | number) => {
         data.type === "QUEUE_EXPIRED" ||
         data.type === "WAITING_COUNT"
       ) {
-        // console.log("새로운 메시지 수신:", data.type, data.message);
+        console.log("새로운 메시지 수신:", data.type, data.message);
         useNotificationStore.getState().addNotification({
           id: Date.now(),
           createdAt: new Date().toISOString(),

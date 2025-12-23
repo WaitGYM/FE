@@ -138,9 +138,7 @@ export const useReservationStore = create<ReservationStoreType>()(
       } catch (error) {
         console.log("기구 예약에 실패", error);
       } finally {
-        set({
-          selectedEquipment: initialState.selectedEquipment,
-        });
+        get().resetSelectedEquipmentState();
         setLoading(false);
       }
     },
@@ -159,6 +157,7 @@ export const useReservationStore = create<ReservationStoreType>()(
       } catch (error) {
         console.log("기구 예약 취소에 실패했습니다.", error);
       } finally {
+        get().resetSelectedEquipmentState();
         setLoading(false);
       }
     },

@@ -1,6 +1,7 @@
 import { AlarmClock } from "lucide-react";
 import motionIcon from "@img/motion-strong.png"; //이미지
 import LinearProgress from "@mui/material/LinearProgress";
+import { useUserStore } from "../../../stores/userStore";
 
 export default function TabMission() {
   //최대값 (임의값 4로 설정)
@@ -24,11 +25,13 @@ export default function TabMission() {
     },
   ];
 
+  const { userInfo } = useUserStore();
+
   return (
     <div className="container">
       <div className="greeting">
         <h2 className="msg">
-          철민님, 미션달성을 위해
+          {userInfo.name}님, 미션달성을 위해
           <br />
           조금만 더 힘내세요!
         </h2>
