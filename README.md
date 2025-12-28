@@ -449,15 +449,13 @@ import { Button, UserProfile } from "@/components";
       <a href="https://github.com/uri122">
         <img src="https://avatars.githubusercontent.com/u/64038879?v=4" width="100" alt="uri"/>
       </a><br />
-      <a href="https://github.com/uri122"><b>최우리</b></a><br />
-      Frontend Developer
+      <a href="https://github.com/uri122"><b>최우리</b></a>
     </td>
     <td align="center">
       <a href="https://github.com/lyla-bae">
         <img src="https://avatars.githubusercontent.com/u/188743295?v=4" width="100" alt="배근영"/>
       </a><br />
-      <a href="https://github.com/lyla-bae"><b>배근영</b></a><br />
-      Frontend Developer
+      <a href="https://github.com/lyla-bae"><b>배근영</b></a>
     </td>
   </tr>
 </table>
