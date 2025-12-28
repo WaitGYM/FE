@@ -96,6 +96,38 @@ Authentication       Expo Auth Session
 
 ---
 
+## 🏗️ 시스템 아키텍처
+
+모바일 앱 쉘(Native)과 비즈니스 로직(Web)을 분리하여 유지보수성을 높인 **하이브리드 아키텍처**
+
+인증(Auth)을 포함한 주요 로직은 Web에서 수행되며, Native는 환경 설정과 하드웨어 제어를 담당
+
+```mermaid
+graph TD
+    User((User))
+    subgraph Mobile ["Mobile App (Expo)"]
+        AppShell["App Shell"]
+        EnvConfig["Env Config (UserAgent)"]
+        Bridge["WebView Bridge"]
+    end
+    subgraph Web ["Web Frontend (React)"]
+        Pages["Pages / UI"]
+        Auth["Auth Logic (Google / Guest)"]
+        State["Zustand Store"]
+    end
+    subgraph Server ["Backend Server"]
+        API["API Server"]
+        Socket["WebSocket"]
+    end
+    User --> AppShell
+    AppShell -->|Wrap| Web
+    EnvConfig -.->|Bypass OAuth| Auth
+    Bridge <-->|postMessage| Web
+    Web -->|Login Request| Server
+```
+
+---
+
 ## 📁 프로젝트 구조
 
 ```
@@ -111,33 +143,47 @@ FE/
 │
 └── 🌐 web/
     ├── src/
-    │   ├── assets/         # 폰트, 이미지 등 정적 에셋
-    │   ├── components/     # 공통 UI 컴포넌트
-    │   ├── features/       # 도메인별 기능 컴포넌트
-    │   ├── hooks/          # 커스텀 훅
-    │   ├── routes/         # 라우팅 설정
-    │   ├── services/       # API 클라이언트, 소켓 서비스
-    │   ├── stores/         # Zustand 상태 관리 스토어
-    │   ├── styles/         # Sass 스타일 시트
-    │   └── types/          # TypeScript 타입 정의
+    │   ├── assets/         # 정적 파일 (이미지, 아이콘 등)
+    │   ├── components/     # 재사용 가능한 공통 컴포넌트
+    │   │   ├── ui/        # 기본 UI 컴포넌트 (Button, Input 등)
+    │   │   ├── layout/    # 레이아웃 컴포넌트 (Header, Footer, Sidebar)
+    │   │   └── common/    # 공통 비즈니스 컴포넌트
+    │   ├── features/       # 기능별 모듈화
+    │   │   ├── auth/
+    │   │   │   ├── components/
+    │   │   │   ├── hooks/
+    │   │   │   ├── services/
+    │   │   │   └── types.ts
+    │   │   └── dashboard/
+    │   │       ├── components/
+    │   │       ├── hooks/
+    │   │       └── services/
+    │   ├── hooks/          # 전역 커스텀 훅
+    │   ├── services/       # API 호출 및 외부 서비스
+    │   ├── stores/         # 상태 관리 (Zustand)
+    │   ├── utils/          # 유틸리티 함수
+    │   ├── types/          # 전역 타입 정의
+    │   ├── constants/      # 상수 정의
+    │   └── styles/         # 전역 스타일 (Sass)
     ├── package.json        # 의존성 및 스크립트
     └── vite.config.ts      # Vite 설정
 ```
 
 ### 🎨 설계 패턴
 
-#### Atomic Design Pattern
+#### Feature-Based Architecture
 
-컴포넌트를 `features` (도메인별), `components/ui` (재사용 가능한 UI 요소)로 구분하여 컴포넌트의 재사용성과 유지보수성 향상
+도메인별로 관련 컴포넌트, 훅, 서비스를 `features` 디렉토리에 모듈화하여 응집도를 높이고 유지보수성 향상
+
+#### Component Hierarchy
+
+- **UI Components** (`components/ui`): 재사용 가능한 기본 UI 요소
+- **Layout Components** (`components/layout`): 페이지 레이아웃 구조
+- **Feature Components** (`features/*/components`): 도메인 특화 컴포넌트
 
 #### Store Pattern (with Zustand)
 
 전역 상태를 `stores` 디렉토리에서 중앙 집중적으로 관리하여 상태 변화를 예측 가능하게 하고, 컴포넌트 간 상태 공유 용이
-
-#### Container/Presenter Pattern
-
-- **Container** (`features`): 데이터 로직과 비즈니스 로직 처리
-- **Presenter** (`components`): UI 렌더링에 집중
 
 ---
 
@@ -155,18 +201,6 @@ FE/
 
 - 회원가입 없이 서비스 핵심 기능 체험 가능
 - 사용자 초기 진입 장벽 완화 및 접근성 향상
-
-### 🧭 라우팅 시스템
-
-**Web**: `react-router-dom`으로 URL 경로에 따른 적절한 페이지 컴포넌트 렌더링
-
-**Mobile**: `react-native-webview`를 통한 웹뷰 내 상호작용, 일부 네이티브 기능은 Expo 라이브러리로 구현
-
-### 📊 상태 관리
-
-**Web**: `Zustand`로 사용자 인증 정보, 운동 기구 목록 등 다양한 전역 상태 관리
-
-**Mobile**: `expo-secure-store`로 로그인 토큰 관리, 주요 상태는 웹뷰와 통신하여 동기화
 
 ### 🔄 실시간 통신
 
@@ -187,40 +221,6 @@ FE/
 
 - 부드러운 페이지 전환 효과
 - 마이크로 인터랙션으로 사용자 경험 향상
-
----
-
-## ♿️ 웹 접근성 (Web Accessibility)
-
-모든 사용자가 원활하게 서비스를 이용할 수 있도록 웹 접근성을 준수하고자 노력했습니다.
-
-### 🏷 시맨틱 HTML
-
-HTML5 시맨틱 태그를 사용하여 웹 페이지 구조를 명확하게 하고, 스크린 리더 사용자의 콘텐츠 이해 지원
-
-### 🎯 ARIA 속성
-
-동적인 UI 컴포넌트(모달, 드롭다운 등)에 ARIA 속성을 부여하여 보조 기술 사용자의 상호작용 지원
-
-### ⌨️ 키보드 네비게이션
-
-모든 기능은 마우스 없이 키보드만으로도 접근 및 사용 가능하도록 구현
-
----
-
-## 🚀 성능 최적화
-
-### Code Splitting
-
-`vite.config.ts`의 `manualChunks` 설정으로 큰 라이브러리를 별도 청크로 분리하여 **초기 로딩 속도 개선**
-
-### Component Memoization
-
-`React.memo`와 `useMemo`를 사용하여 **불필요한 리렌더링 방지**
-
-### API 통신 최적화
-
-`axios`를 사용한 비동기 통신으로 효율적인 데이터 페칭
 
 ---
 
@@ -258,29 +258,128 @@ HTML5 시맨틱 태그를 사용하여 웹 페이지 구조를 명확하게 하�
 - 폰트 용량 95% 감소 (2MB → 107KB)
 - Lighthouse Performance 점수 대폭 개선
 
+### Dialog 접근성 이슈 해결
+
+**🚨 문제**
+
+- MUI Drawer(Dialog) 컴포넌트를 닫을 때 브라우저 콘솔에 접근성 경고 발생
+- **에러 내용**: Dialog가 `aria-hidden="true"` (화면에서 숨김) 상태인데, 그 안에 있는 버튼에 여전히 포커스가 남아있어 발생
+- **실제 상황**: 사용자가 Dialog 내부의 "확인" 버튼을 클릭 → Dialog가 닫히기 시작 → 버튼에 포커스가 남아있는 상태에서 Dialog가 숨겨짐
+- **접근성 문제**: 스크린 리더 사용자가 포커스된 요소를 읽을 수 없어 혼란 발생
+
+**✅ 해결**
+
+- Dialog가 닫히기 전에 포커스를 Dialog 외부로 이동하는 로직 구현
+- Dialog를 연 버튼을 기억했다가, Dialog 닫힌 후 해당 버튼으로 포커스 복원
+- MUI의 자동 포커스 관리 기능 비활성화하고 수동으로 제어
+
+**📊 결과**
+
+- 브라우저 접근성 경고 완전 제거
+- 스크린 리더 및 키보드 사용자 경험 개선
+
 ---
 
 ## 📝 코딩 컨벤션
 
-### Naming Convention
+### 파일 네이밍 컨벤션
+
+#### 컴포넌트
 
 ```typescript
-// 컴포넌트
-PascalCase: UserProfile.tsx, EquipmentCard.tsx;
+// PascalCase
+UserProfile.tsx
+ProductCard.tsx
 
-// 변수/함수
-camelCase: getUserData(), isAuthenticated;
-
-// 인터페이스/타입
-PascalCase: User, EquipmentData, ApiResponse;
+// 폴더형 구조
+UserProfile/
+  ├── index.tsx
+  └── UserProfile.module.css
 ```
 
-### ESLint & TypeScript
+#### 훅
 
-- **ESLint**: `eslint.config.js` 규칙 준수
-- **typescript-eslint**: TypeScript 코드 스타일 강제
-- **eslint-plugin-react-hooks**: React Hook 올바른 사용 보장
-- **tsconfig.json**: 엄격한 타입 체크 적용, 경로 별칭으로 import 경로 간결화
+```typescript
+// camelCase + use 접두사
+useAuth.ts;
+useLocalStorage.ts;
+```
+
+#### 서비스/유틸
+
+```typescript
+// camelCase
+authService.ts;
+formatDate.ts;
+```
+
+#### 타입
+
+```typescript
+// PascalCase + 접미사
+User.types.ts;
+api.types.ts;
+```
+
+#### 상수
+
+```typescript
+// UPPER_SNAKE_CASE
+API_ENDPOINTS.ts;
+COLORS.ts;
+```
+
+### 컴포넌트 파일 구조
+
+```tsx
+// UserProfile.tsx
+import React from "react";
+import { UserProfileProps } from "./UserProfile.types";
+import "./UserProfile.styles.css";
+
+export const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
+  // 로직
+  return <div className="user-profile">{/* JSX */}</div>;
+};
+
+export default UserProfile;
+```
+
+### 인덱스 파일 활용
+
+```tsx
+// components/index.ts
+export { Button } from "./ui/Button";
+export { UserProfile } from "./UserProfile";
+export { ProductCard } from "./ProductCard";
+
+// 사용 시
+import { Button, UserProfile } from "@/components";
+```
+
+### 절대 경로 설정
+
+```json
+// tsconfig.json / vite.config.ts
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/components/*": ["src/components/*"],
+      "@/features/*": ["src/features/*"],
+      "@/utils/*": ["src/utils/*"]
+    }
+  }
+}
+```
+
+### 코드 품질 관리
+
+- **ESLint & Prettier**: 코드 스타일 자동 통일
+- **Husky + lint-staged**: 커밋 전 자동 검증
+- **TypeScript**: 엄격한 타입 체크 적용
+- **테스트**: `__tests__` 폴더 또는 `.test.ts` 접미사 사용
 
 ---
 
