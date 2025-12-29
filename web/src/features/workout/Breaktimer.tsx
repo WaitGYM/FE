@@ -102,21 +102,23 @@ export default function WorkoutBreaktimer() {
             <Header
               className="header--breaktimer"
               rightContent={
-                <button
-                  className="btn-delete"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsRestTimerMiniView(true);
-                    navigate(
-                      `/reservation/select-equipment${
-                        workoutMode === "routine" ? "/routine" : ""
-                      }`
-                    );
-                  }}
-                  type="button"
-                >
-                  <span>기구 현황 보기</span>
-                </button>
+                leftRestTime > 5 && (
+                  <button
+                    className="btn-delete"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsRestTimerMiniView(true);
+                      navigate(
+                        `/reservation/select-equipment${
+                          workoutMode === "routine" ? "/routine" : ""
+                        }`
+                      );
+                    }}
+                    type="button"
+                  >
+                    <span>기구 현황 보기</span>
+                  </button>
+                )
               }
             />
             <section className="container">

@@ -108,11 +108,11 @@ export default function ReservationPage() {
   }
 
   function handleNextBtn() {
-    console.log("다음스텝", selectedEquipment);
+    // console.log("다음스텝", selectedEquipment);
     if (routineDetail) {
       // 운동중이 아니고 대기 없으면 운동 시작으로
       if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
-        console.log("루틴 운동 시작!");
+        // console.log("루틴 운동 시작!");
         const workoutGoal = {
           totalSets: selectedEquipment.sets,
           restSeconds: selectedEquipment.restSeconds,
@@ -125,7 +125,7 @@ export default function ReservationPage() {
         navigate("/workout/exercising", { replace: true });
         resetSelectedEquipmentState();
       } else {
-        console.log("루틴 기구 대기!!");
+        // console.log("루틴 기구 대기!!");
         navigate("/reservation/wait-request");
       }
     } else {
@@ -134,13 +134,14 @@ export default function ReservationPage() {
   }
 
   function handleStartWorkout() {
-    console.log("운동시작으로 GO!!", selectedEquipment, waitingInfo);
+    // console.log("운동시작으로 GO!!", selectedEquipment, waitingInfo);
     const workoutGoal = {
       totalSets: waitingInfo?.sets,
       restSeconds: waitingInfo?.restSeconds,
     };
     startWorkout(selectedEquipment?.id, workoutGoal);
     navigate("/workout/exercising");
+    resetSelectedEquipmentState();
   }
 
   return (
@@ -171,7 +172,8 @@ export default function ReservationPage() {
               </h2>
             }
             rightContent={
-              routineId && (
+              routineId &&
+              !isWorkingOut && (
                 <button
                   type="button"
                   className="btn-delete"
