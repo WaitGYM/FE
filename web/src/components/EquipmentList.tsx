@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 import { Skeleton } from "@mui/material";
 import { useEquipmentStore } from "../stores/equipmentStore";
@@ -20,16 +20,24 @@ export default function EquipmentListPage({
     equipmentInfo: EquipmentType | EquipmentType[]
   ) => void;
 }) {
-  const { equipmentList, equipmentListLoading, getEquipments } =
+  const { equipmentList, equipmentListLoading, getEquipments, refreshTrigger } =
     useEquipmentStore();
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
   const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
   const isEquipAutoSorting = useUIStore((s) => s.isEquipAutoSorting);
+  const prevSortRef = useRef(isEquipAutoSorting);
 
   useEffect(() => {
-    getEquipments(filter);
-  }, []);
+    const isToggleOff =
+      prevSortRef.current === true && isEquipAutoSorting === false;
+
+    prevSortRef.current = isEquipAutoSorting;
+
+    if (!isToggleOff) {
+      getEquipments(filter);
+    }
+  }, [filter, isEquipAutoSorting, refreshTrigger]);
 
   // 30초마다 polling
   useEffect(() => {
@@ -38,12 +46,6 @@ export default function EquipmentListPage({
       return () => clearInterval(interval);
     }
   }, [isRestTimerModalOpen, isRestTimerMiniView]);
-
-  useEffect(() => {
-    if (isEquipAutoSorting) {
-      getEquipments(filter);
-    }
-  }, [isEquipAutoSorting]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     handleSelectedEquipment(selectEquip);
