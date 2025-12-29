@@ -6,6 +6,7 @@ import { useReservationStore } from "./stores/reservationStore";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { useUIStore } from "../../stores/UIStore";
 import { useState, useEffect } from "react";
+import { usePreferenceStore } from "../../stores/preferenceStore";
 
 export default function WaitRequest() {
   const navigate = useNavigate();
@@ -13,17 +14,15 @@ export default function WaitRequest() {
     useReservationStore();
   const { routineId } = useUIStore();
 
-  //툴팁관련
+  // 툴팁
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-
+  const { hasSeenWaitRequestTooltip, setHasSeenWaitRequestTooltip } =
+    usePreferenceStore();
   useEffect(() => {
-    const hasSeenTooltip = localStorage.getItem("hasSeenWaitRequestTooltip");
-
-    if (!hasSeenTooltip) {
-      setTimeout(() => setIsTooltipOpen(true), 1000);
-      localStorage.setItem("hasSeenWaitRequestTooltip", "true");
-    }
-  }, []);
+    if (hasSeenWaitRequestTooltip) return;
+    setTimeout(() => setIsTooltipOpen(true), 1000);
+    setHasSeenWaitRequestTooltip(true);
+  }, [hasSeenWaitRequestTooltip, setHasSeenWaitRequestTooltip]);
 
   async function handleReqBtnClick() {
     await createReservation();

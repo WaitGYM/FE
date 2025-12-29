@@ -17,11 +17,15 @@ function formatSecondsToTime(seconds: number): string {
 export default function WorkoutGoal({
   equipmentInfo,
   mode,
+  isTooltipTarget,
+  onCloseTooltip,
   selectedList,
   setSelectedList,
 }: {
   equipmentInfo: EquipmentType;
   mode: "create" | "update";
+  isTooltipTarget: boolean;
+  onCloseTooltip: () => void;
   selectedList: EquipmentType[];
   setSelectedList: React.Dispatch<React.SetStateAction<EquipmentType[]>>;
 }) {
@@ -40,17 +44,6 @@ export default function WorkoutGoal({
   const { selectedEquipList, setSelectedEquipList, updateSelectedEquipment } =
     useRoutineStore();
 
-  //툴팁관련
-  const [isDragTooltipOpen, setIsDragTooltipOpen] = useState(false);
-
-  useEffect(() => {
-    const hasSeenTooltip = localStorage.getItem("hasDragTooltip");
-
-    if (!hasSeenTooltip) {
-      setTimeout(() => setIsDragTooltipOpen(true), 1000);
-      localStorage.setItem("hasDragTooltip", "true");
-    }
-  }, []);
   return (
     <>
       <li className="box" ref={setNodeRef} style={style} {...attributes}>
@@ -103,10 +96,10 @@ export default function WorkoutGoal({
                   <X size={20} color="#9498A0" />
                 </>
               }
-              open={isDragTooltipOpen}
+              open={isTooltipTarget}
               slotProps={{
                 popper: {
-                  onClick: () => setIsDragTooltipOpen(false),
+                  onClick: onCloseTooltip,
                   sx: {
                     [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
                       {

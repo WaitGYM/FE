@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, CirclePlus } from "lucide-react";
 import Header from "../../components/layout/Header";
@@ -27,6 +27,7 @@ import {
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import WorkoutGoal from "../../components/WorkoutGoal";
 import type { EquipmentType } from "../../types";
+import { usePreferenceStore } from "../../stores/preferenceStore";
 
 export default function RoutineSetting() {
   const [isOpenBackConfirmDialog, setIsOpenBackConfirmDialog] = useState(false);
@@ -53,6 +54,15 @@ export default function RoutineSetting() {
   const { resetSelectedEquipmentState } = useReservationStore();
   const { routineId, resetWorkoutMode } = useUIStore();
   const [deleteList, setDeleteList] = useState<EquipmentType[]>([]);
+
+  // 루틴 수정일때 드래그 버튼 툴팁
+  const [isDragTooltipOpen, setIsDragTooltipOpen] = useState(false);
+  const { hasDragTooltip, setHasDragTooltip } = usePreferenceStore();
+  useEffect(() => {
+    if (!routineId || hasDragTooltip) return;
+    setTimeout(() => setIsDragTooltipOpen(true), 1000);
+    setHasDragTooltip(true);
+  }, [hasDragTooltip, setHasDragTooltip]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -187,7 +197,6 @@ export default function RoutineSetting() {
                 운동추가
               </button>
             )}
-
             <ul className="box-wrap">
               <DndContext
                 sensors={sensors}
@@ -212,11 +221,13 @@ export default function RoutineSetting() {
                   items={selectedEquipList.map((equip) => equip.id)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {selectedEquipList.map((equip) => (
+                  {selectedEquipList.map((equip, idx) => (
                     <WorkoutGoal
                       key={equip.id}
                       equipmentInfo={equip}
                       mode={routineId ? "update" : "create"}
+                      isTooltipTarget={idx === 0 && isDragTooltipOpen}
+                      onCloseTooltip={() => setIsDragTooltipOpen(false)}
                       selectedList={deleteList}
                       setSelectedList={setDeleteList}
                     />

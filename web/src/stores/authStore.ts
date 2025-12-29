@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
+import { useUserStore } from "./userStore";
 
 interface AuthStoreType {
   token: string | null;
@@ -14,7 +14,6 @@ interface AuthStoreType {
 
 export const useAuthStore = create<AuthStoreType>()(
   devtools(
-    // persist 이용한 자동 로그인 처리
     persist(
       (set, get) => ({
         token: null,
@@ -27,8 +26,23 @@ export const useAuthStore = create<AuthStoreType>()(
             isAuthenticated: true,
             tokenExpiry: expiry || null,
           }),
-        logout: () =>
-          set({ token: null, isAuthenticated: false, tokenExpiry: null }),
+
+        logout: () => {
+          const { userInfo } = useUserStore.getState();
+          if (userInfo.isGuest) {
+            localStorage.removeItem(`user_${userInfo.id}_drag_tooltip`);
+            localStorage.removeItem(`user_${userInfo.id}_sort_tooltip`);
+            localStorage.removeItem(`user_${userInfo.id}_wait_tooltip`);
+            localStorage.removeItem(`user_${userInfo.id}_equip_date`);
+            localStorage.removeItem(`user_${userInfo.id}_equip_sort`);
+          }
+          set({
+            token: null,
+            isAuthenticated: false,
+            tokenExpiry: null,
+          });
+        },
+
         isTokenValid: () => {
           const { tokenExpiry } = get();
           if (!tokenExpiry) return true;

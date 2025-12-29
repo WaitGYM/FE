@@ -15,6 +15,7 @@ import { useWorkoutStore } from "../workout/stores/workoutStore";
 import CustomDialog from "../../components/ui/CustomDialog";
 import motionIconSrc from "@img/motion-party.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { usePreferenceStore } from "../../stores/preferenceStore";
 
 export default function ReservationPage() {
   const { filter } = useParams();
@@ -59,6 +60,15 @@ export default function ReservationPage() {
       setIsRefreshing(false);
     }, 500);
   };
+
+  // 툴팁
+  const [isSortTooltipOpen, setIsSortTooltipOpen] = useState(false);
+  const { hasSortTooltip, setHasSortTooltip } = usePreferenceStore();
+  useEffect(() => {
+    if (hasSortTooltip) return;
+    setTimeout(() => setIsSortTooltipOpen(true), 1000);
+    setHasSortTooltip(true);
+  }, [hasSortTooltip, setHasSortTooltip]);
 
   // 페이지 진입시 루틴 완료 체크해서 콩그레츄
   const [modalOpen, setModalOpen] = useState(false); //모달 열림 상태
@@ -133,27 +143,6 @@ export default function ReservationPage() {
     navigate("/workout/exercising");
   }
 
-  //툴팁관련
-  const [isSortTooltipOpen, setIsSortTooltipOpen] = useState(false);
-
-  useEffect(() => {
-    const hasSeenTooltip = localStorage.getItem("hasSortTooltip");
-    if (hasSeenTooltip) {
-      return;
-    }
-
-    const willModalOpen = isRoutineCompelte && !shownOnce;
-    const delay = willModalOpen ? 3000 : 1000;
-
-    const timerId = setTimeout(() => {
-      setIsSortTooltipOpen(true);
-      localStorage.setItem("hasSortTooltip", "true");
-    }, delay);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [isRoutineCompelte, shownOnce]);
   return (
     <>
       <motion.div

@@ -3,9 +3,11 @@ import { devtools } from "zustand/middleware";
 import type { WorkoutModeType } from "../types";
 
 interface UIStateType {
+  currentUserId: number | null;
+  setUserId: (id: number | null) => void;
+
   isEquipAutoSorting: boolean;
   setIsEquipAutoSorting: (val: boolean) => void;
-  initIsEquipAutoSorting: () => void;
 
   workoutMode: WorkoutModeType | null;
   setWorkoutMode: (workoutMode: WorkoutModeType) => void;
@@ -24,28 +26,45 @@ interface UIStateType {
   setIsRestTimerMiniView: (isMiniView: boolean) => void;
 }
 
-const TOGGLE_KEY = "equipment_toggle";
-const DATE_KEY = "equipment_toggle_date";
 const today = new Date().toISOString().split("T")[0];
 
+const getKeys = (uid: number) => ({
+  toggle: `user_${uid}_equip_sort`,
+  date: `user_${uid}_equip_date`,
+});
+
 export const useUIStore = create<UIStateType>()(
-  devtools((set) => ({
-    isEquipAutoSorting: false,
-    setIsEquipAutoSorting: (val) => {
-      localStorage.setItem(TOGGLE_KEY, JSON.stringify(val));
-      localStorage.setItem(DATE_KEY, today);
-      set({ isEquipAutoSorting: val });
-    },
-    initIsEquipAutoSorting: () => {
-      const storedDate = localStorage.getItem(DATE_KEY);
-      const storedToggle = localStorage.getItem(TOGGLE_KEY);
+  devtools((set, get) => ({
+    currentUserId: null,
+    setUserId: (id) => {
+      set({ currentUserId: id });
+      if (!id) {
+        set({ isEquipAutoSorting: false });
+        return;
+      }
+
+      const { toggle, date } = getKeys(id);
+      const storedDate = localStorage.getItem(date);
+      const storedToggle = localStorage.getItem(toggle);
 
       if (storedDate === today && storedToggle === "true") {
         set({ isEquipAutoSorting: true });
       } else {
-        localStorage.removeItem(TOGGLE_KEY);
-        localStorage.setItem(DATE_KEY, today);
+        localStorage.removeItem(toggle);
+        localStorage.setItem(date, today);
         set({ isEquipAutoSorting: false });
+      }
+    },
+
+    isEquipAutoSorting: false,
+    setIsEquipAutoSorting: (val) => {
+      set({ isEquipAutoSorting: val });
+
+      const { currentUserId } = get();
+      if (currentUserId) {
+        const { toggle, date } = getKeys(currentUserId);
+        localStorage.setItem(toggle, JSON.stringify(val));
+        localStorage.setItem(date, today);
       }
     },
 
