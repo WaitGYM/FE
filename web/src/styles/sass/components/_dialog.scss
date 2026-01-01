@@ -24,3 +24,18 @@
     }
   }
 }
+
+/* MUI Drawer 포커스 경고 해결 */
+.MuiDrawer-root[aria-hidden="true"] *:focus,
+.MuiDrawer-root[aria-hidden="true"] *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.MuiDrawer-root[aria-hidden="true"] {
+  pointer-events: none !important;
+}
+
+.MuiDrawer-root[aria-hidden="true"] button {
+  pointer-events: none !important;
+}
