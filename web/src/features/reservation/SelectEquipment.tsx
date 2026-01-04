@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, RefreshCcw, X } from "lucide-react";
@@ -7,6 +7,8 @@ import Switch from "@mui/material/Switch";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import { useUIStore } from "../../stores/UIStore";
 import Header from "../../components/layout/Header";
+import EquipSearchBar from "../../components/EquipSearchBar";
+import EquipCategoryFilter from "../../components/EquipCategoryFilter";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useReservationStore } from "./stores/reservationStore";
@@ -16,6 +18,7 @@ import CustomDialog from "../../components/ui/CustomDialog";
 import motionIconSrc from "@img/motion-party.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { usePreferenceStore } from "../../stores/preferenceStore";
+import { debounce } from "lodash";
 
 export default function ReservationPage() {
   const { filter } = useParams();
@@ -103,16 +106,78 @@ export default function ReservationPage() {
     navigate("/add-routine/routine-setting");
   }
 
+  ////// 검색 및 카테고리
+  const [searchInput, setSearchInput] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // 디바운싱된 검색어 업데이트
+  const debouncedSetSearchTerm = useCallback(
+    debounce((value: string) => {
+      setSearchTerm(value);
+    }, 300),
+    []
+  );
+
+  // 입력값 변경 시 디바운싱 적용
+  useEffect(() => {
+    debouncedSetSearchTerm(searchInput);
+
+    return () => {
+      debouncedSetSearchTerm.cancel();
+    };
+  }, [searchInput, debouncedSetSearchTerm]);
+
+  // 카테고리 목록 추출
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(equipmentList.map((eq) => eq.category))
+    ).sort();
+    return ["즐겨찾기", ...uniqueCategories];
+  }, [equipmentList]);
+
+  // 필터링된 기구 목록
+  const filteredEquipmentList = useMemo(() => {
+    let filtered = equipmentList;
+
+    // 1. 카테고리 필터링 (선택된 카테고리가 있을 때만)
+    if (selectedCategory === "즐겨찾기") {
+      filtered = filtered.filter((eq) => eq.isFavorite);
+    } else if (selectedCategory !== null) {
+      filtered = filtered.filter((eq) => eq.category === selectedCategory);
+    }
+
+    // 2. 검색어 필터링 (1글자 이상일 때만)
+    if (searchTerm.trim().length > 0) {
+      const term = searchTerm.trim().toLowerCase();
+      filtered = filtered.filter((eq) => {
+        const name = eq.name.toLowerCase();
+        const category = eq.category.toLowerCase();
+
+        return name.includes(term) || category.includes(term);
+      });
+    }
+
+    return filtered;
+  }, [equipmentList, selectedCategory, searchTerm]);
+
+  function handleClearSearch() {
+    setSearchInput("");
+    setSearchTerm("");
+  }
+
+  function handleCategoryClick(category: string) {
+    setSelectedCategory(selectedCategory === category ? null : category);
+  }
+
   function handleDeleteReservation() {
     deleteReservation().then(() => getEquipments(filter));
   }
 
   function handleNextBtn() {
-    // console.log("다음스텝", selectedEquipment);
     if (routineDetail) {
       // 운동중이 아니고 대기 없으면 운동 시작으로
       if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
-        // console.log("루틴 운동 시작!");
         const workoutGoal = {
           totalSets: selectedEquipment.sets,
           restSeconds: selectedEquipment.restSeconds,
@@ -125,7 +190,6 @@ export default function ReservationPage() {
         navigate("/workout/exercising", { replace: true });
         resetSelectedEquipmentState();
       } else {
-        // console.log("루틴 기구 대기!!");
         navigate("/reservation/wait-request");
       }
     } else {
@@ -134,7 +198,6 @@ export default function ReservationPage() {
   }
 
   function handleStartWorkout() {
-    // console.log("운동시작으로 GO!!", selectedEquipment, waitingInfo);
     const workoutGoal = {
       totalSets: waitingInfo?.sets,
       restSeconds: waitingInfo?.restSeconds,
@@ -184,6 +247,26 @@ export default function ReservationPage() {
               )
             }
           />
+
+          {!routineId || workoutMode === "direct" ? (
+            <>
+              <section className="container">
+                <EquipSearchBar
+                  searchInput={searchInput}
+                  onSearchChange={setSearchInput}
+                  onClearSearch={handleClearSearch}
+                />
+              </section>
+
+              <EquipCategoryFilter
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onCategoryClick={handleCategoryClick}
+              />
+            </>
+          ) : (
+            ""
+          )}
 
           <section className="container">
             <div className="equipment-wrap">
@@ -258,6 +341,7 @@ export default function ReservationPage() {
                 selectMode="SINGLE"
                 selectedList={Array(selectedEquipment)}
                 handleSelectedEquipment={setSelectedEquipment}
+                overrideEquipmentList={filteredEquipmentList}
               />
             </div>
           </section>
