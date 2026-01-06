@@ -1,5 +1,5 @@
 import type { EquipmentType } from "../types";
-import { Plus, Minus, GripVertical, CircleCheck } from "lucide-react";
+import { Plus, Minus, GripVertical, CircleCheck, X } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useRoutineStore } from "../features/routine/store/routineStore";
@@ -94,48 +94,59 @@ export default function WorkoutGoal({
           </div>
 
           {mode == "update" ? (
-            <button
-              type="button"
-              className="btn-drag-drop"
-              ref={setActivatorNodeRef}
-              {...listeners}
+            <Tooltip
+              title={
+                <>
+                  드래그로 순서를
+                  <br />
+                  바꿀 수 있어요.
+                  <X size={20} color="#9498A0" />
+                </>
+              }
+              open={isDragTooltipOpen}
+              slotProps={{
+                popper: {
+                  onClick: () => setIsDragTooltipOpen(false),
+                  sx: {
+                    [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
+                      {
+                        marginBottom: "1.3rem",
+                      },
+                  },
+                },
+                tooltip: {
+                  sx: {
+                    bgcolor: "#fff",
+                    color: "#293241",
+                    fontSize: "15px",
+                    padding: "12px 12px",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                    textAlign: "left",
+                    lineHeight: "1.4",
+                    maxWidth: "200px",
+                    minWidth: "160px",
+                    display: "grid",
+                    gridTemplateColumns: "1fr 20px",
+                  },
+                },
+                arrow: {
+                  sx: {
+                    color: "#fff",
+                  },
+                },
+              }}
+              arrow
             >
-              <Tooltip
-                title={<>드래그로 순서를 바꿀 수 있어요.</>}
-                open={isDragTooltipOpen}
-                slotProps={{
-                  popper: {
-                    onClick: () => setIsDragTooltipOpen(false),
-                    sx: {
-                      [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
-                        {
-                          marginBottom: "1.3rem",
-                        },
-                    },
-                  },
-                  tooltip: {
-                    sx: {
-                      bgcolor: "#fff",
-                      color: "#293241",
-                      fontSize: "13px",
-                      padding: "12px 16px",
-                      borderRadius: "4px",
-                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                      textAlign: "center",
-                      lineHeight: "1.4",
-                    },
-                  },
-                  arrow: {
-                    sx: {
-                      color: "#fff",
-                    },
-                  },
-                }}
-                arrow
+              <button
+                type="button"
+                className="btn-drag-drop"
+                ref={setActivatorNodeRef}
+                {...listeners}
               >
                 <GripVertical size={20} strokeWidth="2" />
-              </Tooltip>
-            </button>
+              </button>
+            </Tooltip>
           ) : selectedEquipList.length > 1 ? (
             <button
               type="button"

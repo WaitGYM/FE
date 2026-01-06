@@ -10,6 +10,7 @@ import {
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import NotificationButton from "../../components/ui/NotificationButton";
+import thumbDefault from "@img/thumb-default.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
 import { useAuthStore } from "../../stores/authStore";
@@ -48,14 +49,21 @@ export default function Mypage() {
               <strong>{userInfo.name}</strong>님
             </div>
             <div className="profile-img">
-              <img src={userInfo.avatar} alt="프로필 이미지" />
+              <img src={userInfo.avatar || thumbDefault} alt="프로필 이미지" />
             </div>
           </div>
           <div className="menu-wrap">
-            <Link className="menu" to="/profile">
-              <User size={20} strokeWidth="1.5" aria-hidden="true" />
-              개인정보수정
-            </Link>
+            {userInfo.isGuest ? (
+              <button className="menu" disabled>
+                <User size={20} strokeWidth="1.5" aria-hidden="true" />
+                개인정보수정
+              </button>
+            ) : (
+              <Link className="menu" to="/profile">
+                <User size={20} strokeWidth="1.5" aria-hidden="true" />
+                개인정보수정
+              </Link>
+            )}
             <Link className="menu" to="/gyms">
               <Dumbbell size={20} strokeWidth="1.5" aria-hidden="true" />
               이용 헬스장 변경

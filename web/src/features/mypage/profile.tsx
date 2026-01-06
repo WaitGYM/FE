@@ -3,6 +3,7 @@ import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { motion } from "framer-motion";
 import googleLogo from "@img/icon-google.svg"; //이미지로고
+import thumbDefault from "@img/thumb-default.jpg";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
 import { useAuthStore } from "../../stores/authStore";
@@ -48,7 +49,10 @@ export default function Profile() {
             className="thumb-wrap"
             // style={{ backgroundImage: `url(${userInfo.avatar})` }}
           >
-            <img src={`${userInfo.avatar}`} alt="현재 프로필 이미지" />
+            <img
+              src={`${userInfo.avatar || thumbDefault}`}
+              alt="현재 프로필 이미지"
+            />
             {/* <button type="button" className="btn-file">
               <Camera size={20} strokeWidth={1.5} />
             </button> */}

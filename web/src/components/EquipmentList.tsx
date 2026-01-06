@@ -27,17 +27,17 @@ export default function EquipmentListPage({
   const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
   const isEquipAutoSorting = useUIStore((s) => s.isEquipAutoSorting);
 
-  // 1분마다 자동 새로고침
-  useEffect(() => {
-    if (!isRestTimerModalOpen || isRestTimerMiniView) {
-      const interval = setInterval(() => getEquipments(filter), 60000);
-      return () => clearInterval(interval);
-    }
-  }, [isRestTimerModalOpen, isRestTimerMiniView]);
-
   useEffect(() => {
     getEquipments(filter);
   }, []);
+
+  // 30초마다 polling
+  useEffect(() => {
+    if (!isRestTimerModalOpen || isRestTimerMiniView) {
+      const interval = setInterval(() => getEquipments(filter), 30000);
+      return () => clearInterval(interval);
+    }
+  }, [isRestTimerModalOpen, isRestTimerMiniView]);
 
   useEffect(() => {
     if (isEquipAutoSorting) {

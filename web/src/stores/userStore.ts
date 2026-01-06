@@ -3,20 +3,37 @@ import { devtools } from "zustand/middleware";
 import type { UserType } from "../types";
 import { useLoadingStore } from "./loadingStore";
 import { userApi } from "../services";
+import { useAuthStore } from "./authStore";
 
 interface UserState {
   userInfo: UserType;
 
-  // setUser: (user: UserType) => void;
+  guestLogin: () => Promise<boolean>;
   getUserInfo: () => Promise<void>;
   deleteUser: () => Promise<void>;
 }
 
 const { setLoading } = useLoadingStore.getState();
+
+const getEndOfDay = () => {
+  const now = new Date();
+  const endOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    23,
+    59,
+    59,
+    999
+  );
+  return endOfDay.toISOString();
+};
+
 const initialState = {
   userInfo: {
     name: "회원",
     avatar: "/thumb-default.jpg",
+    isGuest: false,
   },
 };
 
@@ -24,14 +41,48 @@ export const useUserStore = create<UserState>()(
   devtools((set) => ({
     ...initialState,
 
-    // setUser: (user) => set({ user }),
     getUserInfo: async () => {
       setLoading(true);
       try {
         const { data } = await userApi.getUserInfo();
-        set({ userInfo: data });
+        // 게스트로 당일 재접속시 토큰으로 받은 유저 데이터에 게스트 유무 값 없어 임시 처리
+        if (data.name.includes("Guest")) {
+          set({
+            userInfo: {
+              ...initialState.userInfo,
+              id: data.id,
+              isGuest: true,
+            },
+          });
+        } else {
+          set({ userInfo: data });
+        }
       } catch (error) {
         console.log("사용자 정보 호출 실패!!", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+
+    guestLogin: async () => {
+      setLoading(true);
+      try {
+        const { data } = await userApi.guestLogin();
+        const { login } = useAuthStore.getState();
+        login(data.token, getEndOfDay());
+
+        set({
+          userInfo: {
+            ...initialState.userInfo,
+            id: data.user.id,
+            isGuest: data.user.isGuest,
+          },
+        });
+
+        return true;
+      } catch (error) {
+        console.log("게스트 로그인 실패!!", error);
+        return false;
       } finally {
         setLoading(false);
       }

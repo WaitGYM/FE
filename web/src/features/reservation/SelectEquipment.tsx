@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, RefreshCcw } from "lucide-react";
+import { ChevronLeft, RefreshCcw, X } from "lucide-react";
 import Switch from "@mui/material/Switch";
 import { useEquipmentStore } from "../../stores/equipmentStore";
 import { useUIStore } from "../../stores/UIStore";
@@ -86,7 +86,7 @@ export default function ReservationPage() {
     resetEquipmentState();
   }
 
-  function handleRotineUpdateBtnClick() {
+  function handleRoutineUpdateBtnClick() {
     if (!routineDetail) return;
     setRoutineName(routineDetail.name);
     setSelectedEquipList(equipmentList);
@@ -113,6 +113,7 @@ export default function ReservationPage() {
           workoutGoal
         );
         navigate("/workout/exercising", { replace: true });
+        resetSelectedEquipmentState();
       } else {
         console.log("루틴 기구 대기!!");
         navigate("/reservation/wait-request");
@@ -137,12 +138,22 @@ export default function ReservationPage() {
 
   useEffect(() => {
     const hasSeenTooltip = localStorage.getItem("hasSortTooltip");
-
-    if (!hasSeenTooltip) {
-      setTimeout(() => setIsSortTooltipOpen(true), 3000);
-      localStorage.setItem("hasSortTooltip", "true");
+    if (hasSeenTooltip) {
+      return;
     }
-  }, []);
+
+    const willModalOpen = isRoutineCompelte && !shownOnce;
+    const delay = willModalOpen ? 3000 : 1000;
+
+    const timerId = setTimeout(() => {
+      setIsSortTooltipOpen(true);
+      localStorage.setItem("hasSortTooltip", "true");
+    }, delay);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [isRoutineCompelte, shownOnce]);
   return (
     <>
       <motion.div
@@ -160,7 +171,7 @@ export default function ReservationPage() {
                 onClick={handleBackBtnClick}
                 aria-label="뒤로 가기"
               >
-                <ChevronLeft size={24} strokeWidth="2" />
+                <ChevronLeft size={20} strokeWidth="2" />
               </button>
             }
             title={
@@ -175,7 +186,7 @@ export default function ReservationPage() {
                 <button
                   type="button"
                   className="btn-delete"
-                  onClick={handleRotineUpdateBtnClick}
+                  onClick={handleRoutineUpdateBtnClick}
                 >
                   수정
                 </button>
@@ -192,9 +203,10 @@ export default function ReservationPage() {
                   <Tooltip
                     title={
                       <>
-                        대기 시간을 최소
+                        대기 시간을 최소순서로
                         <br />
-                        순서로 제안해드려요!
+                        제안해드려요!
+                        <X size={20} color="#9498A0" />
                       </>
                     }
                     open={isSortTooltipOpen}
@@ -212,12 +224,15 @@ export default function ReservationPage() {
                         sx: {
                           bgcolor: "#fff",
                           color: "#293241",
-                          fontSize: "13px",
-                          padding: "12px 16px",
+                          fontSize: "15px",
+                          padding: "12px 12px",
                           borderRadius: "4px",
                           boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                          textAlign: "center",
+                          textAlign: "left",
                           lineHeight: "1.4",
+                          width: "200px",
+                          display: "grid",
+                          gridTemplateColumns: "1fr 20px",
                         },
                       },
                       arrow: {
@@ -284,7 +299,7 @@ export default function ReservationPage() {
           </BottomButtonWrapper>
         ) : null}
 
-        {/* 대기중인 기구가 이용가능이 되면 운동시작으로 */}
+        {/* 대기중인 기구의 차례 되면 운동시작으로 */}
         {selectedEquipment?.status?.myQueuePosition === 1 &&
         selectedEquipment?.status?.myQueueStatus === "NOTIFIED" ? (
           <BottomButtonWrapper>

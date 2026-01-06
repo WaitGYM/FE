@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuthInit } from "../hooks/useAuthInit";
 import { useAuthStore } from "../stores/authStore";
 import { socketService } from "../services/socketService";
@@ -30,21 +31,38 @@ import NotificationPopup from "../components/ui/NotificationPopup";
 export default function AppRoutes() {
   useAuthInit();
   const token = useAuthStore((state) => state.token);
+  const isTokenValid = useAuthStore((state) => state.isTokenValid);
+  const logout = useAuthStore((state) => state.logout);
+
+  useEffect(() => {
+    if (token && !isTokenValid()) {
+      console.log("토큰이 만료되었습니다.");
+      logout();
+    }
+  }, [token, isTokenValid, logout]);
 
   // 웹소켓 연결
-  if (token) socketService.connect(token);
+  if (token && isTokenValid()) socketService.connect(token);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/login"
-          element={token ? <Navigate to="/" replace /> : <Login />}
+          element={
+            token && isTokenValid() ? <Navigate to="/" replace /> : <Login />
+          }
         />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route
           path="/"
-          element={token ? <HomeScreen /> : <Navigate to="/login" replace />}
+          element={
+            token && isTokenValid() ? (
+              <HomeScreen />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
         <Route path="/pushlist" element={<PushList />} />
 
