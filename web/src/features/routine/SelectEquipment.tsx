@@ -1,11 +1,16 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ChevronLeft, Search, Star } from "lucide-react";
 import Header from "../../components/layout/Header";
+import EquipSearchBar from "../../components/EquipSearchBar";
+import EquipCategoryFilter from "../../components/EquipCategoryFilter";
 import EquipmentList from "../../components/EquipmentList";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useRoutineStore } from "./store/routineStore";
+import { useEquipmentStore } from "../../stores/equipmentStore";
+import { debounce } from "lodash";
 
 export default function RoutineSelectEquipPage() {
   const { filter } = useParams();
@@ -16,6 +21,7 @@ export default function RoutineSelectEquipPage() {
     setSelectedEquipList,
     resetRoutineState,
   } = useRoutineStore();
+  const { equipmentList } = useEquipmentStore();
 
   function handleBackBtn() {
     if (!routineDetail) {
@@ -24,6 +30,66 @@ export default function RoutineSelectEquipPage() {
     } else {
       navigate(-1);
     }
+  }
+
+  ////// 검색 및 카테고리
+  const [searchInput, setSearchInput] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
+
+  // 디바운싱된 검색어 업데이트
+  const debouncedSetSearchTerm = useCallback(
+    debounce((value: string) => {
+      setSearchTerm(value);
+    }, 300),
+    []
+  );
+
+  // 입력값 변경 시 디바운싱 적용
+  useEffect(() => {
+    debouncedSetSearchTerm(searchInput);
+
+    return () => {
+      debouncedSetSearchTerm.cancel();
+    };
+  }, [searchInput, debouncedSetSearchTerm]);
+
+  // 카테고리 목록 추출
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(equipmentList.map((eq) => eq.category))
+    ).sort();
+    return ["전체", "즐겨찾기", ...uniqueCategories];
+  }, [equipmentList]);
+
+  // 필터링된 기구 목록
+  const filteredEquipmentList = useMemo(() => {
+    let filtered = equipmentList;
+
+    // 1. 카테고리 필터링 (선택된 카테고리가 있을 때만)
+    if (selectedCategory === "즐겨찾기") {
+      filtered = filtered.filter((eq) => eq.isFavorite);
+    } else if (selectedCategory !== "전체") {
+      filtered = filtered.filter((eq) => eq.category === selectedCategory);
+    }
+
+    // 2. 검색어 필터링 (1글자 이상일 때만)
+    if (searchTerm.trim().length > 0) {
+      const term = searchTerm.trim().toLowerCase();
+      filtered = filtered.filter((eq) => {
+        const name = eq.name.toLowerCase();
+        const category = eq.category.toLowerCase();
+
+        return name.includes(term) || category.includes(term);
+      });
+    }
+
+    return filtered;
+  }, [equipmentList, selectedCategory, searchTerm]);
+
+  function handleClearSearch() {
+    setSearchInput("");
+    setSearchTerm("");
   }
 
   function handleNextBtnClick() {
@@ -56,26 +122,18 @@ export default function RoutineSelectEquipPage() {
         />
 
         <section className="container">
-          <div className="search-bar">
-            <input type="search" placeholder="기구명, 부위를 검색해주세요" />
-            <button className="btn-search">
-              <Search size={20} strokeWidth="1.5" />
-            </button>
-          </div>
+          <EquipSearchBar
+            searchInput={searchInput}
+            onSearchChange={setSearchInput}
+            onClearSearch={handleClearSearch}
+          />
         </section>
-        <div className="category-wrap">
-          <button className="btn-like active">
-            <Star size={20} strokeWidth="1.5" />
-            즐겨찾기
-          </button>
-          <button>허벅지</button>
-          <button>어깨</button>
-          <button>가슴</button>
-          <button>팔</button>
-          <button>등</button>
-          <button>엉덩이</button>
-          <button>복근</button>
-        </div>
+
+        <EquipCategoryFilter
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryClick={setSelectedCategory}
+        />
 
         <section className="container">
           <div className="equipment-wrap">
@@ -91,6 +149,7 @@ export default function RoutineSelectEquipPage() {
               selectMode="MULTI"
               selectedList={selectedEquipList}
               handleSelectedEquipment={setSelectedEquipList}
+              overrideEquipmentList={filteredEquipmentList}
             />
           </div>
         </section>

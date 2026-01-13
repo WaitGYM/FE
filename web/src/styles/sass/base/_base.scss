@@ -105,22 +105,27 @@ button {
 
 .search-bar {
   position: relative;
+  background-color: $c-primary-blue-dark-light;
+  display: flex;
+  align-items: center;
+  border-radius: rem(8);
 
   input[type="search"] {
-    background-color: $c-primary-blue-dark-light;
+    background: none;
+  }
+  .btn-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $c-sub-white;
+    padding: rem(10);
   }
   .btn-search {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: $c-sub-white;
     padding: rem(8) rem(16);
-    background-color: $c-primary-blue-dark-light;
-    border-radius: rem(8);
   }
 }
 

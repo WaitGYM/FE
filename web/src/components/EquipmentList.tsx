@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 import { Skeleton } from "@mui/material";
 import { useEquipmentStore } from "../stores/equipmentStore";
@@ -11,39 +11,47 @@ export default function EquipmentListPage({
   filter = "all",
   selectMode = "SINGLE",
   selectedList,
+  overrideEquipmentList,
   handleSelectedEquipment,
 }: {
   filter?: string;
   selectMode?: "SINGLE" | "MULTI";
   selectedList: EquipmentType[];
+  overrideEquipmentList?: EquipmentType[];
   handleSelectedEquipment: (
     equipmentInfo: EquipmentType | EquipmentType[]
   ) => void;
 }) {
-  const { equipmentList, equipmentListLoading, getEquipments } =
+  const { equipmentList, equipmentListLoading, getEquipments, refreshTrigger } =
     useEquipmentStore();
   const { addFavorite, deleteFavorite } = useFavoriteStore();
   const { userInfo } = useUserStore();
   const { isRestTimerModalOpen, isRestTimerMiniView } = useUIStore();
   const isEquipAutoSorting = useUIStore((s) => s.isEquipAutoSorting);
+  const prevSortRef = useRef(isEquipAutoSorting);
+  const displayList = overrideEquipmentList || equipmentList;
 
   useEffect(() => {
-    getEquipments(filter);
-  }, []);
+    const isToggleOff =
+      prevSortRef.current === true && isEquipAutoSorting === false;
+
+    prevSortRef.current = isEquipAutoSorting;
+
+    if (!isToggleOff) {
+      getEquipments(filter);
+    }
+  }, [filter, isEquipAutoSorting, refreshTrigger]);
 
   // 30초마다 polling
   useEffect(() => {
-    if (!isRestTimerModalOpen || isRestTimerMiniView) {
+    if (
+      !overrideEquipmentList &&
+      (!isRestTimerModalOpen || isRestTimerMiniView)
+    ) {
       const interval = setInterval(() => getEquipments(filter), 30000);
       return () => clearInterval(interval);
     }
-  }, [isRestTimerModalOpen, isRestTimerMiniView]);
-
-  useEffect(() => {
-    if (isEquipAutoSorting) {
-      getEquipments(filter);
-    }
-  }, [isEquipAutoSorting]);
+  }, [isRestTimerModalOpen, isRestTimerMiniView, overrideEquipmentList]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     handleSelectedEquipment(selectEquip);
@@ -132,101 +140,109 @@ export default function EquipmentListPage({
         ))}
       </ul>
     );
-  } else {
-    return (
-      <ul className="equipment-list">
-        {equipmentList.map((equipment: EquipmentType) => (
-          <li key={equipment.id}>
-            <button
-              onClick={() => handleEquipmentToggle(equipment)}
-              aria-label={createEquipmentAriaLabel(equipment)}
-              className={`equipment ${
-                !(
-                  selectedList.length &&
-                  selectedList.some((x) => x.id === equipment.id)
-                )
-                  ? ""
-                  : "selected"
-              }`}
-            >
-              <div className="img">
-                <img
-                  src={equipment.imageUrl}
-                  alt={equipment.name}
-                  loading="lazy"
-                  onLoad={({ target }) => {
-                    target.classList.add("visible");
-                  }}
-                />
-              </div>
-              <div className="info">
-                <div className="title">
-                  <span className="name">{equipment.name}</span>
-                </div>
-                <div
-                  className={`status ${
-                    !equipment.status.isAvailable &&
-                    equipment.status.currentUser !== userInfo.name
-                      ? "waiting"
-                      : ""
-                  }`}
-                >
-                  {/* 상태 뱃지 표현 */}
-                  {equipment.status.myQueuePosition &&
-                    equipment.status.myQueueStatus === "WAITING" && (
-                      <span className="badge waiting">대기중</span>
-                    )}
-                  {equipment.status.completedToday && (
-                    <span className="badge complete">운동완</span>
-                  )}
-                  {equipment.status.myQueueStatus === "NOTIFIED" &&
-                    equipment.status.myQueuePosition === 1 && (
-                      <span className="badge myturn">내차례</span>
-                    )}
+  }
 
-                  {/* 기구 현황 데이터 표현 */}
-                  {equipment.status.currentUser === userInfo.name ? (
-                    <span>이용중</span>
-                  ) : !equipment.status.estimatedWaitMinutes &&
-                    !equipment.status.waitingCount ? (
-                    <span>이용가능</span>
-                  ) : (
-                    <>
-                      <span>
-                        대기&nbsp;
-                        {equipment.status.myQueueStatus === "WAITING"
-                          ? equipment.status.currentUserETA
-                          : equipment.status.estimatedWaitMinutes}
-                        분
-                      </span>
-                      <span className="dot"></span>
-                      <span>
-                        {equipment.status.myQueueStatus === "WAITING"
-                          ? equipment.status.myQueuePosition
-                          : equipment.status.waitingCount}
-                        명
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </button>
-            <button
-              className="favorite"
-              onClick={(e) => handleToggleFavorite(e, equipment)}
-              aria-label={equipment.isFavorite ? "즐겨찾기 취소" : "즐겨찾기"}
-              aria-pressed={equipment.isFavorite}
-              type="button"
-            >
-              <Star
-                size={20}
-                strokeWidth="1.5"
-                className={equipment.isFavorite ? "on" : "off"}
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
+  if (!equipmentListLoading && displayList.length === 0) {
+    return (
+      <div className="empty-result">
+        <p>검색 결과가 없습니다</p>
+      </div>
     );
   }
+  return (
+    <ul className="equipment-list">
+      {displayList.map((equipment: EquipmentType) => (
+        <li key={equipment.id}>
+          <button
+            onClick={() => handleEquipmentToggle(equipment)}
+            aria-label={createEquipmentAriaLabel(equipment)}
+            className={`equipment ${
+              !(
+                selectedList.length &&
+                selectedList.some((x) => x.id === equipment.id)
+              )
+                ? ""
+                : "selected"
+            }`}
+          >
+            <div className="img">
+              <img
+                src={equipment.imageUrl}
+                alt={equipment.name}
+                loading="lazy"
+                onLoad={({ target }) => {
+                  target.classList.add("visible");
+                }}
+              />
+            </div>
+            <div className="info">
+              <div className="title">
+                <span className="name">{equipment.name}</span>
+              </div>
+              <div
+                className={`status ${
+                  !equipment.status.isAvailable &&
+                  equipment.status.currentUser !== userInfo.name
+                    ? "waiting"
+                    : ""
+                }`}
+              >
+                {/* 상태 뱃지 표현 */}
+                {equipment.status.myQueuePosition &&
+                  equipment.status.myQueueStatus === "WAITING" && (
+                    <span className="badge waiting">대기중</span>
+                  )}
+                {equipment.status.completedToday && (
+                  <span className="badge complete">운동완</span>
+                )}
+                {equipment.status.myQueueStatus === "NOTIFIED" &&
+                  equipment.status.myQueuePosition === 1 && (
+                    <span className="badge myturn">내차례</span>
+                  )}
+
+                {/* 기구 현황 데이터 표현 */}
+                {equipment.status.currentUser === userInfo.name ? (
+                  <span>이용중</span>
+                ) : !equipment.status.estimatedWaitMinutes &&
+                  !equipment.status.waitingCount ? (
+                  <span>이용가능</span>
+                ) : (
+                  <>
+                    <span>
+                      대기&nbsp;
+                      {equipment.status.myQueueStatus === "WAITING"
+                        ? equipment.status.currentUserETA
+                        : equipment.status.estimatedWaitMinutes}
+                      분
+                    </span>
+                    <span className="dot"></span>
+                    <span>
+                      {equipment.status.myQueueStatus === "WAITING"
+                        ? equipment.status.myQueuePosition
+                        : equipment.status.waitingCount}
+                      명
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </button>
+          <button
+            className="favorite"
+            onClick={(e) => handleToggleFavorite(e, equipment)}
+            aria-label={equipment.isFavorite ? "즐겨찾기 취소" : "즐겨찾기"}
+            aria-pressed={equipment.isFavorite}
+            type="button"
+          >
+            <Star
+              size={20}
+              strokeWidth="1.5"
+              className={equipment.isFavorite ? "on" : "off"}
+            />
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
 }
+// }

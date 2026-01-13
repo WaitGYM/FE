@@ -1,15 +1,45 @@
 import { motion } from "framer-motion";
 import { ChevronLeft, Store, Search, Star } from "lucide-react";
 import Header from "../../components/layout/Header";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFavoriteStore } from "../../stores/favoriteStore";
 import type { FavoriteType } from "../../types";
+import EquipCategoryFilter from "../../components/EquipCategoryFilter";
 
 export default function Favorites() {
   const navigate = useNavigate();
   const { favoriteList, getFavoriteList, addFavorite, deleteFavorite } =
     useFavoriteStore();
+
+  useEffect(() => {
+    getFavoriteList();
+  }, []);
+
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
+
+  // 카테고리 목록 추출
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(favoriteList.map((eq) => eq.equipment.category))
+    ).sort();
+    return ["전체", ...uniqueCategories];
+  }, [favoriteList]);
+
+  // 필터링된 기구 목록
+  const filteredEquipmentList = useMemo(() => {
+    let filtered = favoriteList;
+
+    if (selectedCategory !== "전체") {
+      filtered = filtered.filter(
+        (eq) => eq.equipment.category === selectedCategory
+      );
+    }
+
+    return filtered;
+  }, [favoriteList, selectedCategory]);
+
+  const displayList = filteredEquipmentList || favoriteList;
 
   async function handleToggleFavorite(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -22,10 +52,6 @@ export default function Favorites() {
     getFavoriteList();
   }
 
-  useEffect(() => {
-    getFavoriteList();
-  }, [getFavoriteList]);
-
   return (
     <motion.div
       className="mypage-page"
@@ -37,28 +63,27 @@ export default function Favorites() {
       <Header
         className="header--mypage"
         leftContent={
-          <button className="btn btn-icon" onClick={() => navigate(-1)} aria-label="뒤로 가기">
+          <button
+            className="btn btn-icon"
+            onClick={() => navigate(-1)}
+            aria-label="뒤로 가기"
+          >
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
         title={<span>즐겨찾기한 기구</span>}
       />
 
-      <div className="category-wrap">
-        <button className="active">전체</button>
-        <button>허벅지</button>
-        <button>어깨</button>
-        <button>가슴</button>
-        <button>팔</button>
-        <button>등</button>
-        <button>엉덩이</button>
-        <button>복근</button>
-      </div>
+      <EquipCategoryFilter
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onCategoryClick={setSelectedCategory}
+      />
 
       <div className="container">
         <div className="equipment-wrap">
           <ul className="equipment-list">
-            {favoriteList.map((favorite: FavoriteType) => (
+            {displayList.map((favorite: FavoriteType) => (
               <li key={favorite.id}>
                 <button className="equipment">
                   <div className="img">

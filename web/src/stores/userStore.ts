@@ -4,6 +4,8 @@ import type { UserType } from "../types";
 import { useLoadingStore } from "./loadingStore";
 import { userApi } from "../services";
 import { useAuthStore } from "./authStore";
+import { useUIStore } from "./UIStore";
+import { usePreferenceStore } from "./preferenceStore";
 
 interface UserState {
   userInfo: UserType;
@@ -41,21 +43,32 @@ export const useUserStore = create<UserState>()(
   devtools((set) => ({
     ...initialState,
 
+    _initUserStores: (userId: number) => {
+      useUIStore.getState().setUserId(userId);
+      usePreferenceStore.getState().setUserId(userId);
+    },
+
     getUserInfo: async () => {
       setLoading(true);
       try {
         const { data } = await userApi.getUserInfo();
+
         // 게스트로 당일 재접속시 토큰으로 받은 유저 데이터에 게스트 유무 값 없어 임시 처리
         if (data.name.includes("Guest")) {
           set({
             userInfo: {
               ...initialState.userInfo,
               id: data.id,
+              name: `Guest_${data.id}`,
               isGuest: true,
             },
           });
+          useUIStore.getState().setUserId(data.id);
+          usePreferenceStore.getState().setUserId(data.id);
         } else {
           set({ userInfo: data });
+          useUIStore.getState().setUserId(data.id);
+          usePreferenceStore.getState().setUserId(data.id);
         }
       } catch (error) {
         console.log("사용자 정보 호출 실패!!", error);
@@ -69,15 +82,19 @@ export const useUserStore = create<UserState>()(
       try {
         const { data } = await userApi.guestLogin();
         const { login } = useAuthStore.getState();
+
         login(data.token, getEndOfDay());
 
         set({
           userInfo: {
             ...initialState.userInfo,
             id: data.user.id,
+            name: `Guest_${data.user.id}`,
             isGuest: data.user.isGuest,
           },
         });
+        useUIStore.getState().setUserId(data.user.id);
+        usePreferenceStore.getState().setUserId(data.user.id);
 
         return true;
       } catch (error) {

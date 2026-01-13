@@ -3,7 +3,6 @@ import { devtools } from "zustand/middleware";
 import { equipmentApi } from "../services";
 import type { EquipmentType } from "../types";
 import { useRoutineStore } from "../features/routine/store/routineStore";
-import { useLoadingStore } from "./loadingStore";
 import { useUIStore } from "./UIStore";
 
 interface EquipmentStoreType {
@@ -11,27 +10,27 @@ interface EquipmentStoreType {
   equipmentListLoading: boolean;
   error: string | null;
   isRoutineCompelte: boolean;
+  refreshTrigger: number;
 
   getEquipments: (filter: string) => Promise<void>;
   clearError: () => void;
   setIsRoutineCompelte: (val: boolean) => void;
+  triggerRefresh: () => void;
   resetEquipmentState: () => void;
 }
-
-const setLoading = useLoadingStore.getState().setLoading;
 
 const initialState = {
   equipmentList: [],
   equipmentListLoading: false,
   error: null,
   isRoutineCompelte: false,
+  refreshTrigger: 0,
 };
 
 export const useEquipmentStore = create<EquipmentStoreType>()(
   devtools((set, get) => ({
     ...initialState,
     getEquipments: async (filter) => {
-      // setLoading(true);
       set({ equipmentListLoading: true });
       try {
         const { routineId, isEquipAutoSorting } = useUIStore.getState();
@@ -42,14 +41,16 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
 
         if (filter === "routine") {
           console.log("기구 스토어에서 루틴 정보 호출----");
-          if (!useRoutineStore.getState().routineDetail)
-            await useRoutineStore.getState().getRoutineDetail(routineId);
-
           const { routineDetail } = useRoutineStore.getState();
-          console.log("기구 스토어에서 루틴 정보", routineDetail);
+          if (!routineDetail) {
+            await useRoutineStore.getState().getRoutineDetail(routineId);
+          }
+
+          const updatedRoutineDetail = useRoutineStore.getState().routineDetail;
+          console.log("기구 스토어에서 루틴 정보", updatedRoutineDetail);
 
           const routineData = eqAllData.reduce((arr, cur) => {
-            const routineEq = routineDetail.exercises.find(
+            const routineEq = updatedRoutineDetail.exercises.find(
               (ex) => cur.id === ex.equipment.id
             );
             if (routineEq) {
@@ -81,7 +82,6 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
           error: "기구 목록을 불러오는데 실패했습니다.",
         });
       } finally {
-        // setLoading(false);
         set({ equipmentListLoading: false });
 
         const { isWorkingOut } = useUIStore.getState();
@@ -96,6 +96,9 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
     clearError: () => set({ error: null }),
 
     setIsRoutineCompelte: (isRoutineCompelte) => set({ isRoutineCompelte }),
+
+    triggerRefresh: () =>
+      set((state) => ({ refreshTrigger: state.refreshTrigger + 1 })),
 
     resetEquipmentState: () => set(initialState),
   }))

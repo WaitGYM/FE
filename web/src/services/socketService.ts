@@ -1,4 +1,5 @@
 import { useNotificationStore } from "../features/notification/store/notificationStore";
+import { useEquipmentStore } from "../stores/equipmentStore";
 
 interface ServerNotificationPayload {
   type: string;
@@ -51,6 +52,11 @@ const connectWebSocket = (userId: string | number) => {
           createdAt: new Date().toISOString(),
           ...data,
         });
+
+        // 내차례 됐을때 현황 즉시 새로고침용
+        if (data.type === "EQUIPMENT_AVAILABLE") {
+          useEquipmentStore.getState().triggerRefresh();
+        }
       }
     } catch (error) {
       console.error("메시지 파싱 오류:", error);
