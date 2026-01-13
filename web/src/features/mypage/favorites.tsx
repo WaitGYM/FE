@@ -16,21 +16,21 @@ export default function Favorites() {
     getFavoriteList();
   }, []);
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
 
   // 카테고리 목록 추출
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
       new Set(favoriteList.map((eq) => eq.equipment.category))
     ).sort();
-    return [...uniqueCategories];
+    return ["전체", ...uniqueCategories];
   }, [favoriteList]);
 
   // 필터링된 기구 목록
   const filteredEquipmentList = useMemo(() => {
     let filtered = favoriteList;
 
-    if (selectedCategory !== null) {
+    if (selectedCategory !== "전체") {
       filtered = filtered.filter(
         (eq) => eq.equipment.category === selectedCategory
       );
@@ -40,10 +40,6 @@ export default function Favorites() {
   }, [favoriteList, selectedCategory]);
 
   const displayList = filteredEquipmentList || favoriteList;
-
-  function handleCategoryClick(category: string) {
-    setSelectedCategory(selectedCategory === category ? null : category);
-  }
 
   async function handleToggleFavorite(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -81,7 +77,7 @@ export default function Favorites() {
       <EquipCategoryFilter
         categories={categories}
         selectedCategory={selectedCategory}
-        onCategoryClick={handleCategoryClick}
+        onCategoryClick={setSelectedCategory}
       />
 
       <div className="container">

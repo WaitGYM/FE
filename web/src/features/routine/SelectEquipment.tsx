@@ -35,7 +35,7 @@ export default function RoutineSelectEquipPage() {
   ////// 검색 및 카테고리
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
 
   // 디바운싱된 검색어 업데이트
   const debouncedSetSearchTerm = useCallback(
@@ -59,7 +59,7 @@ export default function RoutineSelectEquipPage() {
     const uniqueCategories = Array.from(
       new Set(equipmentList.map((eq) => eq.category))
     ).sort();
-    return ["즐겨찾기", ...uniqueCategories];
+    return ["전체", "즐겨찾기", ...uniqueCategories];
   }, [equipmentList]);
 
   // 필터링된 기구 목록
@@ -69,7 +69,7 @@ export default function RoutineSelectEquipPage() {
     // 1. 카테고리 필터링 (선택된 카테고리가 있을 때만)
     if (selectedCategory === "즐겨찾기") {
       filtered = filtered.filter((eq) => eq.isFavorite);
-    } else if (selectedCategory !== null) {
+    } else if (selectedCategory !== "전체") {
       filtered = filtered.filter((eq) => eq.category === selectedCategory);
     }
 
@@ -90,10 +90,6 @@ export default function RoutineSelectEquipPage() {
   function handleClearSearch() {
     setSearchInput("");
     setSearchTerm("");
-  }
-
-  function handleCategoryClick(category: string) {
-    setSelectedCategory(selectedCategory === category ? null : category);
   }
 
   function handleNextBtnClick() {
@@ -136,7 +132,7 @@ export default function RoutineSelectEquipPage() {
         <EquipCategoryFilter
           categories={categories}
           selectedCategory={selectedCategory}
-          onCategoryClick={handleCategoryClick}
+          onCategoryClick={setSelectedCategory}
         />
 
         <section className="container">

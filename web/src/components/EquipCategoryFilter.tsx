@@ -6,7 +6,7 @@ export default function EquipCategoryFilter({
   onCategoryClick,
 }: {
   categories: string[];
-  selectedCategory: string | null;
+  selectedCategory: string;
   onCategoryClick: (category: string) => void;
 }) {
   return (

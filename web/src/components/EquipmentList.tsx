@@ -37,18 +37,21 @@ export default function EquipmentListPage({
 
     prevSortRef.current = isEquipAutoSorting;
 
-    if (!isToggleOff && !overrideEquipmentList) {
+    if (!isToggleOff) {
       getEquipments(filter);
     }
-  }, [filter, isEquipAutoSorting, refreshTrigger, overrideEquipmentList]);
+  }, [filter, isEquipAutoSorting, refreshTrigger]);
 
   // 30초마다 polling
   useEffect(() => {
-    if (!isRestTimerModalOpen || isRestTimerMiniView) {
+    if (
+      !overrideEquipmentList &&
+      (!isRestTimerModalOpen || isRestTimerMiniView)
+    ) {
       const interval = setInterval(() => getEquipments(filter), 30000);
       return () => clearInterval(interval);
     }
-  }, [isRestTimerModalOpen, isRestTimerMiniView]);
+  }, [isRestTimerModalOpen, isRestTimerMiniView, overrideEquipmentList]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     handleSelectedEquipment(selectEquip);
@@ -109,7 +112,7 @@ export default function EquipmentListPage({
     return label;
   }
 
-  if (equipmentListLoading && !overrideEquipmentList) {
+  if (equipmentListLoading) {
     return (
       <ul className="equipment-list" aria-hidden="true">
         {Array.from(new Array(6)).map((_, index) => (
@@ -139,42 +142,13 @@ export default function EquipmentListPage({
     );
   }
 
-  if (displayList.length === 0) {
+  if (!equipmentListLoading && displayList.length === 0) {
     return (
       <div className="empty-result">
         <p>검색 결과가 없습니다</p>
       </div>
     );
   }
-  // if (equipmentListLoading) {
-  //   return (
-  //     <ul className="equipment-list" aria-hidden="true">
-  //       {Array.from(new Array(6)).map((_, index) => (
-  //         <li key={index}>
-  //           <div className="equipment">
-  //             <div>
-  //               <Skeleton
-  //                 variant="rounded"
-  //                 width={48}
-  //                 height={48}
-  //                 animation="wave"
-  //               />
-  //             </div>
-  //             <div className="info">
-  //               <Skeleton
-  //                 variant="text"
-  //                 width="70%"
-  //                 style={{ marginBottom: "0.5" }}
-  //                 animation="wave"
-  //               />
-  //               <Skeleton variant="text" width="90%" animation="wave" />
-  //             </div>
-  //           </div>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   );
-  // } else {
   return (
     <ul className="equipment-list">
       {displayList.map((equipment: EquipmentType) => (
