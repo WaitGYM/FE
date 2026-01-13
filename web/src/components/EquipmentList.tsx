@@ -44,14 +44,11 @@ export default function EquipmentListPage({
 
   // 30초마다 polling
   useEffect(() => {
-    if (
-      !overrideEquipmentList &&
-      (!isRestTimerModalOpen || isRestTimerMiniView)
-    ) {
+    if (!isRestTimerModalOpen || isRestTimerMiniView) {
       const interval = setInterval(() => getEquipments(filter), 30000);
       return () => clearInterval(interval);
     }
-  }, [isRestTimerModalOpen, isRestTimerMiniView, overrideEquipmentList]);
+  }, [isRestTimerModalOpen, isRestTimerMiniView]);
 
   function handleEquipmentToggle(selectEquip: EquipmentType) {
     handleSelectedEquipment(selectEquip);
