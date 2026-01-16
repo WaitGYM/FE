@@ -20,9 +20,9 @@ export default function EquipCategoryFilter({
           onClick={() => onCategoryClick(category)}
           type="button"
         >
-          {category === "즐겨찾기" && (
+          {/* {category === "즐겨찾기" && (
             <Star size={20} strokeWidth="1.5" aria-hidden="true" />
-          )}
+          )} */}
           {category}
         </button>
       ))}
