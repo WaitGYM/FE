@@ -116,7 +116,7 @@ export default function ReservationPage() {
     debounce((value: string) => {
       setSearchTerm(value);
     }, 300),
-    []
+    [],
   );
 
   // 입력값 변경 시 디바운싱 적용
@@ -131,7 +131,7 @@ export default function ReservationPage() {
   // 카테고리 목록 추출
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
-      new Set(equipmentList.map((eq) => eq.category))
+      new Set(equipmentList.map((eq) => eq.category)),
     ).sort();
     return ["전체", "즐겨찾기", ...uniqueCategories];
   }, [equipmentList]);
@@ -181,7 +181,7 @@ export default function ReservationPage() {
         startRoutineWorkout(
           routineDetail.id,
           selectedEquipment.id,
-          workoutGoal
+          workoutGoal,
         );
         navigate("/workout/exercising", { replace: true });
         resetSelectedEquipmentState();
@@ -227,7 +227,7 @@ export default function ReservationPage() {
               <h2>
                 {routineId && workoutMode === "routine"
                   ? routineDetail?.name
-                  : "바로운동"}
+                  : "바로 운동"}
               </h2>
             }
             rightContent={

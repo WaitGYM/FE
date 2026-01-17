@@ -42,7 +42,7 @@ export default function RoutineSelectEquipPage() {
     debounce((value: string) => {
       setSearchTerm(value);
     }, 300),
-    []
+    [],
   );
 
   // 입력값 변경 시 디바운싱 적용
@@ -57,7 +57,7 @@ export default function RoutineSelectEquipPage() {
   // 카테고리 목록 추출
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
-      new Set(equipmentList.map((eq) => eq.category))
+      new Set(equipmentList.map((eq) => eq.category)),
     ).sort();
     return ["전체", "즐겨찾기", ...uniqueCategories];
   }, [equipmentList]);
@@ -118,7 +118,7 @@ export default function RoutineSelectEquipPage() {
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
-          title={<h2>{!routineDetail ? "루틴추가" : "운동 추가"}</h2>}
+          title={<h2>{!routineDetail ? "루틴 추가" : "운동 추가"}</h2>}
         />
 
         <section className="container">

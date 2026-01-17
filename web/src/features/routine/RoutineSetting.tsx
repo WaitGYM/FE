@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, CirclePlus } from "lucide-react";
+import { ChevronLeft, CirclePlus, Plus } from "lucide-react";
 import Header from "../../components/layout/Header";
 import { BottomButtonWrapper } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +78,7 @@ export default function RoutineSetting() {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   function handleNavigatingBack() {
@@ -145,7 +145,7 @@ export default function RoutineSetting() {
       <div className="content-scroll">
         <Header
           className="header--equipment-detail"
-          title={<h2>{routineId ? "루틴 설정" : "세트설정"}</h2>}
+          title={<h2>{routineId ? "루틴 설정" : "세트 설정"}</h2>}
           leftContent={
             <button
               aria-haspopup="dialog"
@@ -193,8 +193,10 @@ export default function RoutineSetting() {
                 className="btn-add"
                 onClick={handleAddEquip}
               >
-                <CirclePlus size={20} strokeWidth="2" />
-                운동추가
+                <span className="icon-plus">
+                  <Plus size={12} strokeWidth="3" />
+                </span>
+                운동 추가
               </button>
             )}
             <ul className="box-wrap">
@@ -206,13 +208,13 @@ export default function RoutineSetting() {
                   const { active, over } = event;
                   if (active.id !== over.id) {
                     const oldIndex = selectedEquipList.findIndex(
-                      (i) => i.id === active.id
+                      (i) => i.id === active.id,
                     );
                     const newIndex = selectedEquipList.findIndex(
-                      (i) => i.id === over.id
+                      (i) => i.id === over.id,
                     );
                     setRoutineEquipSorting(
-                      arrayMove(selectedEquipList, oldIndex, newIndex)
+                      arrayMove(selectedEquipList, oldIndex, newIndex),
                     );
                   }
                 }}
@@ -246,7 +248,7 @@ export default function RoutineSetting() {
             disabled={!deleteList.length}
             onClick={() => setIsOpenEquipDeleteDialog(true)}
           >
-            운동 삭제
+            삭제
           </button>
         )}
         <button
@@ -264,7 +266,7 @@ export default function RoutineSetting() {
           {/* 비활성화일때 .disabled를 붙여주세요 */}
           {/* <button className="btn btn-blue disabled">운동 삭제</button> */}
           {/* <button className="btn btn-orange disabled" onClick={handleCreateRoutine}> */}
-          {routineId ? "루틴 수정" : "루틴 등록"}
+          {routineId ? "저장" : "등록"}
         </button>
       </BottomButtonWrapper>
 
