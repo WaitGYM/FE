@@ -4,6 +4,7 @@ import { workoutApi } from "../services/workoutApi";
 import { useLoadingStore } from "../../../stores/loadingStore";
 import { useUIStore } from "../../../stores/UIStore";
 import type { WorkingoutType, WorkoutProgressInfoType } from "../../../types";
+import { useReservationStore } from "../../reservation/stores/reservationStore";
 
 type WorkoutGoalType = {
   totalSets: number;
@@ -21,7 +22,7 @@ interface WorkoutStoreType {
     routineId: number,
     routineExId: number,
     workoutGoal: WorkoutGoalType
-  ) => Promise<void>;
+  ) => Promise<boolean>;
   autoDecreaseRest: () => void;
   adjustRest: (delta: number) => void;
   resetRestTime: () => void;
@@ -33,7 +34,8 @@ interface WorkoutStoreType {
 }
 
 const setLoading = useLoadingStore.getState().setLoading;
-const { setWorkingOut, isWorkingOut } = useUIStore.getState();
+const { setWorkingOut } = useUIStore.getState();
+const { resetWaitingInfoState } = useReservationStore.getState();
 
 const initialState = {
   workoutGoal: {
@@ -66,8 +68,20 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
       try {
         const { data } = await workoutApi.startWorkout(eqId, workoutGoal);
         set({ workingOutInfo: data, leftRestTime: data.restSeconds });
-        console.log("workingOutInfo :", get().workingOutInfo);
+        // console.log("workingOutInfo :", get().workingOutInfo);
         setWorkingOut(true);
+
+        const { waitingInfo } = useReservationStore.getState();
+        // console.log("대기 정보???", waitingInfo, data);
+
+        if (
+          waitingInfo &&
+          (waitingInfo.equipmentName === data.equipmentName ||
+            waitingInfo.equipment?.id === data.equipmentId)
+        ) {
+          resetWaitingInfoState();
+          // console.log("대기 정보 클리어!!");
+        }
       } catch (error) {
         console.log("운동 시작에 실패했습니다.", error);
       } finally {
@@ -92,8 +106,10 @@ export const useWorkoutStore = create<WorkoutStoreType>()(
           leftRestTime: data.workout.restSeconds,
         });
         setWorkingOut(true);
+        return true;
       } catch (error) {
         console.log("루틴운동 시작에 실패했습니다.", error);
+        return false;
       } finally {
         setLoading(false);
       }

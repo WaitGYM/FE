@@ -17,12 +17,29 @@ type WaitingInfoType = {
   queueId: number;
   queuePosition: number;
 };
+type RoutineWaitingInfoType = {
+  equipment: {
+    category: string;
+    id: number;
+    imageUrl: string;
+    name: string;
+  };
+  exerciseInfo: {
+    order: number;
+    restSeconds: number;
+    targetSets: number;
+  };
+  queue: {
+    estimatedWaitMinutes: number;
+    queueId: number;
+    queuePosition: number;
+  };
+  message: string;
+};
 
 interface ReservationStoreType {
   selectedEquipment: EquipmentType & WorkoutGoalType;
-  equipmentReservationStatus: string;
-  waitingInfo: WaitingInfoType | null;
-  reservationError: string | null;
+  waitingInfo: (WaitingInfoType & RoutineWaitingInfoType) | null;
 
   setSelectedEquipment: (equipmentInfo: EquipmentType) => void;
   updateSelectedEquipment: (
@@ -33,6 +50,7 @@ interface ReservationStoreType {
   createReservation: () => Promise<boolean>;
   deleteReservation: () => Promise<void>;
   resetSelectedEquipmentState: () => void;
+  resetWaitingInfoState: () => void;
   resetState: () => void;
 }
 
@@ -171,6 +189,10 @@ export const useReservationStore = create<ReservationStoreType>()(
     resetSelectedEquipmentState: () =>
       set({
         selectedEquipment: { ...initialState.selectedEquipment },
+      }),
+    resetWaitingInfoState: () =>
+      set({
+        waitingInfo: null,
       }),
     resetState: () => set(initialState),
   }))
