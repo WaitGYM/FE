@@ -36,12 +36,13 @@ export default function EquipmentDetail() {
   }
 
   async function handleNextBtnClick() {
-    // console.log("handleNextBtnClick selectedEquipment: ", electedEquipment);
-    // 대기 현황 없는지 한번 더 확인 필요??
     await getEquipmentReservationStatus();
 
+    const currentStatus =
+      useReservationStore.getState().selectedEquipment.status;
+
     // 운동중이 아니고 대기 없으면 운동 시작으로
-    if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
+    if (!isWorkingOut && currentStatus.isAvailable) {
       const workoutGoal = {
         totalSets: selectedEquipment.sets,
         restSeconds: selectedEquipment.restSeconds,
@@ -66,7 +67,11 @@ export default function EquipmentDetail() {
           className="header--equipment-detail"
           title={<h2>세트설정</h2>}
           leftContent={
-            <button className="btn btn-icon" onClick={handleBackBtnClick} aria-label="뒤로 가기">
+            <button
+              className="btn btn-icon"
+              onClick={handleBackBtnClick}
+              aria-label="뒤로 가기"
+            >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }

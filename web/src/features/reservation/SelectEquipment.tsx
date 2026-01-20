@@ -44,6 +44,7 @@ export default function ReservationPage() {
     selectedEquipment,
     waitingInfo,
     setSelectedEquipment,
+    getEquipmentReservationStatus,
     deleteReservation,
     resetSelectedEquipmentState,
   } = useReservationStore();
@@ -170,21 +171,29 @@ export default function ReservationPage() {
     deleteReservation().then(() => getEquipments(filter));
   }
 
-  function handleNextBtn() {
+  async function handleNextBtn() {
     if (routineDetail) {
+      await getEquipmentReservationStatus();
+      const currentStatus =
+        useReservationStore.getState().selectedEquipment.status;
+
       // 운동중이 아니고 대기 없으면 운동 시작으로
-      if (!isWorkingOut && selectedEquipment.status?.isAvailable) {
+      if (!isWorkingOut && currentStatus.isAvailable) {
         const workoutGoal = {
           totalSets: selectedEquipment.sets,
           restSeconds: selectedEquipment.restSeconds,
         };
-        startRoutineWorkout(
+        const success = await startRoutineWorkout(
           routineDetail.id,
           selectedEquipment.id,
           workoutGoal
         );
-        navigate("/workout/exercising", { replace: true });
-        resetSelectedEquipmentState();
+        if (success) {
+          navigate("/workout/exercising", { replace: true });
+          resetSelectedEquipmentState();
+        } else {
+          alert("루틴운동 시작에 실패했습니다.");
+        }
       } else {
         navigate("/reservation/wait-request");
       }
@@ -343,19 +352,6 @@ export default function ReservationPage() {
           </section>
         </div>
 
-        {/* 대기 건 기구를 선택하면 대기취소 버튼 */}
-        {selectedEquipment?.status?.myQueueId &&
-          selectedEquipment?.status?.myQueueStatus !== "NOTIFIED" && (
-            <BottomButtonWrapper>
-              <button
-                onClick={handleDeleteReservation}
-                className="btn btn-orange"
-              >
-                대기 취소
-              </button>
-            </BottomButtonWrapper>
-          )}
-
         {/* 내 대기건이 없고 내가 이용중이 아닌 이용불가 기구 선택시 다음버튼(대기) */}
         {/* 운동중이 아니고 이용가능 기구일때 다음버튼(운동) */}
         {selectedEquipment?.id &&
@@ -369,6 +365,19 @@ export default function ReservationPage() {
             </button>
           </BottomButtonWrapper>
         ) : null}
+
+        {/* 대기 건 기구를 선택하면 대기취소 버튼 */}
+        {selectedEquipment?.status?.myQueueId &&
+          selectedEquipment?.status?.myQueueStatus == "WAITING" && (
+            <BottomButtonWrapper>
+              <button
+                onClick={handleDeleteReservation}
+                className="btn btn-orange"
+              >
+                대기 취소
+              </button>
+            </BottomButtonWrapper>
+          )}
 
         {/* 대기중인 기구의 차례 되면 운동시작으로 */}
         {selectedEquipment?.status?.myQueuePosition === 1 &&
