@@ -31,6 +31,15 @@
       padding: rem(16);
       margin-bottom: rem(8);
       font-weight: 600;
+      .icon-plus {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(20);
+        height: rem(20);
+        background-color: $c-primary-blue-dark-modal;
+        border-radius: 50%;
+      }
     }
 
     .box-wrap {

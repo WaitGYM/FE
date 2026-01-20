@@ -26,14 +26,14 @@ export default function HomePage() {
 
   function handleWorkoutMode(
     mode: WorkoutModeType,
-    selectedRoutineId?: number
+    selectedRoutineId?: number,
   ) {
     if (mode === "routine" && selectedRoutineId) {
       setRoutineId(selectedRoutineId);
     }
     setWorkoutMode(mode);
     navigate(
-      `/reservation/select-equipment${mode === "routine" ? "/routine" : ""}`
+      `/reservation/select-equipment${mode === "routine" ? "/routine" : ""}`,
     );
   }
 
@@ -155,7 +155,7 @@ export default function HomePage() {
             // id="no-routine"
             type="button"
           >
-            바로운동
+            바로 운동
           </button>
           <button
             onClick={() => navigate("/add-routine/select-equipment")}
@@ -163,7 +163,7 @@ export default function HomePage() {
             // id="routine-add"
             type="button"
           >
-            루틴추가
+            루틴 추가
           </button>
         </BottomButtonWrapper>
       )}

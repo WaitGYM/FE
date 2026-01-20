@@ -34,6 +34,14 @@
         }
       }
 
+      .empty-result {
+        margin: 1.4rem 0;
+        width: 100%;
+        font-size: rem(13);
+        text-align: center;
+        font-weight: 500;
+        color: $c-primary-blue-light;
+      }
       li {
         margin-bottom: rem(4);
         position: relative;

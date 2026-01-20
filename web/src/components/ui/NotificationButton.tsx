@@ -18,7 +18,7 @@ export default function NotificationButton() {
       aria-label="푸시알림 목록"
       type="button"
     >
-      <Bell size={24} strokeWidth="1.5" />
+      <Bell size={24} strokeWidth="2" />
     </button>
   );
 }
