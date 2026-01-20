@@ -194,11 +194,11 @@ export default function ReservationPage() {
   }
 
   function handleStartWorkout() {
-    const workoutGoal = {
-      totalSets: waitingInfo?.sets,
-      restSeconds: waitingInfo?.restSeconds,
-    };
-    startWorkout(selectedEquipment?.id, workoutGoal);
+    if (isWorkingOut) return;
+
+    // 대기 걸었던 운동시작은 루틴 유무 관계없이 같은 api 호출
+    const { totalSets, restSeconds } = waitingInfo;
+    startWorkout(selectedEquipment?.id, { totalSets, restSeconds });
     navigate("/workout/exercising");
     resetSelectedEquipmentState();
   }
