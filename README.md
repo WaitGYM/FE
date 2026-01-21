@@ -1,9 +1,4 @@
 <div align="center">
-
-# 기다려짐
-
-<span style="color:#808080">헬스장에서 지루한 대기시간이 **기다려짐**</span>
-
 ![기다려짐](./readme/00.png)
 
 [![React](https://img.shields.io/badge/React-19.1-61dafb?logo=react)](https://react.dev/)
