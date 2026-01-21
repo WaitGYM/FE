@@ -1,4 +1,5 @@
 <div align="center">
+  
 ![기다려짐](./readme/00.png)
 
 [![React](https://img.shields.io/badge/React-19.1-61dafb?logo=react)](https://react.dev/)
