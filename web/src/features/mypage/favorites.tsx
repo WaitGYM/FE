@@ -21,7 +21,7 @@ export default function Favorites() {
   // 카테고리 목록 추출
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
-      new Set(favoriteList.map((eq) => eq.equipment.category))
+      new Set(favoriteList.map((eq) => eq.equipment.category)),
     ).sort();
     return ["전체", ...uniqueCategories];
   }, [favoriteList]);
@@ -32,7 +32,7 @@ export default function Favorites() {
 
     if (selectedCategory !== "전체") {
       filtered = filtered.filter(
-        (eq) => eq.equipment.category === selectedCategory
+        (eq) => eq.equipment.category === selectedCategory,
       );
     }
 
@@ -43,7 +43,7 @@ export default function Favorites() {
 
   async function handleToggleFavorite(
     e: React.MouseEvent<HTMLButtonElement>,
-    favorite: FavoriteType
+    favorite: FavoriteType,
   ) {
     e.stopPropagation();
     if (favorite.equipment.isFavorite)
@@ -74,48 +74,56 @@ export default function Favorites() {
         title={<span>즐겨찾기한 기구</span>}
       />
 
-      <EquipCategoryFilter
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onCategoryClick={setSelectedCategory}
-      />
+      {displayList.length !== 0 && (
+        <EquipCategoryFilter
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryClick={setSelectedCategory}
+        />
+      )}
 
       <div className="container">
         <div className="equipment-wrap">
-          <ul className="equipment-list">
-            {displayList.map((favorite: FavoriteType) => (
-              <li key={favorite.id}>
-                <button className="equipment">
-                  <div className="img">
-                    <img
-                      src={favorite.equipment.imageUrl}
-                      alt={favorite.equipment.name}
-                      loading="lazy"
-                      onLoad={({ target }) => {
-                        target.classList.add("visible");
-                      }}
-                    />
-                  </div>
-                  <div className="info">
-                    <div className="title">
-                      <span className="name">{favorite.equipment.name}</span>
+          {displayList.length !== 0 ? (
+            <ul className="equipment-list">
+              {displayList.map((favorite: FavoriteType) => (
+                <li key={favorite.id}>
+                  <button className="equipment">
+                    <div className="img">
+                      <img
+                        src={favorite.equipment.imageUrl}
+                        alt={favorite.equipment.name}
+                        loading="lazy"
+                        onLoad={({ target }) => {
+                          target.classList.add("visible");
+                        }}
+                      />
                     </div>
-                  </div>
-                </button>
-                <button
-                  className="favorite"
-                  onClick={(e) => handleToggleFavorite(e, favorite)}
-                  aria-label="즐겨찾기 취소"
-                >
-                  <Star
-                    size={20}
-                    strokeWidth="1.5"
-                    className={favorite.equipment.isFavorite ? "on" : ""}
-                  />
-                </button>
-              </li>
-            ))}
-          </ul>
+                    <div className="info">
+                      <div className="title">
+                        <span className="name">{favorite.equipment.name}</span>
+                      </div>
+                    </div>
+                  </button>
+                  <button
+                    className="favorite"
+                    onClick={(e) => handleToggleFavorite(e, favorite)}
+                    aria-label="즐겨찾기 취소"
+                  >
+                    <Star
+                      size={20}
+                      strokeWidth="1.5"
+                      className={favorite.equipment.isFavorite ? "on" : ""}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="empty-result">
+              <p>즐겨찾기한 기구가 없습니다</p>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
