@@ -20,6 +20,7 @@ export type EquipmentType = {
       estimatedEndAt?: Date;
     };
     currentUser?: string;
+    currentUserId: number;
     currentUserStartedAt?: Date;
     currentUserETA: number;
     estimatedWaitMinutes: boolean;

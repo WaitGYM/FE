@@ -18,7 +18,11 @@ export default function Gyms() {
       <Header
         className="header--mypage"
         leftContent={
-          <button className="btn btn-icon" onClick={() => navigate(-1)} aria-label="뒤로 가기">
+          <button
+            className="btn btn-icon"
+            onClick={() => navigate(-1)}
+            aria-label="뒤로 가기"
+          >
             <ChevronLeft size={24} strokeWidth="2" />
           </button>
         }
@@ -27,7 +31,9 @@ export default function Gyms() {
 
       <div className="container">
         <div className="search-bar">
-          <input type="search" placeholder="헬스장 이름을 검색해주세요" />
+          <div className="input-wrap">
+            <input type="search" placeholder="헬스장 이름을 검색해주세요" />
+          </div>
           <button className="btn-search" aria-label="검색">
             <Search size={20} strokeWidth="1.5" aria-hidden="true" />
           </button>

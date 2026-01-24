@@ -176,14 +176,7 @@ export default function EquipmentListPage({
               <div className="title">
                 <span className="name">{equipment.name}</span>
               </div>
-              <div
-                className={`status ${
-                  !equipment.status.isAvailable &&
-                  equipment.status.currentUser !== userInfo.name
-                    ? "waiting"
-                    : ""
-                }`}
-              >
+              <div className="status">
                 {/* 상태 뱃지 표현 */}
                 {equipment.status.myQueuePosition &&
                   equipment.status.myQueueStatus === "WAITING" && (
@@ -198,22 +191,23 @@ export default function EquipmentListPage({
                   )}
 
                 {/* 기구 현황 데이터 표현 */}
-                {equipment.status.currentUser === userInfo.name ? (
+                {equipment.status.currentUserId === userInfo.id && (
                   <span>이용중</span>
-                ) : !equipment.status.estimatedWaitMinutes &&
-                  !equipment.status.waitingCount ? (
+                )}
+                {!equipment.status.estimatedWaitMinutes &&
+                !equipment.status.waitingCount ? (
                   <span>이용가능</span>
                 ) : (
                   <>
-                    <span>
+                    <span className="waiting">
                       대기&nbsp;
                       {equipment.status.myQueueStatus === "WAITING"
                         ? equipment.status.currentUserETA
                         : equipment.status.estimatedWaitMinutes}
                       분
                     </span>
-                    <span className="dot"></span>
-                    <span>
+                    <span className="waiting dot"></span>
+                    <span className="waiting">
                       {equipment.status.myQueueStatus === "WAITING"
                         ? equipment.status.myQueuePosition
                         : equipment.status.waitingCount}

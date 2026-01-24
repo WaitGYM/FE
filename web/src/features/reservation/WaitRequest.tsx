@@ -10,8 +10,11 @@ import { usePreferenceStore } from "../../stores/preferenceStore";
 
 export default function WaitRequest() {
   const navigate = useNavigate();
-  const { selectedEquipment, reservationError, createReservation } =
-    useReservationStore();
+  const {
+    selectedEquipment,
+    createReservation,
+    getEquipmentReservationStatus,
+  } = useReservationStore();
   const { routineId } = useUIStore();
 
   // 툴팁
@@ -25,11 +28,20 @@ export default function WaitRequest() {
   }, [hasSeenWaitRequestTooltip, setHasSeenWaitRequestTooltip]);
 
   async function handleReqBtnClick() {
-    await createReservation();
-    if (!reservationError)
-      navigate(`/reservation/select-equipment${routineId ? "/routine" : ""}`, {
-        replace: true,
-      });
+    await getEquipmentReservationStatus();
+
+    const currentStatus =
+      useReservationStore.getState().selectedEquipment.status;
+
+    if (!currentStatus.isAvailable) {
+      const success = await createReservation();
+      if (!success) alert("기구 예약에 실패했습니다.");
+    } else {
+      alert("기구 예약에 실패했습니다.");
+    }
+    navigate(`/reservation/select-equipment${routineId ? "/routine" : ""}`, {
+      replace: true,
+    });
   }
 
   return (

@@ -48,6 +48,7 @@
 
     .name {
       font-size: rem(18);
+      font-weight: 600;
     }
 
     .status {
@@ -58,11 +59,11 @@
       display: flex;
       gap: 0.5rem;
 
-      &.waiting {
+      span.waiting {
         color: $c-point-orange;
       }
 
-      &.available {
+      span.available {
         color: $c-primary-blue-light;
       }
       & span:not(:last-child)::after {

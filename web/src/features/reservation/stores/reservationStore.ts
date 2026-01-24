@@ -17,22 +17,40 @@ type WaitingInfoType = {
   queueId: number;
   queuePosition: number;
 };
+type RoutineWaitingInfoType = {
+  equipment: {
+    category: string;
+    id: number;
+    imageUrl: string;
+    name: string;
+  };
+  exerciseInfo: {
+    order: number;
+    restSeconds: number;
+    targetSets: number;
+  };
+  queue: {
+    estimatedWaitMinutes: number;
+    queueId: number;
+    queuePosition: number;
+  };
+  message: string;
+};
 
 interface ReservationStoreType {
   selectedEquipment: EquipmentType & WorkoutGoalType;
-  equipmentReservationStatus: string;
-  waitingInfo: WaitingInfoType | null;
-  reservationError: string | null;
+  waitingInfo: (WaitingInfoType & RoutineWaitingInfoType) | null;
 
   setSelectedEquipment: (equipmentInfo: EquipmentType) => void;
   updateSelectedEquipment: (
     field: "sets" | "restSeconds",
     delta: number
   ) => void;
-  getEquipmentReservationStatus: () => Promise<void>;
-  createReservation: () => Promise<void>;
+  getEquipmentReservationStatus: () => Promise<boolean>;
+  createReservation: () => Promise<boolean>;
   deleteReservation: () => Promise<void>;
   resetSelectedEquipmentState: () => void;
+  resetWaitingInfoState: () => void;
   resetState: () => void;
 }
 
@@ -40,9 +58,7 @@ const { setLoading } = useLoadingStore.getState();
 
 const initialState = {
   selectedEquipment: [],
-  equipmentReservationStatus: "",
   waitingInfo: null,
-  reservationError: null,
 };
 
 export const useReservationStore = create<ReservationStoreType>()(
@@ -94,14 +110,13 @@ export const useReservationStore = create<ReservationStoreType>()(
       try {
         const eq = get().selectedEquipment;
         if (eq) {
-          const resData = (
-            await reservationApi.getEquipmentReservationStatus(eq.id)
-          ).data;
+          const { data } = await reservationApi.getEquipmentReservationStatus(
+            eq.id
+          );
 
-          set({
-            equipmentReservationStatus: resData.status,
-          });
-          console.log("getEquipmentReservationStatus :", resData.status);
+          set((state) => ({
+            selectedEquipment: { ...state.selectedEquipment, ...data },
+          }));
         } else {
           throw Error;
         }
@@ -125,18 +140,27 @@ export const useReservationStore = create<ReservationStoreType>()(
             routineDetail.id,
             eq.id
           );
+          set({
+            waitingInfo: {
+              totalSets: eq.sets,
+              restSeconds: eq.restSeconds,
+              ...res.data,
+            },
+          });
         } else {
           const reqData = {
             totalSets: eq.sets,
             restSeconds: eq.restSeconds,
           };
           res = await reservationApi.createReservation(eq.id, reqData);
+          set({
+            waitingInfo: { ...reqData, ...res.data },
+          });
         }
-        set({
-          waitingInfo: { ...res.data },
-        });
+        return true;
       } catch (error) {
         console.log("기구 예약에 실패", error);
+        return false;
       } finally {
         get().resetSelectedEquipmentState();
         setLoading(false);
@@ -165,6 +189,10 @@ export const useReservationStore = create<ReservationStoreType>()(
     resetSelectedEquipmentState: () =>
       set({
         selectedEquipment: { ...initialState.selectedEquipment },
+      }),
+    resetWaitingInfoState: () =>
+      set({
+        waitingInfo: null,
       }),
     resetState: () => set(initialState),
   }))
