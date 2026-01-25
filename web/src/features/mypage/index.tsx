@@ -17,12 +17,25 @@ import { useAuthStore } from "../../stores/authStore";
 
 export default function Mypage() {
   const navigate = useNavigate();
-  const { userInfo } = useUserStore();
+  const { userInfo, terminateSession, deleteAccount } = useUserStore();
   const logout = useAuthStore((state) => state.logout);
 
-  function handleLogout() {
-    logout();
-    navigate("/login");
+  async function handleLogout() {
+    let success: boolean;
+
+    // 게스트일 경우 계정삭제(탈퇴하기)와 동일하게 작동
+    if (userInfo.isGuest) {
+      success = await deleteAccount();
+    } else {
+      success = await terminateSession();
+    }
+
+    if (success) {
+      logout();
+      navigate("/login");
+    } else {
+      alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    }
   }
 
   function comingSoon() {
