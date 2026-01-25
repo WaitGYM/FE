@@ -10,14 +10,17 @@ import { useAuthStore } from "../../stores/authStore";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { userInfo, deleteUser } = useUserStore();
+  const { userInfo, deleteAccount } = useUserStore();
   const logout = useAuthStore((state) => state.logout);
 
-  async function handleDeleteUser() {
-    // api 미작업으로 보류
-    // await deleteUser();
-    // logout();
-    // navigate("/login");
+  async function handleDeleteAccount() {
+    const success = await deleteAccount();
+    if (success) {
+      logout();
+      navigate("/login");
+    } else {
+      alert("탈퇴에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    }
   }
 
   return (
@@ -76,7 +79,7 @@ export default function Profile() {
         <button
           type="button"
           className="btn-withdraw"
-          onClick={handleDeleteUser}
+          onClick={handleDeleteAccount}
         >
           탈퇴하기
         </button>
