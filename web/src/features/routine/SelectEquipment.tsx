@@ -19,14 +19,14 @@ export default function RoutineSelectEquipPage() {
     selectedEquipList,
     routineDetail,
     setSelectedEquipList,
-    resetRoutineState,
+    resetRoutineDetailState,
   } = useRoutineStore();
   const { equipmentList } = useEquipmentStore();
 
   function handleBackBtn() {
     if (!routineDetail) {
       navigate("/");
-      resetRoutineState();
+      resetRoutineDetailState();
     } else {
       navigate(-1);
     }

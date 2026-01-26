@@ -52,7 +52,7 @@ export default function ReservationPage() {
     routineDetail,
     setSelectedEquipList,
     setRoutineName,
-    resetRoutineState,
+    resetRoutineDetailState,
   } = useRoutineStore();
 
   // 새로고침 아이콘회전
@@ -94,7 +94,7 @@ export default function ReservationPage() {
   function handleBackBtnClick() {
     navigate("/", { replace: true });
 
-    if (routineDetail) resetRoutineState();
+    if (routineDetail) resetRoutineDetailState();
     resetSelectedEquipmentState();
     resetWorkoutMode();
     resetEquipmentState();

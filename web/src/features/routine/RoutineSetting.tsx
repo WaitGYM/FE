@@ -49,7 +49,7 @@ export default function RoutineSetting() {
     updateRoutine,
     deleteRoutine,
     resetSelectedEquipList,
-    resetRoutineState,
+    resetRoutineDetailState,
   } = useRoutineStore();
   const { resetSelectedEquipmentState } = useReservationStore();
   const { routineId, resetWorkoutMode } = useUIStore();
@@ -101,15 +101,20 @@ export default function RoutineSetting() {
   }
 
   async function handleDeleteRoutine() {
-    await deleteRoutine();
-    navigate("/", { replace: true });
+    const success = await deleteRoutine();
 
-    const timer = setTimeout(() => {
-      resetRoutineState();
-      resetSelectedEquipmentState();
-      resetWorkoutMode();
-    }, 100);
-    return () => clearTimeout(timer);
+    if (success) {
+      navigate("/", { replace: true });
+
+      const timer = setTimeout(() => {
+        resetRoutineDetailState();
+        resetSelectedEquipmentState();
+        resetWorkoutMode();
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      alert("루틴 삭제에 실패했습니다.");
+    }
   }
 
   function handleAddEquip() {
