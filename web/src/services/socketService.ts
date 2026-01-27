@@ -1,4 +1,5 @@
 import { useNotificationStore } from "../features/notification/store/notificationStore";
+import { useReservationStore } from "../features/reservation/stores/reservationStore";
 import { useEquipmentStore } from "../stores/equipmentStore";
 
 interface ServerNotificationPayload {
@@ -27,7 +28,7 @@ const connectWebSocket = (userId: string | number) => {
       JSON.stringify({
         type: "auth",
         token: userId,
-      })
+      }),
     );
 
     // console.log("순수 웹소켓 연결 성공!");
@@ -52,8 +53,14 @@ const connectWebSocket = (userId: string | number) => {
           ...data,
         });
 
-        // 내차례 됐을때 현황 즉시 새로고침용
+        // 내차례 됐을때 현황 즉시 새로고침
         if (data.type === "EQUIPMENT_AVAILABLE") {
+          useEquipmentStore.getState().triggerRefresh();
+        }
+
+        // 대기만료시 대기정보 삭제
+        if (data.type === "QUEUE_EXPIRED") {
+          useReservationStore.getState().resetWaitingInfoState();
           useEquipmentStore.getState().triggerRefresh();
         }
       }
