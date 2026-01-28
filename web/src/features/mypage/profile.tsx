@@ -7,17 +7,26 @@ import thumbDefault from "@img/thumb-default.jpg";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
 import { useAuthStore } from "../../stores/authStore";
+import { useReservationStore } from "../reservation/stores/reservationStore";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function Profile() {
   const navigate = useNavigate();
   const { userInfo, deleteAccount } = useUserStore();
   const logout = useAuthStore((state) => state.logout);
+  const { resetWaitingInfoState } = useReservationStore();
+  const { setWorkingOut, setRestTimerModalOpen, setIsRestTimerMiniView } =
+    useUIStore();
 
   async function handleDeleteAccount() {
     const success = await deleteAccount();
     if (success) {
       logout();
       navigate("/login");
+      setIsRestTimerMiniView(false);
+      setRestTimerModalOpen(false);
+      setWorkingOut(false);
+      resetWaitingInfoState();
     } else {
       alert("탈퇴에 실패했습니다. 잠시 후 다시 시도해주세요.");
     }
