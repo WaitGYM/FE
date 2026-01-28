@@ -14,11 +14,16 @@ import thumbDefault from "@img/thumb-default.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/userStore";
 import { useAuthStore } from "../../stores/authStore";
+import { useReservationStore } from "../reservation/stores/reservationStore";
+import { useUIStore } from "../../stores/UIStore";
 
 export default function Mypage() {
   const navigate = useNavigate();
   const { userInfo, terminateSession, deleteAccount } = useUserStore();
   const logout = useAuthStore((state) => state.logout);
+  const { resetWaitingInfoState } = useReservationStore();
+  const { setWorkingOut, setRestTimerModalOpen, setIsRestTimerMiniView } =
+    useUIStore();
 
   async function handleLogout() {
     let success: boolean;
@@ -33,6 +38,10 @@ export default function Mypage() {
     if (success) {
       logout();
       navigate("/login");
+      setRestTimerModalOpen(false);
+      setIsRestTimerMiniView(false);
+      setWorkingOut(false);
+      resetWaitingInfoState();
     } else {
       alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.");
     }
