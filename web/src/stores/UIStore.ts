@@ -20,7 +20,7 @@ interface UIStateType {
   setWorkingOut: (isWorkingOut: boolean) => void;
 
   isRestTimerModalOpen: boolean;
-  toggleRestTimerModalOpen: () => void;
+  setRestTimerModalOpen: (isRestTimerModalOpen: boolean) => void;
 
   isRestTimerMiniView: boolean;
   setIsRestTimerMiniView: (isMiniView: boolean) => void;
@@ -84,11 +84,11 @@ export const useUIStore = create<UIStateType>()(
     setWorkingOut: (isWorkingOut) => set({ isWorkingOut }),
 
     isRestTimerModalOpen: false,
-    toggleRestTimerModalOpen: () =>
-      set((state) => ({ isRestTimerModalOpen: !state.isRestTimerModalOpen })),
+    setRestTimerModalOpen: (isRestTimerModalOpen) =>
+      set({ isRestTimerModalOpen }),
 
     isRestTimerMiniView: false,
     setIsRestTimerMiniView: (isRestTimerMiniView) =>
       set({ isRestTimerMiniView }),
-  }))
+  })),
 );

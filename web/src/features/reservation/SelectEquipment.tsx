@@ -52,7 +52,7 @@ export default function ReservationPage() {
     routineDetail,
     setSelectedEquipList,
     setRoutineName,
-    resetRoutineState,
+    resetRoutineDetailState,
   } = useRoutineStore();
 
   // 새로고침 아이콘회전
@@ -94,7 +94,7 @@ export default function ReservationPage() {
   function handleBackBtnClick() {
     navigate("/", { replace: true });
 
-    if (routineDetail) resetRoutineState();
+    if (routineDetail) resetRoutineDetailState();
     resetSelectedEquipmentState();
     resetWorkoutMode();
     resetEquipmentState();
@@ -379,8 +379,9 @@ export default function ReservationPage() {
             </BottomButtonWrapper>
           )}
 
-        {/* 대기중인 기구의 차례 되면 운동시작으로 */}
-        {selectedEquipment?.status?.myQueuePosition === 1 &&
+        {/* 운동중이 아니고 대기중인 기구의 차례 되면 운동시작으로 */}
+        {!isWorkingOut &&
+        selectedEquipment?.status?.myQueuePosition === 1 &&
         selectedEquipment?.status?.myQueueStatus === "NOTIFIED" ? (
           <BottomButtonWrapper>
             <button onClick={handleStartWorkout} className="btn btn-orange">

@@ -18,7 +18,7 @@ const formatTime = (sec: number): string => {
   const seconds = sec % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
     2,
-    "0"
+    "0",
   )}`;
 };
 
@@ -27,7 +27,7 @@ export default function WorkoutBreaktimer() {
   const {
     workoutMode,
     isRestTimerModalOpen,
-    toggleRestTimerModalOpen,
+    setRestTimerModalOpen,
     isRestTimerMiniView,
     setIsRestTimerMiniView,
   } = useUIStore();
@@ -80,7 +80,7 @@ export default function WorkoutBreaktimer() {
   function goWorkoutPage() {
     completeRest();
     navigate("/workout/exercising", { replace: true });
-    toggleRestTimerModalOpen();
+    setRestTimerModalOpen(false);
   }
 
   if (!isRestTimerModalOpen) return null;
@@ -111,7 +111,7 @@ export default function WorkoutBreaktimer() {
                       navigate(
                         `/reservation/select-equipment${
                           workoutMode === "routine" ? "/routine" : ""
-                        }`
+                        }`,
                       );
                     }}
                     type="button"
@@ -159,7 +159,7 @@ export default function WorkoutBreaktimer() {
                                 strokeWidth="2"
                                 key={`set${index}`}
                               />
-                            )
+                            ),
                         )}
                       </div>
                       <p className="visually-hidden" aria-live="polite">
@@ -208,7 +208,7 @@ export default function WorkoutBreaktimer() {
             }}
             type="button"
             aria-label={`휴식 타이머: ${formatTime(
-              leftRestTime
+              leftRestTime,
             )}. 전체 화면으로 보려면 클릭하세요.`}
           >
             {/* 배경 트랙 */}
@@ -238,6 +238,6 @@ export default function WorkoutBreaktimer() {
         )}
       </motion.div>
     </AnimatePresence>,
-    document.getElementById("modal-root")!
+    document.getElementById("modal-root")!,
   );
 }

@@ -12,7 +12,8 @@ interface UserState {
 
   guestLogin: () => Promise<boolean>;
   getUserInfo: () => Promise<void>;
-  deleteUser: () => Promise<void>;
+  terminateSession: () => Promise<boolean>;
+  deleteAccount: () => Promise<boolean>;
 }
 
 const { setLoading } = useLoadingStore.getState();
@@ -26,7 +27,7 @@ const getEndOfDay = () => {
     23,
     59,
     59,
-    999
+    999,
   );
   return endOfDay.toISOString();
 };
@@ -53,7 +54,7 @@ export const useUserStore = create<UserState>()(
       try {
         const { data } = await userApi.getUserInfo();
 
-        // 게스트로 당일 재접속시 토큰으로 받은 유저 데이터에 게스트 유무 값 없어 임시 처리
+        // 게스트로 당일 재접속(재로그인X)시 토큰으로 받은 유저 데이터에 게스트 유무 값 없어 임시 처리
         if (data.name.includes("Guest")) {
           set({
             userInfo: {
@@ -98,22 +99,34 @@ export const useUserStore = create<UserState>()(
 
         return true;
       } catch (error) {
-        console.log("게스트 로그인 실패!!", error);
         return false;
       } finally {
         setLoading(false);
       }
     },
 
-    deleteUser: async () => {
+    terminateSession: async () => {
       setLoading(true);
       try {
-        await userApi.getUserInfo();
+        await userApi.terminateSession();
+        return true;
       } catch (error) {
-        console.log("탈퇴하기 실패!!", error);
+        return false;
       } finally {
         setLoading(false);
       }
     },
-  }))
+
+    deleteAccount: async () => {
+      setLoading(true);
+      try {
+        await userApi.deleteAccount();
+        return true;
+      } catch (error) {
+        return false;
+      } finally {
+        setLoading(false);
+      }
+    },
+  })),
 );

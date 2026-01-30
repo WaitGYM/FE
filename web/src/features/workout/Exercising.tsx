@@ -10,7 +10,7 @@ import { useUIStore } from "../../stores/UIStore";
 export default function WorkoutExercising() {
   const navigate = useNavigate();
   const { workingOutInfo, stopWorkout, completeWorkoutSet } = useWorkoutStore();
-  const { isRestTimerModalOpen, toggleRestTimerModalOpen } = useUIStore();
+  const { isRestTimerModalOpen, setRestTimerModalOpen } = useUIStore();
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -38,7 +38,7 @@ export default function WorkoutExercising() {
     const seconds = Math.floor((ms % 60000) / 1000);
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
       2,
-      "0"
+      "0",
     )}`;
   }
 
@@ -51,7 +51,7 @@ export default function WorkoutExercising() {
     const isWorkoutCompleted = await completeWorkoutSet();
     if (!isWorkoutCompleted) {
       handleTimerReset();
-      toggleRestTimerModalOpen();
+      setRestTimerModalOpen(true);
     } else {
       handleWorkoutComplete();
     }
@@ -105,7 +105,7 @@ export default function WorkoutExercising() {
                       />
                     ) : (
                       <Circle size={20} strokeWidth="2" key={`set${index}`} />
-                    )
+                    ),
                 )}
               </div>
               <p className="visually-hidden" aria-live="polite">
