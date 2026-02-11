@@ -19,7 +19,7 @@ export default function EquipmentListPage({
   selectedList: EquipmentType[];
   overrideEquipmentList?: EquipmentType[];
   handleSelectedEquipment: (
-    equipmentInfo: EquipmentType | EquipmentType[]
+    equipmentInfo: EquipmentType | EquipmentType[],
   ) => void;
 }) {
   const { equipmentList, equipmentListLoading, getEquipments, refreshTrigger } =
@@ -56,7 +56,7 @@ export default function EquipmentListPage({
 
   async function handleToggleFavorite(
     e: React.MouseEvent<HTMLButtonElement>,
-    equipment: EquipmentType
+    equipment: EquipmentType,
   ) {
     e.stopPropagation();
     if (equipment.isFavorite) await deleteFavorite(equipment.id);
@@ -77,10 +77,7 @@ export default function EquipmentListPage({
     ) {
       label += ", 이용 가능";
     } else {
-      const waitMinutes =
-        equipment.status.myQueueStatus === "WAITING"
-          ? equipment.status.currentUserETA
-          : equipment.status.estimatedWaitMinutes;
+      const waitMinutes = equipment.status.estimatedWaitMinutes;
       const waitingCount =
         equipment.status.myQueueStatus === "WAITING"
           ? equipment.status.myQueuePosition
@@ -201,10 +198,7 @@ export default function EquipmentListPage({
                   <>
                     <span className="waiting">
                       대기&nbsp;
-                      {equipment.status.myQueueStatus === "WAITING"
-                        ? equipment.status.currentUserETA
-                        : equipment.status.estimatedWaitMinutes}
-                      분
+                      {equipment.status.estimatedWaitMinutes}분
                     </span>
                     <span className="waiting dot"></span>
                     <span className="waiting">
