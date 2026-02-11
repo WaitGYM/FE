@@ -4,6 +4,7 @@ import { equipmentApi } from "../services";
 import type { EquipmentType } from "../types";
 import { useRoutineStore } from "../features/routine/store/routineStore";
 import { useUIStore } from "./UIStore";
+import { useReservationStore } from "../features/reservation/stores/reservationStore";
 
 interface EquipmentStoreType {
   equipmentList: EquipmentType[];
@@ -51,7 +52,7 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
 
           const routineData = eqAllData.reduce((arr, cur) => {
             const routineEq = updatedRoutineDetail.exercises.find(
-              (ex) => cur.id === ex.equipment.id
+              (ex) => cur.id === ex.equipment.id,
             );
             if (routineEq) {
               let newItem = { ...cur };
@@ -69,7 +70,7 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
         } else {
           // 대기 건 기구 있으면 최상단 배치
           const waitingEqIdx = eqAllData.findIndex(
-            (eq) => eq.status.myQueuePosition
+            (eq) => eq.status.myQueuePosition,
           );
           if (waitingEqIdx !== -1) {
             const [matched] = eqAllData.splice(waitingEqIdx, 1);
@@ -87,7 +88,7 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
         const { isWorkingOut } = useUIStore.getState();
         if (!isWorkingOut && !get().error && filter === "routine") {
           get().setIsRoutineCompelte(
-            get().equipmentList.every((eq) => eq.status.completedToday)
+            get().equipmentList.every((eq) => eq.status.completedToday),
           );
         }
       }
@@ -97,9 +98,11 @@ export const useEquipmentStore = create<EquipmentStoreType>()(
 
     setIsRoutineCompelte: (isRoutineCompelte) => set({ isRoutineCompelte }),
 
-    triggerRefresh: () =>
-      set((state) => ({ refreshTrigger: state.refreshTrigger + 1 })),
+    triggerRefresh: () => {
+      set((state) => ({ refreshTrigger: state.refreshTrigger + 1 }));
+      useReservationStore.getState().resetSelectedEquipmentState();
+    },
 
     resetEquipmentState: () => set(initialState),
-  }))
+  })),
 );
