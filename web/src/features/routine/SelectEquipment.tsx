@@ -107,7 +107,7 @@ export default function RoutineSelectEquipPage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           leftContent={
             <button
@@ -153,7 +153,7 @@ export default function RoutineSelectEquipPage() {
             />
           </div>
         </section>
-      </div>
+      </main>
 
       {selectedEquipList.length && (
         <BottomButtonWrapper>

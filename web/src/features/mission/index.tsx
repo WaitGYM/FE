@@ -14,7 +14,7 @@ export default function ChallengeScreen() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           className="header--achive"
           leftContent={
@@ -41,7 +41,7 @@ export default function ChallengeScreen() {
           <Route path="mission" element={<TabMission />} />
           <Route path="ranking" element={<TabRanking />} />
         </Routes>
-      </div>
+      </main>
 
       <Footer />
     </motion.div>

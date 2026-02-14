@@ -147,7 +147,7 @@ export default function RoutineSetting() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           className="header--equipment-detail"
           title={<h2>{routineId ? "루틴 설정" : "세트 설정"}</h2>}
@@ -244,7 +244,7 @@ export default function RoutineSetting() {
             </ul>
           </section>
         </div>
-      </div>
+      </main>
       <BottomButtonWrapper>
         {routineId && (
           <button

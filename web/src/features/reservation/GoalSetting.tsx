@@ -62,7 +62,7 @@ export default function EquipmentDetail() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           className="header--equipment-detail"
           title={<h2>세트설정</h2>}
@@ -161,7 +161,7 @@ export default function EquipmentDetail() {
             </ul>
           </section>
         </div>
-      </div>
+      </main>
       {selectedEquipment?.sets ? (
         <BottomButtonWrapper>
           <button className="btn btn-orange" onClick={handleNextBtnClick}>

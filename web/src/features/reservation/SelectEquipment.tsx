@@ -220,7 +220,7 @@ export default function ReservationPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
       >
-        <div className="content-scroll">
+        <main className="content-scroll">
           <Header
             className="header--equipment-detail"
             leftContent={
@@ -350,7 +350,7 @@ export default function ReservationPage() {
               />
             </div>
           </section>
-        </div>
+        </main>
 
         {/* 내 대기건이 없고 내가 이용중이 아닌 이용불가 기구 선택시 다음버튼(대기) */}
         {/* 운동중이 아니고 이용가능 기구일때 다음버튼(운동) */}

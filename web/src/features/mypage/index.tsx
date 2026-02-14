@@ -58,7 +58,7 @@ export default function Mypage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           className="header--mypage"
           leftContent={<h1 className="title">내 정보</h1>}
@@ -127,7 +127,7 @@ export default function Mypage() {
             로그아웃
           </button>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </motion.div>

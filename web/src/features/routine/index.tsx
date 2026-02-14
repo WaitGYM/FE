@@ -23,7 +23,7 @@ export default function EquipmentListPage() {
     setSelectedList((prevSelected) =>
       prevSelected.includes(selectEquip)
         ? prevSelected.filter((v) => v !== selectEquip)
-        : [...prevSelected, selectEquip]
+        : [...prevSelected, selectEquip],
     );
   }
 
@@ -35,10 +35,14 @@ export default function EquipmentListPage() {
 
   return (
     <div className="add-routine-page equipmentList-page">
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           leftContent={
-            <button className="btn btn-icon" onClick={() => navigate(-1)} aria-label="뒤로 가기">
+            <button
+              className="btn btn-icon"
+              onClick={() => navigate(-1)}
+              aria-label="뒤로 가기"
+            >
               <ChevronLeft size={24} strokeWidth="2" />
             </button>
           }
@@ -89,7 +93,7 @@ export default function EquipmentListPage() {
             </ul>
           </div>
         </section>
-      </div>
+      </main>
 
       {selectedList.length ? (
         <BottomButtonWrapper>

@@ -62,7 +62,7 @@ export default function RoutineSettingPreview() {
         변경사항을 <strong className="text-orange">저장</strong>하지 않고
         <br />
         페이지를 나가시겠어요?
-      </h6>
+      </h6>,
     );
     setOpen(true);
   }
@@ -73,7 +73,7 @@ export default function RoutineSettingPreview() {
         정말 루틴을
         <br />
         <strong className="text-orange">삭제</strong> 하시겠어요?
-      </h6>
+      </h6>,
     );
     setOpen(true);
   }
@@ -83,7 +83,7 @@ export default function RoutineSettingPreview() {
         정말 운동을
         <br />
         <strong className="text-orange">삭제</strong> 하시겠어요?
-      </h6>
+      </h6>,
     );
     setOpen(true);
   }
@@ -94,7 +94,7 @@ export default function RoutineSettingPreview() {
         이 루틴을
         <br />
         <strong className="text-orange">수정</strong>하시겠어요?
-      </h6>
+      </h6>,
     );
     setOpen(true);
   }
@@ -102,7 +102,7 @@ export default function RoutineSettingPreview() {
   function updateSelectedEquipment(
     eqId: number,
     field: "sets" | "restSeconds",
-    changeValue: number
+    changeValue: number,
   ) {
     const newEquipmentList = selectedEquipList.map((curEq) => {
       if (curEq.id !== eqId) {
@@ -137,7 +137,7 @@ export default function RoutineSettingPreview() {
 
   function handleRemoveEquipment(equipId: number) {
     setSelectedEquipList((prevList) =>
-      prevList.filter((equip) => equip.id !== equipId)
+      prevList.filter((equip) => equip.id !== equipId),
     );
   }
 
@@ -148,7 +148,7 @@ export default function RoutineSettingPreview() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           className="header--equipment-detail"
           title={<h2>루틴설정</h2>}
@@ -253,7 +253,7 @@ export default function RoutineSettingPreview() {
                             updateSelectedEquipment(
                               equip.id,
                               "restSeconds",
-                              -10
+                              -10,
                             )
                           }
                         >
@@ -281,7 +281,7 @@ export default function RoutineSettingPreview() {
             </ul>
           </section>
         </div>
-      </div>
+      </main>
       <BottomButtonWrapper>
         <button className="btn btn-blue" onClick={handleEquipDelete}>
           운동 삭제

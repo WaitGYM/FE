@@ -27,7 +27,7 @@ export default function PushList() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           leftContent={
             <button
@@ -77,7 +77,7 @@ export default function PushList() {
             </p>
           </div>
         </section>
-      </div>
+      </main>
     </motion.div>
   );
 }

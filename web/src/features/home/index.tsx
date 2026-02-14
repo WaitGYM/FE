@@ -44,7 +44,7 @@ export default function HomePage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2, ease: "easeInOut" }}
     >
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           className="header--home"
           leftContent={
@@ -145,7 +145,7 @@ export default function HomePage() {
             )}
           </section>
         </div>
-      </div>
+      </main>
 
       {!isWorkingOut && (
         <BottomButtonWrapper>

@@ -34,7 +34,7 @@ export default function WorkoutReservation({
 
   return (
     <div className="reservation-page" id="workout-reservation">
-      <div className="content-scroll">
+      <main className="content-scroll">
         <Header
           leftContent={
             <button className="btn btn-icon">
@@ -111,7 +111,7 @@ export default function WorkoutReservation({
             </div>
           </div>
         </section>
-      </div>
+      </main>
 
       <BottomButtonWrapper>
         <button className="btn btn-orange">대기하기</button>
