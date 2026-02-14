@@ -325,7 +325,15 @@ export default function ReservationPage() {
                     <Switch
                       checked={isEquipAutoSorting}
                       size="small"
-                      color="warning"
+                      sx={{
+                        "& .MuiSwitch-switchBase.Mui-checked": {
+                          color: "#ef754d",
+                        },
+                        "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                          {
+                            backgroundColor: "#ef754d",
+                          },
+                      }}
                       slotProps={{ input: { "aria-label": "자동제안" } }}
                       onChange={(e) => setIsEquipAutoSorting(e.target.checked)}
                     />
