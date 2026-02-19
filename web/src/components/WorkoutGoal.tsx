@@ -55,13 +55,13 @@ export default function WorkoutGoal({
                   type="checkbox"
                   id={`select-${equipmentInfo?.name}`}
                   checked={selectedList.some(
-                    (item) => item.id == equipmentInfo.id
+                    (item) => item.id == equipmentInfo.id,
                   )}
                   onChange={(e) => {
                     const newArr = e.target.checked
                       ? [...selectedList, equipmentInfo]
                       : [...selectedList].filter(
-                          (item) => item.id != equipmentInfo.id
+                          (item) => item.id != equipmentInfo.id,
                         );
                     setSelectedList(newArr);
                   }}
@@ -109,12 +109,12 @@ export default function WorkoutGoal({
                 },
                 tooltip: {
                   sx: {
-                    bgcolor: "#fff",
-                    color: "#293241",
+                    bgcolor: "#727780",
+                    color: "#ffffff",
                     fontSize: "15px",
                     padding: "12px 12px",
                     borderRadius: "4px",
-                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                    boxShadow: "0 4px 6px rgba(62,62,62,0.5)",
                     textAlign: "left",
                     lineHeight: "1.4",
                     maxWidth: "200px",
@@ -125,7 +125,7 @@ export default function WorkoutGoal({
                 },
                 arrow: {
                   sx: {
-                    color: "#fff",
+                    color: "#727780",
                   },
                 },
               }}

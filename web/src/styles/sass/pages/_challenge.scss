@@ -136,9 +136,9 @@
         .progress {
           height: rem(20);
           border-radius: rem(20);
-          background-color: $c-primary-blue;
+          background-color: $c-primary-blue-dark-modal;
           & .MuiLinearProgress-bar {
-            background-color: $c-point-orange;
+            background-color: $c-sub-white;
           }
         }
         .num-count {
@@ -148,6 +148,7 @@
           transform: translate(-50%, -50%);
           font-size: rem(12);
           color: $c-sub-white;
+          mix-blend-mode: difference;
         }
       }
     }

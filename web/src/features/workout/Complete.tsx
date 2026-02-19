@@ -73,7 +73,7 @@ export default function WorkoutCompletePage() {
       <BottomButtonWrapper>
         <button
           type="button"
-          className="btn btn-orange"
+          className="btn btn-white"
           onClick={handleWorkoutComplete}
         >
           확인

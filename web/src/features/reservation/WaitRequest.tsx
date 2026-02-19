@@ -98,12 +98,12 @@ export default function WaitRequest() {
             },
             tooltip: {
               sx: {
-                bgcolor: "#fff",
-                color: "#293241",
+                bgcolor: "#727780",
+                color: "#ffffff",
                 fontSize: "15px",
                 padding: "12px 12px",
                 borderRadius: "4px",
-                boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                boxShadow: "0 4px 6px rgba(62,62,62,0.5)",
                 textAlign: "left",
                 lineHeight: "1.5",
                 maxWidth: "300px",
@@ -115,13 +115,13 @@ export default function WaitRequest() {
             },
             arrow: {
               sx: {
-                color: "#fff",
+                color: "#727780",
               },
             },
           }}
           arrow
         >
-          <button className="btn btn-orange" onClick={handleReqBtnClick}>
+          <button className="btn btn-white" onClick={handleReqBtnClick}>
             사용 요청 보내기
           </button>
         </Tooltip>

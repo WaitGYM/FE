@@ -182,7 +182,7 @@ export default function WorkoutBreaktimer() {
                 <Minus />
               </button>
               <button
-                className="btn btn-orange"
+                className="btn btn-white"
                 onClick={handleSkipRest}
                 type="button"
               >

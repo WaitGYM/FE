@@ -95,7 +95,7 @@ export default function Profile() {
       </div>
 
       {/* <BottomButtonWrapper>
-        <button className="btn btn-orange">수정하기</button>
+        <button className="btn btn-white">수정하기</button>
       </BottomButtonWrapper> */}
     </motion.div>
   );

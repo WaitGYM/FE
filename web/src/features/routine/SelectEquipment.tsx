@@ -161,7 +161,7 @@ export default function RoutineSelectEquipPage() {
             onClick={() =>
               !routineDetail ? handleNextBtnClick() : handleAddBtnClick()
             }
-            className="btn btn-orange"
+            className="btn btn-white"
           >
             {!routineDetail ? "다음" : "추가하기"}
           </button>

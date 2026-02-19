@@ -258,9 +258,7 @@ export default function RoutineSetting() {
         )}
         <button
           aria-haspopup="dialog"
-          className={`btn btn-orange ${
-            !selectedEquipList.length && "disabled"
-          }`}
+          className={`btn btn-white ${!selectedEquipList.length && "disabled"}`}
           disabled={!selectedEquipList.length}
           onClick={() =>
             routineId
@@ -270,7 +268,7 @@ export default function RoutineSetting() {
         >
           {/* 비활성화일때 .disabled를 붙여주세요 */}
           {/* <button className="btn btn-blue disabled">운동 삭제</button> */}
-          {/* <button className="btn btn-orange disabled" onClick={handleCreateRoutine}> */}
+          {/* <button className="btn btn-white disabled" onClick={handleCreateRoutine}> */}
           {routineId ? "저장" : "등록"}
         </button>
       </BottomButtonWrapper>

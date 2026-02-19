@@ -43,6 +43,10 @@
     background: $c-sub-gray;
     color: $c-sub-white;
   }
+  &.btn-white {
+    background: $c-sub-white;
+    color: $c-primary-blue-dark;
+  }
   &.disabled {
     opacity: 0.4;
   }

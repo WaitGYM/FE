@@ -114,7 +114,7 @@ export default function WorkoutReservation({
       </main>
 
       <BottomButtonWrapper>
-        <button className="btn btn-orange">대기하기</button>
+        <button className="btn btn-white">대기하기</button>
       </BottomButtonWrapper>
 
       {/* 휴식시간타이머 */}

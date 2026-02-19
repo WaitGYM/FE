@@ -34,7 +34,7 @@ export default function WorkoutBooking() {
       </section>
 
       <BottomButtonWrapper>
-        <button className="btn btn-orange">사용 요청 보내기</button>
+        <button className="btn btn-white">사용 요청 보내기</button>
       </BottomButtonWrapper>
     </div>
   );

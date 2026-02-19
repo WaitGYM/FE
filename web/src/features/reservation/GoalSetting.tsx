@@ -168,7 +168,7 @@ export default function EquipmentDetail() {
       </main>
       {selectedEquipment?.sets ? (
         <BottomButtonWrapper>
-          <button className="btn btn-orange" onClick={handleNextBtnClick}>
+          <button className="btn btn-white" onClick={handleNextBtnClick}>
             {!isWorkingOut && selectedEquipment.status?.isAvailable
               ? "이용하기"
               : "예약하기"}

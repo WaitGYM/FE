@@ -119,7 +119,7 @@ export default function WorkoutExercising() {
 
       <BottomButtonWrapper>
         <button
-          className="btn btn-blue"
+          className="btn btn-white"
           onClick={handleSetComplete}
           type="button"
         >

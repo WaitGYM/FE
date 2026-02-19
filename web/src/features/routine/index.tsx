@@ -97,7 +97,11 @@ export default function EquipmentListPage() {
 
       {selectedList.length ? (
         <BottomButtonWrapper>
-          <button onClick={handleNextBtnClick} className="btn btn-orange">
+          <button
+            onClick={handleNextBtnClick}
+            className="btn btn-white"
+            type="button"
+          >
             다음
           </button>
         </BottomButtonWrapper>

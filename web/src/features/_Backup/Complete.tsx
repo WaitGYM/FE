@@ -33,7 +33,7 @@ export default function WorkoutCompletePage() {
       </ul>
 
       <BottomButtonWrapper>
-        <button className="btn btn-orange" id="ok">
+        <button className="btn btn-white" id="ok">
           확인
         </button>
       </BottomButtonWrapper>

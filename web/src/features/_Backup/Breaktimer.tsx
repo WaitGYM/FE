@@ -43,7 +43,7 @@ export default function WorkoutBreaktimer() {
         <button className="btn btn-gray">
           <Plus />
         </button>
-        <button className="btn btn-orange">휴식중단</button>
+        <button className="btn btn-white">휴식중단</button>
         <button className="btn btn-gray">
           <Minus />
         </button>

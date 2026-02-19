@@ -301,12 +301,12 @@ export default function ReservationPage() {
                       },
                       tooltip: {
                         sx: {
-                          bgcolor: "#fff",
-                          color: "#293241",
+                          bgcolor: "#727780",
+                          color: "#ffffff",
                           fontSize: "15px",
                           padding: "12px 12px",
                           borderRadius: "4px",
-                          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                          boxShadow: "0 4px 6px rgba(62,62,62,0.5)",
                           textAlign: "left",
                           lineHeight: "1.4",
                           width: "200px",
@@ -316,7 +316,7 @@ export default function ReservationPage() {
                       },
                       arrow: {
                         sx: {
-                          color: "#fff",
+                          color: "#727780",
                         },
                       },
                     }}
@@ -368,7 +368,7 @@ export default function ReservationPage() {
           !selectedEquipment.status.isAvailable) ||
           (!isWorkingOut && selectedEquipment?.status.isAvailable)) ? (
           <BottomButtonWrapper>
-            <button onClick={handleNextBtn} className="btn btn-orange">
+            <button onClick={handleNextBtn} className="btn btn-white">
               다음
             </button>
           </BottomButtonWrapper>
@@ -380,7 +380,7 @@ export default function ReservationPage() {
             <BottomButtonWrapper>
               <button
                 onClick={handleDeleteReservation}
-                className="btn btn-orange"
+                className="btn btn-white"
               >
                 대기 취소
               </button>
@@ -392,7 +392,7 @@ export default function ReservationPage() {
         selectedEquipment?.status?.myQueuePosition === 1 &&
         selectedEquipment?.status?.myQueueStatus === "NOTIFIED" ? (
           <BottomButtonWrapper>
-            <button onClick={handleStartWorkout} className="btn btn-orange">
+            <button onClick={handleStartWorkout} className="btn btn-white">
               운동 시작
             </button>
           </BottomButtonWrapper>

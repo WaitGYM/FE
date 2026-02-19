@@ -159,7 +159,7 @@ export default function HomePage() {
           </button>
           <button
             onClick={() => navigate("/add-routine/select-equipment")}
-            className="btn btn-orange"
+            className="btn btn-white"
             // id="routine-add"
             type="button"
           >

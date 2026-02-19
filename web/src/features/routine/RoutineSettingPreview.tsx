@@ -286,10 +286,10 @@ export default function RoutineSettingPreview() {
         <button className="btn btn-blue" onClick={handleEquipDelete}>
           운동 삭제
         </button>
-        <button className="btn btn-orange" onClick={handleNextBtnClick}>
+        <button className="btn btn-white" onClick={handleNextBtnClick}>
           {/* 비활성화일때 .disabled를 붙여주세요 */}
           {/* <button className="btn btn-blue disabled">운동 삭제</button> */}
-          {/* <button className="btn btn-orange disabled" onClick={handleNextBtnClick}> */}
+          {/* <button className="btn btn-white disabled" onClick={handleNextBtnClick}> */}
           루틴 수정
         </button>
       </BottomButtonWrapper>
@@ -306,7 +306,7 @@ export default function RoutineSettingPreview() {
           <button className="btn btn-blue" onClick={handleClose}>
             취소
           </button>
-          <button className="btn btn-orange" onClick={handleClose}>
+          <button className="btn btn-white" onClick={handleClose}>
             확인
           </button>
         </BottomButtonWrapper>

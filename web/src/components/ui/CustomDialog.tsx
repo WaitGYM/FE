@@ -75,7 +75,7 @@ export default function CustomDialog({
           <button className="btn btn-blue" onClick={handleClose}>
             취소
           </button>
-          <button className="btn btn-orange" onClick={handleConfirm}>
+          <button className="btn btn-white" onClick={handleConfirm}>
             확인
           </button>
         </BottomButtonWrapper>
