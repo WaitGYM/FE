@@ -155,9 +155,10 @@ export default function RoutineSetting() {
             <button
               aria-haspopup="dialog"
               className="btn btn-icon"
-              onClick={() =>
-                routineId ? checkDataChange() : handleNavigatingBack()
-              }
+              onClick={(e) => {
+                e.currentTarget.blur();
+                routineId ? checkDataChange() : handleNavigatingBack();
+              }}
               aria-label="뒤로 가기"
             >
               <ChevronLeft size={24} strokeWidth="2" />
@@ -168,7 +169,10 @@ export default function RoutineSetting() {
               <button
                 aria-haspopup="dialog"
                 className="btn-delete"
-                onClick={() => setIsOpenRoutineDeleteDialog(true)}
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  setIsOpenRoutineDeleteDialog(true);
+                }}
               >
                 삭제
               </button>
@@ -251,7 +255,10 @@ export default function RoutineSetting() {
             aria-haspopup="dialog"
             className={`btn btn-blue ${!deleteList.length && "disabled"}`}
             disabled={!deleteList.length}
-            onClick={() => setIsOpenEquipDeleteDialog(true)}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              setIsOpenEquipDeleteDialog(true);
+            }}
           >
             삭제
           </button>
@@ -260,11 +267,14 @@ export default function RoutineSetting() {
           aria-haspopup="dialog"
           className={`btn btn-white ${!selectedEquipList.length && "disabled"}`}
           disabled={!selectedEquipList.length}
-          onClick={() =>
-            routineId
-              ? setIsOpenRoutineUpdateDialog(true)
-              : handleCreateRoutine()
-          }
+          onClick={(e) => {
+            e.currentTarget.blur();
+            setTimeout(() => {
+              routineId
+                ? setIsOpenRoutineUpdateDialog(true)
+                : handleCreateRoutine();
+            }, 0);
+          }}
         >
           {/* 비활성화일때 .disabled를 붙여주세요 */}
           {/* <button className="btn btn-blue disabled">운동 삭제</button> */}
