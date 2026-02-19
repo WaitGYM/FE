@@ -121,7 +121,7 @@ export default function WorkoutBreaktimer() {
                 )
               }
             />
-            <section className="container">
+            <main className="container">
               <Box className={`circular-timer`}>
                 {/* 배경 트랙 */}
                 <CircularProgress
@@ -170,7 +170,7 @@ export default function WorkoutBreaktimer() {
                   </Typography>
                 </Box>
               </Box>
-            </section>
+            </main>
             <BottomButtonWrapper>
               <button
                 className="btn btn-gray"

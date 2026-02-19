@@ -106,6 +106,7 @@ export default function EquipmentDetail() {
                         className="btn btn-icon"
                         onClick={() => updateSelectedEquipment("sets", -1)}
                         disabled={selectedEquipment.sets < 2}
+                        aria-label="1 줄이기"
                       >
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
@@ -116,6 +117,7 @@ export default function EquipmentDetail() {
                         className="btn btn-icon"
                         onClick={() => updateSelectedEquipment("sets", 1)}
                         disabled={selectedEquipment.sets > 7}
+                        aria-label="1 늘리기"
                       >
                         <Plus size={20} strokeWidth="1.5" />
                       </button>
@@ -134,6 +136,7 @@ export default function EquipmentDetail() {
                         onClick={() =>
                           updateSelectedEquipment("restSeconds", -10)
                         }
+                        aria-label="1 줄이기"
                       >
                         <Minus size={20} strokeWidth="1.5" />
                       </button>
@@ -151,6 +154,7 @@ export default function EquipmentDetail() {
                         onClick={() =>
                           updateSelectedEquipment("restSeconds", 10)
                         }
+                        aria-label="1 늘리기"
                       >
                         <Plus size={20} strokeWidth="1.5" />
                       </button>

@@ -20,7 +20,7 @@ export default function WorkoutCompletePage() {
       `/reservation/select-equipment${
         workoutMode === "routine" ? "/routine" : ""
       }`,
-      { replace: true }
+      { replace: true },
     );
 
     const timer = setTimeout(() => {
@@ -30,7 +30,7 @@ export default function WorkoutCompletePage() {
   }
 
   return (
-    <motion.div
+    <motion.main
       className="container workout-complete-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -79,6 +79,6 @@ export default function WorkoutCompletePage() {
           확인
         </button>
       </BottomButtonWrapper>
-    </motion.div>
+    </motion.main>
   );
 }

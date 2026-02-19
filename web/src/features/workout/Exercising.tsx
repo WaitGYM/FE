@@ -87,7 +87,7 @@ export default function WorkoutExercising() {
         }
       />
 
-      <section className="container">
+      <main className="container">
         <div className="text-wrap">
           <h1>{workingOutInfo?.equipmentName}</h1>
           <h2 className="timer-text">{formatTime(time)}</h2>
@@ -115,7 +115,7 @@ export default function WorkoutExercising() {
             </>
           )}
         </div>
-      </section>
+      </main>
 
       <BottomButtonWrapper>
         <button
