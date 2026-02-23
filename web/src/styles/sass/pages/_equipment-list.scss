@@ -52,6 +52,10 @@
           &.selected {
             background-color: $c-primary-blue-dark-light;
           }
+          &.disabled,
+          &:disabled {
+            opacity: 0.4;
+          }
         }
         .favorite {
           position: absolute;
