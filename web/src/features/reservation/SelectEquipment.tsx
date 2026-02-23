@@ -285,7 +285,7 @@ export default function ReservationPage() {
                         대기 시간을 최소순서로
                         <br />
                         제안해드려요!
-                        <X size={20} color="#9498A0" />
+                        <X size={20} color="#ffffff" />
                       </>
                     }
                     open={isSortTooltipOpen}

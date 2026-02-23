@@ -93,7 +93,7 @@ export default function WorkoutGoal({
                   드래그로 순서를
                   <br />
                   바꿀 수 있어요.
-                  <X size={20} color="#9498A0" />
+                  <X size={20} color="#ffffff" />
                 </>
               }
               open={isTooltipTarget}

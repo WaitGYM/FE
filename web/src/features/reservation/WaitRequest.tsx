@@ -82,7 +82,7 @@ export default function WaitRequest() {
               기구 사용이 필요하다면
               <br />
               '사용 요청'을 보내 알림을 전달하세요!
-              <X size={20} color="#9498A0" />
+              <X size={20} color="#ffffff" />
             </>
           }
           open={isTooltipOpen}
